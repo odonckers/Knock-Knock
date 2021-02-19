@@ -3,19 +3,22 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		E25A15BB25E072740065517B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15BA25E072740065517B /* AppDelegate.swift */; };
 		E25A15BD25E072740065517B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15BC25E072740065517B /* SceneDelegate.swift */; };
 		E25A15BF25E072740065517B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15BE25E072740065517B /* ContentView.swift */; };
-		E25A15C225E072740065517B /* Knock_Knock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E25A15C025E072740065517B /* Knock_Knock.xcdatamodeld */; };
 		E25A15C425E072780065517B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C325E072780065517B /* Assets.xcassets */; };
 		E25A15C725E072780065517B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C625E072780065517B /* Preview Assets.xcassets */; };
 		E25A15CA25E072780065517B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C825E072780065517B /* LaunchScreen.storyboard */; };
 		E25A15D525E072780065517B /* Knock_KnockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15D425E072780065517B /* Knock_KnockTests.swift */; };
 		E25A15E025E072780065517B /* Knock_KnockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15DF25E072780065517B /* Knock_KnockUITests.swift */; };
+		E25A15F125E072F10065517B /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15F025E072F10065517B /* Persistence.swift */; };
+		E25A160525E073B90065517B /* NSManagedObjectContext+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A160425E073B90065517B /* NSManagedObjectContext+Extension.swift */; };
+		E25A161925E07A040065517B /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = E25A161825E07A040065517B /* Introspect */; };
+		E25A162B25E07AC60065517B /* Knock_Knock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E25A162925E07AC60065517B /* Knock_Knock.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +43,6 @@
 		E25A15BA25E072740065517B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E25A15BC25E072740065517B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E25A15BE25E072740065517B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		E25A15C125E072740065517B /* Knock_Knock.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Knock_Knock.xcdatamodel; sourceTree = "<group>"; };
 		E25A15C325E072780065517B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E25A15C625E072780065517B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E25A15C925E072780065517B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +53,9 @@
 		E25A15DB25E072780065517B /* Knock-KnockUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Knock-KnockUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E25A15DF25E072780065517B /* Knock_KnockUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Knock_KnockUITests.swift; sourceTree = "<group>"; };
 		E25A15E125E072780065517B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E25A15F025E072F10065517B /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		E25A160425E073B90065517B /* NSManagedObjectContext+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Extension.swift"; sourceTree = "<group>"; };
+		E25A162A25E07AC60065517B /* Knock_Knock.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Knock_Knock.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E25A161925E07A040065517B /* Introspect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,13 +107,14 @@
 		E25A15B925E072740065517B /* Knock-Knock */ = {
 			isa = PBXGroup;
 			children = (
+				E25A161225E077FC0065517B /* Models */,
+				E25A161625E079620065517B /* Theme */,
+				E25A160025E073AC0065517B /* Utilities */,
 				E25A15BA25E072740065517B /* AppDelegate.swift */,
 				E25A15BC25E072740065517B /* SceneDelegate.swift */,
 				E25A15BE25E072740065517B /* ContentView.swift */,
-				E25A15C325E072780065517B /* Assets.xcassets */,
 				E25A15C825E072780065517B /* LaunchScreen.storyboard */,
 				E25A15CB25E072780065517B /* Info.plist */,
-				E25A15C025E072740065517B /* Knock_Knock.xcdatamodeld */,
 				E25A15C525E072780065517B /* Preview Content */,
 			);
 			path = "Knock-Knock";
@@ -139,6 +146,31 @@
 			path = "Knock-KnockUITests";
 			sourceTree = "<group>";
 		};
+		E25A160025E073AC0065517B /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				E25A160425E073B90065517B /* NSManagedObjectContext+Extension.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		E25A161225E077FC0065517B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E25A162925E07AC60065517B /* Knock_Knock.xcdatamodeld */,
+				E25A15F025E072F10065517B /* Persistence.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E25A161625E079620065517B /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				E25A15C325E072780065517B /* Assets.xcassets */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -155,6 +187,9 @@
 			dependencies = (
 			);
 			name = "Knock-Knock";
+			packageProductDependencies = (
+				E25A161825E07A040065517B /* Introspect */,
+			);
 			productName = "Knock-Knock";
 			productReference = E25A15B725E072740065517B /* Knock-Knock.app */;
 			productType = "com.apple.product-type.application";
@@ -226,6 +261,9 @@
 				Base,
 			);
 			mainGroup = E25A15AE25E072740065517B;
+			packageReferences = (
+				E25A161725E07A040065517B /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+			);
 			productRefGroup = E25A15B825E072740065517B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -270,9 +308,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E25A15BB25E072740065517B /* AppDelegate.swift in Sources */,
+				E25A162B25E07AC60065517B /* Knock_Knock.xcdatamodeld in Sources */,
 				E25A15BD25E072740065517B /* SceneDelegate.swift in Sources */,
+				E25A160525E073B90065517B /* NSManagedObjectContext+Extension.swift in Sources */,
 				E25A15BF25E072740065517B /* ContentView.swift in Sources */,
-				E25A15C225E072740065517B /* Knock_Knock.xcdatamodeld in Sources */,
+				E25A15F125E072F10065517B /* Persistence.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +485,7 @@
 				DEVELOPMENT_TEAM = K238G2ZV74;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Knock-Knock/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -466,6 +507,7 @@
 				DEVELOPMENT_TEAM = K238G2ZV74;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Knock-Knock/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -602,13 +644,32 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		E25A161725E07A040065517B /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E25A161825E07A040065517B /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E25A161725E07A040065517B /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
+		};
+/* End XCSwiftPackageProductDependency section */
+
 /* Begin XCVersionGroup section */
-		E25A15C025E072740065517B /* Knock_Knock.xcdatamodeld */ = {
+		E25A162925E07AC60065517B /* Knock_Knock.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				E25A15C125E072740065517B /* Knock_Knock.xcdatamodel */,
+				E25A162A25E07AC60065517B /* Knock_Knock.xcdatamodel */,
 			);
-			currentVersion = E25A15C125E072740065517B /* Knock_Knock.xcdatamodel */;
+			currentVersion = E25A162A25E07AC60065517B /* Knock_Knock.xcdatamodel */;
 			path = Knock_Knock.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
