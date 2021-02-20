@@ -58,11 +58,7 @@ struct SidebarNavigationView: View {
     @ViewBuilder private var territoriesSection: some View {
         Section(
             header: Text("Territories")
-                .ifOS(.iOS) {
-                    $0.foregroundColor(
-                        Color("LabelColor")
-                    )
-                }
+                .foregroundColor(Color("LabelColor"))
         ) {
             ForEach(territories, id: \.self) { territory in
                 let tag = NavigationItem.territory(territory).value

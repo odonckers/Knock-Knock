@@ -22,12 +22,10 @@ struct TerritoryFormView: View {
         Form {
             Section(header: Text("Info")) {
                 TextField("Required", text: $viewModel.name)
-                    .ifOS(.iOS) {
-                        $0.introspectTextField {
-                            if !viewModel.didInitiallyRespondKeyboard {
-                                $0.becomeFirstResponder()
-                                viewModel.keyboardResponded()
-                            }
+                    .introspectTextField {
+                        if !viewModel.didInitiallyRespondKeyboard {
+                            $0.becomeFirstResponder()
+                            viewModel.keyboardResponded()
                         }
                     }
                     .formLabel("Name")
