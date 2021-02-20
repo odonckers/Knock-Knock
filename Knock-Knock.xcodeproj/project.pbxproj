@@ -7,12 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E25A15BB25E072740065517B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15BA25E072740065517B /* AppDelegate.swift */; };
-		E25A15BD25E072740065517B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15BC25E072740065517B /* SceneDelegate.swift */; };
 		E25A15BF25E072740065517B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15BE25E072740065517B /* ContentView.swift */; };
 		E25A15C425E072780065517B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C325E072780065517B /* Assets.xcassets */; };
 		E25A15C725E072780065517B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C625E072780065517B /* Preview Assets.xcassets */; };
-		E25A15CA25E072780065517B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C825E072780065517B /* LaunchScreen.storyboard */; };
 		E25A15D525E072780065517B /* Knock_KnockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15D425E072780065517B /* Knock_KnockTests.swift */; };
 		E25A15E025E072780065517B /* Knock_KnockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15DF25E072780065517B /* Knock_KnockUITests.swift */; };
 		E25A15F125E072F10065517B /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15F025E072F10065517B /* Persistence.swift */; };
@@ -64,6 +61,7 @@
 		E25A175425E0B4560065517B /* RecordsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A175325E0B4560065517B /* RecordsLabel.swift */; };
 		E25A175C25E0B46C0065517B /* SidebarNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A175B25E0B46C0065517B /* SidebarNavigationView.swift */; };
 		E25A176125E0B4A20065517B /* TabNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A176025E0B4A20065517B /* TabNavigationView.swift */; };
+		E25A176F25E0D9440065517B /* KnockKnockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A176E25E0D9430065517B /* KnockKnockApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,12 +83,9 @@
 
 /* Begin PBXFileReference section */
 		E25A15B725E072740065517B /* Knock-Knock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Knock-Knock.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E25A15BA25E072740065517B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E25A15BC25E072740065517B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E25A15BE25E072740065517B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E25A15C325E072780065517B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E25A15C625E072780065517B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		E25A15C925E072780065517B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E25A15CB25E072780065517B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E25A15D025E072780065517B /* Knock-KnockTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Knock-KnockTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E25A15D425E072780065517B /* Knock_KnockTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Knock_KnockTests.swift; sourceTree = "<group>"; };
@@ -147,6 +142,7 @@
 		E25A175B25E0B46C0065517B /* SidebarNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarNavigationView.swift; sourceTree = "<group>"; };
 		E25A176025E0B4A20065517B /* TabNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabNavigationView.swift; sourceTree = "<group>"; };
 		E25A176525E0B52B0065517B /* Knock-Knock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Knock-Knock.entitlements"; sourceTree = "<group>"; };
+		E25A176E25E0D9430065517B /* KnockKnockApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnockKnockApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,10 +201,8 @@
 				E25A161625E079620065517B /* Theme */,
 				E25A160025E073AC0065517B /* Utilities */,
 				E25A16D825E08A380065517B /* Views */,
-				E25A15BA25E072740065517B /* AppDelegate.swift */,
-				E25A15BC25E072740065517B /* SceneDelegate.swift */,
+				E25A176E25E0D9430065517B /* KnockKnockApp.swift */,
 				E25A15BE25E072740065517B /* ContentView.swift */,
-				E25A15C825E072780065517B /* LaunchScreen.storyboard */,
 				E25A15CB25E072780065517B /* Info.plist */,
 				E25A176525E0B52B0065517B /* Knock-Knock.entitlements */,
 				E25A15C525E072780065517B /* Preview Content */,
@@ -529,7 +523,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E25A15CA25E072780065517B /* LaunchScreen.storyboard in Resources */,
 				E25A15C725E072780065517B /* Preview Assets.xcassets in Resources */,
 				E25A15C425E072780065517B /* Assets.xcassets in Resources */,
 			);
@@ -558,9 +551,7 @@
 			files = (
 				E25A164825E07F8D0065517B /* Configure.swift in Sources */,
 				E25A174625E0B3F40065517B /* TerritoryList.swift in Sources */,
-				E25A15BB25E072740065517B /* AppDelegate.swift in Sources */,
 				E25A162B25E07AC60065517B /* Knock_Knock.xcdatamodeld in Sources */,
-				E25A15BD25E072740065517B /* SceneDelegate.swift in Sources */,
 				E25A176125E0B4A20065517B /* TabNavigationView.swift in Sources */,
 				E25A171925E0B1810065517B /* RecordList.swift in Sources */,
 				E25A16D125E0863C0065517B /* Record+SwiftUI.swift in Sources */,
@@ -587,6 +578,7 @@
 				E25A16E325E08B3B0065517B /* DoorGrid.swift in Sources */,
 				E25A170725E095FE0065517B /* RecordFormView.swift in Sources */,
 				E25A15F125E072F10065517B /* Persistence.swift in Sources */,
+				E25A176F25E0D9440065517B /* KnockKnockApp.swift in Sources */,
 				E25A172725E0B1D40065517B /* Territory+Extension.swift in Sources */,
 				E25A163925E07BFF0065517B /* DeleteConfirmation.swift in Sources */,
 				E25A165425E07FC70065517B /* LocationManager.swift in Sources */,
@@ -640,17 +632,6 @@
 			targetProxy = E25A15DC25E072780065517B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		E25A15C825E072780065517B /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E25A15C925E072780065517B /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		E25A15E225E072780065517B /* Debug */ = {
