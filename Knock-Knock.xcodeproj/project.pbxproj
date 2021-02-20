@@ -37,6 +37,33 @@
 		E25A169625E083240065517B /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A169525E083240065517B /* Tag.swift */; };
 		E25A169B25E083A80065517B /* CardGroupBoxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A169A25E083A80065517B /* CardGroupBoxStyle.swift */; };
 		E25A16A325E083C20065517B /* FlatButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16A225E083C20065517B /* FlatButtonStyle.swift */; };
+		E25A16A825E084390065517B /* Record+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16A725E084390065517B /* Record+Extension.swift */; };
+		E25A16AD25E0847C0065517B /* Door+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16AC25E0847C0065517B /* Door+Extension.swift */; };
+		E25A16B225E084BD0065517B /* Attempt+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16B125E084BD0065517B /* Attempt+Extension.swift */; };
+		E25A16BA25E0854C0065517B /* RecordType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16B925E0854C0065517B /* RecordType.swift */; };
+		E25A16C225E0857B0065517B /* AttemptSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16C125E0857B0065517B /* AttemptSymbol.swift */; };
+		E25A16C725E085940065517B /* AttemptPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16C625E085940065517B /* AttemptPerson.swift */; };
+		E25A16CC25E085E50065517B /* Attempt+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16CB25E085E50065517B /* Attempt+SwiftUI.swift */; };
+		E25A16D125E0863C0065517B /* Record+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16D025E0863C0065517B /* Record+SwiftUI.swift */; };
+		E25A16DB25E08A7F0065517B /* DoorsViewTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16DA25E08A7F0065517B /* DoorsViewTitle.swift */; };
+		E25A16E325E08B3B0065517B /* DoorGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16E225E08B3B0065517B /* DoorGrid.swift */; };
+		E25A16ED25E093AA0065517B /* DoorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16EC25E093AA0065517B /* DoorsView.swift */; };
+		E25A16F225E094DB0065517B /* GridLayoutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16F125E094DB0065517B /* GridLayoutButton.swift */; };
+		E25A170125E095C40065517B /* RecordFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A170025E095C40065517B /* RecordFormViewModel.swift */; };
+		E25A170725E095FE0065517B /* RecordFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A170625E095FE0065517B /* RecordFormView.swift */; };
+		E25A170F25E096850065517B /* SetSegmentedControlAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A170E25E096850065517B /* SetSegmentedControlAppearance.swift */; };
+		E25A171425E0B1530065517B /* RecordRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A171325E0B1530065517B /* RecordRow.swift */; };
+		E25A171925E0B1810065517B /* RecordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A171825E0B1810065517B /* RecordList.swift */; };
+		E25A171E25E0B1AB0065517B /* RecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A171D25E0B1AB0065517B /* RecordsView.swift */; };
+		E25A172725E0B1D40065517B /* Territory+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A172625E0B1D40065517B /* Territory+Extension.swift */; };
+		E25A173125E0B35A0065517B /* TerritoryFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A173025E0B35A0065517B /* TerritoryFormViewModel.swift */; };
+		E25A173925E0B3880065517B /* TerritoryFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A173825E0B3880065517B /* TerritoryFormView.swift */; };
+		E25A173E25E0B3CD0065517B /* TerritoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A173D25E0B3CD0065517B /* TerritoryRow.swift */; };
+		E25A174625E0B3F40065517B /* TerritoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A174525E0B3F40065517B /* TerritoryList.swift */; };
+		E25A174B25E0B4160065517B /* TerritoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A174A25E0B4160065517B /* TerritoriesView.swift */; };
+		E25A175425E0B4560065517B /* RecordsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A175325E0B4560065517B /* RecordsLabel.swift */; };
+		E25A175C25E0B46C0065517B /* SidebarNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A175B25E0B46C0065517B /* SidebarNavigationView.swift */; };
+		E25A176125E0B4A20065517B /* TabNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A176025E0B4A20065517B /* TabNavigationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +119,34 @@
 		E25A169525E083240065517B /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		E25A169A25E083A80065517B /* CardGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardGroupBoxStyle.swift; sourceTree = "<group>"; };
 		E25A16A225E083C20065517B /* FlatButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatButtonStyle.swift; sourceTree = "<group>"; };
+		E25A16A725E084390065517B /* Record+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Record+Extension.swift"; sourceTree = "<group>"; };
+		E25A16AC25E0847C0065517B /* Door+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Door+Extension.swift"; sourceTree = "<group>"; };
+		E25A16B125E084BD0065517B /* Attempt+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attempt+Extension.swift"; sourceTree = "<group>"; };
+		E25A16B925E0854C0065517B /* RecordType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordType.swift; sourceTree = "<group>"; };
+		E25A16C125E0857B0065517B /* AttemptSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttemptSymbol.swift; sourceTree = "<group>"; };
+		E25A16C625E085940065517B /* AttemptPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttemptPerson.swift; sourceTree = "<group>"; };
+		E25A16CB25E085E50065517B /* Attempt+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attempt+SwiftUI.swift"; sourceTree = "<group>"; };
+		E25A16D025E0863C0065517B /* Record+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Record+SwiftUI.swift"; sourceTree = "<group>"; };
+		E25A16DA25E08A7F0065517B /* DoorsViewTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorsViewTitle.swift; sourceTree = "<group>"; };
+		E25A16E225E08B3B0065517B /* DoorGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorGrid.swift; sourceTree = "<group>"; };
+		E25A16EC25E093AA0065517B /* DoorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorsView.swift; sourceTree = "<group>"; };
+		E25A16F125E094DB0065517B /* GridLayoutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayoutButton.swift; sourceTree = "<group>"; };
+		E25A170025E095C40065517B /* RecordFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordFormViewModel.swift; sourceTree = "<group>"; };
+		E25A170625E095FE0065517B /* RecordFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordFormView.swift; sourceTree = "<group>"; };
+		E25A170E25E096850065517B /* SetSegmentedControlAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSegmentedControlAppearance.swift; sourceTree = "<group>"; };
+		E25A171325E0B1530065517B /* RecordRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRow.swift; sourceTree = "<group>"; };
+		E25A171825E0B1810065517B /* RecordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordList.swift; sourceTree = "<group>"; };
+		E25A171D25E0B1AB0065517B /* RecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsView.swift; sourceTree = "<group>"; };
+		E25A172625E0B1D40065517B /* Territory+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Territory+Extension.swift"; sourceTree = "<group>"; };
+		E25A173025E0B35A0065517B /* TerritoryFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoryFormViewModel.swift; sourceTree = "<group>"; };
+		E25A173825E0B3880065517B /* TerritoryFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoryFormView.swift; sourceTree = "<group>"; };
+		E25A173D25E0B3CD0065517B /* TerritoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoryRow.swift; sourceTree = "<group>"; };
+		E25A174525E0B3F40065517B /* TerritoryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoryList.swift; sourceTree = "<group>"; };
+		E25A174A25E0B4160065517B /* TerritoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoriesView.swift; sourceTree = "<group>"; };
+		E25A175325E0B4560065517B /* RecordsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsLabel.swift; sourceTree = "<group>"; };
+		E25A175B25E0B46C0065517B /* SidebarNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarNavigationView.swift; sourceTree = "<group>"; };
+		E25A176025E0B4A20065517B /* TabNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabNavigationView.swift; sourceTree = "<group>"; };
+		E25A176525E0B52B0065517B /* Knock-Knock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Knock-Knock.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,14 +200,17 @@
 			children = (
 				E25A162F25E07B8D0065517B /* Components */,
 				E25A161225E077FC0065517B /* Models */,
+				E25A175225E0B4450065517B /* Navigation */,
 				E25A165225E07FBA0065517B /* Services */,
 				E25A161625E079620065517B /* Theme */,
 				E25A160025E073AC0065517B /* Utilities */,
+				E25A16D825E08A380065517B /* Views */,
 				E25A15BA25E072740065517B /* AppDelegate.swift */,
 				E25A15BC25E072740065517B /* SceneDelegate.swift */,
 				E25A15BE25E072740065517B /* ContentView.swift */,
 				E25A15C825E072780065517B /* LaunchScreen.storyboard */,
 				E25A15CB25E072780065517B /* Info.plist */,
+				E25A176525E0B52B0065517B /* Knock-Knock.entitlements */,
 				E25A15C525E072780065517B /* Preview Content */,
 			);
 			path = "Knock-Knock";
@@ -201,6 +259,10 @@
 		E25A161225E077FC0065517B /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E25A172525E0B1C70065517B /* Territory */,
+				E25A16B625E0851D0065517B /* Record */,
+				E25A16B725E085240065517B /* Door */,
+				E25A16B825E085290065517B /* Attempt */,
 				E25A162925E07AC60065517B /* Knock_Knock.xcdatamodeld */,
 				E25A15F025E072F10065517B /* Persistence.swift */,
 			);
@@ -213,6 +275,7 @@
 				E25A15C325E072780065517B /* Assets.xcassets */,
 				E25A169A25E083A80065517B /* CardGroupBoxStyle.swift */,
 				E25A16A225E083C20065517B /* FlatButtonStyle.swift */,
+				E25A170E25E096850065517B /* SetSegmentedControlAppearance.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -247,6 +310,114 @@
 				E25A165F25E080190065517B /* LocationRequest.swift */,
 			);
 			path = Location;
+			sourceTree = "<group>";
+		};
+		E25A16B625E0851D0065517B /* Record */ = {
+			isa = PBXGroup;
+			children = (
+				E25A16A725E084390065517B /* Record+Extension.swift */,
+				E25A16D025E0863C0065517B /* Record+SwiftUI.swift */,
+				E25A16B925E0854C0065517B /* RecordType.swift */,
+			);
+			path = Record;
+			sourceTree = "<group>";
+		};
+		E25A16B725E085240065517B /* Door */ = {
+			isa = PBXGroup;
+			children = (
+				E25A16AC25E0847C0065517B /* Door+Extension.swift */,
+			);
+			path = Door;
+			sourceTree = "<group>";
+		};
+		E25A16B825E085290065517B /* Attempt */ = {
+			isa = PBXGroup;
+			children = (
+				E25A16B125E084BD0065517B /* Attempt+Extension.swift */,
+				E25A16CB25E085E50065517B /* Attempt+SwiftUI.swift */,
+				E25A16C125E0857B0065517B /* AttemptSymbol.swift */,
+				E25A16C625E085940065517B /* AttemptPerson.swift */,
+			);
+			path = Attempt;
+			sourceTree = "<group>";
+		};
+		E25A16D825E08A380065517B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E25A172E25E0B2C40065517B /* Territories */,
+				E25A172F25E0B31E0065517B /* Territory Form */,
+				E25A16FF25E095A70065517B /* Records */,
+				E25A170525E095D50065517B /* Record Form */,
+				E25A16D925E08A400065517B /* Doors */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E25A16D925E08A400065517B /* Doors */ = {
+			isa = PBXGroup;
+			children = (
+				E25A16EC25E093AA0065517B /* DoorsView.swift */,
+				E25A16DA25E08A7F0065517B /* DoorsViewTitle.swift */,
+				E25A16E225E08B3B0065517B /* DoorGrid.swift */,
+				E25A16F125E094DB0065517B /* GridLayoutButton.swift */,
+			);
+			path = Doors;
+			sourceTree = "<group>";
+		};
+		E25A16FF25E095A70065517B /* Records */ = {
+			isa = PBXGroup;
+			children = (
+				E25A171D25E0B1AB0065517B /* RecordsView.swift */,
+				E25A171825E0B1810065517B /* RecordList.swift */,
+				E25A171325E0B1530065517B /* RecordRow.swift */,
+			);
+			path = Records;
+			sourceTree = "<group>";
+		};
+		E25A170525E095D50065517B /* Record Form */ = {
+			isa = PBXGroup;
+			children = (
+				E25A170625E095FE0065517B /* RecordFormView.swift */,
+				E25A170025E095C40065517B /* RecordFormViewModel.swift */,
+			);
+			path = "Record Form";
+			sourceTree = "<group>";
+		};
+		E25A172525E0B1C70065517B /* Territory */ = {
+			isa = PBXGroup;
+			children = (
+				E25A172625E0B1D40065517B /* Territory+Extension.swift */,
+			);
+			path = Territory;
+			sourceTree = "<group>";
+		};
+		E25A172E25E0B2C40065517B /* Territories */ = {
+			isa = PBXGroup;
+			children = (
+				E25A174A25E0B4160065517B /* TerritoriesView.swift */,
+				E25A174525E0B3F40065517B /* TerritoryList.swift */,
+				E25A173D25E0B3CD0065517B /* TerritoryRow.swift */,
+			);
+			path = Territories;
+			sourceTree = "<group>";
+		};
+		E25A172F25E0B31E0065517B /* Territory Form */ = {
+			isa = PBXGroup;
+			children = (
+				E25A173825E0B3880065517B /* TerritoryFormView.swift */,
+				E25A173025E0B35A0065517B /* TerritoryFormViewModel.swift */,
+			);
+			path = "Territory Form";
+			sourceTree = "<group>";
+		};
+		E25A175225E0B4450065517B /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				E25A175B25E0B46C0065517B /* SidebarNavigationView.swift */,
+				E25A176025E0B4A20065517B /* TabNavigationView.swift */,
+				E25A175325E0B4560065517B /* RecordsLabel.swift */,
+			);
+			path = Navigation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -386,29 +557,56 @@
 			buildActionMask = 2147483647;
 			files = (
 				E25A164825E07F8D0065517B /* Configure.swift in Sources */,
+				E25A174625E0B3F40065517B /* TerritoryList.swift in Sources */,
 				E25A15BB25E072740065517B /* AppDelegate.swift in Sources */,
 				E25A162B25E07AC60065517B /* Knock_Knock.xcdatamodeld in Sources */,
 				E25A15BD25E072740065517B /* SceneDelegate.swift in Sources */,
+				E25A176125E0B4A20065517B /* TabNavigationView.swift in Sources */,
+				E25A171925E0B1810065517B /* RecordList.swift in Sources */,
+				E25A16D125E0863C0065517B /* Record+SwiftUI.swift in Sources */,
+				E25A174B25E0B4160065517B /* TerritoriesView.swift in Sources */,
 				E25A16A325E083C20065517B /* FlatButtonStyle.swift in Sources */,
 				E25A160525E073B90065517B /* NSManagedObjectContext+Extension.swift in Sources */,
+				E25A16CC25E085E50065517B /* Attempt+SwiftUI.swift in Sources */,
 				E25A167525E080D00065517B /* SheetState.swift in Sources */,
+				E25A16DB25E08A7F0065517B /* DoorsViewTitle.swift in Sources */,
 				E25A169625E083240065517B /* Tag.swift in Sources */,
 				E25A167A25E081430065517B /* StatefulPreviewWrapper.swift in Sources */,
 				E25A15BF25E072740065517B /* ContentView.swift in Sources */,
 				E25A163125E07B980065517B /* ContainerView.swift in Sources */,
+				E25A175C25E0B46C0065517B /* SidebarNavigationView.swift in Sources */,
+				E25A171E25E0B1AB0065517B /* RecordsView.swift in Sources */,
 				E25A163E25E07CC30065517B /* FilledBackground.swift in Sources */,
+				E25A16BA25E0854C0065517B /* RecordType.swift in Sources */,
+				E25A173925E0B3880065517B /* TerritoryFormView.swift in Sources */,
+				E25A170125E095C40065517B /* RecordFormViewModel.swift in Sources */,
+				E25A171425E0B1530065517B /* RecordRow.swift in Sources */,
+				E25A16B225E084BD0065517B /* Attempt+Extension.swift in Sources */,
 				E25A168E25E082990065517B /* ViewControllerResolver.swift in Sources */,
 				E25A169B25E083A80065517B /* CardGroupBoxStyle.swift in Sources */,
+				E25A16E325E08B3B0065517B /* DoorGrid.swift in Sources */,
+				E25A170725E095FE0065517B /* RecordFormView.swift in Sources */,
 				E25A15F125E072F10065517B /* Persistence.swift in Sources */,
+				E25A172725E0B1D40065517B /* Territory+Extension.swift in Sources */,
 				E25A163925E07BFF0065517B /* DeleteConfirmation.swift in Sources */,
 				E25A165425E07FC70065517B /* LocationManager.swift in Sources */,
+				E25A170F25E096850065517B /* SetSegmentedControlAppearance.swift in Sources */,
+				E25A16AD25E0847C0065517B /* Door+Extension.swift in Sources */,
 				E25A166025E080190065517B /* LocationRequest.swift in Sources */,
 				E25A167F25E081750065517B /* UserDefault.swift in Sources */,
+				E25A16C725E085940065517B /* AttemptPerson.swift in Sources */,
 				E25A164325E07F4C0065517B /* Bundle+Extension.swift in Sources */,
 				E25A166825E0804E0065517B /* Binding+Extension.swift in Sources */,
+				E25A173E25E0B3CD0065517B /* TerritoryRow.swift in Sources */,
+				E25A16C225E0857B0065517B /* AttemptSymbol.swift in Sources */,
+				E25A16A825E084390065517B /* Record+Extension.swift in Sources */,
+				E25A16ED25E093AA0065517B /* DoorsView.swift in Sources */,
+				E25A173125E0B35A0065517B /* TerritoryFormViewModel.swift in Sources */,
 				E25A168925E0825E0065517B /* SearchBar.swift in Sources */,
+				E25A16F225E094DB0065517B /* GridLayoutButton.swift in Sources */,
 				E25A166D25E080960065517B /* PlatformModifiers.swift in Sources */,
 				E25A168425E081B60065517B /* FormLabel.swift in Sources */,
+				E25A175425E0B4560065517B /* RecordsLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,6 +774,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Knock-Knock/Knock-Knock.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Knock-Knock/Preview Content\"";
 				DEVELOPMENT_TEAM = K238G2ZV74;
@@ -598,6 +797,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Knock-Knock/Knock-Knock.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Knock-Knock/Preview Content\"";
 				DEVELOPMENT_TEAM = K238G2ZV74;

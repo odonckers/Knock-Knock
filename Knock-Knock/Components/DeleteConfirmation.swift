@@ -41,7 +41,7 @@ struct DeleteConfirmation<Source: DynamicViewContent>: View {
 }
 
 extension DynamicViewContent {
-    func onConfirmedDelete(
+    public func onConfirmedDelete(
         title: @escaping (IndexSet) -> String,
         message: String? = nil,
         perform: @escaping (IndexSet) -> Void

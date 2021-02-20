@@ -37,7 +37,7 @@ struct FormLabel<Source: View>: View {
 }
 
 extension View {
-    func formLabel(
+    public func formLabel(
         _ label: String,
         position: Alignment? = .leading
     ) -> some View {

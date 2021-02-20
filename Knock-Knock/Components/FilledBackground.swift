@@ -20,7 +20,7 @@ private struct FilledBackground<Content: View, Background: View>: View {
 }
 
 extension View {
-    func filledBackground<Content: View>(
+    public func filledBackground<Content: View>(
         _ background: Content
     ) -> some View {
         FilledBackground(
