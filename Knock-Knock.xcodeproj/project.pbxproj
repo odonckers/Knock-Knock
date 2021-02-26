@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E215E93725E6F538001A89C1 /* LegacySplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E215E93625E6F538001A89C1 /* LegacySplitView.swift */; };
 		E25A15BF25E072740065517B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15BE25E072740065517B /* ContentView.swift */; };
 		E25A15C425E072780065517B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C325E072780065517B /* Assets.xcassets */; };
 		E25A15C725E072780065517B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C625E072780065517B /* Preview Assets.xcassets */; };
@@ -82,6 +83,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E215E93625E6F538001A89C1 /* LegacySplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacySplitView.swift; sourceTree = "<group>"; };
 		E25A15B725E072740065517B /* Knock-Knock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Knock-Knock.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E25A15BE25E072740065517B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E25A15C325E072780065517B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				E25A163025E07B980065517B /* ContainerView.swift */,
 				E25A163825E07BFF0065517B /* DeleteConfirmation.swift */,
 				E25A163D25E07CC30065517B /* FilledBackground.swift */,
+				E215E93625E6F538001A89C1 /* LegacySplitView.swift */,
 				E25A167925E081430065517B /* StatefulPreviewWrapper.swift */,
 				E25A168325E081B60065517B /* FormLabel.swift */,
 				E25A168825E0825E0065517B /* SearchBar.swift */,
@@ -572,6 +575,7 @@
 				E25A173925E0B3880065517B /* TerritoryFormView.swift in Sources */,
 				E25A170125E095C40065517B /* RecordFormViewModel.swift in Sources */,
 				E25A171425E0B1530065517B /* RecordRow.swift in Sources */,
+				E215E93725E6F538001A89C1 /* LegacySplitView.swift in Sources */,
 				E25A16B225E084BD0065517B /* Attempt+Extension.swift in Sources */,
 				E25A168E25E082990065517B /* ViewControllerResolver.swift in Sources */,
 				E25A169B25E083A80065517B /* CardGroupBoxStyle.swift in Sources */,
