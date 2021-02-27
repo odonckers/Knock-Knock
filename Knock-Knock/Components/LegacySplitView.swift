@@ -10,7 +10,7 @@ import UIKit
 
 struct LegacySplitView<Primary: View, Supplementary: View, Secondary: View, Compact: View>: UIViewControllerRepresentable {
     let style: UISplitViewController.Style
-        
+    
     @State var displayMode: UISplitViewController.DisplayMode = .automatic
     @State var splitBehavior: UISplitViewController.SplitBehavior = .automatic
     
@@ -24,15 +24,21 @@ struct LegacySplitView<Primary: View, Supplementary: View, Secondary: View, Comp
         return vc
     }
 
-    func updateUIViewController(_ vc: UISplitViewController, context: Context) {
+    func updateUIViewController(_ vc: UISplitViewController, context: Context) {        
         vc.preferredDisplayMode = displayMode
         vc.preferredSplitBehavior = splitBehavior
         
         vc.setViewController(UIHostingController(rootView: primary()), for: .primary)
-        vc.setViewController(UIHostingController(rootView: supplementary()), for: .supplementary)
+
+        if let supplementary = self.supplementary() {
+            vc.setViewController(UIHostingController(rootView: supplementary), for: .supplementary)
+        }
+
         vc.setViewController(UIHostingController(rootView: secondary()), for: .secondary)
-        
-        vc.setViewController(UIHostingController(rootView: compact()), for: .compact)
+
+        if let compact = self.compact() {
+            vc.setViewController(UIHostingController(rootView: compact), for: .compact)
+        }
     }
 }
 

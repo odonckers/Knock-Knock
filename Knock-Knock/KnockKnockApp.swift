@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct KnockKnockApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     let persistenceController = PersistenceController.shared
     
     var body: some Scene {
@@ -21,3 +23,5 @@ struct KnockKnockApp: App {
         }
     }
 }
+
+class AppDelegate: NSObject, UIApplicationDelegate { }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E215E93725E6F538001A89C1 /* LegacySplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E215E93625E6F538001A89C1 /* LegacySplitView.swift */; };
+		E21799C525EAC7F8005AB340 /* Introspect+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21799C425EAC7F8005AB340 /* Introspect+Extension.swift */; };
 		E25A15BF25E072740065517B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15BE25E072740065517B /* ContentView.swift */; };
 		E25A15C425E072780065517B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C325E072780065517B /* Assets.xcassets */; };
 		E25A15C725E072780065517B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C625E072780065517B /* Preview Assets.xcassets */; };
@@ -84,6 +85,7 @@
 
 /* Begin PBXFileReference section */
 		E215E93625E6F538001A89C1 /* LegacySplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacySplitView.swift; sourceTree = "<group>"; };
+		E21799C425EAC7F8005AB340 /* Introspect+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Introspect+Extension.swift"; sourceTree = "<group>"; };
 		E25A15B725E072740065517B /* Knock-Knock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Knock-Knock.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E25A15BE25E072740065517B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E25A15C325E072780065517B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -242,8 +244,9 @@
 			isa = PBXGroup;
 			children = (
 				E25A166725E0804E0065517B /* Binding+Extension.swift */,
-				E25A164725E07F8D0065517B /* Configure.swift */,
 				E25A164225E07F4C0065517B /* Bundle+Extension.swift */,
+				E25A164725E07F8D0065517B /* Configure.swift */,
+				E21799C425EAC7F8005AB340 /* Introspect+Extension.swift */,
 				E25A160425E073B90065517B /* NSManagedObjectContext+Extension.swift */,
 				E25A166C25E080960065517B /* PlatformModifiers.swift */,
 				E25A167425E080D00065517B /* SheetState.swift */,
@@ -592,6 +595,7 @@
 				E25A167F25E081750065517B /* UserDefault.swift in Sources */,
 				E25A16C725E085940065517B /* AttemptPerson.swift in Sources */,
 				E25A164325E07F4C0065517B /* Bundle+Extension.swift in Sources */,
+				E21799C525EAC7F8005AB340 /* Introspect+Extension.swift in Sources */,
 				E25A166825E0804E0065517B /* Binding+Extension.swift in Sources */,
 				E25A173E25E0B3CD0065517B /* TerritoryRow.swift in Sources */,
 				E25A16C225E0857B0065517B /* AttemptSymbol.swift in Sources */,

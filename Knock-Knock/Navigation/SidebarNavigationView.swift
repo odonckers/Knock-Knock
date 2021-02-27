@@ -130,7 +130,9 @@ struct SidebarNavigationView: View {
     }
     
     // MARK: - Body
-        
+    
+    @State private var hasLoaded = false
+    
     var body: some View {
         NavigationView {
             sidebar
@@ -144,6 +146,13 @@ struct SidebarNavigationView: View {
             Text("Select a Record")
                 .font(.title2)
                 .foregroundColor(.secondary)
+                .introspectSplitViewController { splitViewController in
+                    if !hasLoaded {
+                        splitViewController.preferredDisplayMode = .twoDisplaceSecondary
+                        splitViewController.showsSecondaryOnlyButton = true
+                        hasLoaded.toggle()
+                    }
+                }
         }
     }
 }

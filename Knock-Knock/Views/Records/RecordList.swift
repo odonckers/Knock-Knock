@@ -102,4 +102,3 @@ struct RecordList_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
     }
 }
-
