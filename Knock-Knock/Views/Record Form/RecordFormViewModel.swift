@@ -60,18 +60,17 @@ class RecordFormViewModel: ObservableObject {
         var toSave: Record
         if let record = record {
             toSave = record
+            toSave.willUpdate()
         } else {
             toSave = Record(context: viewContext)
-            toSave.uuid = UUID().uuidString
-            toSave.dateCreated = Date()
+            toSave.willCreate()
         }
 
-        toSave.dateUpdated = Date()
+        toSave.wrappedType = isApartment ? .apartment : .street
+        toSave.apartmentNumber = isApartment ? apartmentNumber : nil
         toSave.streetName = streetName
         toSave.city = city
         toSave.state = state
-        toSave.setType(isApartment ? .apartment : .street)
-        toSave.apartmentNumber = isApartment ? apartmentNumber : nil
         toSave.territory = territory
 
         viewContext.unsafeSave()

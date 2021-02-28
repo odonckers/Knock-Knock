@@ -8,18 +8,27 @@
 import Foundation
 
 extension Record {
-    public var wrappedUuid: String { uuid ?? UUID().uuidString }
-    public var wrappedDateCreated: Date { dateCreated ?? Date() }
-    public var wrappedDateUpdated: Date { dateUpdated ?? Date() }
-    public var wrappedType: RecordType { RecordType(rawValue: type) ?? .street }
-    public var wrappedStreetName: String { streetName ?? "" }
-
-    public func setType(_ type: RecordType) {
-        self.type = type.rawValue
+    public var wrappedType: RecordType {
+        get { RecordType(rawValue: type) ?? .street }
+        set { self.type = newValue.rawValue }
     }
-
+    public var wrappedStreetName: String { streetName ?? "" }
     public var doorArray: [Door] {
         let set = doors as? Set<Door> ?? []
         return set.sorted { $0.wrappedNumber < $1.wrappedNumber }
     }
+}
+
+extension Record: ModelManagedObject {
+    public var wrappedID: String { uuid ?? UUID().uuidString }
+    public var wrappedDateCreated: Date { dateCreated ?? Date() }
+    public var wrappedDateUpdated: Date { dateUpdated ?? Date() }
+
+    public func willCreate() {
+        uuid = UUID().uuidString
+        dateCreated = Date()
+        dateUpdated = dateCreated
+    }
+
+    public func willUpdate() { dateUpdated = Date() }
 }

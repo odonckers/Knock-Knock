@@ -65,6 +65,7 @@
 		E25A176125E0B4A20065517B /* TabNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A176025E0B4A20065517B /* TabNavigationView.swift */; };
 		E25A176F25E0D9440065517B /* KnockKnockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A176E25E0D9430065517B /* KnockKnockApp.swift */; };
 		E2BB6FC125EB3F2600731EDE /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FC025EB3F2600731EDE /* UIColor+Extension.swift */; };
+		E2BB6FDB25EB6DF600731EDE /* ModelManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FDA25EB6DF600731EDE /* ModelManagedObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,6 +150,7 @@
 		E25A176525E0B52B0065517B /* Knock-Knock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Knock-Knock.entitlements"; sourceTree = "<group>"; };
 		E25A176E25E0D9430065517B /* KnockKnockApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnockKnockApp.swift; sourceTree = "<group>"; };
 		E2BB6FC025EB3F2600731EDE /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		E2BB6FDA25EB6DF600731EDE /* ModelManagedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManagedObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,6 +251,7 @@
 				E25A164225E07F4C0065517B /* Bundle+Extension.swift */,
 				E25A164725E07F8D0065517B /* Configure.swift */,
 				E21799C425EAC7F8005AB340 /* Introspect+Extension.swift */,
+				E2BB6FDA25EB6DF600731EDE /* ModelManagedObject.swift */,
 				E25A160425E073B90065517B /* NSManagedObjectContext+Extension.swift */,
 				E25A166C25E080960065517B /* PlatformModifiers.swift */,
 				E25A167425E080D00065517B /* SheetState.swift */,
@@ -606,6 +609,7 @@
 				E25A16A825E084390065517B /* Record+Extension.swift in Sources */,
 				E25A16ED25E093AA0065517B /* DoorsView.swift in Sources */,
 				E25A173125E0B35A0065517B /* TerritoryFormViewModel.swift in Sources */,
+				E2BB6FDB25EB6DF600731EDE /* ModelManagedObject.swift in Sources */,
 				E25A168925E0825E0065517B /* SearchBar.swift in Sources */,
 				E25A16F225E094DB0065517B /* GridLayoutButton.swift in Sources */,
 				E25A166D25E080960065517B /* PlatformModifiers.swift in Sources */,

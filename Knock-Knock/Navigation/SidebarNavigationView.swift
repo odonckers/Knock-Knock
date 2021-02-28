@@ -147,7 +147,7 @@ extension SidebarNavigationView {
         var value: String {
             switch self {
             case .territory(let territory):
-                return "territory-" + territory.wrappedUuid
+                return "territory-" + territory.wrappedID
             default:
                 return "recordList"
             }

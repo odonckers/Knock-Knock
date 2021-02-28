@@ -29,12 +29,12 @@ struct TerritoryList: View {
     var body: some View {
         List(
             territories,
-            id: \.wrappedUuid,
+            id: \.wrappedID,
             selection: $selection
         ) { territory in
             NavigationLink(
                 destination: RecordsView(territory: territory),
-                tag: territory.wrappedUuid,
+                tag: territory.wrappedID,
                 selection: $selection
             ) {
                 TerritoryRow(territory: territory)

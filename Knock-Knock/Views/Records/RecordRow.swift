@@ -55,11 +55,11 @@ struct RecordCell_Previews: PreviewProvider {
         record.state = "State"
 
         let apartment = Record(context: viewContext)
+        apartment.wrappedType = .apartment
         apartment.streetName = "Street Name"
         apartment.city = "City"
         apartment.state = "State"
         apartment.apartmentNumber = "500"
-        apartment.setType(.apartment)
 
         return Group {
             RecordRow(record: record)

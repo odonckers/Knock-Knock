@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-enum GridLayoutOptions: Int {
-    case grid = 0
-    case list = 1
+enum GridLayoutOptions: String, Identifiable, CaseIterable {
+    var id: String { rawValue }
+
+    case grid
+    case list
 }
 
 struct GridLayoutButton: View {
@@ -27,10 +29,10 @@ struct GridLayoutButton: View {
     var body: some View {
         Menu {
             Picker("Layout", selection: $selectedGridLayout.animation()) {
-                ForEach(0..<options.count) { i in
-                    let gridLayout = Array(options.keys)[i]
-                    let option = options[gridLayout]!
+                ForEach(GridLayoutOptions.allCases, id: \.id) { value in
+                    let option = options[value]!
                     Label(option.0, systemImage: option.1)
+                        .tag(value)
                 }
             }
         } label: {

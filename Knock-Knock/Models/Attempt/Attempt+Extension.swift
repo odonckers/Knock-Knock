@@ -8,22 +8,27 @@
 import Foundation
 
 extension Attempt {
-    public var wrappedUuid: String { uuid ?? UUID().uuidString }
-    public var wrappedDateCreated: Date { dateCreated ?? Date() }
-    public var wrappedDateUpdated: Date { dateUpdated ?? Date() }
     public var wrappedDate: Date { date ?? Date() }
     public var wrappedSymbol: AttemptSymbol {
-        AttemptSymbol(rawValue: symbol) ?? .notAtHome
+        get { AttemptSymbol(rawValue: symbol) ?? .notAtHome }
+        set { symbol = newValue.rawValue }
     }
     public var wrappedPerson: AttemptPerson {
-        AttemptPerson(rawValue: person) ?? .nobody
+        get { AttemptPerson(rawValue: person) ?? .nobody }
+        set { person = newValue.rawValue }
+    }
+}
+
+extension Attempt: ModelManagedObject {
+    public var wrappedID: String { uuid ?? UUID().uuidString }
+    public var wrappedDateCreated: Date { dateCreated ?? Date() }
+    public var wrappedDateUpdated: Date { dateUpdated ?? Date() }
+
+    public func willCreate() {
+        uuid = UUID().uuidString
+        dateCreated = Date()
+        dateUpdated = dateCreated
     }
 
-    public func setSymbol(_ symbol: AttemptSymbol) {
-        self.symbol = symbol.rawValue
-    }
-
-    public func setPerson(_ person: AttemptPerson) {
-        self.person = person.rawValue
-    }
+    public func willUpdate() { dateUpdated = Date() }
 }

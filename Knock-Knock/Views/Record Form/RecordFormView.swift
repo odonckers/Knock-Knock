@@ -125,7 +125,7 @@ struct RecordFormView_Previews: PreviewProvider {
         let viewContext = PersistenceController.preview.container.viewContext
 
         let record = Record(context: viewContext)
-        record.setType(.apartment)
+        record.wrappedType = .apartment
         record.streetName = "Street name"
         record.city = "City"
         record.state = "State"

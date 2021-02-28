@@ -14,7 +14,7 @@ class TerritoryFormViewModel: ObservableObject {
     init(territory: Territory? = nil) {
         self.territory = territory
 
-        if let territory = territory, let name = territory.name {
+        if let territory = self.territory, let name = territory.name {
             self.name = name
         }
     }
@@ -32,13 +32,12 @@ class TerritoryFormViewModel: ObservableObject {
             var toSave: Territory
             if let territory = self.territory {
                 toSave = territory
+                toSave.willUpdate()
             } else {
                 toSave = Territory(context: viewContext)
-                toSave.uuid = UUID().uuidString
-                toSave.dateCreated = Date()
+                toSave.willCreate()
             }
 
-            toSave.dateUpdated = Date()
             toSave.name = name
 
             viewContext.unsafeSave()

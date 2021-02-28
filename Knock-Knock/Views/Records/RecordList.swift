@@ -42,12 +42,12 @@ struct RecordList: View {
     var body: some View {
         List(
             records,
-            id: \.wrappedUuid,
+            id: \.wrappedID,
             selection: $selection
         ) { record in
             NavigationLink(
                 destination: DoorsView(record: record),
-                tag: record.wrappedUuid,
+                tag: record.wrappedID,
                 selection: $selection
             ) {
                 RecordRow(record: record)
