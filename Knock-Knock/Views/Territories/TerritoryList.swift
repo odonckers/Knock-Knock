@@ -23,7 +23,7 @@ struct TerritoryList: View {
     )
     private var territories: FetchedResults<Territory>
 
-    @SceneStorage("territoryList.selection")
+    @SceneStorage("Territory.selection")
     private var selection: String? // Territory UUID
 
     var body: some View {

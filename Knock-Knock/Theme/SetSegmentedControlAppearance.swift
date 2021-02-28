@@ -7,11 +7,8 @@
 
 import SwiftUI
 
-public func setSegmentedControlAppearance(
-    selectedTintColor: UIColor? = nil,
-    selectedForegroundColor: UIColor? = nil
-) {
-    UISegmentedControl.appearance().selectedSegmentTintColor = selectedTintColor
+public func setSegmentedControlAppearance() {
+    UISegmentedControl.appearance().selectedSegmentTintColor = .accentColor
     UISegmentedControl.appearance().setTitleTextAttributes(
         [.foregroundColor: UIColor.white],
         for: .selected

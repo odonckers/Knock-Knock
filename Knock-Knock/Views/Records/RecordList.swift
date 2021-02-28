@@ -36,7 +36,7 @@ struct RecordList: View {
     private var recordsRequest: FetchRequest<Record>
     private var records: FetchedResults<Record> { recordsRequest.wrappedValue }
 
-    @SceneStorage("recordList.selection")
+    @SceneStorage("Record.selection")
     private var selection: String? // Record UUID
 
     var body: some View {

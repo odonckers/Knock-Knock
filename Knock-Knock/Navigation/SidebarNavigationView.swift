@@ -12,7 +12,7 @@ import SwiftUI
 struct SidebarNavigationView: View {
     // MARK: - Sidebar
 
-    @SceneStorage("sidebarNavigation.selection")
+    @SceneStorage("SidebarNavigation.selection")
     private var selection: String?
 
     @ViewBuilder private var sidebar: some View {
@@ -30,6 +30,7 @@ struct SidebarNavigationView: View {
         .introspectTableView { tableView in
             tableView.backgroundColor = .secondarySystemBackground
         }
+        .navigationTitle("Home")
     }
 
     // MARK: - Territories Section
@@ -61,9 +62,11 @@ struct SidebarNavigationView: View {
                     Label(territory.wrappedName, systemImage: "folder")
                 }
                 .contextMenu {
-                    Button(action: {
-                        sheet.present(.territoryFormEdit, with: territory)
-                    }) {
+                    Button(
+                        action: {
+                            sheet.present(.territoryFormEdit, with: territory)
+                        }
+                    ) {
                         Label("Edit", systemImage: "pencil")
                     }
                     Menu {
@@ -118,9 +121,7 @@ struct SidebarNavigationView: View {
 
     var body: some View {
         NavigationView {
-            sidebar
-                .navigationTitle("Home")
-                .sheet(isPresented: $sheet.isPresented) { sheetContents }
+            sidebar.sheet(isPresented: $sheet.isPresented) { sheetContents }
             RecordsView()
             Text("Select a Record")
                 .font(.title2)
