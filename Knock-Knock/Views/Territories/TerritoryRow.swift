@@ -15,7 +15,7 @@ struct TerritoryRow: View {
             Image(systemName: "folder")
                 .font(.title2)
                 .foregroundColor(.accentColor)
-            Spacer().frame(width: 16)
+            FramedSpacer(spacing: .medium, direction: .horizontal)
             VStack(alignment: .leading) {
                 Text(territory.wrappedName)
                     .font(.headline)

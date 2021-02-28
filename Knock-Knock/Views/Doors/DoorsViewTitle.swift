@@ -16,12 +16,10 @@ struct DoorsViewTitle: View {
                 Text(record.abbreviatedType)
                     .frame(width: 44)
             }
-            Spacer().frame(width: 16)
-
+            FramedSpacer(spacing: .medium, direction: .horizontal)
             if let apartmentNumber = record.apartmentNumber {
                 Text(apartmentNumber)
             }
-
             Text(record.wrappedStreetName)
         }
         .font(Font.body.bold())

@@ -66,6 +66,8 @@
 		E25A176F25E0D9440065517B /* KnockKnockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A176E25E0D9430065517B /* KnockKnockApp.swift */; };
 		E2BB6FC125EB3F2600731EDE /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FC025EB3F2600731EDE /* UIColor+Extension.swift */; };
 		E2BB6FDB25EB6DF600731EDE /* ModelManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FDA25EB6DF600731EDE /* ModelManagedObject.swift */; };
+		E2BB6FE925EBE0AA00731EDE /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FE825EBE0AA00731EDE /* Spacing.swift */; };
+		E2BB6FEE25EBE12000731EDE /* FramedSpacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FED25EBE12000731EDE /* FramedSpacer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +153,8 @@
 		E25A176E25E0D9430065517B /* KnockKnockApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnockKnockApp.swift; sourceTree = "<group>"; };
 		E2BB6FC025EB3F2600731EDE /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		E2BB6FDA25EB6DF600731EDE /* ModelManagedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManagedObject.swift; sourceTree = "<group>"; };
+		E2BB6FE825EBE0AA00731EDE /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
+		E2BB6FED25EBE12000731EDE /* FramedSpacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FramedSpacer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -281,6 +285,7 @@
 				E25A169A25E083A80065517B /* CardGroupBoxStyle.swift */,
 				E25A16A225E083C20065517B /* FlatButtonStyle.swift */,
 				E25A170E25E096850065517B /* SetSegmentedControlAppearance.swift */,
+				E2BB6FE825EBE0AA00731EDE /* Spacing.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -297,6 +302,7 @@
 				E25A168825E0825E0065517B /* SearchBar.swift */,
 				E25A169525E083240065517B /* Tag.swift */,
 				E25A168D25E082990065517B /* ViewControllerResolver.swift */,
+				E2BB6FED25EBE12000731EDE /* FramedSpacer.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -573,6 +579,7 @@
 				E25A16CC25E085E50065517B /* Attempt+SwiftUI.swift in Sources */,
 				E25A167525E080D00065517B /* SheetState.swift in Sources */,
 				E25A16DB25E08A7F0065517B /* DoorsViewTitle.swift in Sources */,
+				E2BB6FE925EBE0AA00731EDE /* Spacing.swift in Sources */,
 				E25A169625E083240065517B /* Tag.swift in Sources */,
 				E25A167A25E081430065517B /* StatefulPreviewWrapper.swift in Sources */,
 				E25A15BF25E072740065517B /* ContentView.swift in Sources */,
@@ -610,6 +617,7 @@
 				E25A16ED25E093AA0065517B /* DoorsView.swift in Sources */,
 				E25A173125E0B35A0065517B /* TerritoryFormViewModel.swift in Sources */,
 				E2BB6FDB25EB6DF600731EDE /* ModelManagedObject.swift in Sources */,
+				E2BB6FEE25EBE12000731EDE /* FramedSpacer.swift in Sources */,
 				E25A168925E0825E0065517B /* SearchBar.swift in Sources */,
 				E25A16F225E094DB0065517B /* GridLayoutButton.swift in Sources */,
 				E25A166D25E080960065517B /* PlatformModifiers.swift in Sources */,
