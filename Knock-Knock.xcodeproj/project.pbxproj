@@ -44,21 +44,21 @@
 		E25A16C725E085940065517B /* AttemptPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16C625E085940065517B /* AttemptPerson.swift */; };
 		E25A16CC25E085E50065517B /* Attempt+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16CB25E085E50065517B /* Attempt+SwiftUI.swift */; };
 		E25A16D125E0863C0065517B /* Record+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16D025E0863C0065517B /* Record+SwiftUI.swift */; };
-		E25A16DB25E08A7F0065517B /* DoorsViewTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16DA25E08A7F0065517B /* DoorsViewTitle.swift */; };
-		E25A16E325E08B3B0065517B /* DoorGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16E225E08B3B0065517B /* DoorGrid.swift */; };
+		E25A16DB25E08A7F0065517B /* DoorsTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16DA25E08A7F0065517B /* DoorsTitle.swift */; };
+		E25A16E325E08B3B0065517B /* DoorsGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16E225E08B3B0065517B /* DoorsGrid.swift */; };
 		E25A16ED25E093AA0065517B /* DoorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16EC25E093AA0065517B /* DoorsView.swift */; };
 		E25A16F225E094DB0065517B /* GridLayoutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16F125E094DB0065517B /* GridLayoutButton.swift */; };
 		E25A170125E095C40065517B /* RecordFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A170025E095C40065517B /* RecordFormViewModel.swift */; };
 		E25A170725E095FE0065517B /* RecordFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A170625E095FE0065517B /* RecordFormView.swift */; };
 		E25A170F25E096850065517B /* SetSegmentedControlAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A170E25E096850065517B /* SetSegmentedControlAppearance.swift */; };
-		E25A171425E0B1530065517B /* RecordRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A171325E0B1530065517B /* RecordRow.swift */; };
-		E25A171925E0B1810065517B /* RecordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A171825E0B1810065517B /* RecordList.swift */; };
+		E25A171425E0B1530065517B /* RecordsListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A171325E0B1530065517B /* RecordsListRow.swift */; };
+		E25A171925E0B1810065517B /* RecordsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A171825E0B1810065517B /* RecordsList.swift */; };
 		E25A171E25E0B1AB0065517B /* RecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A171D25E0B1AB0065517B /* RecordsView.swift */; };
 		E25A172725E0B1D40065517B /* Territory+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A172625E0B1D40065517B /* Territory+Extension.swift */; };
 		E25A173125E0B35A0065517B /* TerritoryFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A173025E0B35A0065517B /* TerritoryFormViewModel.swift */; };
 		E25A173925E0B3880065517B /* TerritoryFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A173825E0B3880065517B /* TerritoryFormView.swift */; };
-		E25A173E25E0B3CD0065517B /* TerritoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A173D25E0B3CD0065517B /* TerritoryRow.swift */; };
-		E25A174625E0B3F40065517B /* TerritoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A174525E0B3F40065517B /* TerritoryList.swift */; };
+		E25A173E25E0B3CD0065517B /* TerritoriesListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A173D25E0B3CD0065517B /* TerritoriesListRow.swift */; };
+		E25A174625E0B3F40065517B /* TerritoriesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A174525E0B3F40065517B /* TerritoriesList.swift */; };
 		E25A174B25E0B4160065517B /* TerritoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A174A25E0B4160065517B /* TerritoriesView.swift */; };
 		E25A175425E0B4560065517B /* RecordsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A175325E0B4560065517B /* RecordsLabel.swift */; };
 		E25A175C25E0B46C0065517B /* SidebarNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A175B25E0B46C0065517B /* SidebarNavigationView.swift */; };
@@ -130,21 +130,21 @@
 		E25A16C625E085940065517B /* AttemptPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttemptPerson.swift; sourceTree = "<group>"; };
 		E25A16CB25E085E50065517B /* Attempt+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attempt+SwiftUI.swift"; sourceTree = "<group>"; };
 		E25A16D025E0863C0065517B /* Record+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Record+SwiftUI.swift"; sourceTree = "<group>"; };
-		E25A16DA25E08A7F0065517B /* DoorsViewTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorsViewTitle.swift; sourceTree = "<group>"; };
-		E25A16E225E08B3B0065517B /* DoorGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorGrid.swift; sourceTree = "<group>"; };
+		E25A16DA25E08A7F0065517B /* DoorsTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorsTitle.swift; sourceTree = "<group>"; };
+		E25A16E225E08B3B0065517B /* DoorsGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorsGrid.swift; sourceTree = "<group>"; };
 		E25A16EC25E093AA0065517B /* DoorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorsView.swift; sourceTree = "<group>"; };
 		E25A16F125E094DB0065517B /* GridLayoutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayoutButton.swift; sourceTree = "<group>"; };
 		E25A170025E095C40065517B /* RecordFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordFormViewModel.swift; sourceTree = "<group>"; };
 		E25A170625E095FE0065517B /* RecordFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordFormView.swift; sourceTree = "<group>"; };
 		E25A170E25E096850065517B /* SetSegmentedControlAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSegmentedControlAppearance.swift; sourceTree = "<group>"; };
-		E25A171325E0B1530065517B /* RecordRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRow.swift; sourceTree = "<group>"; };
-		E25A171825E0B1810065517B /* RecordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordList.swift; sourceTree = "<group>"; };
+		E25A171325E0B1530065517B /* RecordsListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsListRow.swift; sourceTree = "<group>"; };
+		E25A171825E0B1810065517B /* RecordsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsList.swift; sourceTree = "<group>"; };
 		E25A171D25E0B1AB0065517B /* RecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsView.swift; sourceTree = "<group>"; };
 		E25A172625E0B1D40065517B /* Territory+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Territory+Extension.swift"; sourceTree = "<group>"; };
 		E25A173025E0B35A0065517B /* TerritoryFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoryFormViewModel.swift; sourceTree = "<group>"; };
 		E25A173825E0B3880065517B /* TerritoryFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoryFormView.swift; sourceTree = "<group>"; };
-		E25A173D25E0B3CD0065517B /* TerritoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoryRow.swift; sourceTree = "<group>"; };
-		E25A174525E0B3F40065517B /* TerritoryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoryList.swift; sourceTree = "<group>"; };
+		E25A173D25E0B3CD0065517B /* TerritoriesListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoriesListRow.swift; sourceTree = "<group>"; };
+		E25A174525E0B3F40065517B /* TerritoriesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoriesList.swift; sourceTree = "<group>"; };
 		E25A174A25E0B4160065517B /* TerritoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoriesView.swift; sourceTree = "<group>"; };
 		E25A175325E0B4560065517B /* RecordsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsLabel.swift; sourceTree = "<group>"; };
 		E25A175B25E0B46C0065517B /* SidebarNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarNavigationView.swift; sourceTree = "<group>"; };
@@ -369,8 +369,8 @@
 			isa = PBXGroup;
 			children = (
 				E25A16EC25E093AA0065517B /* DoorsView.swift */,
-				E25A16DA25E08A7F0065517B /* DoorsViewTitle.swift */,
-				E25A16E225E08B3B0065517B /* DoorGrid.swift */,
+				E25A16DA25E08A7F0065517B /* DoorsTitle.swift */,
+				E25A16E225E08B3B0065517B /* DoorsGrid.swift */,
 				E25A16F125E094DB0065517B /* GridLayoutButton.swift */,
 			);
 			path = Doors;
@@ -380,8 +380,8 @@
 			isa = PBXGroup;
 			children = (
 				E25A171D25E0B1AB0065517B /* RecordsView.swift */,
-				E25A171825E0B1810065517B /* RecordList.swift */,
-				E25A171325E0B1530065517B /* RecordRow.swift */,
+				E25A171825E0B1810065517B /* RecordsList.swift */,
+				E25A171325E0B1530065517B /* RecordsListRow.swift */,
 			);
 			path = Records;
 			sourceTree = "<group>";
@@ -407,8 +407,8 @@
 			isa = PBXGroup;
 			children = (
 				E25A174A25E0B4160065517B /* TerritoriesView.swift */,
-				E25A174525E0B3F40065517B /* TerritoryList.swift */,
-				E25A173D25E0B3CD0065517B /* TerritoryRow.swift */,
+				E25A174525E0B3F40065517B /* TerritoriesList.swift */,
+				E25A173D25E0B3CD0065517B /* TerritoriesListRow.swift */,
 			);
 			path = Territories;
 			sourceTree = "<group>";
@@ -568,17 +568,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				E25A164825E07F8D0065517B /* Configure.swift in Sources */,
-				E25A174625E0B3F40065517B /* TerritoryList.swift in Sources */,
+				E25A174625E0B3F40065517B /* TerritoriesList.swift in Sources */,
 				E25A162B25E07AC60065517B /* Knock_Knock.xcdatamodeld in Sources */,
 				E25A176125E0B4A20065517B /* TabNavigationView.swift in Sources */,
-				E25A171925E0B1810065517B /* RecordList.swift in Sources */,
+				E25A171925E0B1810065517B /* RecordsList.swift in Sources */,
 				E25A16D125E0863C0065517B /* Record+SwiftUI.swift in Sources */,
 				E25A174B25E0B4160065517B /* TerritoriesView.swift in Sources */,
 				E25A16A325E083C20065517B /* FlatButtonStyle.swift in Sources */,
 				E25A160525E073B90065517B /* NSManagedObjectContext+Extension.swift in Sources */,
 				E25A16CC25E085E50065517B /* Attempt+SwiftUI.swift in Sources */,
 				E25A167525E080D00065517B /* SheetState.swift in Sources */,
-				E25A16DB25E08A7F0065517B /* DoorsViewTitle.swift in Sources */,
+				E25A16DB25E08A7F0065517B /* DoorsTitle.swift in Sources */,
 				E2BB6FE925EBE0AA00731EDE /* Spacing.swift in Sources */,
 				E25A169625E083240065517B /* Tag.swift in Sources */,
 				E25A167A25E081430065517B /* StatefulPreviewWrapper.swift in Sources */,
@@ -591,12 +591,12 @@
 				E25A173925E0B3880065517B /* TerritoryFormView.swift in Sources */,
 				E25A170125E095C40065517B /* RecordFormViewModel.swift in Sources */,
 				E2BB6FC125EB3F2600731EDE /* UIColor+Extension.swift in Sources */,
-				E25A171425E0B1530065517B /* RecordRow.swift in Sources */,
+				E25A171425E0B1530065517B /* RecordsListRow.swift in Sources */,
 				E215E93725E6F538001A89C1 /* LegacySplitView.swift in Sources */,
 				E25A16B225E084BD0065517B /* Attempt+Extension.swift in Sources */,
 				E25A168E25E082990065517B /* ViewControllerResolver.swift in Sources */,
 				E25A169B25E083A80065517B /* CardGroupBoxStyle.swift in Sources */,
-				E25A16E325E08B3B0065517B /* DoorGrid.swift in Sources */,
+				E25A16E325E08B3B0065517B /* DoorsGrid.swift in Sources */,
 				E25A170725E095FE0065517B /* RecordFormView.swift in Sources */,
 				E25A15F125E072F10065517B /* Persistence.swift in Sources */,
 				E25A176F25E0D9440065517B /* KnockKnockApp.swift in Sources */,
@@ -611,7 +611,7 @@
 				E25A164325E07F4C0065517B /* Bundle+Extension.swift in Sources */,
 				E21799C525EAC7F8005AB340 /* Introspect+Extension.swift in Sources */,
 				E25A166825E0804E0065517B /* Binding+Extension.swift in Sources */,
-				E25A173E25E0B3CD0065517B /* TerritoryRow.swift in Sources */,
+				E25A173E25E0B3CD0065517B /* TerritoriesListRow.swift in Sources */,
 				E25A16C225E0857B0065517B /* AttemptSymbol.swift in Sources */,
 				E25A16A825E084390065517B /* Record+Extension.swift in Sources */,
 				E25A16ED25E093AA0065517B /* DoorsView.swift in Sources */,

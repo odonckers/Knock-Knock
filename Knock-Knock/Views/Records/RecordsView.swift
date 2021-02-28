@@ -14,7 +14,7 @@ struct RecordsView: View {
     @ObservedObject private var sheet = SheetState<SheetStates>()
 
     var body: some View {
-        RecordList(territory: territory)
+        LclList(territory: territory)
             .navigationTitle(territory?.wrappedName ?? "Records")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {

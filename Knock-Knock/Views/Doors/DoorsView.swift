@@ -10,17 +10,17 @@ import SwiftUI
 struct DoorsView: View {
     let record: Record
 
-    @SceneStorage(kDoorGridLayout)
+    @SceneStorage(kDoorsGridLayout)
     private var selectedGridLayout: GridLayoutOptions = .grid
 
     var body: some View {
-        DoorGrid(selectedGridLayout: $selectedGridLayout)
+        LclGrid(selectedGridLayout: $selectedGridLayout)
             .toolbar {
                 ToolbarItem {
                     GridLayoutButton(selectedGridLayout: $selectedGridLayout)
                 }
                 ToolbarItem(placement: .principal) {
-                    DoorsViewTitle(record: record)
+                    LclTitle(record: record)
                 }
             }
             .navigationBarTitleDisplayMode(.inline)

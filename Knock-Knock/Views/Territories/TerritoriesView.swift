@@ -11,7 +11,7 @@ struct TerritoriesView: View {
     @ObservedObject private var sheet = SheetState<SheetStates>()
 
     var body: some View {
-        TerritoryList()
+        LclList()
             .navigationTitle("Territories")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
