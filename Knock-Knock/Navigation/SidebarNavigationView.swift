@@ -82,7 +82,6 @@ struct SidebarNavigationView: View {
             Button(action: { sheet.present(.territoryForm) }) {
                 Label("Add Territory", systemImage: "plus.circle")
             }
-            .buttonStyle(BorderlessButtonStyle())
         }
     }
 
