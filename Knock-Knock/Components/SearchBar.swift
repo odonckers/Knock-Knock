@@ -47,6 +47,7 @@ extension View {
     }
 }
 
+#if DEBUG
 struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
@@ -60,3 +61,4 @@ struct SearchBar_Previews: PreviewProvider {
         }
     }
 }
+#endif

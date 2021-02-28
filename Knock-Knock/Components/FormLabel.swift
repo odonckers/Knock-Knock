@@ -45,6 +45,7 @@ extension View {
     }
 }
 
+#if DEBUG
 struct FormLabel_Previews: PreviewProvider {
     static var previews: some View {
         Form {
@@ -55,3 +56,4 @@ struct FormLabel_Previews: PreviewProvider {
         }
     }
 }
+#endif

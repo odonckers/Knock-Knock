@@ -72,6 +72,7 @@ struct DoorGrid: View {
     }
 }
 
+#if DEBUG
 struct DoorGrid_Previews: PreviewProvider {
     static var previews: some View {
         DoorGrid()
@@ -83,3 +84,4 @@ struct DoorGrid_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
     }
 }
+#endif

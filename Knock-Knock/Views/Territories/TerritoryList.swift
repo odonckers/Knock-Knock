@@ -65,6 +65,7 @@ struct TerritoryList: View {
     }
 }
 
+#if DEBUG
 struct TerritoryList_Previews: PreviewProvider {
     static var previews: some View {
         TerritoryList()
@@ -75,3 +76,4 @@ struct TerritoryList_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
     }
 }
+#endif

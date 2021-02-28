@@ -154,6 +154,7 @@ extension SidebarNavigationView {
     }
 }
 
+#if DEBUG
 struct SidebarNavigationView_Previews: PreviewProvider {
     static var previews: some View {
         SidebarNavigationView()
@@ -163,3 +164,4 @@ struct SidebarNavigationView_Previews: PreviewProvider {
             )
     }
 }
+#endif

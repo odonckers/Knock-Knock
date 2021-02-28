@@ -43,6 +43,7 @@ extension TerritoriesView {
     }
 }
 
+#if DEBUG
 struct TerritoriesView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
@@ -55,3 +56,4 @@ struct TerritoriesView_Previews: PreviewProvider {
         )
     }
 }
+#endif

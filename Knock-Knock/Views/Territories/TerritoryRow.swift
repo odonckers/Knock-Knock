@@ -28,6 +28,7 @@ struct TerritoryRow: View {
     }
 }
 
+#if DEBUG
 struct TerritoryRow_Previews: PreviewProvider {
     static var previews: some View {
         let viewContext = PersistenceController.preview.container.viewContext
@@ -41,3 +42,4 @@ struct TerritoryRow_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
     }
 }
+#endif

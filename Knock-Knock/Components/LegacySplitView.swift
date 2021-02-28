@@ -74,6 +74,7 @@ extension LegacySplitView {
     }
 }
 
+#if DEBUG
 struct LegacySplitView_Previews: PreviewProvider {
     static var previews: some View {        
         LegacySplitView(
@@ -99,3 +100,4 @@ struct LegacySplitView_Previews: PreviewProvider {
         .splitBehavior(.tile)
     }
 }
+#endif

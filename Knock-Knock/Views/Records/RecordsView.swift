@@ -44,6 +44,7 @@ extension RecordsView {
     }
 }
 
+#if DEBUG
 struct RecordsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView { RecordsView().listStyle(PlainListStyle()) }
@@ -53,3 +54,4 @@ struct RecordsView_Previews: PreviewProvider {
             )
     }
 }
+#endif

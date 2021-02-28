@@ -29,6 +29,7 @@ struct FlatButtonStyle: ButtonStyle {
     }
 }
 
+#if DEBUG
 struct FlatButtonStyle_Previews: PreviewProvider {
     static var previews: some View {
         Button(action: { }) {
@@ -39,3 +40,4 @@ struct FlatButtonStyle_Previews: PreviewProvider {
         .previewLayout(.sizeThatFits)
     }
 }
+#endif

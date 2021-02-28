@@ -76,6 +76,7 @@ struct RecordList: View {
     }
 }
 
+#if DEBUG
 struct RecordList_Previews: PreviewProvider {
     static var previews: some View {
         RecordList()
@@ -87,3 +88,4 @@ struct RecordList_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
     }
 }
+#endif

@@ -13,6 +13,7 @@ struct RecordsLabel: View {
     }
 }
 
+#if DEBUG
 struct RecordsLabel_Previews: PreviewProvider {
     static var previews: some View {
         RecordsLabel()
@@ -21,3 +22,4 @@ struct RecordsLabel_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
     }
 }
+#endif

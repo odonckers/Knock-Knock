@@ -36,6 +36,7 @@ struct Tag<Content: View>: View {
     }
 }
 
+#if DEBUG
 struct Tag_Previews: PreviewProvider {
     static var previews: some View {
         Tag { Text("GET") }
@@ -43,3 +44,4 @@ struct Tag_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
     }
 }
+#endif

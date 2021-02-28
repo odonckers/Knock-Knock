@@ -53,6 +53,7 @@ extension DynamicViewContent {
     }
 }
 
+#if DEBUG
 struct DeleteConfirmation_Previews: PreviewProvider {
     static var previews: some View {
         List {
@@ -70,3 +71,4 @@ struct DeleteConfirmation_Previews: PreviewProvider {
         }
     }
 }
+#endif

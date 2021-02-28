@@ -28,6 +28,7 @@ struct DoorsView: View {
     }
 }
 
+#if DEBUG
 struct DoorsView_Previews: PreviewProvider {
     static var previews: some View {
         let record = Record(
@@ -40,3 +41,4 @@ struct DoorsView_Previews: PreviewProvider {
         return NavigationView { DoorsView(record: record) }
     }
 }
+#endif

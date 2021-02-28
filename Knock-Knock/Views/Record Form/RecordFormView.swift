@@ -119,6 +119,7 @@ struct RecordFormView: View {
     }
 }
 
+#if DEBUG
 struct RecordFormView_Previews: PreviewProvider {
     static var previews: some View {
         let viewContext = PersistenceController.preview.container.viewContext
@@ -143,3 +144,4 @@ struct RecordFormView_Previews: PreviewProvider {
         }
     }
 }
+#endif

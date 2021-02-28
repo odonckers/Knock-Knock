@@ -30,6 +30,7 @@ extension View {
     }
 }
 
+#if DEBUG
 struct FilledBackground_Previews: PreviewProvider {
     static var previews: some View {
         EmptyView()
@@ -39,4 +40,4 @@ struct FilledBackground_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
     }
 }
-
+#endif

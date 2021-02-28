@@ -44,6 +44,7 @@ struct RecordRow: View {
     }
 }
 
+#if DEBUG
 struct RecordCell_Previews: PreviewProvider {
     static var previews: some View {
         let viewContext = PersistenceController.preview.container.viewContext
@@ -69,3 +70,4 @@ struct RecordCell_Previews: PreviewProvider {
         .previewLayout(.sizeThatFits)
     }
 }
+#endif

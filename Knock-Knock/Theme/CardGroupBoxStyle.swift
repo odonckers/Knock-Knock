@@ -28,6 +28,7 @@ struct CardGroupBoxStyle: GroupBoxStyle {
     }
 }
 
+#if DEBUG
 struct CardGroupBox_Previews: PreviewProvider {
     static var previews: some View {
         GroupBox(label: Label("Label", systemImage: "checkmark.circle.fill")) {
@@ -39,3 +40,4 @@ struct CardGroupBox_Previews: PreviewProvider {
         .previewLayout(.fixed(width: 414, height: 216))
     }
 }
+#endif

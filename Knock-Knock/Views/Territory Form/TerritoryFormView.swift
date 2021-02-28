@@ -75,6 +75,7 @@ struct TerritoryFormView: View {
     }
 }
 
+#if DEBUG
 struct TerritoryFormView_Previews: PreviewProvider {
     static var previews: some View {
         let viewContext = PersistenceController.preview.container.viewContext
@@ -89,3 +90,4 @@ struct TerritoryFormView_Previews: PreviewProvider {
         }
     }
 }
+#endif

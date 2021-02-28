@@ -34,8 +34,10 @@ extension TabNavigationView {
     }
 }
 
+#if DEBUG
 struct TabNavigationView_Previews: PreviewProvider {
     static var previews: some View {
         TabNavigationView()
     }
 }
+#endif

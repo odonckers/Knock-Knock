@@ -28,6 +28,7 @@ struct DoorsViewTitle: View {
     }
 }
 
+#if DEBUG
 struct DoorsViewTitle_Previews: PreviewProvider {
     static var previews: some View {
         let viewContext = PersistenceController.preview.container.viewContext
@@ -48,3 +49,4 @@ struct DoorsViewTitle_Previews: PreviewProvider {
         }
     }
 }
+#endif
