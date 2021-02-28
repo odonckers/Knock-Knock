@@ -8,7 +8,7 @@
 import CoreData
 import SwiftUI
 
-extension RecordsView.SubList {
+extension RecordsView.LclList {
     struct LclRow: View {
         @ObservedObject var record: Record
 
@@ -64,8 +64,8 @@ struct RecordsListRow_Previews: PreviewProvider {
         apartment.apartmentNumber = "500"
 
         return Group {
-            RecordsView.SubList.SubRow(record: record)
-            RecordsView.SubList.SubRow(record: apartment)
+            RecordsView.LclList.LclRow(record: record)
+            RecordsView.LclList.LclRow(record: apartment)
         }
         .frame(width: 414, alignment: .leading)
         .padding(.horizontal)

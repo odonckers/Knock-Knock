@@ -43,7 +43,7 @@ struct DoorsTitle_Previews: PreviewProvider {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .principal) {
-                        DoorsView.SubTitle(record: record)
+                        DoorsView.LclTitle(record: record)
                     }
                 }
         }

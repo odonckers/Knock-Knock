@@ -70,7 +70,7 @@ extension TerritoriesView {
 #if DEBUG
 struct TerritoriesList_Previews: PreviewProvider {
     static var previews: some View {
-        TerritoriesView.SubList()
+        TerritoriesView.LclList()
             .environment(
                 \.managedObjectContext,
                 PersistenceController.preview.container.viewContext

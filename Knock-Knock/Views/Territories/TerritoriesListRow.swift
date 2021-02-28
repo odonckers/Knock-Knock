@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension TerritoriesView.SubList {
+extension TerritoriesView.LclList {
     struct LclRow: View {
         @ObservedObject var territory: Territory
 
@@ -38,7 +38,7 @@ struct TerritoriesListRow_Previews: PreviewProvider {
         let territory = Territory(context: viewContext)
         territory.name = "D2D-50"
 
-        return TerritoriesView.SubList.SubRow(territory: territory)
+        return TerritoriesView.LclList.LclRow(territory: territory)
             .frame(width: 414, alignment: .leading)
             .padding(.horizontal)
             .previewLayout(.sizeThatFits)

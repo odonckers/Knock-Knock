@@ -81,7 +81,7 @@ extension RecordsView {
 #if DEBUG
 struct RecordsList_Previews: PreviewProvider {
     static var previews: some View {
-        RecordsView.SubList()
+        RecordsView.LclList()
             .environment(
                 \.managedObjectContext,
                 PersistenceController.preview.container.viewContext

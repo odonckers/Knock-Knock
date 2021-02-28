@@ -77,7 +77,7 @@ extension DoorsView {
 #if DEBUG
 struct DoorsGrid_Previews: PreviewProvider {
     static var previews: some View {
-        DoorsView.SubGrid()
+        DoorsView.LclGrid()
             .background(Color("GroupedBackgroundColor"))
             .environment(
                 \.managedObjectContext,
