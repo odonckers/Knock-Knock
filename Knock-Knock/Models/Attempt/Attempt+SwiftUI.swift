@@ -10,16 +10,11 @@ import SwiftUI
 extension Attempt {
     public var symbolColor: Color {
         switch wrappedSymbol {
-        case .notAtHome:
-            return Color("NotAtHomeColor")
-        case .busy:
-            return Color("BusyColor")
-        case .callAgain:
-            return Color("CallAgainColor")
-        case .notInterested:
-            return Color("NotInterestedColor")
-        case .other:
-            return Color("OtherColor")
+        case .notAtHome: return Color("NotAtHomeColor")
+        case .busy: return Color("BusyColor")
+        case .callAgain: return Color("CallAgainColor")
+        case .notInterested: return Color("NotInterestedColor")
+        case .other: return Color("OtherColor")
         }
     }
 }

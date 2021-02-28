@@ -12,9 +12,9 @@ struct DeleteConfirmation<Source: DynamicViewContent>: View {
     let title: (IndexSet) -> String
     let message: String?
     let perform: (IndexSet) -> Void
-    
-    @State var indexSet: IndexSet = []
-    @State var isPresented: Bool = false
+
+    @State var indexSet = IndexSet()
+    @State var isPresented = false
 
     var body: some View {
         source
@@ -30,9 +30,7 @@ struct DeleteConfirmation<Source: DynamicViewContent>: View {
                     secondaryButton: .destructive(
                         Text("Delete"),
                         action: {
-                            withAnimation {
-                                perform(indexSet)
-                            }
+                            withAnimation { perform(indexSet) }
                         }
                     )
                 )
@@ -41,7 +39,7 @@ struct DeleteConfirmation<Source: DynamicViewContent>: View {
 }
 
 extension DynamicViewContent {
-    public func onConfirmedDelete(
+    @ViewBuilder public func onConfirmedDelete(
         title: @escaping (IndexSet) -> String,
         message: String? = nil,
         perform: @escaping (IndexSet) -> Void
@@ -61,9 +59,12 @@ struct DeleteConfirmation_Previews: PreviewProvider {
             ForEach(0..<10) { i in
                 Text("Index \(i)")
             }
-            .onConfirmedDelete(title: { _ in
-                "Are you sure?"
-            }, message: "This is serious...") { index in
+            .onConfirmedDelete(
+                title: { _ in
+                    "Are you sure?"
+                },
+                message: "This is serious..."
+            ) { index in
                 print(index)
             }
         }

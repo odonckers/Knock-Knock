@@ -13,7 +13,7 @@ class SheetState<State>: ObservableObject {
         didSet { isPresented = state != nil }
     }
     @Published var arguments: Any? = nil
-        
+
     func present(_ state: State, with arguments: Any? = nil) {
         self.state = state
         self.arguments = arguments

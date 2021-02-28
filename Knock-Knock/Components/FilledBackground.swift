@@ -10,7 +10,7 @@ import SwiftUI
 private struct FilledBackground<Content: View, Background: View>: View {
     var content: () -> Content
     var background: () -> Background
-        
+
     var body: some View {
         ZStack {
             background().edgesIgnoringSafeArea(.all)
@@ -20,14 +20,12 @@ private struct FilledBackground<Content: View, Background: View>: View {
 }
 
 extension View {
-    public func filledBackground<Content: View>(
+    @ViewBuilder public func filledBackground<Content: View>(
         _ background: Content
     ) -> some View {
         FilledBackground(
             content: { self },
-            background: {
-                background.edgesIgnoringSafeArea(.all)
-            }
+            background: { background.edgesIgnoringSafeArea(.all) }
         )
     }
 }

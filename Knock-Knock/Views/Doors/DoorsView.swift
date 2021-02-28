@@ -9,19 +9,16 @@ import SwiftUI
 
 struct DoorsView: View {
     let record: Record
-    
+
     @SceneStorage(kDoorGridLayout)
-    private var selectedGridLayout = GridLayoutOptions.grid.rawValue
-            
+    private var selectedGridLayout: GridLayoutOptions = .grid
+
     var body: some View {
         DoorGrid(selectedGridLayout: $selectedGridLayout)
             .toolbar {
                 ToolbarItem {
-                    GridLayoutButton(
-                        selectedGridLayout: $selectedGridLayout
-                    )
+                    GridLayoutButton(selectedGridLayout: $selectedGridLayout)
                 }
-                
                 ToolbarItem(placement: .principal) {
                     DoorsViewTitle(record: record)
                 }
@@ -39,10 +36,7 @@ struct DoorsView_Previews: PreviewProvider {
         record.streetName = "Street Name"
         record.city = "City"
         record.state = "State"
-        
-        return NavigationView {
-            DoorsView(record: record)
-        }
+
+        return NavigationView { DoorsView(record: record) }
     }
 }
-

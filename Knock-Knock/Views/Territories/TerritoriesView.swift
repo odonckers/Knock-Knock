@@ -9,15 +9,13 @@ import SwiftUI
 
 struct TerritoriesView: View {
     @ObservedObject private var sheet = SheetState<SheetStates>()
-    
+
     var body: some View {
         TerritoryList()
             .navigationTitle("Territories")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button(action: {
-                        sheet.present(.territoryForm)
-                    }) {
+                    Button(action: { sheet.present(.territoryForm) }) {
                         Label(
                             "Add Territory",
                             systemImage: "folder.fill.badge.plus"

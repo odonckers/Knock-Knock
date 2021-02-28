@@ -8,33 +8,19 @@
 import Foundation
 
 extension Door {
-    public var wrappedUuid: String {
-        uuid ?? UUID().uuidString
-    }
-    
-    public var wrappedDateCreated: Date {
-        dateCreated ?? Date()
-    }
-    
-    public var wrappedDateUpdated: Date {
-        dateUpdated ?? Date()
-    }
-    
-    public var wrappedNumber: String {
-        number ?? ""
-    }
-    
+    public var wrappedUuid: String { uuid ?? UUID().uuidString }
+    public var wrappedDateCreated: Date { dateCreated ?? Date() }
+    public var wrappedDateUpdated: Date { dateUpdated ?? Date() }
+    public var wrappedNumber: String { number ?? "" }
     public var wrappedAttemptSymbol: AttemptSymbol {
         AttemptSymbol(rawValue: attemptSymbol) ?? .notAtHome
     }
-    
+
     public var attemptArray: [Attempt] {
         let set = attempts as? Set<Attempt> ?? []
-        return set.sorted {
-            $0.wrappedDate < $1.wrappedDate
-        }
+        return set.sorted { $0.wrappedDate < $1.wrappedDate }
     }
-    
+
     public var latestAttempt: Attempt? {
         attemptArray.count <= 1 ? attemptArray.first : nil
     }

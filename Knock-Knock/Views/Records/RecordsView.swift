@@ -10,21 +10,16 @@ import SwiftUI
 
 struct RecordsView: View {
     var territory: Territory? = nil
-        
+
     @ObservedObject private var sheet = SheetState<SheetStates>()
-    
+
     var body: some View {
         RecordList(territory: territory)
             .navigationTitle(territory?.wrappedName ?? "Records")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button(action: {
-                        sheet.present(.recordForm)
-                    }) {
-                        Label(
-                            "Add Record",
-                            systemImage: "note.text.badge.plus"
-                        )
+                    Button(action: { sheet.present(.recordForm) }) {
+                        Label("Add Record", systemImage: "note.text.badge.plus")
                     }
                 }
             }
@@ -51,13 +46,10 @@ extension RecordsView {
 
 struct RecordsView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            RecordsView()
-                .listStyle(PlainListStyle())
-        }
-        .environment(
-            \.managedObjectContext,
-            PersistenceController.preview.container.viewContext
-        )
+        NavigationView { RecordsView().listStyle(PlainListStyle()) }
+            .environment(
+                \.managedObjectContext,
+                PersistenceController.preview.container.viewContext
+            )
     }
 }

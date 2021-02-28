@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct FlatButtonStyle: ButtonStyle {
-    @Environment(\.colorScheme) private var colorScheme
-    
+    @Environment(\.colorScheme)
+    private var colorScheme
+
     func makeBody(configuration: Configuration) -> some View {
         let color = Color.accentColor
         let pressed = configuration.isPressed
-        
+
         return configuration.label
             .font(Font.body.weight(.medium))
             .padding([.leading, .trailing], 8)

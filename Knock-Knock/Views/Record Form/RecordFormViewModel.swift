@@ -11,12 +11,10 @@ import CoreLocation
 import SwiftUI
 
 class RecordFormViewModel: ObservableObject {
-    private var record: Record? = nil
-    private var territory: Territory? = nil
-    
-    var isApartment: Bool {
-        selectedTypeIndex == 1
-    }
+    var record: Record? = nil
+    var territory: Territory? = nil
+
+    var isApartment: Bool { selectedTypeIndex == 1 }
     var canSave: Bool {
         if isApartment {
             return streetName != "" && apartmentNumber != ""
@@ -24,49 +22,40 @@ class RecordFormViewModel: ObservableObject {
             return streetName != ""
         }
     }
-    
+
     @Published var title = "New Record"
-    
+
     @Published var selectedTypeIndex = 0
     @Published var streetName = ""
     @Published var city = ""
     @Published var state = ""
     @Published var apartmentNumber = ""
-    
+
     @Published var location = LocationManager()
-        
+
     init(record: Record? = nil, territory: Territory? = nil) {
         self.record = record
         self.territory = territory
-        
+
         if let record = record {
             title = "Edit Record"
-            
+
             switch record.wrappedType {
-            case .apartment:
-                selectedTypeIndex = 1
-            default:
-                selectedTypeIndex = 0
+            case .apartment: selectedTypeIndex = 1
+            default: selectedTypeIndex = 0
             }
-            
+
             if let streetName = record.streetName {
                 self.streetName = streetName
             }
-            
-            if let city = record.city {
-                self.city = city
-            }
-            
-            if let state = record.state {
-                self.state = state
-            }
-                        
+            if let city = record.city { self.city = city }
+            if let state = record.state { self.state = state }
             if let apartmentNumber = record.apartmentNumber {
                 self.apartmentNumber = apartmentNumber
             }
         }
     }
-        
+
     func save(viewContext: NSManagedObjectContext) {
         var toSave: Record
         if let record = record {
@@ -76,7 +65,7 @@ class RecordFormViewModel: ObservableObject {
             toSave.uuid = UUID().uuidString
             toSave.dateCreated = Date()
         }
-        
+
         toSave.dateUpdated = Date()
         toSave.streetName = streetName
         toSave.city = city
@@ -84,23 +73,17 @@ class RecordFormViewModel: ObservableObject {
         toSave.setType(isApartment ? .apartment : .street)
         toSave.apartmentNumber = isApartment ? apartmentNumber : nil
         toSave.territory = territory
-        
+
         viewContext.unsafeSave()
     }
-    
+
     func useCurrentLocation() {
         location.whenAuthorized { placemark in
             if let streetName = placemark?.thoroughfare {
                 self.streetName = streetName
             }
-            
-            if let city = placemark?.locality {
-                self.city = city
-            }
-            
-            if let state = placemark?.administrativeArea {
-                self.state = state
-            }
+            if let city = placemark?.locality { self.city = city }
+            if let state = placemark?.administrativeArea { self.state = state }
         }
     }
 }

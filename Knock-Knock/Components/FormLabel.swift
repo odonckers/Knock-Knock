@@ -11,22 +11,18 @@ struct FormLabel<Source: View>: View {
     let source: Source
     let label: String
     let position: Alignment
-    
+
     var body: some View {
         let formLabel = Text(label)
-            .foregroundColor(
-                Color("SecondaryLabelColor")
-            )
+            .foregroundColor(Color("SecondaryLabelColor"))
             .frame(minWidth: 128, alignment: position)
-                
+
         HStack {
             if position == .leading {
                 formLabel
                 Spacer()
             }
-                        
             source
-            
             if position == .trailing {
                 Spacer()
                 formLabel
@@ -37,7 +33,7 @@ struct FormLabel<Source: View>: View {
 }
 
 extension View {
-    public func formLabel(
+    @ViewBuilder public func formLabel(
         _ label: String,
         position: Alignment? = .leading
     ) -> some View {

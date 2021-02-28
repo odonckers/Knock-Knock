@@ -64,6 +64,7 @@
 		E25A175C25E0B46C0065517B /* SidebarNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A175B25E0B46C0065517B /* SidebarNavigationView.swift */; };
 		E25A176125E0B4A20065517B /* TabNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A176025E0B4A20065517B /* TabNavigationView.swift */; };
 		E25A176F25E0D9440065517B /* KnockKnockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A176E25E0D9430065517B /* KnockKnockApp.swift */; };
+		E2BB6FC125EB3F2600731EDE /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FC025EB3F2600731EDE /* UIColor+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,6 +148,7 @@
 		E25A176025E0B4A20065517B /* TabNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabNavigationView.swift; sourceTree = "<group>"; };
 		E25A176525E0B52B0065517B /* Knock-Knock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Knock-Knock.entitlements"; sourceTree = "<group>"; };
 		E25A176E25E0D9430065517B /* KnockKnockApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnockKnockApp.swift; sourceTree = "<group>"; };
+		E2BB6FC025EB3F2600731EDE /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,6 +253,7 @@
 				E25A166C25E080960065517B /* PlatformModifiers.swift */,
 				E25A167425E080D00065517B /* SheetState.swift */,
 				E25A167E25E081750065517B /* UserDefault.swift */,
+				E2BB6FC025EB3F2600731EDE /* UIColor+Extension.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -577,6 +580,7 @@
 				E25A16BA25E0854C0065517B /* RecordType.swift in Sources */,
 				E25A173925E0B3880065517B /* TerritoryFormView.swift in Sources */,
 				E25A170125E095C40065517B /* RecordFormViewModel.swift in Sources */,
+				E2BB6FC125EB3F2600731EDE /* UIColor+Extension.swift in Sources */,
 				E25A171425E0B1530065517B /* RecordRow.swift in Sources */,
 				E215E93725E6F538001A89C1 /* LegacySplitView.swift in Sources */,
 				E25A16B225E084BD0065517B /* Attempt+Extension.swift in Sources */,

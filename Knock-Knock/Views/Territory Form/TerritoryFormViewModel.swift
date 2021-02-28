@@ -9,29 +9,24 @@ import Combine
 import Foundation
 
 class TerritoryFormViewModel: ObservableObject {
-    private var territory: Territory? = nil
-    
+    var territory: Territory? = nil
+
     init(territory: Territory? = nil) {
         self.territory = territory
-        
+
         if let territory = territory, let name = territory.name {
             self.name = name
         }
     }
-    
+
     @Published var name = ""
     @Published var didInitiallyRespondKeyboard = false
-    
-    var title: String {
-        territory != nil ? "Edit Territory" : "New Territory"
-    }
-    
-    var canSave: Bool {
-        name != ""
-    }
-    
+
+    var title: String { territory != nil ? "Edit Territory" : "New Territory" }
+    var canSave: Bool { name != "" }
+
     private let viewContext = PersistenceController.shared.container.viewContext
-    
+
     func save() {
         if canSave {
             var toSave: Territory
@@ -42,16 +37,15 @@ class TerritoryFormViewModel: ObservableObject {
                 toSave.uuid = UUID().uuidString
                 toSave.dateCreated = Date()
             }
-            
+
             toSave.dateUpdated = Date()
             toSave.name = name
-            
+
             viewContext.unsafeSave()
         }
     }
-    
+
     func keyboardResponded() {
         didInitiallyRespondKeyboard = true
     }
 }
-

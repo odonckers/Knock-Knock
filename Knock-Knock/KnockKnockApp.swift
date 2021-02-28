@@ -10,13 +10,15 @@ import SwiftUI
 @main
 struct KnockKnockApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
+
     let persistenceController = PersistenceController.shared
-    
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            ContentView().environment(
+                \.managedObjectContext,
+                persistenceController.container.viewContext
+            )
         }
         .commands {
             SidebarCommands()

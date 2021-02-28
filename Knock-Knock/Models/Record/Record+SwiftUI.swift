@@ -10,19 +10,15 @@ import SwiftUI
 extension Record {
     public var abbreviatedType: String {
         switch wrappedType {
-        case .street:
-            return "ST"
-        case .apartment:
-            return "APT"
+        case .street: return "ST"
+        case .apartment: return "APT"
         }
     }
-    
+
     public var typeColor: Color {
         switch wrappedType {
-        case .street:
-            return Color("StreetColor")
-        case .apartment:
-            return Color("ApartmentColor")
+        case .street: return Color("StreetColor")
+        case .apartment: return Color("ApartmentColor")
         }
     }
 }

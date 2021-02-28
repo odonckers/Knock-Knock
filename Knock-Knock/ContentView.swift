@@ -10,11 +10,12 @@ import CoreData
 
 struct ContentView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-    
+
     private var isCompact: Bool {
-        horizontalSizeClass == .compact || UIDevice.current.userInterfaceIdiom == .phone
+        horizontalSizeClass == .compact ||
+            UIDevice.current.userInterfaceIdiom == .phone
     }
-    
+
     @ViewBuilder private var navigationView: some View {
         if isCompact {
             TabNavigationView()
@@ -22,23 +23,17 @@ struct ContentView: View {
             SidebarNavigationView()
         }
     }
-            
+
     var body: some View {
-        navigationView
-            .onAppear {
-                UISegmentedControl.appearance().selectedSegmentTintColor = .systemGreen
-                UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
-            }
+        navigationView.onAppear { setSegmentedControlAppearance() }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
-            .environment(
-                \.managedObjectContext,
-                PersistenceController.preview.container.viewContext
-            )
+        ContentView().environment(
+            \.managedObjectContext,
+            PersistenceController.preview.container.viewContext
+        )
     }
 }
-

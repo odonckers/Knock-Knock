@@ -9,44 +9,36 @@ import CoreData
 import SwiftUI
 
 struct RecordList: View {
-    private var territory: Territory?
-    
+    var territory: Territory?
+
     init(territory: Territory? = nil) {
         self.territory = territory
-        
+
         var recordsPredicate = NSPredicate(format: "territory == NULL")
         if let territory = territory {
-            recordsPredicate = NSPredicate(
-                format: "territory == %@",
-                territory
-            )
+            recordsPredicate = NSPredicate(format: "territory == %@", territory)
         }
-        
+
         recordsRequest = FetchRequest<Record>(
             sortDescriptors: [
-                NSSortDescriptor(
-                    keyPath: \Record.streetName,
-                    ascending: true
-                )
+                NSSortDescriptor(keyPath: \Record.streetName, ascending: true)
             ],
             predicate: recordsPredicate,
             animation: .default
         )
     }
-    
-    @Environment(\.managedObjectContext) private var viewContext
-    
-    @EnvironmentObject
-    private var sheet: SheetState<RecordsView.SheetStates>
-    
+
+    @Environment(\.managedObjectContext)
+    private var viewContext
+
+    @EnvironmentObject private var sheet: SheetState<RecordsView.SheetStates>
+
     private var recordsRequest: FetchRequest<Record>
-    private var records: FetchedResults<Record> {
-        recordsRequest.wrappedValue
-    }
-    
+    private var records: FetchedResults<Record> { recordsRequest.wrappedValue }
+
     @SceneStorage("recordList.selection")
     private var selection: String? // Record UUID
-    
+
     var body: some View {
         List(
             records,
@@ -61,20 +53,13 @@ struct RecordList: View {
                 RecordRow(record: record)
             }
             .contextMenu {
-                Button(action: {
-                    sheet.present(.recordForm, with: record)
-                }) {
+                Button(action: { sheet.present(.recordForm, with: record) }) {
                     Label("Edit", systemImage: "pencil")
                 }
-                
+
                 Menu {
-                    Button(action: {
-                        delete(record)
-                    }) {
-                        Label(
-                            "Permenantly Delete",
-                            systemImage: "trash"
-                        )
+                    Button(action: { delete(record) }) {
+                        Label("Permenantly Delete", systemImage: "trash")
                     }
                 } label: {
                     Label("Delete Record", systemImage: "trash")
@@ -82,7 +67,7 @@ struct RecordList: View {
             }
         }
     }
-    
+
     private func delete(_ item: NSManagedObject) {
         withAnimation {
             viewContext.delete(item)

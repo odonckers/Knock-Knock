@@ -8,12 +8,13 @@
 import SwiftUI
 
 class SearchBar: NSObject, ObservableObject {
-    @Published var text: String = ""
-    
-    let searchController: UISearchController = UISearchController(searchResultsController: nil)
-    
+    @Published var text = ""
+
+    let searchController = UISearchController(searchResultsController: nil)
+
     override init() {
         super.init()
+
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchResultsUpdater = self
     }
@@ -21,8 +22,6 @@ class SearchBar: NSObject, ObservableObject {
 
 extension SearchBar: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        
-        // Publish search bar text changes.
         if let searchBarText = searchController.searchBar.text {
             self.text = searchBarText
         }
@@ -31,21 +30,20 @@ extension SearchBar: UISearchResultsUpdating {
 
 struct SearchBarModifier: ViewModifier {
     let searchBar: SearchBar
-    
+
     func body(content: Content) -> some View {
-        content
-            .overlay(
-                ViewControllerResolver { viewController in
-                    viewController.navigationItem.searchController = self.searchBar.searchController
-                }
-                .frame(width: 0, height: 0)
-            )
+        content.overlay(
+            ViewControllerResolver { viewController in
+                viewController.navigationItem.searchController = searchBar.searchController
+            }
+            .frame(width: 0, height: 0)
+        )
     }
 }
 
 extension View {
     func add(searchBar: SearchBar) -> some View {
-        return self.modifier(SearchBarModifier(searchBar: searchBar))
+        self.modifier(SearchBarModifier(searchBar: searchBar))
     }
 }
 
@@ -54,10 +52,11 @@ struct SearchBar_Previews: PreviewProvider {
         NavigationView {
             List {
                 Text("Hello, World!")
+                Text("Hello, World!")
+                Text("Hello, World!")
             }
             .navigationTitle("Hello, World!")
             .add(searchBar: SearchBar())
         }
     }
 }
-

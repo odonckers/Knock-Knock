@@ -8,9 +8,11 @@
 import SwiftUI
 
 extension View {
-    /// Modify the view in a closure. This can be useful when you need to conditionally apply a modifier that is unavailable on certain platforms.
+    /// Modify the view in a closure. This can be useful when you need to conditionally apply a modifier that
+    /// is unavailable on certain platforms.
     ///
-    /// For example, imagine this code needing to run on macOS too where `View#actionSheet()` is not available:
+    /// For example, imagine this code needing to run on macOS too where `View#actionSheet()` is
+    /// not available:
     /// ```
     /// struct ContentView: View {
     ///     var body: some View {
@@ -25,7 +27,9 @@ extension View {
     ///     }
     /// }
     /// ```
-    @ViewBuilder func modify(@ViewBuilder _ handler: (_: Self) -> AnyView?) -> some View {
+    @ViewBuilder func modify(
+        @ViewBuilder _ handler: (_: Self) -> AnyView?
+    ) -> some View {
         if let content = handler(self) {
             content
         } else {

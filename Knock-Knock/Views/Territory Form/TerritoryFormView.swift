@@ -12,12 +12,14 @@ struct TerritoryFormView: View {
     init(territory: Territory? = nil) {
         viewModel = TerritoryFormViewModel(territory: territory)
     }
-    
-    @Environment(\.presentationMode) private var presentationMode
+
+    @Environment(\.presentationMode)
+    private var presentationMode
+
     @ObservedObject private var viewModel: TerritoryFormViewModel
-    
+
     // MARK: - Form
-    
+
     @ViewBuilder private var form: some View {
         Form {
             Section(header: Text("Info")) {
@@ -32,47 +34,39 @@ struct TerritoryFormView: View {
             }
         }
     }
-    
+
     // MARK: - Cancel Button
-    
+
     @ViewBuilder private var cancelButton: some View {
-        Button(action: {
-            presentationMode.wrappedValue.dismiss()
-        }) {
+        Button(action: { presentationMode.wrappedValue.dismiss() }) {
             Text("Cancel")
         }
     }
-    
+
     // MARK: - Save Button
-    
+
     @ViewBuilder private var saveButton: some View {
-        Button(action: {
-            withAnimation {
-                viewModel.save()
+        Button(
+            action: {
+                withAnimation { viewModel.save() }
+                presentationMode.wrappedValue.dismiss()
             }
-            
-            presentationMode.wrappedValue.dismiss()
-        }) {
+        ) {
             Text("Save")
         }
         .keyboardShortcut(.defaultAction)
         .disabled(!viewModel.canSave)
     }
-    
+
     // MARK: - Body
-    
+
     var body: some View {
         NavigationView {
             form
                 .navigationTitle(viewModel.title)
                 .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        cancelButton
-                    }
-                    
-                    ToolbarItem(placement: .confirmationAction) {
-                        saveButton
-                    }
+                    ToolbarItem(placement: .cancellationAction) { cancelButton }
+                    ToolbarItem(placement: .confirmationAction) { saveButton }
                 }
         }
         .introspectViewController {
@@ -84,14 +78,12 @@ struct TerritoryFormView: View {
 struct TerritoryFormView_Previews: PreviewProvider {
     static var previews: some View {
         let viewContext = PersistenceController.preview.container.viewContext
-        
+
         let territory = Territory(context: viewContext)
         territory.name = "D2D-77"
-        
+
         return Group {
-            TerritoryFormView()
-                .previewDisplayName("New Form Preview")
-            
+            TerritoryFormView().previewDisplayName("New Form Preview")
             TerritoryFormView(territory: territory)
                 .previewDisplayName("Edit Form Preview")
         }

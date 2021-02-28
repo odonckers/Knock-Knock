@@ -9,31 +9,28 @@ import SwiftUI
 
 struct TabNavigationView: View {
     @SceneStorage("tabNavigation.selection")
-    private var selection: Int = 0
-        
+    private var selection: NavigationItem = .recordList
+
     var body: some View {
         TabView(selection: $selection) {
             NavigationView { RecordsView() }
                 .tabItem { RecordsLabel() }
-            .tag(NavigationItem.recordList.rawValue)
-            
+                .tag(NavigationItem.recordList)
+
             NavigationView { TerritoriesView() }
                 .tabItem {
-                    Label(
-                        "Territories",
-                        systemImage: "rectangle.stack.fill"
-                    )
+                    Label("Territories", systemImage: "rectangle.stack.fill")
                 }
-            .tag(NavigationItem.territoryList.rawValue)
+                .tag(NavigationItem.territoryList)
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
 extension TabNavigationView {
-    enum NavigationItem: Int {
-        case recordList = 0
-        case territoryList = 1
+    enum NavigationItem: String {
+        case recordList
+        case territoryList
     }
 }
 

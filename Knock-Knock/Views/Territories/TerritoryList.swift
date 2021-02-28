@@ -9,11 +9,12 @@ import CoreData
 import SwiftUI
 
 struct TerritoryList: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    
+    @Environment(\.managedObjectContext)
+    private var viewContext
+
     @EnvironmentObject
     private var sheet: SheetState<TerritoriesView.SheetStates>
-    
+
     @FetchRequest(
         sortDescriptors: [
             NSSortDescriptor(keyPath: \Territory.name, ascending: true)
@@ -21,10 +22,10 @@ struct TerritoryList: View {
         animation: .default
     )
     private var territories: FetchedResults<Territory>
-    
+
     @SceneStorage("territoryList.selection")
     private var selection: String? // Territory UUID
-        
+
     var body: some View {
         List(
             territories,
@@ -46,13 +47,8 @@ struct TerritoryList: View {
                 }
                 
                 Menu {
-                    Button(action: {
-                        delete(territory)
-                    }) {
-                        Label(
-                            "Permenantly Delete",
-                            systemImage: "trash"
-                        )
+                    Button(action: { delete(territory) }) {
+                        Label("Permenantly Delete", systemImage: "trash")
                     }
                 } label: {
                     Label("Delete Territory", systemImage: "trash")
@@ -60,7 +56,7 @@ struct TerritoryList: View {
             }
         }
     }
-    
+
     private func delete(_ item: NSManagedObject) {
         withAnimation {
             viewContext.delete(item)

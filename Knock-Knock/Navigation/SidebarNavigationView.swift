@@ -6,28 +6,15 @@
 //
 
 import CoreData
+import Introspect
 import SwiftUI
 
 struct SidebarNavigationView: View {
     // MARK: - Sidebar
-    
+
     @SceneStorage("sidebarNavigation.selection")
     private var selection: String?
-    
-    private enum NavigationItem {
-        case recordList
-        case territory(Territory)
-        
-        var value: String {
-            switch self {
-            case .territory(let territory):
-                return "territory-" + territory.wrappedUuid
-            default:
-                return "recordList"
-            }
-        }
-    }
-        
+
     @ViewBuilder private var sidebar: some View {
         List(selection: $selection) {
             NavigationLink(
@@ -37,16 +24,19 @@ struct SidebarNavigationView: View {
             ) {
                 RecordsLabel()
             }
-            
             territoriesSection
         }
         .listStyle(SidebarListStyle())
+        .introspectTableView { tableView in
+            tableView.backgroundColor = .secondarySystemBackground
+        }
     }
-    
+
     // MARK: - Territories Section
-    
-    @Environment(\.managedObjectContext) private var viewContext
-    
+
+    @Environment(\.managedObjectContext)
+    private var viewContext
+
     @FetchRequest(
         sortDescriptors: [
             NSSortDescriptor(keyPath: \Territory.name, ascending: true)
@@ -54,7 +44,7 @@ struct SidebarNavigationView: View {
         animation: .default
     )
     private var territories: FetchedResults<Territory>
-    
+
     @ViewBuilder private var territoriesSection: some View {
         Section(
             header: Text("Territories")
@@ -62,11 +52,9 @@ struct SidebarNavigationView: View {
         ) {
             ForEach(territories, id: \.self) { territory in
                 let tag = NavigationItem.territory(territory).value
-                
+
                 NavigationLink(
-                    destination: RecordsView(
-                        territory: territory
-                    ),
+                    destination: RecordsView(territory: territory),
                     tag: tag,
                     selection: $selection
                 ) {
@@ -78,11 +66,8 @@ struct SidebarNavigationView: View {
                     }) {
                         Label("Edit", systemImage: "pencil")
                     }
-                    
                     Menu {
-                        Button(action: {
-                            delete(territory)
-                        }) {
+                        Button(action: { delete(territory) }) {
                             Label("Permenantly Delete", systemImage: "trash")
                         }
                     } label: {
@@ -90,27 +75,25 @@ struct SidebarNavigationView: View {
                     }
                 }
             }
-            
-            Button(action: {
-                sheet.present(.territoryForm)
-            }) {
+
+            Button(action: { sheet.present(.territoryForm) }) {
                 Label("Add Territory", systemImage: "plus.circle")
             }
             .buttonStyle(BorderlessButtonStyle())
         }
     }
-    
+
     private func delete(_ item: NSManagedObject) {
         withAnimation {
             viewContext.delete(item)
             viewContext.unsafeSave()
         }
     }
-    
+
     // MARK: - Sheet Contents
-    
+
     @ObservedObject private var sheet = SheetState<SheetStates>()
-    
+
     @ViewBuilder private var sheetContents: some View {
         switch sheet.state {
         case .territoryForm:
@@ -122,27 +105,23 @@ struct SidebarNavigationView: View {
             EmptyView()
         }
     }
-    
+
     private enum SheetStates {
         case none
         case territoryForm
         case territoryFormEdit
     }
-    
+
     // MARK: - Body
-    
+
     @State private var hasLoaded = false
-    
+
     var body: some View {
         NavigationView {
             sidebar
                 .navigationTitle("Home")
-                .sheet(isPresented: $sheet.isPresented) {
-                    sheetContents
-                }
-            
+                .sheet(isPresented: $sheet.isPresented) { sheetContents }
             RecordsView()
-            
             Text("Select a Record")
                 .font(.title2)
                 .foregroundColor(.secondary)
@@ -150,9 +129,27 @@ struct SidebarNavigationView: View {
                     if !hasLoaded {
                         splitViewController.preferredDisplayMode = .twoDisplaceSecondary
                         splitViewController.showsSecondaryOnlyButton = true
+                        splitViewController.primaryBackgroundStyle = .sidebar
+
                         hasLoaded.toggle()
                     }
                 }
+        }
+    }
+}
+
+extension SidebarNavigationView {
+    private enum NavigationItem {
+        case recordList
+        case territory(Territory)
+
+        var value: String {
+            switch self {
+            case .territory(let territory):
+                return "territory-" + territory.wrappedUuid
+            default:
+                return "recordList"
+            }
         }
     }
 }

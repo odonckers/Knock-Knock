@@ -8,39 +8,6 @@
 import SwiftUI
 
 extension Bundle {
-    static var appName: String {
-        guard let name = main.infoDictionary?["CFBundleName"] as? String else {
-            return ""
-        }
-        
-        return name
-    }
-    
-    static var appVersionMarketing: String {
-        guard let name = main.infoDictionary?["CFBundleShortVersionString"] as? String else {
-            return ""
-        }
-        
-        return name
-    }
-    
-    static var appVersionBuild: String {
-        let bundleKey = kCFBundleVersionKey as String
-        guard let version = main.object(forInfoDictionaryKey: bundleKey) as? String else {
-            return "0"
-        }
-        
-        return version
-    }
-    
-    static var copyrightHumanReadable: String {
-        guard let name = main.infoDictionary?["NSHumanReadableCopyright"] as? String else {
-            return ""
-        }
-        
-        return name
-    }
-    
     var icon: Image? {
         if
             let icons = infoDictionary?["CFBundleIcons"] as? [String: Any],
@@ -50,8 +17,35 @@ extension Bundle {
         {
             return Image(lastIcon)
         }
-        
         return nil
     }
-}
 
+    static var appName: String {
+        guard let name = main.infoDictionary?["CFBundleName"] as? String else {
+            return ""
+        }
+        return name
+    }
+
+    static var appVersionMarketing: String {
+        guard let name = main.infoDictionary?["CFBundleShortVersionString"] as? String else {
+            return ""
+        }
+        return name
+    }
+
+    static var appVersionBuild: String {
+        let bundleKey = kCFBundleVersionKey as String
+        guard let version = main.object(forInfoDictionaryKey: bundleKey) as? String else {
+            return "0"
+        }
+        return version
+    }
+
+    static var copyrightHumanReadable: String {
+        guard let name = main.infoDictionary?["NSHumanReadableCopyright"] as? String else {
+            return ""
+        }
+        return name
+    }
+}
