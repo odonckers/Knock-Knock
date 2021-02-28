@@ -16,16 +16,12 @@ struct ContentView: View {
             UIDevice.current.userInterfaceIdiom == .phone
     }
 
-    @ViewBuilder private var navigationView: some View {
+    var body: some View {
         if isCompact {
             TabNavigationView()
         } else {
             SidebarNavigationView()
         }
-    }
-
-    var body: some View {
-        navigationView.onAppear { setSegmentedControlAppearance() }
     }
 }
 

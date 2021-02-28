@@ -50,7 +50,6 @@
 		E25A16F225E094DB0065517B /* GridLayoutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16F125E094DB0065517B /* GridLayoutButton.swift */; };
 		E25A170125E095C40065517B /* RecordFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A170025E095C40065517B /* RecordFormViewModel.swift */; };
 		E25A170725E095FE0065517B /* RecordFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A170625E095FE0065517B /* RecordFormView.swift */; };
-		E25A170F25E096850065517B /* SetSegmentedControlAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A170E25E096850065517B /* SetSegmentedControlAppearance.swift */; };
 		E25A171425E0B1530065517B /* RecordsListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A171325E0B1530065517B /* RecordsListRow.swift */; };
 		E25A171925E0B1810065517B /* RecordsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A171825E0B1810065517B /* RecordsList.swift */; };
 		E25A171E25E0B1AB0065517B /* RecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A171D25E0B1AB0065517B /* RecordsView.swift */; };
@@ -68,6 +67,7 @@
 		E2BB6FDB25EB6DF600731EDE /* ModelManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FDA25EB6DF600731EDE /* ModelManagedObject.swift */; };
 		E2BB6FE925EBE0AA00731EDE /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FE825EBE0AA00731EDE /* Spacing.swift */; };
 		E2BB6FEE25EBE12000731EDE /* FramedSpacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FED25EBE12000731EDE /* FramedSpacer.swift */; };
+		E2F2117825EC224900BD96DE /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F2117725EC224900BD96DE /* Theme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,7 +136,6 @@
 		E25A16F125E094DB0065517B /* GridLayoutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayoutButton.swift; sourceTree = "<group>"; };
 		E25A170025E095C40065517B /* RecordFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordFormViewModel.swift; sourceTree = "<group>"; };
 		E25A170625E095FE0065517B /* RecordFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordFormView.swift; sourceTree = "<group>"; };
-		E25A170E25E096850065517B /* SetSegmentedControlAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSegmentedControlAppearance.swift; sourceTree = "<group>"; };
 		E25A171325E0B1530065517B /* RecordsListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsListRow.swift; sourceTree = "<group>"; };
 		E25A171825E0B1810065517B /* RecordsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsList.swift; sourceTree = "<group>"; };
 		E25A171D25E0B1AB0065517B /* RecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsView.swift; sourceTree = "<group>"; };
@@ -155,6 +154,7 @@
 		E2BB6FDA25EB6DF600731EDE /* ModelManagedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManagedObject.swift; sourceTree = "<group>"; };
 		E2BB6FE825EBE0AA00731EDE /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
 		E2BB6FED25EBE12000731EDE /* FramedSpacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FramedSpacer.swift; sourceTree = "<group>"; };
+		E2F2117725EC224900BD96DE /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,8 +284,8 @@
 				E25A15C325E072780065517B /* Assets.xcassets */,
 				E25A169A25E083A80065517B /* CardGroupBoxStyle.swift */,
 				E25A16A225E083C20065517B /* FlatButtonStyle.swift */,
-				E25A170E25E096850065517B /* SetSegmentedControlAppearance.swift */,
 				E2BB6FE825EBE0AA00731EDE /* Spacing.swift */,
+				E2F2117725EC224900BD96DE /* Theme.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -603,7 +603,6 @@
 				E25A172725E0B1D40065517B /* Territory+Extension.swift in Sources */,
 				E25A163925E07BFF0065517B /* DeleteConfirmation.swift in Sources */,
 				E25A165425E07FC70065517B /* LocationManager.swift in Sources */,
-				E25A170F25E096850065517B /* SetSegmentedControlAppearance.swift in Sources */,
 				E25A16AD25E0847C0065517B /* Door+Extension.swift in Sources */,
 				E25A166025E080190065517B /* LocationRequest.swift in Sources */,
 				E25A167F25E081750065517B /* UserDefault.swift in Sources */,
@@ -618,6 +617,7 @@
 				E25A173125E0B35A0065517B /* TerritoryFormViewModel.swift in Sources */,
 				E2BB6FDB25EB6DF600731EDE /* ModelManagedObject.swift in Sources */,
 				E2BB6FEE25EBE12000731EDE /* FramedSpacer.swift in Sources */,
+				E2F2117825EC224900BD96DE /* Theme.swift in Sources */,
 				E25A168925E0825E0065517B /* SearchBar.swift in Sources */,
 				E25A16F225E094DB0065517B /* GridLayoutButton.swift in Sources */,
 				E25A166D25E080960065517B /* PlatformModifiers.swift in Sources */,

@@ -136,7 +136,7 @@ struct RecordFormView_Previews: PreviewProvider {
             RecordFormView(record: record)
                 .previewDisplayName("Edit Form Preview")
         }
-        .onAppear { setSegmentedControlAppearance() }
+        .environmentObject(Theme())
     }
 }
 #endif
