@@ -54,7 +54,6 @@
 		E25A171925E0B1810065517B /* RecordsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A171825E0B1810065517B /* RecordsList.swift */; };
 		E25A171E25E0B1AB0065517B /* RecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A171D25E0B1AB0065517B /* RecordsView.swift */; };
 		E25A172725E0B1D40065517B /* Territory+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A172625E0B1D40065517B /* Territory+Extension.swift */; };
-		E25A173125E0B35A0065517B /* TerritoryFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A173025E0B35A0065517B /* TerritoryFormViewModel.swift */; };
 		E25A173925E0B3880065517B /* TerritoryFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A173825E0B3880065517B /* TerritoryFormView.swift */; };
 		E25A173E25E0B3CD0065517B /* TerritoriesListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A173D25E0B3CD0065517B /* TerritoriesListRow.swift */; };
 		E25A174625E0B3F40065517B /* TerritoriesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A174525E0B3F40065517B /* TerritoriesList.swift */; };
@@ -63,6 +62,7 @@
 		E25A175C25E0B46C0065517B /* SidebarNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A175B25E0B46C0065517B /* SidebarNavigationView.swift */; };
 		E25A176125E0B4A20065517B /* TabNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A176025E0B4A20065517B /* TabNavigationView.swift */; };
 		E25A176F25E0D9440065517B /* KnockKnockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A176E25E0D9430065517B /* KnockKnockApp.swift */; };
+		E27AAB0D25ED8B9D00342603 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AAB0C25ED8B9D00342603 /* Color+Extension.swift */; };
 		E2BB6FC125EB3F2600731EDE /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FC025EB3F2600731EDE /* UIColor+Extension.swift */; };
 		E2BB6FDB25EB6DF600731EDE /* ModelManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FDA25EB6DF600731EDE /* ModelManagedObject.swift */; };
 		E2BB6FE925EBE0AA00731EDE /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FE825EBE0AA00731EDE /* Spacing.swift */; };
@@ -140,7 +140,6 @@
 		E25A171825E0B1810065517B /* RecordsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsList.swift; sourceTree = "<group>"; };
 		E25A171D25E0B1AB0065517B /* RecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsView.swift; sourceTree = "<group>"; };
 		E25A172625E0B1D40065517B /* Territory+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Territory+Extension.swift"; sourceTree = "<group>"; };
-		E25A173025E0B35A0065517B /* TerritoryFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoryFormViewModel.swift; sourceTree = "<group>"; };
 		E25A173825E0B3880065517B /* TerritoryFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoryFormView.swift; sourceTree = "<group>"; };
 		E25A173D25E0B3CD0065517B /* TerritoriesListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoriesListRow.swift; sourceTree = "<group>"; };
 		E25A174525E0B3F40065517B /* TerritoriesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoriesList.swift; sourceTree = "<group>"; };
@@ -150,6 +149,7 @@
 		E25A176025E0B4A20065517B /* TabNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabNavigationView.swift; sourceTree = "<group>"; };
 		E25A176525E0B52B0065517B /* Knock-Knock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Knock-Knock.entitlements"; sourceTree = "<group>"; };
 		E25A176E25E0D9430065517B /* KnockKnockApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnockKnockApp.swift; sourceTree = "<group>"; };
+		E27AAB0C25ED8B9D00342603 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		E2BB6FC025EB3F2600731EDE /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		E2BB6FDA25EB6DF600731EDE /* ModelManagedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManagedObject.swift; sourceTree = "<group>"; };
 		E2BB6FE825EBE0AA00731EDE /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
@@ -283,6 +283,7 @@
 			children = (
 				E25A15C325E072780065517B /* Assets.xcassets */,
 				E25A169A25E083A80065517B /* CardGroupBoxStyle.swift */,
+				E27AAB0C25ED8B9D00342603 /* Color+Extension.swift */,
 				E25A16A225E083C20065517B /* FlatButtonStyle.swift */,
 				E2BB6FE825EBE0AA00731EDE /* Spacing.swift */,
 				E2F2117725EC224900BD96DE /* Theme.swift */,
@@ -417,7 +418,6 @@
 			isa = PBXGroup;
 			children = (
 				E25A173825E0B3880065517B /* TerritoryFormView.swift */,
-				E25A173025E0B35A0065517B /* TerritoryFormViewModel.swift */,
 			);
 			path = "Territory Form";
 			sourceTree = "<group>";
@@ -582,6 +582,7 @@
 				E2BB6FE925EBE0AA00731EDE /* Spacing.swift in Sources */,
 				E25A169625E083240065517B /* Tag.swift in Sources */,
 				E25A167A25E081430065517B /* StatefulPreviewWrapper.swift in Sources */,
+				E27AAB0D25ED8B9D00342603 /* Color+Extension.swift in Sources */,
 				E25A15BF25E072740065517B /* ContentView.swift in Sources */,
 				E25A163125E07B980065517B /* ContainerView.swift in Sources */,
 				E25A175C25E0B46C0065517B /* SidebarNavigationView.swift in Sources */,
@@ -614,7 +615,6 @@
 				E25A16C225E0857B0065517B /* AttemptSymbol.swift in Sources */,
 				E25A16A825E084390065517B /* Record+Extension.swift in Sources */,
 				E25A16ED25E093AA0065517B /* DoorsView.swift in Sources */,
-				E25A173125E0B35A0065517B /* TerritoryFormViewModel.swift in Sources */,
 				E2BB6FDB25EB6DF600731EDE /* ModelManagedObject.swift in Sources */,
 				E2BB6FEE25EBE12000731EDE /* FramedSpacer.swift in Sources */,
 				E2F2117825EC224900BD96DE /* Theme.swift in Sources */,

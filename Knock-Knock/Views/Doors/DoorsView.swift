@@ -24,7 +24,7 @@ struct DoorsView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .filledBackground(Color("GroupedBackgroundColor"))
+            .filledBackground(Color.groupedBackground)
     }
 }
 

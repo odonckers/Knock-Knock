@@ -19,26 +19,6 @@
         "reference" : "systemBlueColor"
       },
       "idiom" : "universal"
-    },
-    {
-      "color" : {
-        "platform" : "osx",
-        "reference" : "systemBlueColor"
-      },
-      "idiom" : "mac"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "color" : {
-        "platform" : "osx",
-        "reference" : "systemBlueColor"
-      },
-      "idiom" : "mac"
     }
   ],
   "info" : {

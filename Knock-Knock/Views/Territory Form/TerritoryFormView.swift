@@ -9,68 +9,88 @@ import Introspect
 import SwiftUI
 
 struct TerritoryFormView: View {
+    var territory: Territory? = nil
+
     init(territory: Territory? = nil) {
-        viewModel = TerritoryFormViewModel(territory: territory)
+        self.territory = territory
+
+        if let territory = territory, let name = territory.name {
+            self.name = name
+        }
     }
+
+    @Environment(\.managedObjectContext)
+    private var viewContext
 
     @Environment(\.presentationMode)
     private var presentationMode
 
-    @ObservedObject private var viewModel: TerritoryFormViewModel
+    @State private var name = ""
+    @State private var wasFirstResponder = false
 
-    // MARK: - Form
-
-    @ViewBuilder private var form: some View {
-        Form {
-            Section(header: Text("Info")) {
-                TextField("Required", text: $viewModel.name)
-                    .introspectTextField {
-                        if !viewModel.didInitiallyRespondKeyboard {
-                            $0.becomeFirstResponder()
-                            viewModel.keyboardResponded()
-                        }
-                    }
-                    .formLabel("Name")
-            }
-        }
+    private var title: String {
+        territory != nil ? "Edit Territory" : "New Territory"
     }
 
-    // MARK: - Cancel Button
-
-    @ViewBuilder private var cancelButton: some View {
-        Button(action: { presentationMode.wrappedValue.dismiss() }) {
-            Text("Cancel")
+    var body: some View {
+        NavigationView {
+            Form {
+                Section(header: Text("Info")) {
+                    TextField("Name (Required)", text: $name)
+                        .introspectTextField { textField in
+                            if !wasFirstResponder {
+                                textField.becomeFirstResponder()
+                                wasFirstResponder.toggle()
+                            }
+                        }
+                }
+            }
+            .navigationTitle(title)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(
+                        action: { presentationMode.wrappedValue.dismiss() }
+                    ) {
+                        Text("Cancel")
+                    }
+                }
+                ToolbarItem(placement: .confirmationAction) { saveButton }
+            }
+        }
+        .introspectViewController { viewController in
+            viewController.isModalInPresentation = true
         }
     }
 
     // MARK: - Save Button
+    
+    private var canSave: Bool { name != "" }
 
     @ViewBuilder private var saveButton: some View {
-        Button(
-            action: {
-                withAnimation { viewModel.save() }
-                presentationMode.wrappedValue.dismiss()
-            }
-        ) {
+        Button(action: { save() }) {
             Text("Save")
         }
         .keyboardShortcut(.defaultAction)
-        .disabled(!viewModel.canSave)
+        .disabled(!canSave)
     }
 
-    // MARK: - Body
-
-    var body: some View {
-        NavigationView {
-            form
-                .navigationTitle(viewModel.title)
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) { cancelButton }
-                    ToolbarItem(placement: .confirmationAction) { saveButton }
+    private func save() {
+        if canSave {
+            withAnimation {
+                var toSave: Territory
+                if let territory = self.territory {
+                    toSave = territory
+                    toSave.willUpdate()
+                } else {
+                    toSave = Territory(context: viewContext)
+                    toSave.willCreate()
                 }
-        }
-        .introspectViewController {
-            $0.isModalInPresentation = true
+
+                toSave.name = name
+                viewContext.unsafeSave()
+            }
+
+            presentationMode.wrappedValue.dismiss()
         }
     }
 }

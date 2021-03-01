@@ -9,39 +9,137 @@ import Introspect
 import SwiftUI
 
 struct RecordFormView: View {
+    var record: Record? = nil
+    var territory: Territory? = nil
+
     init(record: Record? = nil, territory: Territory? = nil) {
-        viewModel = RecordFormViewModel(record: record, territory: territory)
+        self.record = record
+        self.territory = territory
+
+        if let record = record {
+            selectedTypeIndex = Int(record.wrappedType.rawValue)
+
+            if let streetName = record.streetName {
+                self.streetName = streetName
+            }
+            if let city = record.city { self.city = city }
+            if let state = record.state { self.state = state }
+            if let apartmentNumber = record.apartmentNumber {
+                self.apartmentNumber = apartmentNumber
+            }
+        }
     }
+
+    @Environment(\.managedObjectContext)
+    private var viewContext
 
     @Environment(\.presentationMode)
     private var presentationMode
 
-    @ObservedObject private var viewModel: RecordFormViewModel
+    @State var selectedTypeIndex = 0
+    @State var streetName = ""
+    @State var city = ""
+    @State var state = ""
+    @State var apartmentNumber = ""
 
-    // MARK: - Form
+    @State var location = LocationManager()
 
-    @ViewBuilder private var form: some View {
-        Form {
-            Section { typePicker.formLabel("Type") }
+    var title: String {
+        record?.streetName != nil ? "Edit Record" : "New Record"
+    }
 
-            if viewModel.selectedTypeIndex == 1 {
-                Section(header: Text("Apartment Options")) {
-                    TextField("Required", text: $viewModel.apartmentNumber)
-                        .formLabel("Number")
+    var body: some View {
+        NavigationView {
+            Form {
+                typePicker
+
+                if selectedTypeIndex == 1 {
+                    Section(header: Text("Apartment Options")) {
+                        TextField(
+                            "Apartment Number (Required)",
+                            text: $apartmentNumber
+                        )
+                    }
+                }
+
+                Section(header: Text("Street Info")) {
+                    streetNameField
+                    TextField("City", text: $city)
+                    TextField("State", text: $state)
+                }
+
+                Section(header: Text("Geolocation")) {
+                    Button(action: useCurrentLocation) {
+                        Text("Use Current Location")
+                    }
                 }
             }
-
-            Section(header: Text("Street Info")) {
-                streetNameField
-                TextField("Optional", text: $viewModel.city).formLabel("City")
-                TextField("Optional", text: $viewModel.state).formLabel("State")
-                Button(action: viewModel.useCurrentLocation) {
-                    Text("Use Current Location")
+            .navigationTitle(title)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(
+                        action: { presentationMode.wrappedValue.dismiss() }
+                    ) {
+                        Text("Cancel")
+                    }
                 }
+                ToolbarItem(placement: .confirmationAction) { saveButton }
             }
         }
-        .onAppear { viewModel.location.request() }
-        .onDisappear { viewModel.location.stopUpdatingPlacement() }
+        .introspectViewController { viewController in
+            viewController.isModalInPresentation = true
+        }
+        .onAppear { location.request() }
+        .onDisappear { location.stopUpdatingPlacement() }
+    }
+
+    func useCurrentLocation() {
+        location.whenAuthorized { placemark in
+            if let streetName = placemark?.thoroughfare {
+                self.streetName = streetName
+            }
+            if let city = placemark?.locality { self.city = city }
+            if let state = placemark?.administrativeArea { self.state = state }
+        }
+    }
+
+    // MARK: - Save Button
+
+    var isApartment: Bool { selectedTypeIndex == 1 }
+    var canSave: Bool {
+        if isApartment {
+            return streetName != "" && apartmentNumber != ""
+        } else {
+            return streetName != ""
+        }
+    }
+
+    @ViewBuilder private var saveButton: some View {
+        Button(action: { withAnimation { save() } }) {
+            Text("Save")
+        }
+        .disabled(!canSave)
+    }
+
+    func save() {
+        var toSave: Record
+        if let record = record {
+            toSave = record
+            toSave.willUpdate()
+        } else {
+            toSave = Record(context: viewContext)
+            toSave.willCreate()
+        }
+
+        toSave.wrappedType = isApartment ? .apartment : .street
+        toSave.apartmentNumber = isApartment ? apartmentNumber : nil
+        toSave.streetName = streetName
+        toSave.city = city
+        toSave.state = state
+        toSave.territory = territory
+
+        viewContext.unsafeSave()
+        presentationMode.wrappedValue.dismiss()
     }
 
     // MARK: - Type Picker
@@ -49,11 +147,11 @@ struct RecordFormView: View {
     private var typeOptions = ["Street", "Apartment"]
 
     @ViewBuilder private var typePicker: some View {
-        Picker("Type", selection: $viewModel.selectedTypeIndex.animation()) {
+        Picker("Type", selection: $selectedTypeIndex.animation()) {
             ForEach(0 ..< typeOptions.count) { Text(typeOptions[$0]) }
         }
         .pickerStyle(SegmentedPickerStyle())
-        .labelsHidden()
+        .formLabel("Type")
     }
 
     // MARK: - Street Name Field
@@ -61,61 +159,13 @@ struct RecordFormView: View {
     @State private var wasFirstResponder = false
 
     @ViewBuilder private var streetNameField: some View {
-        TextField("Required", text: $viewModel.streetName)
-            .introspectTextField {
+        TextField("Street Name (Required)", text: $streetName)
+            .introspectTextField { textField in
                 if !wasFirstResponder {
-                    $0.becomeFirstResponder()
-                    wasFirstResponder = true
+                    textField.becomeFirstResponder()
+                    wasFirstResponder.toggle()
                 }
             }
-            .formLabel("Name")
-    }
-
-    // MARK: - Save Button
-
-    @Environment(\.managedObjectContext)
-    private var viewContext
-
-    @ViewBuilder private var saveButton: some View {
-        Button(
-            action: {
-                withAnimation {
-                    viewModel.save(viewContext: viewContext)
-                    presentationMode.wrappedValue.dismiss()
-                }
-            }
-        ) {
-            Text("Save")
-        }
-        .disabled(!viewModel.canSave)
-    }
-
-    // MARK: - Cancel Button
-
-    @ViewBuilder private var cancelButton: some View {
-        Button(action: { presentationMode.wrappedValue.dismiss() }) {
-            Text("Cancel")
-        }
-    }
-
-    // MARK: - Body
-
-    var body: some View {
-        NavigationView {
-            form
-                .navigationTitle(viewModel.title)
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button(
-                            action: { presentationMode.wrappedValue.dismiss() }
-                        ) {
-                            Text("Cancel")
-                        }
-                    }
-                    ToolbarItem(placement: .confirmationAction) { saveButton }
-                }
-        }
-        .introspectViewController { $0.isModalInPresentation = true }
     }
 }
 

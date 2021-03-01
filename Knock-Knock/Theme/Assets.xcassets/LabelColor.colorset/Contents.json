@@ -19,26 +19,6 @@
         "reference" : "labelColor"
       },
       "idiom" : "universal"
-    },
-    {
-      "color" : {
-        "platform" : "osx",
-        "reference" : "labelColor"
-      },
-      "idiom" : "mac"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "color" : {
-        "platform" : "osx",
-        "reference" : "labelColor"
-      },
-      "idiom" : "mac"
     }
   ],
   "info" : {

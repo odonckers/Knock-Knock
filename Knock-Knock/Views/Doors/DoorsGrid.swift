@@ -78,7 +78,7 @@ extension DoorsView {
 struct DoorsGrid_Previews: PreviewProvider {
     static var previews: some View {
         DoorsView.LclGrid()
-            .background(Color("GroupedBackgroundColor"))
+            .background(Color.groupedBackground)
             .environment(
                 \.managedObjectContext,
                 PersistenceController.preview.container.viewContext

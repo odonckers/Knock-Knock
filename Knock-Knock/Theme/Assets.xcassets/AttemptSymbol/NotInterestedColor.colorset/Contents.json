@@ -19,26 +19,6 @@
         "reference" : "systemIndigoColor"
       },
       "idiom" : "universal"
-    },
-    {
-      "color" : {
-        "platform" : "osx",
-        "reference" : "systemIndigoColor"
-      },
-      "idiom" : "mac"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "color" : {
-        "platform" : "osx",
-        "reference" : "systemIndigoColor"
-      },
-      "idiom" : "mac"
     }
   ],
   "info" : {

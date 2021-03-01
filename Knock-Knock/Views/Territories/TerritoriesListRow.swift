@@ -22,7 +22,7 @@ extension TerritoriesView.LclList {
                         .font(.headline)
                     Text("\(territory.recordCount) records")
                         .font(.subheadline)
-                        .foregroundColor(Color("SecondaryLabelColor"))
+                        .foregroundColor(.secondaryLabel)
                 }
             }
             .padding(.vertical, 8)

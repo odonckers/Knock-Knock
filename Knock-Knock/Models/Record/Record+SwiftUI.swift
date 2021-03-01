@@ -17,8 +17,8 @@ extension Record {
 
     public var typeColor: Color {
         switch wrappedType {
-        case .street: return Color("StreetColor")
-        case .apartment: return Color("ApartmentColor")
+        case .street: return .recordTypeStreet
+        case .apartment: return .recordTypeApartment
         }
     }
 }

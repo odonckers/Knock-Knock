@@ -36,7 +36,7 @@ extension RecordsView.LclList {
                             if let state = record.state { Text(state) }
                         }
                         .font(.subheadline)
-                        .foregroundColor(Color("SecondaryLabelColor"))
+                        .foregroundColor(.secondaryLabel)
                     }
                 }
                 .padding(.horizontal, 16)
@@ -56,16 +56,16 @@ struct RecordsListRow_Previews: PreviewProvider {
         record.city = "City"
         record.state = "State"
 
-        let apartment = Record(context: viewContext)
-        apartment.wrappedType = .apartment
-        apartment.streetName = "Street Name"
-        apartment.city = "City"
-        apartment.state = "State"
-        apartment.apartmentNumber = "500"
+        let recordTypeApartment = Record(context: viewContext)
+        recordTypeApartment.wrappedType = .apartment
+        recordTypeApartment.streetName = "Street Name"
+        recordTypeApartment.city = "City"
+        recordTypeApartment.state = "State"
+        recordTypeApartment.apartmentNumber = "500"
 
         return Group {
             RecordsView.LclList.LclRow(record: record)
-            RecordsView.LclList.LclRow(record: apartment)
+            RecordsView.LclList.LclRow(record: recordTypeApartment)
         }
         .frame(width: 414, alignment: .leading)
         .padding(.horizontal)
