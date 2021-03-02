@@ -21,12 +21,26 @@ struct GridLayoutButton: View {
         _selectedGridLayout = selectedGridLayout
     }
 
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.horizontalSizeClass)
+    private var horizontalSizeClass
 
     private var isCompact: Bool {
         horizontalSizeClass == .compact ||
             UIDevice.current.userInterfaceIdiom == .phone
     }
+
+    var body: some View {
+        if isCompact {
+            Menu { picker } label: {
+                Label("Sort", systemImage: "arrow.up.arrow.down")
+                    .font(.title2)
+            }
+        } else {
+            picker.pickerStyle(InlinePickerStyle())
+        }
+    }
+
+    // MARK: - Picker
 
     private let options: [GridLayoutOptions: (String, String)] = [
         .grid: ("Grid", "square.grid.3x2.fill"),
@@ -40,17 +54,6 @@ struct GridLayoutButton: View {
                 Label(option.0, systemImage: option.1)
                     .tag(value)
             }
-        }
-    }
-
-    var body: some View {
-        if isCompact {
-            Menu { picker } label: {
-                Label("Sort", systemImage: "arrow.up.arrow.down")
-                    .font(.title2)
-            }
-        } else {
-            picker.pickerStyle(InlinePickerStyle())
         }
     }
 }

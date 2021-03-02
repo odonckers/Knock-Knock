@@ -10,6 +10,32 @@ import Introspect
 import SwiftUI
 
 struct SidebarNavigationView: View {
+    @Environment(\.managedObjectContext)
+    private var viewContext
+
+    @State private var hasLoaded = false
+
+    var body: some View {
+        NavigationView {
+            sidebar.sheet(isPresented: $sheet.isPresented) { sheetContents }
+
+            RecordsView()
+
+            Text("Select a Record")
+                .font(.title2)
+                .foregroundColor(.secondary)
+                .introspectSplitViewController { splitViewController in
+                    if !hasLoaded {
+                        splitViewController.preferredDisplayMode = .twoDisplaceSecondary
+                        splitViewController.showsSecondaryOnlyButton = true
+                        splitViewController.primaryBackgroundStyle = .sidebar
+
+                        hasLoaded.toggle()
+                    }
+                }
+        }
+    }
+
     // MARK: - Sidebar
 
     @SceneStorage("SidebarNavigation.selection")
@@ -34,9 +60,6 @@ struct SidebarNavigationView: View {
     }
 
     // MARK: - Territories Section
-
-    @Environment(\.managedObjectContext)
-    private var viewContext
 
     @FetchRequest(
         sortDescriptors: [
@@ -92,7 +115,7 @@ struct SidebarNavigationView: View {
         }
     }
 
-    // MARK: - Sheet Contents
+    // MARK: - Sheet
 
     @ObservedObject private var sheet = SheetState<SheetStates>()
 
@@ -112,29 +135,6 @@ struct SidebarNavigationView: View {
         case none
         case territoryForm
         case territoryFormEdit
-    }
-
-    // MARK: - Body
-
-    @State private var hasLoaded = false
-
-    var body: some View {
-        NavigationView {
-            sidebar.sheet(isPresented: $sheet.isPresented) { sheetContents }
-            RecordsView()
-            Text("Select a Record")
-                .font(.title2)
-                .foregroundColor(.secondary)
-                .introspectSplitViewController { splitViewController in
-                    if !hasLoaded {
-                        splitViewController.preferredDisplayMode = .twoDisplaceSecondary
-                        splitViewController.showsSecondaryOnlyButton = true
-                        splitViewController.primaryBackgroundStyle = .sidebar
-
-                        hasLoaded.toggle()
-                    }
-                }
-        }
     }
 }
 

@@ -12,14 +12,3 @@ struct RecordsLabel: View {
         Label("Records", systemImage: "note.text")
     }
 }
-
-#if DEBUG
-struct RecordsLabel_Previews: PreviewProvider {
-    static var previews: some View {
-        RecordsLabel()
-            .frame(width: 240, alignment: .leading)
-            .padding()
-            .previewLayout(.sizeThatFits)
-    }
-}
-#endif

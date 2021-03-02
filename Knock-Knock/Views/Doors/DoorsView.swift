@@ -7,24 +7,97 @@
 
 import SwiftUI
 
+let kDoorsGridLayout = "DoorsView.Grid.layout"
+
 struct DoorsView: View {
     let record: Record
+
+    var body: some View {
+        ScrollView {
+            LazyVGrid(columns: gridColumns) {
+                ForEach(sectionHeaders, id: \.0) { header in
+                    let groupLabel = Label(header.0, systemImage: header.1)
+                        .foregroundColor(Color(header.2))
+
+                    GroupBox(label: groupLabel) {
+                        ForEach(0..<header.0.count) { index in
+                            Text("Index \(index)")
+                        }
+                    }
+                    .groupBoxStyle(CardGroupBoxStyle())
+                }
+            }
+            .padding()
+        }
+        .toolbar {
+            ToolbarItem(placement: .principal) { title }
+            ToolbarItem {
+                GridLayoutButton(selectedGridLayout: $selectedGridLayout)
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .filledBackground(Color.groupedBackground)
+    }
+
+    @Environment(\.horizontalSizeClass)
+    private var horizontalSize
+
+    @Environment(\.verticalSizeClass)
+    private var verticalSize
+
+    // MARK: - Grid
 
     @SceneStorage(kDoorsGridLayout)
     private var selectedGridLayout: GridLayoutOptions = .grid
 
-    var body: some View {
-        LclGrid(selectedGridLayout: $selectedGridLayout)
-            .toolbar {
-                ToolbarItem {
-                    GridLayoutButton(selectedGridLayout: $selectedGridLayout)
-                }
-                ToolbarItem(placement: .principal) {
-                    LclTitle(record: record)
-                }
+    private var inPortrait: Bool {
+        horizontalSize == .compact && verticalSize == .regular
+    }
+    private var isGrid: Bool { selectedGridLayout == .grid }
+
+    private let sectionHeaders: [(String, String, String)] = [
+        ("Not-at-Homes", "house.fill", "NotAtHomeColor"),
+        ("Busy", "megaphone.fill", "BusyColor"),
+        ("Call Again", "person.fill.checkmark", "CallAgainColor"),
+        ("Not Interested", "person.fill.xmark", "NotInterestedColor"),
+        ("Other", "dot.squareshape.fill", "OtherColor")
+    ]
+
+    private var gridColumns: [GridItem] {
+        let gridColumnItem = GridItem(
+            .flexible(),
+            spacing: 8,
+            alignment: .top
+        )
+
+        let portraitColumns = [gridColumnItem, gridColumnItem]
+        let landscapeColumns = [
+            gridColumnItem,
+            gridColumnItem,
+            gridColumnItem
+        ]
+
+        let gridColumns = inPortrait ? portraitColumns : landscapeColumns
+        let listColumns = [gridColumnItem]
+
+        return isGrid ? gridColumns : listColumns
+    }
+
+    // MARK: - Title
+
+    @ViewBuilder private var title: some View {
+        HStack {
+            Tag(color: record.typeColor) {
+                Text(record.abbreviatedType)
+                    .frame(width: 44)
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .filledBackground(Color.groupedBackground)
+            FramedSpacer(spacing: .medium, direction: .horizontal)
+            if let apartmentNumber = record.apartmentNumber {
+                Text(apartmentNumber)
+            }
+            Text(record.wrappedStreetName)
+        }
+        .font(Font.body.bold())
     }
 }
 

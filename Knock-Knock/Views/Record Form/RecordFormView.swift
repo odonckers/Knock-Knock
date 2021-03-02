@@ -42,8 +42,6 @@ struct RecordFormView: View {
     @State var state = ""
     @State var apartmentNumber = ""
 
-    @State var location = LocationManager()
-
     var title: String {
         record?.streetName != nil ? "Edit Record" : "New Record"
     }
@@ -51,7 +49,7 @@ struct RecordFormView: View {
     var body: some View {
         NavigationView {
             Form {
-                typePicker
+                Section { typePicker }
 
                 if selectedTypeIndex == 1 {
                     Section(header: Text("Apartment Options")) {
@@ -69,77 +67,18 @@ struct RecordFormView: View {
                 }
 
                 Section(header: Text("Geolocation")) {
-                    Button(action: useCurrentLocation) {
-                        Text("Use Current Location")
-                    }
+                    useCurrentLocationButton
                 }
             }
             .navigationTitle(title)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(
-                        action: { presentationMode.wrappedValue.dismiss() }
-                    ) {
-                        Text("Cancel")
-                    }
-                }
+                ToolbarItem(placement: .cancellationAction) { cancelButton }
                 ToolbarItem(placement: .confirmationAction) { saveButton }
             }
         }
         .introspectViewController { viewController in
             viewController.isModalInPresentation = true
         }
-        .onAppear { location.request() }
-        .onDisappear { location.stopUpdatingPlacement() }
-    }
-
-    func useCurrentLocation() {
-        location.whenAuthorized { placemark in
-            if let streetName = placemark?.thoroughfare {
-                self.streetName = streetName
-            }
-            if let city = placemark?.locality { self.city = city }
-            if let state = placemark?.administrativeArea { self.state = state }
-        }
-    }
-
-    // MARK: - Save Button
-
-    var isApartment: Bool { selectedTypeIndex == 1 }
-    var canSave: Bool {
-        if isApartment {
-            return streetName != "" && apartmentNumber != ""
-        } else {
-            return streetName != ""
-        }
-    }
-
-    @ViewBuilder private var saveButton: some View {
-        Button(action: { withAnimation { save() } }) {
-            Text("Save")
-        }
-        .disabled(!canSave)
-    }
-
-    func save() {
-        var toSave: Record
-        if let record = record {
-            toSave = record
-            toSave.willUpdate()
-        } else {
-            toSave = Record(context: viewContext)
-            toSave.willCreate()
-        }
-
-        toSave.wrappedType = isApartment ? .apartment : .street
-        toSave.apartmentNumber = isApartment ? apartmentNumber : nil
-        toSave.streetName = streetName
-        toSave.city = city
-        toSave.state = state
-        toSave.territory = territory
-
-        viewContext.unsafeSave()
-        presentationMode.wrappedValue.dismiss()
     }
 
     // MARK: - Type Picker
@@ -166,6 +105,76 @@ struct RecordFormView: View {
                     wasFirstResponder.toggle()
                 }
             }
+    }
+
+    // MARK: - Use Current Location Button
+
+    @State var location = LocationManager()
+
+    @ViewBuilder private var useCurrentLocationButton: some View {
+        Button(action: useCurrentLocation) {
+            Text("Use Current Location")
+        }
+        .onAppear { location.request() }
+        .onDisappear { location.stopUpdatingPlacement() }
+    }
+
+    private func useCurrentLocation() {
+        location.whenAuthorized { placemark in
+            if let streetName = placemark?.thoroughfare {
+                self.streetName = streetName
+            }
+            if let city = placemark?.locality { self.city = city }
+            if let state = placemark?.administrativeArea { self.state = state }
+        }
+    }
+
+    // MARK: - Cancel Button
+
+    @ViewBuilder private var cancelButton: some View {
+        Button(action: { presentationMode.wrappedValue.dismiss() }) {
+            Text("Cancel")
+        }
+    }
+
+    // MARK: - Save Button
+
+    var isApartment: Bool { selectedTypeIndex == 1 }
+    var canSave: Bool {
+        if isApartment {
+            return streetName != "" && apartmentNumber != ""
+        } else {
+            return streetName != ""
+        }
+    }
+
+    @ViewBuilder private var saveButton: some View {
+        Button(action: save) { Text("Save") }
+            .disabled(!canSave)
+    }
+
+    func save() {
+        withAnimation {
+            var toSave: Record
+            if let record = record {
+                toSave = record
+                toSave.willUpdate()
+            } else {
+                toSave = Record(context: viewContext)
+                toSave.willCreate()
+            }
+
+            toSave.wrappedType = isApartment ? .apartment : .street
+            toSave.apartmentNumber = isApartment ? apartmentNumber : nil
+            toSave.streetName = streetName
+            toSave.city = city
+            toSave.state = state
+            toSave.territory = territory
+
+            viewContext.unsafeSave()
+        }
+
+        presentationMode.wrappedValue.dismiss()
     }
 }
 

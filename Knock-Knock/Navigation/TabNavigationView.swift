@@ -25,9 +25,7 @@ struct TabNavigationView: View {
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
-}
 
-extension TabNavigationView {
     enum NavigationItem: String {
         case recordList
         case territoryList

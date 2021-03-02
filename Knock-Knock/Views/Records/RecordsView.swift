@@ -11,35 +11,99 @@ import SwiftUI
 struct RecordsView: View {
     var territory: Territory? = nil
 
-    @ObservedObject private var sheet = SheetState<SheetStates>()
+    init(territory: Territory? = nil) {
+        self.territory = territory
+
+        var recordsPredicate = NSPredicate(format: "territory == NULL")
+        if let territory = territory {
+            recordsPredicate = NSPredicate(format: "territory == %@", territory)
+        }
+
+        recordsRequest = FetchRequest<Record>(
+            sortDescriptors: [
+                NSSortDescriptor(keyPath: \Record.streetName, ascending: true)
+            ],
+            predicate: recordsPredicate,
+            animation: .default
+        )
+    }
+
+    @Environment(\.managedObjectContext)
+    private var viewContext
 
     var body: some View {
-        LclList(territory: territory)
-            .navigationTitle(territory?.wrappedName ?? "Records")
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button(action: { sheet.present(.recordForm) }) {
-                        Label("Add Record", systemImage: "note.text.badge.plus")
-                    }
+        List(
+            records,
+            id: \.wrappedID,
+            selection: $selection,
+            rowContent: rowContent
+        )
+        .navigationTitle(territory?.wrappedName ?? "Records")
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button(action: { sheet.present(.recordForm) }) {
+                    Label("Add Record", systemImage: "note.text.badge.plus")
                 }
             }
-            .sheet(isPresented: $sheet.isPresented) {
-                switch sheet.state {
-                case .recordForm:
-                    RecordFormView(
-                        record: sheet.arguments as? Record ?? nil,
-                        territory: territory
-                    )
-                default:
-                    EmptyView()
-                }
-            }
-            .environmentObject(sheet)
+        }
+        .sheet(isPresented: $sheet.isPresented, content: sheetContent)
     }
-}
 
-extension RecordsView {
-    enum SheetStates {
+    // MARK: - List
+
+    private var recordsRequest: FetchRequest<Record>
+    private var records: FetchedResults<Record> { recordsRequest.wrappedValue }
+
+    @SceneStorage("Record.selection")
+    private var selection: String? // Record UUID
+
+    @ViewBuilder private func rowContent(record: Record) -> some View {
+        NavigationLink(
+            destination: DoorsView(record: record),
+            tag: record.wrappedID,
+            selection: $selection
+        ) {
+            LclRow(record: record)
+        }
+        .contextMenu {
+            Button(action: { sheet.present(.recordForm, with: record) }) {
+                Label("Edit", systemImage: "pencil")
+            }
+
+            Menu {
+                Button(action: { delete(record) }) {
+                    Label("Permenantly Delete", systemImage: "trash")
+                }
+            } label: {
+                Label("Delete Record", systemImage: "trash")
+            }
+        }
+    }
+
+    private func delete(_ item: NSManagedObject) {
+        withAnimation {
+            viewContext.delete(item)
+            viewContext.unsafeSave()
+        }
+    }
+
+    // MARK: - Sheet
+
+    @ObservedObject private var sheet = SheetState<SheetStates>()
+
+    @ViewBuilder private func sheetContent() -> some View {
+        switch sheet.state {
+        case .recordForm:
+            RecordFormView(
+                record: sheet.arguments as? Record ?? nil,
+                territory: territory
+            )
+        default:
+            EmptyView()
+        }
+    }
+
+    private enum SheetStates {
         case recordForm
     }
 }

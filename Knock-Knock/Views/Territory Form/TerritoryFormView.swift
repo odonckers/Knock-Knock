@@ -19,14 +19,8 @@ struct TerritoryFormView: View {
         }
     }
 
-    @Environment(\.managedObjectContext)
-    private var viewContext
-
     @Environment(\.presentationMode)
     private var presentationMode
-
-    @State private var name = ""
-    @State private var wasFirstResponder = false
 
     private var title: String {
         territory != nil ? "Edit Territory" : "New Territory"
@@ -35,25 +29,11 @@ struct TerritoryFormView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Info")) {
-                    TextField("Name (Required)", text: $name)
-                        .introspectTextField { textField in
-                            if !wasFirstResponder {
-                                textField.becomeFirstResponder()
-                                wasFirstResponder.toggle()
-                            }
-                        }
-                }
+                Section(header: Text("Info")) { nameTextField }
             }
             .navigationTitle(title)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(
-                        action: { presentationMode.wrappedValue.dismiss() }
-                    ) {
-                        Text("Cancel")
-                    }
-                }
+                ToolbarItem(placement: .cancellationAction) { cancelButton }
                 ToolbarItem(placement: .confirmationAction) { saveButton }
             }
         }
@@ -62,16 +42,40 @@ struct TerritoryFormView: View {
         }
     }
 
+    // MARK: - Name Field
+
+    @State private var name = ""
+    @State private var wasFirstResponder = false
+
+    @ViewBuilder private var nameTextField: some View {
+        TextField("Name (Required)", text: $name)
+            .introspectTextField { textField in
+                if !wasFirstResponder {
+                    textField.becomeFirstResponder()
+                    wasFirstResponder.toggle()
+                }
+            }
+    }
+
+    // MARK: - Cancel Button
+
+    @ViewBuilder private var cancelButton: some View {
+        Button(action: { presentationMode.wrappedValue.dismiss() }) {
+            Text("Cancel")
+        }
+    }
+
     // MARK: - Save Button
+
+    @Environment(\.managedObjectContext)
+    private var viewContext
     
     private var canSave: Bool { name != "" }
 
     @ViewBuilder private var saveButton: some View {
-        Button(action: { save() }) {
-            Text("Save")
-        }
-        .keyboardShortcut(.defaultAction)
-        .disabled(!canSave)
+        Button(action: save) { Text("Save") }
+            .disabled(!canSave)
+            .keyboardShortcut(.defaultAction)
     }
 
     private func save() {
