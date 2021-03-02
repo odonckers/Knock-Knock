@@ -17,7 +17,8 @@ struct SidebarNavigationView: View {
 
     var body: some View {
         NavigationView {
-            sidebar.sheet(isPresented: $sheet.isPresented) { sheetContents }
+            sidebar
+                .sheet(isPresented: $sheet.isPresented, content: sheetContent)
 
             RecordsView()
 
@@ -119,7 +120,7 @@ struct SidebarNavigationView: View {
 
     @ObservedObject private var sheet = SheetState<SheetStates>()
 
-    @ViewBuilder private var sheetContents: some View {
+    @ViewBuilder private func sheetContent() -> some View {
         switch sheet.state {
         case .territoryForm:
             TerritoryFormView()
