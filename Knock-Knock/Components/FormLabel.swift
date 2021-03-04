@@ -28,7 +28,7 @@ struct FormLabel<Source: View>: View {
     }
 
     @ViewBuilder private var formLabel: some View {
-        Text(label)
+        Text(LocalizedStringKey(label))
             .foregroundColor(.placeholderText)
             .frame(minWidth: 100, alignment: position)
     }

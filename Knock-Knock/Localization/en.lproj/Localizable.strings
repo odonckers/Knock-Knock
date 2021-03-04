@@ -1,0 +1,45 @@
+/* 
+  Localizable.strings
+  Knock-Knock
+
+  Created by Owen Donckers on 3/2/21.
+  
+*/
+
+"general.cancel" = "Cancel";
+"general.delete" = "Delete";
+"general.edit" = "Edit";
+"general.home" = "Home";
+"general.info" = "Info";
+"general.permenantlyDelete" = "Permenantly Delete";
+"general.save" = "Save";
+"general.type" = "Type";
+
+"doors.selectRecord" = "Select a Record";
+
+"recordForm.button.currentLocation" = "Use Current Location";
+"recordForm.field.apartmentNumber" = "Apartment Number";
+"recordForm.field.apartmentNumber.required" = "Apartment Number (Required)";
+"recordForm.field.city" = "City";
+"recordForm.field.state" = "State";
+"recordForm.field.streetName" = "Street Name";
+"recordForm.field.streetName.required" = "Street Name (Required)";
+"recordForm.header.apartment" = "Apartment Options";
+"recordForm.header.geolocation" = "Geolocation";
+"recordForm.header.street" = "Street Info";
+"recordForm.title.edit" = "Edit Record";
+"recordForm.title.new" = "New Record";
+
+"records.add" = "Add Record";
+"records.delete" = "Delete Record";
+"records.title" = "Records";
+
+"territories.add" = "Add Territory";
+"territories.delete" = "Delete Territory";
+"territories.title" = "Territories";
+"territories.numberOfRecords %@" = "%@ records";
+
+"territoryForm.field.name" = "Name";
+"territoryForm.field.name.required" = "Name (Required)";
+"territoryForm.title.edit" = "Edit Territory";
+"territoryForm.title.new" = "New Territory";

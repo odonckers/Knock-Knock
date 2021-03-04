@@ -38,11 +38,13 @@ struct RecordsView: View {
             selection: $selection,
             rowContent: rowContent
         )
-        .navigationTitle(territory?.wrappedName ?? "Records")
+        .navigationTitle(
+            LocalizedStringKey(territory?.wrappedName ?? "records.title")
+        )
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button(action: { sheet.present(.recordForm) }) {
-                    Label("Add Record", systemImage: "note.text.badge.plus")
+                    Label("records.add", systemImage: "note.text.badge.plus")
                 }
             }
         }
@@ -67,15 +69,18 @@ struct RecordsView: View {
         }
         .contextMenu {
             Button(action: { sheet.present(.recordForm, with: record) }) {
-                Label("Edit", systemImage: "pencil")
+                Label("general.edit", systemImage: "pencil")
             }
 
             Menu {
                 Button(action: { delete(record) }) {
-                    Label("Permenantly Delete", systemImage: "trash")
+                    Label(
+                        "general.permenantlyDelete",
+                        systemImage: "trash"
+                    )
                 }
             } label: {
-                Label("Delete Record", systemImage: "trash")
+                Label("records.delete", systemImage: "trash")
             }
         }
     }

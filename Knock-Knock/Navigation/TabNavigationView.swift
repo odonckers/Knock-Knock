@@ -19,7 +19,10 @@ struct TabNavigationView: View {
 
             NavigationView { TerritoriesView() }
                 .tabItem {
-                    Label("Territories", systemImage: "rectangle.stack.fill")
+                    Label(
+                        "territories.title",
+                        systemImage: "rectangle.stack.fill"
+                    )
                 }
                 .tag(NavigationItem.territoryList)
         }

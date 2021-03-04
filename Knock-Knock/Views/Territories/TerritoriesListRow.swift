@@ -20,7 +20,7 @@ extension TerritoriesView {
                 VStack(alignment: .leading) {
                     Text(territory.wrappedName)
                         .font(.headline)
-                    Text("\(territory.recordCount) records")
+                    Text("territories.numberOfRecords \(territory.recordCount)")
                         .font(.subheadline)
                         .foregroundColor(.secondaryLabel)
                 }

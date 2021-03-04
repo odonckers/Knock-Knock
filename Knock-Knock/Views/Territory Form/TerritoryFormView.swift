@@ -22,16 +22,18 @@ struct TerritoryFormView: View {
     @Environment(\.presentationMode)
     private var presentationMode
 
-    private var title: String {
-        territory != nil ? "Edit Territory" : "New Territory"
-    }
-
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Info")) { nameTextField }
+                Section(header: Text("general.info")) {
+                    nameTextField
+                }
             }
-            .navigationTitle(title)
+            .navigationTitle(
+                territory != nil ?
+                    "territoryForm.title.edit" :
+                    "territoryForm.title.new"
+            )
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { cancelButton }
                 ToolbarItem(placement: .confirmationAction) { saveButton }
@@ -48,7 +50,7 @@ struct TerritoryFormView: View {
     @State private var wasFirstResponder = false
 
     @ViewBuilder private var nameTextField: some View {
-        TextField("Name (Required)", text: $name)
+        TextField("territoryForm.field.name.required", text: $name)
             .introspectTextField { textField in
                 if !wasFirstResponder {
                     textField.becomeFirstResponder()
@@ -61,7 +63,7 @@ struct TerritoryFormView: View {
 
     @ViewBuilder private var cancelButton: some View {
         Button(action: { presentationMode.wrappedValue.dismiss() }) {
-            Text("Cancel")
+            Text("general.cancel")
         }
     }
 
@@ -73,7 +75,7 @@ struct TerritoryFormView: View {
     private var canSave: Bool { name != "" }
 
     @ViewBuilder private var saveButton: some View {
-        Button(action: save) { Text("Save") }
+        Button(action: save) { Text("general.save") }
             .disabled(!canSave)
             .keyboardShortcut(.defaultAction)
     }

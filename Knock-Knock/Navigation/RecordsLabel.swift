@@ -9,6 +9,6 @@ import SwiftUI
 
 struct RecordsLabel: View {
     var body: some View {
-        Label("Records", systemImage: "note.text")
+        Label("records.title", systemImage: "note.text")
     }
 }

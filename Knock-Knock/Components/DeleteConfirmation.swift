@@ -28,7 +28,7 @@ struct DeleteConfirmation<Source: DynamicViewContent>: View {
                     message: message == nil ? nil : Text(message!),
                     primaryButton: .cancel(),
                     secondaryButton: .destructive(
-                        Text("Delete"),
+                        Text("general.delete"),
                         action: {
                             withAnimation { perform(indexSet) }
                         }

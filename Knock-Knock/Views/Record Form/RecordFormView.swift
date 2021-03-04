@@ -42,35 +42,35 @@ struct RecordFormView: View {
     @State var state = ""
     @State var apartmentNumber = ""
 
-    var title: String {
-        record?.streetName != nil ? "Edit Record" : "New Record"
-    }
-
     var body: some View {
         NavigationView {
             Form {
                 Section { typePicker }
 
                 if selectedTypeIndex == 1 {
-                    Section(header: Text("Apartment Options")) {
+                    Section(header: Text("recordForm.header.apartment")) {
                         TextField(
-                            "Apartment Number (Required)",
+                            "recordForm.field.apartmentNumber.required",
                             text: $apartmentNumber
                         )
                     }
                 }
 
-                Section(header: Text("Street Info")) {
+                Section(header: Text("recordForm.header.street")) {
                     streetNameField
-                    TextField("City", text: $city)
-                    TextField("State", text: $state)
+                    TextField("recordForm.field.city", text: $city)
+                    TextField("recordForm.field.state", text: $state)
                 }
 
-                Section(header: Text("Geolocation")) {
+                Section(header: Text("recordForm.header.geolocation")) {
                     useCurrentLocationButton
                 }
             }
-            .navigationTitle(title)
+            .navigationTitle(
+                record?.streetName != nil ?
+                    "recordForm.title.edit" :
+                    "recordForm.title.new"
+            )
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { cancelButton }
                 ToolbarItem(placement: .confirmationAction) { saveButton }
@@ -86,11 +86,11 @@ struct RecordFormView: View {
     private var typeOptions = ["Street", "Apartment"]
 
     @ViewBuilder private var typePicker: some View {
-        Picker("Type", selection: $selectedTypeIndex.animation()) {
+        Picker("general.type", selection: $selectedTypeIndex.animation()) {
             ForEach(0 ..< typeOptions.count) { Text(typeOptions[$0]) }
         }
         .pickerStyle(SegmentedPickerStyle())
-        .formLabel("Type")
+        .formLabel("general.type")
     }
 
     // MARK: - Street Name Field
@@ -98,7 +98,7 @@ struct RecordFormView: View {
     @State private var wasFirstResponder = false
 
     @ViewBuilder private var streetNameField: some View {
-        TextField("Street Name (Required)", text: $streetName)
+        TextField("recordForm.field.streetName.required", text: $streetName)
             .introspectTextField { textField in
                 if !wasFirstResponder {
                     textField.becomeFirstResponder()
@@ -113,7 +113,7 @@ struct RecordFormView: View {
 
     @ViewBuilder private var useCurrentLocationButton: some View {
         Button(action: useCurrentLocation) {
-            Text("Use Current Location")
+            Text("recordForm.button.currentLocation")
         }
         .onAppear { location.request() }
         .onDisappear { location.stopUpdatingPlacement() }
@@ -133,7 +133,7 @@ struct RecordFormView: View {
 
     @ViewBuilder private var cancelButton: some View {
         Button(action: { presentationMode.wrappedValue.dismiss() }) {
-            Text("Cancel")
+            Text("general.cancel")
         }
     }
 
@@ -149,7 +149,7 @@ struct RecordFormView: View {
     }
 
     @ViewBuilder private var saveButton: some View {
-        Button(action: save) { Text("Save") }
+        Button(action: save) { Text("general.save") }
             .disabled(!canSave)
     }
 

@@ -22,7 +22,7 @@ struct SidebarNavigationView: View {
 
             RecordsView()
 
-            Text("Select a Record")
+            Text("doors.selectRecord")
                 .font(.title2)
                 .foregroundColor(.secondary)
                 .introspectSplitViewController { splitViewController in
@@ -57,7 +57,7 @@ struct SidebarNavigationView: View {
         .introspectTableView { tableView in
             tableView.backgroundColor = .secondarySystemBackground
         }
-        .navigationTitle("Home")
+        .navigationTitle("general.home")
     }
 
     // MARK: - Territories Section
@@ -72,7 +72,7 @@ struct SidebarNavigationView: View {
 
     @ViewBuilder private var territoriesSection: some View {
         Section(
-            header: Text("Territories")
+            header: Text("territories.title")
                 .foregroundColor(.label)
         ) {
             ForEach(territories, id: \.self) { territory in
@@ -91,20 +91,23 @@ struct SidebarNavigationView: View {
                             sheet.present(.territoryFormEdit, with: territory)
                         }
                     ) {
-                        Label("Edit", systemImage: "pencil")
+                        Label("general.edit", systemImage: "pencil")
                     }
                     Menu {
                         Button(action: { delete(territory) }) {
-                            Label("Permenantly Delete", systemImage: "trash")
+                            Label(
+                                "general.permenantlyDelete",
+                                systemImage: "trash"
+                            )
                         }
                     } label: {
-                        Label("Delete Territory", systemImage: "trash")
+                        Label("territories.delete", systemImage: "trash")
                     }
                 }
             }
 
             Button(action: { sheet.present(.territoryForm) }) {
-                Label("Add Territory", systemImage: "plus.circle")
+                Label("territories.add", systemImage: "plus.circle")
             }
         }
     }
