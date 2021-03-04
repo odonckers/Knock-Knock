@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E21799C525EAC7F8005AB340 /* Introspect+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21799C425EAC7F8005AB340 /* Introspect+Extension.swift */; };
+		E24673BB25F0623600A0653B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24673BA25F0623600A0653B /* AppDelegate.swift */; };
+		E24673C625F0625700A0653B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24673C525F0625700A0653B /* SceneDelegate.swift */; };
 		E25A15BF25E072740065517B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15BE25E072740065517B /* ContentView.swift */; };
 		E25A15C425E072780065517B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C325E072780065517B /* Assets.xcassets */; };
 		E25A15C725E072780065517B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C625E072780065517B /* Preview Assets.xcassets */; };
@@ -55,7 +57,6 @@
 		E25A175425E0B4560065517B /* RecordsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A175325E0B4560065517B /* RecordsLabel.swift */; };
 		E25A175C25E0B46C0065517B /* SidebarNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A175B25E0B46C0065517B /* SidebarNavigationView.swift */; };
 		E25A176125E0B4A20065517B /* TabNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A176025E0B4A20065517B /* TabNavigationView.swift */; };
-		E25A176F25E0D9440065517B /* KnockKnockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A176E25E0D9430065517B /* KnockKnockApp.swift */; };
 		E27AAB0D25ED8B9D00342603 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AAB0C25ED8B9D00342603 /* Color+Extension.swift */; };
 		E2BB6FC125EB3F2600731EDE /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FC025EB3F2600731EDE /* UIColor+Extension.swift */; };
 		E2BB6FDB25EB6DF600731EDE /* ModelManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FDA25EB6DF600731EDE /* ModelManagedObject.swift */; };
@@ -84,6 +85,8 @@
 
 /* Begin PBXFileReference section */
 		E21799C425EAC7F8005AB340 /* Introspect+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Introspect+Extension.swift"; sourceTree = "<group>"; };
+		E24673BA25F0623600A0653B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E24673C525F0625700A0653B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E25A15B725E072740065517B /* Knock-Knock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Knock-Knock.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E25A15BE25E072740065517B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E25A15C325E072780065517B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -137,7 +140,6 @@
 		E25A175B25E0B46C0065517B /* SidebarNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarNavigationView.swift; sourceTree = "<group>"; };
 		E25A176025E0B4A20065517B /* TabNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabNavigationView.swift; sourceTree = "<group>"; };
 		E25A176525E0B52B0065517B /* Knock-Knock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Knock-Knock.entitlements"; sourceTree = "<group>"; };
-		E25A176E25E0D9430065517B /* KnockKnockApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnockKnockApp.swift; sourceTree = "<group>"; };
 		E27AAB0C25ED8B9D00342603 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		E2BB6FC025EB3F2600731EDE /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		E2BB6FDA25EB6DF600731EDE /* ModelManagedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManagedObject.swift; sourceTree = "<group>"; };
@@ -204,7 +206,8 @@
 				E25A161625E079620065517B /* Theme */,
 				E25A160025E073AC0065517B /* Utilities */,
 				E25A16D825E08A380065517B /* Views */,
-				E25A176E25E0D9430065517B /* KnockKnockApp.swift */,
+				E24673BA25F0623600A0653B /* AppDelegate.swift */,
+				E24673C525F0625700A0653B /* SceneDelegate.swift */,
 				E25A15BE25E072740065517B /* ContentView.swift */,
 				E25A15CB25E072780065517B /* Info.plist */,
 				E25A176525E0B52B0065517B /* Knock-Knock.entitlements */,
@@ -576,6 +579,7 @@
 				E27AAB0D25ED8B9D00342603 /* Color+Extension.swift in Sources */,
 				E25A15BF25E072740065517B /* ContentView.swift in Sources */,
 				E25A163125E07B980065517B /* ContainerView.swift in Sources */,
+				E24673BB25F0623600A0653B /* AppDelegate.swift in Sources */,
 				E25A175C25E0B46C0065517B /* SidebarNavigationView.swift in Sources */,
 				E25A171E25E0B1AB0065517B /* RecordsView.swift in Sources */,
 				E25A163E25E07CC30065517B /* FilledBackground.swift in Sources */,
@@ -588,7 +592,6 @@
 				E25A169B25E083A80065517B /* CardGroupBoxStyle.swift in Sources */,
 				E25A170725E095FE0065517B /* RecordFormView.swift in Sources */,
 				E25A15F125E072F10065517B /* Persistence.swift in Sources */,
-				E25A176F25E0D9440065517B /* KnockKnockApp.swift in Sources */,
 				E25A172725E0B1D40065517B /* Territory+Extension.swift in Sources */,
 				E25A163925E07BFF0065517B /* DeleteConfirmation.swift in Sources */,
 				E25A165425E07FC70065517B /* LocationManager.swift in Sources */,
@@ -607,6 +610,7 @@
 				E2BB6FEE25EBE12000731EDE /* FramedSpacer.swift in Sources */,
 				E2F2117825EC224900BD96DE /* Theme.swift in Sources */,
 				E25A168925E0825E0065517B /* SearchBar.swift in Sources */,
+				E24673C625F0625700A0653B /* SceneDelegate.swift in Sources */,
 				E25A16F225E094DB0065517B /* GridLayoutButton.swift in Sources */,
 				E25A166D25E080960065517B /* PlatformModifiers.swift in Sources */,
 				E25A168425E081B60065517B /* FormLabel.swift in Sources */,

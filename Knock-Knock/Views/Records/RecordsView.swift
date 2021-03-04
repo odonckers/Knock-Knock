@@ -56,8 +56,7 @@ struct RecordsView: View {
     private var recordsRequest: FetchRequest<Record>
     private var records: FetchedResults<Record> { recordsRequest.wrappedValue }
 
-    @SceneStorage("Record.selection")
-    private var selection: String? // Record UUID
+    @State private var selection: String? // Record UUID
 
     @ViewBuilder private func rowContent(record: Record) -> some View {
         NavigationLink(

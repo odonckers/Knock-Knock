@@ -39,8 +39,7 @@ struct SidebarNavigationView: View {
 
     // MARK: - Sidebar
 
-    @SceneStorage("SidebarNavigation.selection")
-    private var selection: String?
+    @State private var selection: String?
 
     @ViewBuilder private var sidebar: some View {
         List(selection: $selection) {

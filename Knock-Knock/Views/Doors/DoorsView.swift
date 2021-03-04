@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-let kDoorsGridLayout = "DoorsView.Grid.layout"
-
 struct DoorsView: View {
     let record: Record
 
@@ -47,8 +45,7 @@ struct DoorsView: View {
 
     // MARK: - Grid
 
-    @SceneStorage(kDoorsGridLayout)
-    private var selectedGridLayout: GridLayoutOptions = .grid
+    @State private var selectedGridLayout: GridLayoutOptions = .grid
 
     private var inPortrait: Bool {
         horizontalSize == .compact && verticalSize == .regular

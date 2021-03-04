@@ -43,8 +43,7 @@ struct TerritoriesView: View {
     )
     private var territories: FetchedResults<Territory>
 
-    @SceneStorage("Territory.selection")
-    private var selection: String? // Territory UUID
+    @State private var selection: String? // Territory UUID
 
     @ViewBuilder private func rowContent(territory: Territory) -> some View {
         NavigationLink(

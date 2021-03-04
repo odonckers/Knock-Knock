@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct TabNavigationView: View {
-    @SceneStorage("TabNavigation.selection")
-    private var selection: NavigationItem = .recordList
+    @State private var selection: NavigationItem = .recordList
 
     var body: some View {
         TabView(selection: $selection) {
