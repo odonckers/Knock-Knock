@@ -10,6 +10,7 @@
 		E21799C525EAC7F8005AB340 /* Introspect+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21799C425EAC7F8005AB340 /* Introspect+Extension.swift */; };
 		E24673BB25F0623600A0653B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24673BA25F0623600A0653B /* AppDelegate.swift */; };
 		E24673C625F0625700A0653B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24673C525F0625700A0653B /* SceneDelegate.swift */; };
+		E253C5CC25F0878900C0DDD8 /* SidebarNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E253C5CB25F0878900C0DDD8 /* SidebarNavigationViewController.swift */; };
 		E25A15BF25E072740065517B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15BE25E072740065517B /* ContentView.swift */; };
 		E25A15C425E072780065517B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C325E072780065517B /* Assets.xcassets */; };
 		E25A15C725E072780065517B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C625E072780065517B /* Preview Assets.xcassets */; };
@@ -87,6 +88,7 @@
 		E21799C425EAC7F8005AB340 /* Introspect+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Introspect+Extension.swift"; sourceTree = "<group>"; };
 		E24673BA25F0623600A0653B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E24673C525F0625700A0653B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		E253C5CB25F0878900C0DDD8 /* SidebarNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarNavigationViewController.swift; sourceTree = "<group>"; };
 		E25A15B725E072740065517B /* Knock-Knock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Knock-Knock.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E25A15BE25E072740065517B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E25A15C325E072780065517B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -416,6 +418,7 @@
 				E25A175B25E0B46C0065517B /* SidebarNavigationView.swift */,
 				E25A176025E0B4A20065517B /* TabNavigationView.swift */,
 				E25A175325E0B4560065517B /* RecordsLabel.swift */,
+				E253C5CB25F0878900C0DDD8 /* SidebarNavigationViewController.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -605,6 +608,7 @@
 				E25A173E25E0B3CD0065517B /* TerritoriesListRow.swift in Sources */,
 				E25A16C225E0857B0065517B /* AttemptSymbol.swift in Sources */,
 				E25A16A825E084390065517B /* Record+Extension.swift in Sources */,
+				E253C5CC25F0878900C0DDD8 /* SidebarNavigationViewController.swift in Sources */,
 				E25A16ED25E093AA0065517B /* DoorsView.swift in Sources */,
 				E2BB6FDB25EB6DF600731EDE /* ModelManagedObject.swift in Sources */,
 				E2BB6FEE25EBE12000731EDE /* FramedSpacer.swift in Sources */,
