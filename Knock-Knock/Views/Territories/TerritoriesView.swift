@@ -35,7 +35,7 @@ struct TerritoriesView: View {
 
     // MARK: - List
 
-    @FetchRequest(
+    @FetchRequest<Territory>(
         sortDescriptors: [
             NSSortDescriptor(keyPath: \Territory.name, ascending: true)
         ],
