@@ -28,6 +28,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             for: .supplementary
         )
 
+        let tabBarController = UITabBarController()
+        tabBarController.setViewControllers(
+            [
+                UINavigationController(
+                    rootViewController: RecordsViewController()
+                )
+            ],
+            animated: false
+        )
+        splitViewController.setViewController(tabBarController, for: .compact)
+
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = splitViewController

@@ -27,21 +27,15 @@ class SidebarViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.setToolbarHidden(false, animated: false)
 
-        let addTerritory = UIAction(
+        let addTerritoryAction = UIAction(
             title: "Add Territory",
             image: UIImage(systemName: "folder.badge.plus")
         ) { [weak self] action in
             guard let self = self else { return }
-
-            let viewContext = self.persistenceController.container.viewContext
-
-            let toSave = Territory(context: viewContext)
-            toSave.willCreate()
-            toSave.name = "Territory"
-            viewContext.unsafeSave()
+            self.presentTerritoryFormAlert()
         }
 
-        let addRecord = UIAction(
+        let addRecordAction = UIAction(
             title: "Add Record",
             image: UIImage(systemName: "doc.badge.plus")
         ) { [weak self] action in
@@ -55,7 +49,7 @@ class SidebarViewController: UIViewController {
             viewContext.unsafeSave()
         }
 
-        let menu = UIMenu(children: [addTerritory, addRecord])
+        let menu = UIMenu(children: [addTerritoryAction, addRecordAction])
         toolbarItems = [
             UIBarButtonItem(systemItem: .flexibleSpace),
             UIBarButtonItem(
@@ -74,6 +68,59 @@ class SidebarViewController: UIViewController {
             animated: false,
             scrollPosition: .centeredVertically
         )
+    }
+}
+
+@available(iOS 14, *)
+extension SidebarViewController {
+    private func presentTerritoryFormAlert(territory: Territory? = nil) {
+        let alertController = UIAlertController(
+            title: "New Territory",
+            message: nil,
+            preferredStyle: .alert
+        )
+
+        alertController.addTextField()
+
+        let nameTextField = alertController.textFields?.first
+        nameTextField?.placeholder = "Name"
+        nameTextField?.autocapitalizationType = .allCharacters
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(cancelAction)
+
+        let submitAction = UIAlertAction(title: "Submit", style: .default) {
+            [unowned alertController] _ in
+
+            guard let textFields = alertController.textFields
+            else { return }
+
+            let nameField = textFields[0]
+
+            let viewContext = self.persistenceController.container.viewContext
+
+            var toSave: Territory
+            if let territory = territory {
+                toSave = territory
+                toSave.willUpdate()
+            } else {
+                toSave = Territory(context: viewContext)
+                toSave.willCreate()
+            }
+
+            toSave.name = nameField.text
+            viewContext.unsafeSave()
+        }
+        alertController.addAction(submitAction)
+
+        if let territory = territory {
+            alertController.title = "Edit Territory"
+            alertController.message = territory.wrappedName
+
+            nameTextField?.text = territory.wrappedName
+        }
+
+        present(alertController, animated: true)
     }
 }
 
@@ -102,7 +149,6 @@ extension SidebarViewController {
             configuration.headerMode = sectionIndex == 0
                 ? .none
                 : .firstItemInSection
-
             configuration.trailingSwipeActionsConfigurationProvider = {
                 [weak self] indexPath in
 
@@ -123,6 +169,7 @@ extension SidebarViewController {
                         style: .normal,
                         title: "Edit"
                     ) { action, view, completion in
+                        self.presentTerritoryFormAlert(territory: territory)
                         completion(true)
                     }
                     editAction.image = UIImage(systemName: "pencil")

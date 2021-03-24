@@ -33,9 +33,15 @@ class RecordsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationController?.navigationBar.prefersLargeTitles = true
+        title = territory != nil ? territory!.wrappedName : "Records"
 
-        setTitle()
+        if let navigationController = navigationController {
+            navigationController.navigationBar.prefersLargeTitles = true
+            navigationController.tabBarItem.image = UIImage(
+                systemName: "note.text"
+            )
+            navigationController.tabBarItem.title = "Records"
+        }
 
         configureCollectionView()
         configureDataSource()
@@ -45,18 +51,10 @@ class RecordsViewController: UIViewController {
 
     func setTerritory(_ territory: Territory? = nil) {
         self.territory = territory
-        setTitle()
+        title = territory != nil ? territory!.wrappedName : "Records"
 
         configureFetchRequests()
         applySnapshot()
-    }
-
-    private func setTitle() {
-        if let territory = territory {
-            title = territory.wrappedName
-        } else {
-            title = "Records"
-        }
     }
 }
 
