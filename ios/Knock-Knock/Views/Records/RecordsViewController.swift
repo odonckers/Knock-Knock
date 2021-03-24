@@ -9,16 +9,19 @@ import CoreData
 import UIKit
 
 class RecordsViewController: UIViewController {
-    var territory: Territory?
+    var selectedTerritory: Territory? {
+        get { territory }
+        set(newValue) {
+            territory = newValue
 
-    init(territory: Territory? = nil) {
-        self.territory = territory
-        super.init(nibName: nil, bundle: nil)
+            title = newValue != nil ? newValue!.wrappedName : "Records"
+
+            configureFetchRequests()
+            applySnapshot()
+        }
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    private var territory: Territory?
 
     private lazy var persistenceController: PersistenceController = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -28,7 +31,21 @@ class RecordsViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Int, Record>!
 
-    private var fetchedRecordsController: NSFetchedResultsController<Record>!
+    private lazy var fetchedRecordsController: NSFetchedResultsController<Record> = {
+        var fetchRequest: NSFetchRequest<Record> = Record.fetchRequest()
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(keyPath: \Record.streetName, ascending: true)
+        ]
+
+        let fetchedRecordsController = NSFetchedResultsController<Record>(
+            fetchRequest: fetchRequest,
+            managedObjectContext: persistenceController.container.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        fetchedRecordsController.delegate = self
+        return fetchedRecordsController
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,16 +142,7 @@ extension RecordsViewController {
     }
 
     private func configureFetchRequests() {
-        var fetchRequest: NSFetchRequest<Record>
-        if let fetchedRecordsController = fetchedRecordsController {
-            fetchRequest = fetchedRecordsController.fetchRequest
-        } else {
-            fetchRequest = Record.fetchRequest()
-            fetchRequest.sortDescriptors = [
-                NSSortDescriptor(keyPath: \Record.streetName, ascending: true)
-            ]
-        }
-
+        let fetchRequest = fetchedRecordsController.fetchRequest
         if let territory = territory {
             fetchRequest.predicate = NSPredicate(
                 format: "territory == %@",
@@ -142,16 +150,6 @@ extension RecordsViewController {
             )
         } else {
             fetchRequest.predicate = NSPredicate(format: "territory == NULL")
-        }
-
-        if fetchedRecordsController == nil {
-            fetchedRecordsController = NSFetchedResultsController<Record>(
-                fetchRequest: fetchRequest,
-                managedObjectContext: persistenceController.container.viewContext,
-                sectionNameKeyPath: nil,
-                cacheName: nil
-            )
-            fetchedRecordsController.delegate = self
         }
 
         do {
@@ -166,10 +164,7 @@ extension RecordsViewController {
         var snapshot = NSDiffableDataSourceSectionSnapshot<Record>()
 
         var items = [Record]()
-        if
-            let fetchedResultsController = fetchedRecordsController,
-            let records = fetchedResultsController.fetchedObjects
-        {
+        if let records = fetchedRecordsController.fetchedObjects {
             items = records
         }
 

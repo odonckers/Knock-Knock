@@ -18,7 +18,22 @@ class SidebarViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>!
 
-    private var fetchedTerritoriesController: NSFetchedResultsController<Territory>!
+    private lazy var fetchedTerritoriesController: NSFetchedResultsController<Territory> = {
+        let fetchRequest: NSFetchRequest = Territory.fetchRequest()
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(keyPath: \Territory.name, ascending: true)
+        ]
+
+        let fetchedTerritoriesController = NSFetchedResultsController<Territory>(
+            fetchRequest: fetchRequest,
+            managedObjectContext: persistenceController.container.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        fetchedTerritoriesController.delegate = self
+
+        return fetchedTerritoriesController
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -248,7 +263,7 @@ extension SidebarViewController: UICollectionViewDelegate {
         at indexPath: IndexPath
     ) {
         if let recordsViewController = recordsViewController() {
-            recordsViewController.setTerritory()
+            recordsViewController.selectedTerritory = nil
         }
     }
 
@@ -261,7 +276,7 @@ extension SidebarViewController: UICollectionViewDelegate {
             let recordsViewController = recordsViewController()
         else { return }
 
-        recordsViewController.setTerritory(territory)
+        recordsViewController.selectedTerritory = territory
     }
 }
 
@@ -337,19 +352,6 @@ extension SidebarViewController {
     }
 
     private func configureFetchRequests() {
-        let fetchRequest: NSFetchRequest = Territory.fetchRequest()
-        fetchRequest.sortDescriptors = [
-            NSSortDescriptor(keyPath: \Territory.name, ascending: true)
-        ]
-
-        fetchedTerritoriesController = NSFetchedResultsController<Territory>(
-            fetchRequest: fetchRequest,
-            managedObjectContext: persistenceController.container.viewContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil
-        )
-        fetchedTerritoriesController.delegate = self
-
         do {
             try fetchedTerritoriesController.performFetch()
             updateSnapshot()
@@ -378,10 +380,7 @@ extension SidebarViewController {
         let header: SidebarItem = .header(title: "Territories")
 
         var items = [SidebarItem]()
-        if
-            let fetchedResultsController = fetchedTerritoriesController,
-            let territories = fetchedResultsController.fetchedObjects
-        {
+        if let territories = fetchedTerritoriesController.fetchedObjects {
             items = territories.map { territory in
                 .row(
                     title: territory.wrappedName,
