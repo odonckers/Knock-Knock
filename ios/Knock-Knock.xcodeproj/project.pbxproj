@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F179801260959580046944E /* ManagedObjectChangesPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F179800260959580046944E /* ManagedObjectChangesPublisher.swift */; };
+		7F179806260A776C0046944E /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F179805260A776C0046944E /* TabBarItem.swift */; };
+		7F179818260A89CF0046944E /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 7F179817260A89CF0046944E /* Introspect */; };
+		7FF2D029260ABF7D00A54D72 /* RecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF2D028260ABF7D00A54D72 /* RecordsViewController.swift */; };
 		E21799C525EAC7F8005AB340 /* Introspect+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21799C425EAC7F8005AB340 /* Introspect+Extension.swift */; };
 		E24673BB25F0623600A0653B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24673BA25F0623600A0653B /* AppDelegate.swift */; };
 		E24673C625F0625700A0653B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24673C525F0625700A0653B /* SceneDelegate.swift */; };
-		E253C5CC25F0878900C0DDD8 /* SidebarNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E253C5CB25F0878900C0DDD8 /* SidebarNavigationViewController.swift */; };
+		E253C5CC25F0878900C0DDD8 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E253C5CB25F0878900C0DDD8 /* SidebarViewController.swift */; };
 		E25A15BF25E072740065517B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15BE25E072740065517B /* ContentView.swift */; };
 		E25A15C425E072780065517B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C325E072780065517B /* Assets.xcassets */; };
 		E25A15C725E072780065517B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C625E072780065517B /* Preview Assets.xcassets */; };
@@ -18,7 +22,6 @@
 		E25A15E025E072780065517B /* Knock_KnockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15DF25E072780065517B /* Knock_KnockUITests.swift */; };
 		E25A15F125E072F10065517B /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15F025E072F10065517B /* Persistence.swift */; };
 		E25A160525E073B90065517B /* NSManagedObjectContext+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A160425E073B90065517B /* NSManagedObjectContext+Extension.swift */; };
-		E25A161925E07A040065517B /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = E25A161825E07A040065517B /* Introspect */; };
 		E25A162B25E07AC60065517B /* Knock_Knock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E25A162925E07AC60065517B /* Knock_Knock.xcdatamodeld */; };
 		E25A163125E07B980065517B /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A163025E07B980065517B /* ContainerView.swift */; };
 		E25A163925E07BFF0065517B /* DeleteConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A163825E07BFF0065517B /* DeleteConfirmation.swift */; };
@@ -85,10 +88,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7F179800260959580046944E /* ManagedObjectChangesPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectChangesPublisher.swift; sourceTree = "<group>"; };
+		7F179805260A776C0046944E /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
+		7FF2D028260ABF7D00A54D72 /* RecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsViewController.swift; sourceTree = "<group>"; };
 		E21799C425EAC7F8005AB340 /* Introspect+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Introspect+Extension.swift"; sourceTree = "<group>"; };
 		E24673BA25F0623600A0653B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E24673C525F0625700A0653B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E253C5CB25F0878900C0DDD8 /* SidebarNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarNavigationViewController.swift; sourceTree = "<group>"; };
+		E253C5CB25F0878900C0DDD8 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
 		E25A15B725E072740065517B /* Knock-Knock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Knock-Knock.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E25A15BE25E072740065517B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E25A15C325E072780065517B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -156,7 +162,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E25A161925E07A040065517B /* Introspect in Frameworks */,
+				7F179818260A89CF0046944E /* Introspect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +257,7 @@
 				E25A164225E07F4C0065517B /* Bundle+Extension.swift */,
 				E25A164725E07F8D0065517B /* Configure.swift */,
 				E21799C425EAC7F8005AB340 /* Introspect+Extension.swift */,
+				7F179800260959580046944E /* ManagedObjectChangesPublisher.swift */,
 				E2BB6FDA25EB6DF600731EDE /* ModelManagedObject.swift */,
 				E25A160425E073B90065517B /* NSManagedObjectContext+Extension.swift */,
 				E25A166C25E080960065517B /* PlatformModifiers.swift */,
@@ -373,6 +380,7 @@
 		E25A16FF25E095A70065517B /* Records */ = {
 			isa = PBXGroup;
 			children = (
+				7FF2D028260ABF7D00A54D72 /* RecordsViewController.swift */,
 				E25A171D25E0B1AB0065517B /* RecordsView.swift */,
 				E25A171325E0B1530065517B /* RecordsListRow.swift */,
 			);
@@ -418,7 +426,8 @@
 				E25A175B25E0B46C0065517B /* SidebarNavigationView.swift */,
 				E25A176025E0B4A20065517B /* TabNavigationView.swift */,
 				E25A175325E0B4560065517B /* RecordsLabel.swift */,
-				E253C5CB25F0878900C0DDD8 /* SidebarNavigationViewController.swift */,
+				E253C5CB25F0878900C0DDD8 /* SidebarViewController.swift */,
+				7F179805260A776C0046944E /* TabBarItem.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -448,7 +457,7 @@
 			);
 			name = "Knock-Knock";
 			packageProductDependencies = (
-				E25A161825E07A040065517B /* Introspect */,
+				7F179817260A89CF0046944E /* Introspect */,
 			);
 			productName = "Knock-Knock";
 			productReference = E25A15B725E072740065517B /* Knock-Knock.app */;
@@ -522,7 +531,7 @@
 			);
 			mainGroup = E25A15AE25E072740065517B;
 			packageReferences = (
-				E25A161725E07A040065517B /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+				7F179816260A89CF0046944E /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = E25A15B825E072740065517B /* Products */;
 			projectDirPath = "";
@@ -601,6 +610,7 @@
 				E25A16AD25E0847C0065517B /* Door+Extension.swift in Sources */,
 				E25A166025E080190065517B /* LocationRequest.swift in Sources */,
 				E25A167F25E081750065517B /* UserDefault.swift in Sources */,
+				7FF2D029260ABF7D00A54D72 /* RecordsViewController.swift in Sources */,
 				E25A16C725E085940065517B /* AttemptPerson.swift in Sources */,
 				E25A164325E07F4C0065517B /* Bundle+Extension.swift in Sources */,
 				E21799C525EAC7F8005AB340 /* Introspect+Extension.swift in Sources */,
@@ -608,12 +618,14 @@
 				E25A173E25E0B3CD0065517B /* TerritoriesListRow.swift in Sources */,
 				E25A16C225E0857B0065517B /* AttemptSymbol.swift in Sources */,
 				E25A16A825E084390065517B /* Record+Extension.swift in Sources */,
-				E253C5CC25F0878900C0DDD8 /* SidebarNavigationViewController.swift in Sources */,
+				E253C5CC25F0878900C0DDD8 /* SidebarViewController.swift in Sources */,
 				E25A16ED25E093AA0065517B /* DoorsView.swift in Sources */,
 				E2BB6FDB25EB6DF600731EDE /* ModelManagedObject.swift in Sources */,
 				E2BB6FEE25EBE12000731EDE /* FramedSpacer.swift in Sources */,
 				E2F2117825EC224900BD96DE /* Theme.swift in Sources */,
 				E25A168925E0825E0065517B /* SearchBar.swift in Sources */,
+				7F179801260959580046944E /* ManagedObjectChangesPublisher.swift in Sources */,
+				7F179806260A776C0046944E /* TabBarItem.swift in Sources */,
 				E24673C625F0625700A0653B /* SceneDelegate.swift in Sources */,
 				E25A16F225E094DB0065517B /* GridLayoutButton.swift in Sources */,
 				E25A166D25E080960065517B /* PlatformModifiers.swift in Sources */,
@@ -789,7 +801,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Knock-Knock/Knock-Knock.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Knock-Knock/Preview Content\"";
-				DEVELOPMENT_TEAM = K238G2ZV74;
+				DEVELOPMENT_TEAM = J6PFETQJQU;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Knock-Knock/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -797,7 +809,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "donckersdev.Knock-Knock";
+				PRODUCT_BUNDLE_IDENTIFIER = "beta.donckersdev.Knock-Knock";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -812,7 +824,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Knock-Knock/Knock-Knock.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Knock-Knock/Preview Content\"";
-				DEVELOPMENT_TEAM = K238G2ZV74;
+				DEVELOPMENT_TEAM = J6PFETQJQU;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Knock-Knock/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -820,7 +832,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "donckersdev.Knock-Knock";
+				PRODUCT_BUNDLE_IDENTIFIER = "beta.donckersdev.Knock-Knock";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -953,7 +965,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E25A161725E07A040065517B /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+		7F179816260A89CF0046944E /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
 			requirement = {
@@ -964,9 +976,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E25A161825E07A040065517B /* Introspect */ = {
+		7F179817260A89CF0046944E /* Introspect */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E25A161725E07A040065517B /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			package = 7F179816260A89CF0046944E /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
 			productName = Introspect;
 		};
 /* End XCSwiftPackageProductDependency section */
