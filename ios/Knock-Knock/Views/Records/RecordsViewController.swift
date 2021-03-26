@@ -125,7 +125,18 @@ extension RecordsViewController {
 
             var contentConfiguration: UIListContentConfiguration = .accompaniedSidebarSubtitleCell()
             contentConfiguration.text = item.wrappedStreetName
-            contentConfiguration.secondaryText = item.city
+            contentConfiguration.textProperties.font = .systemFont(ofSize: 18)
+
+            var secondaryTexts: [String] = []
+            if let city = item.city {
+                secondaryTexts.append(city)
+            }
+            if let state = item.state {
+                secondaryTexts.append(state)
+            }
+            contentConfiguration.secondaryText = secondaryTexts.joined(
+                separator: ", "
+            )
 
             cell.contentConfiguration = contentConfiguration
         }

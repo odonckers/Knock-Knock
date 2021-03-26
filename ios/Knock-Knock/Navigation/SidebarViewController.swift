@@ -31,7 +31,6 @@ class SidebarViewController: UIViewController {
             cacheName: nil
         )
         fetchedTerritoriesController.delegate = self
-
         return fetchedTerritoriesController
     }()
 
@@ -61,6 +60,8 @@ class SidebarViewController: UIViewController {
             let toSave = Record(context: viewContext)
             toSave.willCreate()
             toSave.streetName = "This is a street"
+            toSave.city = "City"
+            toSave.state = "State"
             viewContext.unsafeSave()
         }
 

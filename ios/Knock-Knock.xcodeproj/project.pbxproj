@@ -36,8 +36,6 @@
 		E25A167A25E081430065517B /* StatefulPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A167925E081430065517B /* StatefulPreviewWrapper.swift */; };
 		E25A167F25E081750065517B /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A167E25E081750065517B /* UserDefault.swift */; };
 		E25A168425E081B60065517B /* FormLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A168325E081B60065517B /* FormLabel.swift */; };
-		E25A168925E0825E0065517B /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A168825E0825E0065517B /* SearchBar.swift */; };
-		E25A168E25E082990065517B /* ViewControllerResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A168D25E082990065517B /* ViewControllerResolver.swift */; };
 		E25A169625E083240065517B /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A169525E083240065517B /* Tag.swift */; };
 		E25A169B25E083A80065517B /* CardGroupBoxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A169A25E083A80065517B /* CardGroupBoxStyle.swift */; };
 		E25A16A325E083C20065517B /* FlatButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16A225E083C20065517B /* FlatButtonStyle.swift */; };
@@ -122,8 +120,6 @@
 		E25A167925E081430065517B /* StatefulPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulPreviewWrapper.swift; sourceTree = "<group>"; };
 		E25A167E25E081750065517B /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
 		E25A168325E081B60065517B /* FormLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormLabel.swift; sourceTree = "<group>"; };
-		E25A168825E0825E0065517B /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
-		E25A168D25E082990065517B /* ViewControllerResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerResolver.swift; sourceTree = "<group>"; };
 		E25A169525E083240065517B /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		E25A169A25E083A80065517B /* CardGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardGroupBoxStyle.swift; sourceTree = "<group>"; };
 		E25A16A225E083C20065517B /* FlatButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatButtonStyle.swift; sourceTree = "<group>"; };
@@ -302,9 +298,7 @@
 				E25A163D25E07CC30065517B /* FilledBackground.swift */,
 				E25A167925E081430065517B /* StatefulPreviewWrapper.swift */,
 				E25A168325E081B60065517B /* FormLabel.swift */,
-				E25A168825E0825E0065517B /* SearchBar.swift */,
 				E25A169525E083240065517B /* Tag.swift */,
-				E25A168D25E082990065517B /* ViewControllerResolver.swift */,
 				E2BB6FED25EBE12000731EDE /* FramedSpacer.swift */,
 			);
 			path = Components;
@@ -600,7 +594,6 @@
 				E2BB6FC125EB3F2600731EDE /* UIColor+Extension.swift in Sources */,
 				E25A171425E0B1530065517B /* RecordsListRow.swift in Sources */,
 				E25A16B225E084BD0065517B /* Attempt+Extension.swift in Sources */,
-				E25A168E25E082990065517B /* ViewControllerResolver.swift in Sources */,
 				E25A169B25E083A80065517B /* CardGroupBoxStyle.swift in Sources */,
 				E25A170725E095FE0065517B /* RecordFormView.swift in Sources */,
 				E25A15F125E072F10065517B /* Persistence.swift in Sources */,
@@ -623,7 +616,6 @@
 				E2BB6FDB25EB6DF600731EDE /* ModelManagedObject.swift in Sources */,
 				E2BB6FEE25EBE12000731EDE /* FramedSpacer.swift in Sources */,
 				E2F2117825EC224900BD96DE /* Theme.swift in Sources */,
-				E25A168925E0825E0065517B /* SearchBar.swift in Sources */,
 				7F179801260959580046944E /* ManagedObjectChangesPublisher.swift in Sources */,
 				7F179806260A776C0046944E /* TabBarItem.swift in Sources */,
 				E24673C625F0625700A0653B /* SceneDelegate.swift in Sources */,
