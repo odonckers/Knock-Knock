@@ -14,10 +14,6 @@ class SidebarViewController: UIViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.persistenceController
     }()
-
-    private var collectionView: UICollectionView!
-    private var dataSource: UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>!
-
     private lazy var fetchedTerritoriesController: NSFetchedResultsController<Territory> = {
         let fetchRequest: NSFetchRequest = Territory.fetchRequest()
         fetchRequest.sortDescriptors = [
@@ -34,13 +30,49 @@ class SidebarViewController: UIViewController {
         return fetchedTerritoriesController
     }()
 
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(
+            frame: view.bounds,
+            collectionViewLayout: createLayout()
+        )
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.backgroundColor = .systemBackground
+        collectionView.delegate = self
+        return collectionView
+    }()
+    private var dataSource: UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.addSubview(collectionView)
+
+        configureNavigationBar()
+        setupToolbar()
+
+        configureDataSource()
+        applyInitialSnapshot()
+
+        configureFetchRequests()
+
+        collectionView.selectItem(
+            at: IndexPath(row: 0, section: 0),
+            animated: false,
+            scrollPosition: .centeredVertically
+        )
+    }
+}
+
+// MARK: - Navigation Bar
+
+extension SidebarViewController {
+    private func configureNavigationBar() {
         title = "Home"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.setToolbarHidden(false, animated: false)
+    }
 
+    private func setupToolbar() {
         let addTerritoryAction = UIAction(
             title: "Add Territory",
             image: UIImage(systemName: "folder.badge.plus")
@@ -55,39 +87,27 @@ class SidebarViewController: UIViewController {
         ) { [weak self] action in
             guard let self = self else { return }
 
-            let viewContext = self.persistenceController.container.viewContext
-
-            let toSave = Record(context: viewContext)
-            toSave.willCreate()
-            toSave.streetName = "This is a street"
-            toSave.city = "City"
-            toSave.state = "State"
-            viewContext.unsafeSave()
+            let recordForm = HostingController(rootView: RecordFormView())
+            recordForm.modalPresentationStyle = .formSheet
+            self.present(recordForm, animated: true, completion: nil )
         }
 
         let menu = UIMenu(children: [addTerritoryAction, addRecordAction])
-        toolbarItems = [
-            UIBarButtonItem(systemItem: .flexibleSpace),
-            UIBarButtonItem(
-                image: UIImage(systemName: "plus.circle.fill"),
-                menu: menu
-            )
-        ]
-
-        configureCollectionView()
-        configureDataSource()
-        applyInitialSnapshot()
-        configureFetchRequests()
-
-        collectionView.selectItem(
-            at: IndexPath(row: 0, section: 0),
-            animated: false,
-            scrollPosition: .centeredVertically
+        setToolbarItems(
+            [
+                UIBarButtonItem(systemItem: .flexibleSpace),
+                UIBarButtonItem(
+                    image: UIImage(systemName: "plus.circle.fill"),
+                    menu: menu
+                )
+            ],
+            animated: false
         )
     }
 }
 
-@available(iOS 14, *)
+// MARK: - Menus
+
 extension SidebarViewController {
     private func presentTerritoryFormAlert(territory: Territory? = nil) {
         let alertController = UIAlertController(
@@ -138,22 +158,17 @@ extension SidebarViewController {
 
         present(alertController, animated: true)
     }
+
+    private func deleteTerritory(_ territory: Territory) {
+        persistenceController.container.viewContext.delete(territory)
+        persistenceController.container.viewContext.unsafeSave()
+    }
 }
+
+// MARK: - Collection View Config
 
 @available(iOS 14, *)
 extension SidebarViewController {
-    private func configureCollectionView() {
-        collectionView = UICollectionView(
-            frame: view.bounds,
-            collectionViewLayout: createLayout()
-        )
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = .systemBackground
-        collectionView.delegate = self
-
-        view.addSubview(collectionView)
-    }
-
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout() {
             (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
@@ -221,13 +236,6 @@ extension SidebarViewController {
     }
 }
 
-extension SidebarViewController {
-    private func deleteTerritory(_ territory: Territory) {
-        persistenceController.container.viewContext.delete(territory)
-        persistenceController.container.viewContext.unsafeSave()
-    }
-}
-
 @available(iOS 14, *)
 extension SidebarViewController: UICollectionViewDelegate {
     func collectionView(
@@ -281,21 +289,14 @@ extension SidebarViewController: UICollectionViewDelegate {
     }
 }
 
-@available(iOS 14, *)
-extension SidebarViewController: NSFetchedResultsControllerDelegate {
-    func controllerDidChangeContent(
-        _ controller: NSFetchedResultsController<NSFetchRequestResult>
-    ) {
-        updateSnapshot()
-    }
-}
+// MARK: - Data Source
 
 @available(iOS 14, *)
 extension SidebarViewController {
-    private func configureDataSource() {
-        let headerRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, SidebarItem> {
-            cell, indexPath, item in
+    private typealias CellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, SidebarItem>
 
+    private func configureDataSource() {
+        let headerRegistration = CellRegistration { cell, indexPath, item in
             var contentConfiguration = cell.defaultContentConfiguration()
             contentConfiguration.text = item.title
 
@@ -303,9 +304,7 @@ extension SidebarViewController {
             cell.accessories = [.outlineDisclosure()]
         }
 
-        let expandableRowRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, SidebarItem> {
-            cell, indexPath, item in
-
+        let expandableRowRegistration = CellRegistration { cell, indexPath, item in
             var contentConfiguration = cell.defaultContentConfiguration()
             contentConfiguration.text = item.title
             contentConfiguration.secondaryText = item.subtitle
@@ -315,9 +314,7 @@ extension SidebarViewController {
             cell.accessories = [.outlineDisclosure()]
         }
 
-        let rowRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, SidebarItem> {
-            cell, indexPath, item in
-
+        let rowRegistration = CellRegistration { cell, indexPath, item in
             var contentConfiguration = cell.defaultContentConfiguration()
             contentConfiguration.text = item.title
             contentConfiguration.secondaryText = item.subtitle
@@ -327,29 +324,30 @@ extension SidebarViewController {
         }
 
         dataSource = UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>(
-            collectionView: collectionView
-        ) { (collectionView, indexPath, item) -> UICollectionViewCell in
-            switch item.type {
-            case .header:
-                return collectionView.dequeueConfiguredReusableCell(
-                    using: headerRegistration,
-                    for: indexPath,
-                    item: item
-                )
-            case .expandableRow:
-                return collectionView.dequeueConfiguredReusableCell(
-                    using: expandableRowRegistration,
-                    for: indexPath,
-                    item: item
-                )
-            default:
-                return collectionView.dequeueConfiguredReusableCell(
-                    using: rowRegistration,
-                    for: indexPath,
-                    item: item
-                )
+            collectionView: collectionView,
+            cellProvider: { collectionView, indexPath, item in
+                switch item.type {
+                case .header:
+                    return collectionView.dequeueConfiguredReusableCell(
+                        using: headerRegistration,
+                        for: indexPath,
+                        item: item
+                    )
+                case .expandableRow:
+                    return collectionView.dequeueConfiguredReusableCell(
+                        using: expandableRowRegistration,
+                        for: indexPath,
+                        item: item
+                    )
+                default:
+                    return collectionView.dequeueConfiguredReusableCell(
+                        using: rowRegistration,
+                        for: indexPath,
+                        item: item
+                    )
+                }
             }
-        }
+        )
     }
 
     private func configureFetchRequests() {
@@ -417,6 +415,19 @@ extension SidebarViewController {
         dataSource.apply(snapshot, to: .territories)
     }
 }
+
+// MARK: - Core Data
+
+@available(iOS 14, *)
+extension SidebarViewController: NSFetchedResultsControllerDelegate {
+    func controllerDidChangeContent(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>
+    ) {
+        updateSnapshot()
+    }
+}
+
+// MARK: - Enums, Structs, etc.
 
 @available(iOS 14.0, *)
 extension SidebarViewController {

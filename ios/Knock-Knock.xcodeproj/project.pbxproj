@@ -10,6 +10,10 @@
 		7F179801260959580046944E /* ManagedObjectChangesPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F179800260959580046944E /* ManagedObjectChangesPublisher.swift */; };
 		7F179806260A776C0046944E /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F179805260A776C0046944E /* TabBarItem.swift */; };
 		7F179818260A89CF0046944E /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 7F179817260A89CF0046944E /* Introspect */; };
+		7F5310FF260E667300F5F3BE /* RecordCellContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5310FE260E667300F5F3BE /* RecordCellContentConfiguration.swift */; };
+		7F531104260E66B400F5F3BE /* RecordCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F531103260E66B400F5F3BE /* RecordCellContentView.swift */; };
+		7F53110F260E714900F5F3BE /* RecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53110E260E714900F5F3BE /* RecordCell.swift */; };
+		7F590A99260E4388004CE55F /* HostedControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F590A98260E4388004CE55F /* HostedControllerView.swift */; };
 		7FF2D029260ABF7D00A54D72 /* RecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF2D028260ABF7D00A54D72 /* RecordsViewController.swift */; };
 		E21799C525EAC7F8005AB340 /* Introspect+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21799C425EAC7F8005AB340 /* Introspect+Extension.swift */; };
 		E24673BB25F0623600A0653B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24673BA25F0623600A0653B /* AppDelegate.swift */; };
@@ -88,6 +92,10 @@
 /* Begin PBXFileReference section */
 		7F179800260959580046944E /* ManagedObjectChangesPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectChangesPublisher.swift; sourceTree = "<group>"; };
 		7F179805260A776C0046944E /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
+		7F5310FE260E667300F5F3BE /* RecordCellContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCellContentConfiguration.swift; sourceTree = "<group>"; };
+		7F531103260E66B400F5F3BE /* RecordCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCellContentView.swift; sourceTree = "<group>"; };
+		7F53110E260E714900F5F3BE /* RecordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCell.swift; sourceTree = "<group>"; };
+		7F590A98260E4388004CE55F /* HostedControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostedControllerView.swift; sourceTree = "<group>"; };
 		7FF2D028260ABF7D00A54D72 /* RecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsViewController.swift; sourceTree = "<group>"; };
 		E21799C425EAC7F8005AB340 /* Introspect+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Introspect+Extension.swift"; sourceTree = "<group>"; };
 		E24673BA25F0623600A0653B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -179,6 +187,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F5310FC260E663600F5F3BE /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				7F5310FD260E665900F5F3BE /* RecordCell */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		7F5310FD260E665900F5F3BE /* RecordCell */ = {
+			isa = PBXGroup;
+			children = (
+				7F5310FE260E667300F5F3BE /* RecordCellContentConfiguration.swift */,
+				7F531103260E66B400F5F3BE /* RecordCellContentView.swift */,
+				7F53110E260E714900F5F3BE /* RecordCell.swift */,
+			);
+			path = RecordCell;
+			sourceTree = "<group>";
+		};
 		E25A15AE25E072740065517B = {
 			isa = PBXGroup;
 			children = (
@@ -296,6 +322,7 @@
 				E25A163025E07B980065517B /* ContainerView.swift */,
 				E25A163825E07BFF0065517B /* DeleteConfirmation.swift */,
 				E25A163D25E07CC30065517B /* FilledBackground.swift */,
+				7F590A98260E4388004CE55F /* HostedControllerView.swift */,
 				E25A167925E081430065517B /* StatefulPreviewWrapper.swift */,
 				E25A168325E081B60065517B /* FormLabel.swift */,
 				E25A169525E083240065517B /* Tag.swift */,
@@ -374,6 +401,7 @@
 		E25A16FF25E095A70065517B /* Records */ = {
 			isa = PBXGroup;
 			children = (
+				7F5310FC260E663600F5F3BE /* Components */,
 				7FF2D028260ABF7D00A54D72 /* RecordsViewController.swift */,
 				E25A171D25E0B1AB0065517B /* RecordsView.swift */,
 				E25A171325E0B1530065517B /* RecordsListRow.swift */,
@@ -580,6 +608,7 @@
 				E25A16CC25E085E50065517B /* Attempt+SwiftUI.swift in Sources */,
 				E25A167525E080D00065517B /* SheetState.swift in Sources */,
 				E2BB6FE925EBE0AA00731EDE /* Spacing.swift in Sources */,
+				7F590A99260E4388004CE55F /* HostedControllerView.swift in Sources */,
 				E25A169625E083240065517B /* Tag.swift in Sources */,
 				E25A167A25E081430065517B /* StatefulPreviewWrapper.swift in Sources */,
 				E27AAB0D25ED8B9D00342603 /* Color+Extension.swift in Sources */,
@@ -602,11 +631,13 @@
 				E25A165425E07FC70065517B /* LocationManager.swift in Sources */,
 				E25A16AD25E0847C0065517B /* Door+Extension.swift in Sources */,
 				E25A166025E080190065517B /* LocationRequest.swift in Sources */,
+				7F5310FF260E667300F5F3BE /* RecordCellContentConfiguration.swift in Sources */,
 				E25A167F25E081750065517B /* UserDefault.swift in Sources */,
 				7FF2D029260ABF7D00A54D72 /* RecordsViewController.swift in Sources */,
 				E25A16C725E085940065517B /* AttemptPerson.swift in Sources */,
 				E25A164325E07F4C0065517B /* Bundle+Extension.swift in Sources */,
 				E21799C525EAC7F8005AB340 /* Introspect+Extension.swift in Sources */,
+				7F531104260E66B400F5F3BE /* RecordCellContentView.swift in Sources */,
 				E25A166825E0804E0065517B /* Binding+Extension.swift in Sources */,
 				E25A173E25E0B3CD0065517B /* TerritoriesListRow.swift in Sources */,
 				E25A16C225E0857B0065517B /* AttemptSymbol.swift in Sources */,
@@ -616,6 +647,7 @@
 				E2BB6FDB25EB6DF600731EDE /* ModelManagedObject.swift in Sources */,
 				E2BB6FEE25EBE12000731EDE /* FramedSpacer.swift in Sources */,
 				E2F2117825EC224900BD96DE /* Theme.swift in Sources */,
+				7F53110F260E714900F5F3BE /* RecordCell.swift in Sources */,
 				7F179801260959580046944E /* ManagedObjectChangesPublisher.swift in Sources */,
 				7F179806260A776C0046944E /* TabBarItem.swift in Sources */,
 				E24673C625F0625700A0653B /* SceneDelegate.swift in Sources */,

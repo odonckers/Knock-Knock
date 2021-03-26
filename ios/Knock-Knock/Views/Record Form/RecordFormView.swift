@@ -8,7 +8,9 @@
 import Introspect
 import SwiftUI
 
-struct RecordFormView: View {
+struct RecordFormView: HostedControllerView {
+    var dismiss: (() -> Void)?
+
     var record: Record? = nil
     var territory: Territory? = nil
 
@@ -30,11 +32,13 @@ struct RecordFormView: View {
         }
     }
 
-    @Environment(\.managedObjectContext)
-    private var viewContext
-
     @Environment(\.presentationMode)
     private var presentationMode
+
+    private var persistenceController: PersistenceController = {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.persistenceController
+    }()
 
     @State var selectedTypeIndex = 0
     @State var streetName = ""
@@ -76,9 +80,11 @@ struct RecordFormView: View {
                 ToolbarItem(placement: .confirmationAction) { saveButton }
             }
         }
-        .introspectViewController { viewController in
-            viewController.isModalInPresentation = true
-        }
+    }
+
+    private func closePresentation() {
+        if let dismiss = dismiss { dismiss() }
+        else { presentationMode.wrappedValue.dismiss() }
     }
 
     // MARK: - Type Picker
@@ -132,7 +138,7 @@ struct RecordFormView: View {
     // MARK: - Cancel Button
 
     @ViewBuilder private var cancelButton: some View {
-        Button(action: { presentationMode.wrappedValue.dismiss() }) {
+        Button(action: closePresentation) {
             Text("general.cancel")
         }
     }
@@ -154,27 +160,26 @@ struct RecordFormView: View {
     }
 
     func save() {
-        withAnimation {
-            var toSave: Record
-            if let record = record {
-                toSave = record
-                toSave.willUpdate()
-            } else {
-                toSave = Record(context: viewContext)
-                toSave.willCreate()
-            }
-
-            toSave.wrappedType = isApartment ? .apartment : .street
-            toSave.apartmentNumber = isApartment ? apartmentNumber : nil
-            toSave.streetName = streetName
-            toSave.city = city
-            toSave.state = state
-            toSave.territory = territory
-
-            viewContext.unsafeSave()
+        var toSave: Record
+        if let record = record {
+            toSave = record
+            toSave.willUpdate()
+        } else {
+            toSave = Record(
+                context: persistenceController.container.viewContext
+            )
+            toSave.willCreate()
         }
 
-        presentationMode.wrappedValue.dismiss()
+        toSave.wrappedType = isApartment ? .apartment : .street
+        toSave.apartmentNumber = isApartment ? apartmentNumber : nil
+        toSave.streetName = streetName
+        toSave.city = city
+        toSave.state = state
+        toSave.territory = territory
+
+        persistenceController.container.viewContext.unsafeSave()
+        closePresentation()
     }
 }
 

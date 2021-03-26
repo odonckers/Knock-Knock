@@ -20,17 +20,12 @@ class RecordsViewController: UIViewController {
             applySnapshot()
         }
     }
-
     private var territory: Territory?
 
     private lazy var persistenceController: PersistenceController = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.persistenceController
     }()
-
-    private var collectionView: UICollectionView!
-    private var dataSource: UICollectionViewDiffableDataSource<Int, Record>!
-
     private lazy var fetchedRecordsController: NSFetchedResultsController<Record> = {
         var fetchRequest: NSFetchRequest<Record> = Record.fetchRequest()
         fetchRequest.sortDescriptors = [
@@ -47,25 +42,32 @@ class RecordsViewController: UIViewController {
         return fetchedRecordsController
     }()
 
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(
+            frame: view.bounds,
+            collectionViewLayout: createLayout()
+        )
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.backgroundColor = .systemBackground
+        collectionView.delegate = self
+        return collectionView
+    }()
+    private var dataSource: UICollectionViewDiffableDataSource<Int, Record>!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = territory != nil ? territory!.wrappedName : "Records"
+        view.addSubview(collectionView)
 
-        if let navigationController = navigationController {
-            navigationController.navigationBar.prefersLargeTitles = true
-            navigationController.tabBarItem.image = UIImage(
-                systemName: "note.text"
-            )
-            navigationController.tabBarItem.title = "Records"
-        }
+        setupNavigationBar()
 
-        configureCollectionView()
         configureDataSource()
         applySnapshot()
         configureFetchRequests()
     }
+}
 
+extension RecordsViewController {
     func setTerritory(_ territory: Territory? = nil) {
         self.territory = territory
         title = territory != nil ? territory!.wrappedName : "Records"
@@ -76,18 +78,19 @@ class RecordsViewController: UIViewController {
 }
 
 extension RecordsViewController {
-    private func configureCollectionView() {
-        collectionView = UICollectionView(
-            frame: view.bounds,
-            collectionViewLayout: createLayout()
-        )
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = .systemBackground
-        collectionView.delegate = self
-
-        view.addSubview(collectionView)
+    private func setupNavigationBar() {
+        title = territory != nil ? territory!.wrappedName : "Records"
+        if let navigationController = navigationController {
+            navigationController.navigationBar.prefersLargeTitles = true
+            navigationController.tabBarItem.image = UIImage(
+                systemName: "note.text"
+            )
+            navigationController.tabBarItem.title = "Records"
+        }
     }
+}
 
+extension RecordsViewController {
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout() {
             (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
@@ -97,6 +100,60 @@ extension RecordsViewController {
             )
             configuration.showsSeparators = true
             configuration.headerMode = .none
+
+            configuration.trailingSwipeActionsConfigurationProvider = {
+                [weak self] indexPath in
+
+                guard let self = self else { return nil }
+
+                let editAction = UIContextualAction(
+                    style: .normal,
+                    title: "Edit"
+                ) { action, view, completion in
+                    completion(true)
+                }
+                editAction.image = UIImage(systemName: "pencil")
+                editAction.backgroundColor = .systemBlue
+
+                let deleteAction = UIContextualAction(
+                    style: .destructive,
+                    title: "Delete"
+                ) { [weak self] action, view, completion in
+                    guard let self = self else { return }
+
+                    let defaultAction = UIAlertAction(
+                        title: "Confirm",
+                        style: .default
+                    ) { action in
+                    }
+                    let cancelAction = UIAlertAction(
+                        title: "Cancel",
+                        style: .cancel
+                    ) { action in
+                    }
+
+                    // Create and configure the alert controller.
+                    let alert = UIAlertController(
+                        title: "Are you sure?",
+                        message: "This action will permanently delete it.",
+                        preferredStyle: .alert
+                    )
+                    alert.addAction(defaultAction)
+                    alert.addAction(cancelAction)
+
+                    self.present(alert, animated: true) {
+                       // The alert was presented
+                    }
+
+                    completion(true)
+                }
+                deleteAction.image = UIImage(systemName: "trash")
+                deleteAction.backgroundColor = .systemRed
+
+                return UISwipeActionsConfiguration(
+                    actions: [deleteAction, editAction]
+                )
+            }
 
             let section: NSCollectionLayoutSection = .list(
                 using: configuration,
@@ -119,37 +176,23 @@ extension RecordsViewController: NSFetchedResultsControllerDelegate {
 }
 
 extension RecordsViewController {
+    private typealias CellRegistration = UICollectionView.CellRegistration<RecordCell, Record>
+
     private func configureDataSource() {
-        let rowRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Record> {
-            cell, indexPath, item in
-
-            var contentConfiguration: UIListContentConfiguration = .accompaniedSidebarSubtitleCell()
-            contentConfiguration.text = item.wrappedStreetName
-            contentConfiguration.textProperties.font = .systemFont(ofSize: 18)
-
-            var secondaryTexts: [String] = []
-            if let city = item.city {
-                secondaryTexts.append(city)
-            }
-            if let state = item.state {
-                secondaryTexts.append(state)
-            }
-            contentConfiguration.secondaryText = secondaryTexts.joined(
-                separator: ", "
-            )
-
-            cell.contentConfiguration = contentConfiguration
+        let rowRegistration = CellRegistration { cell, indexPath, item in
+            cell.record = item
         }
 
         dataSource = UICollectionViewDiffableDataSource<Int, Record>(
-            collectionView: collectionView
-        ) { (collectionView, indexPath, item) -> UICollectionViewCell in
-            return collectionView.dequeueConfiguredReusableCell(
-                using: rowRegistration,
-                for: indexPath,
-                item: item
-            )
-        }
+            collectionView: collectionView,
+            cellProvider: { collectionView, indexPath, item in
+                collectionView.dequeueConfiguredReusableCell(
+                    using: rowRegistration,
+                    for: indexPath,
+                    item: item
+                )
+            }
+        )
     }
 
     private func configureFetchRequests() {
