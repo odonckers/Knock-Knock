@@ -445,10 +445,10 @@
 		E25A175225E0B4450065517B /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				E253C5CB25F0878900C0DDD8 /* SidebarViewController.swift */,
 				E25A175B25E0B46C0065517B /* SidebarNavigationView.swift */,
 				E25A176025E0B4A20065517B /* TabNavigationView.swift */,
 				E25A175325E0B4560065517B /* RecordsLabel.swift */,
-				E253C5CB25F0878900C0DDD8 /* SidebarViewController.swift */,
 				7F179805260A776C0046944E /* TabBarItem.swift */,
 			);
 			path = Navigation;

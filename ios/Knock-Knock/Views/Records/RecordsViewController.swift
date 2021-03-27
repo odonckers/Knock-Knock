@@ -59,7 +59,7 @@ class RecordsViewController: UIViewController {
 
         view.addSubview(collectionView)
 
-        setupNavigationBar()
+        configureNavigationBar()
 
         configureDataSource()
         applySnapshot()
@@ -78,7 +78,7 @@ extension RecordsViewController {
 }
 
 extension RecordsViewController {
-    private func setupNavigationBar() {
+    private func configureNavigationBar() {
         title = territory != nil ? territory!.wrappedName : "Records"
         if let navigationController = navigationController {
             navigationController.navigationBar.prefersLargeTitles = true
@@ -87,6 +87,26 @@ extension RecordsViewController {
             )
             navigationController.tabBarItem.title = "Records"
         }
+
+        let addRecordAction = UIAction(
+            title: "Add Record",
+            image: UIImage(systemName: "doc.badge.plus")
+        ) { [weak self] action in
+            guard let self = self else { return }
+
+            let recordForm = HostingController(
+                rootView: RecordFormView(territory: self.territory)
+            )
+            recordForm.modalPresentationStyle = .formSheet
+            self.present(recordForm, animated: true, completion: nil )
+        }
+
+        let addRecordButton = UIBarButtonItem(
+            title: "Add Record",
+            image: UIImage(systemName: "plus.circle.fill"),
+            primaryAction: addRecordAction
+        )
+        navigationItem.rightBarButtonItem = addRecordButton
     }
 }
 
@@ -113,7 +133,7 @@ extension RecordsViewController {
                     completion(true)
                 }
                 editAction.image = UIImage(systemName: "pencil")
-                editAction.backgroundColor = .systemBlue
+                editAction.backgroundColor = .systemGray2
 
                 let deleteAction = UIContextualAction(
                     style: .destructive,

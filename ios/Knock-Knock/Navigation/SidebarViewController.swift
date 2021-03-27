@@ -204,7 +204,7 @@ extension SidebarViewController {
                         completion(true)
                     }
                     editAction.image = UIImage(systemName: "pencil")
-                    editAction.backgroundColor = .systemBlue
+                    editAction.backgroundColor = .systemGray2
 
                     let deleteAction = UIContextualAction(
                         style: .destructive,
