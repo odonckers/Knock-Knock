@@ -17,19 +17,6 @@ struct RecordFormView: HostedControllerView {
     init(record: Record? = nil, territory: Territory? = nil) {
         self.record = record
         self.territory = territory
-
-        if let record = record {
-            selectedTypeIndex = Int(record.wrappedType.rawValue)
-
-            if let streetName = record.streetName {
-                self.streetName = streetName
-            }
-            if let city = record.city { self.city = city }
-            if let state = record.state { self.state = state }
-            if let apartmentNumber = record.apartmentNumber {
-                self.apartmentNumber = apartmentNumber
-            }
-        }
     }
 
     @Environment(\.presentationMode)
@@ -78,6 +65,20 @@ struct RecordFormView: HostedControllerView {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { cancelButton }
                 ToolbarItem(placement: .confirmationAction) { saveButton }
+            }
+        }
+        .onAppear {
+            if let record = record {
+                selectedTypeIndex = Int(record.wrappedType.rawValue)
+
+                if let streetName = record.streetName {
+                    self.streetName = streetName
+                }
+                if let city = record.city { self.city = city }
+                if let state = record.state { self.state = state }
+                if let apartmentNumber = record.apartmentNumber {
+                    self.apartmentNumber = apartmentNumber
+                }
             }
         }
     }

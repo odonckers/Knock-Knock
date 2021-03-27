@@ -124,13 +124,27 @@ extension RecordsViewController {
             configuration.trailingSwipeActionsConfigurationProvider = {
                 [weak self] indexPath in
 
-                guard let self = self else { return nil }
+                guard
+                    let self = self,
+                    let record = self.dataSource.itemIdentifier(for: indexPath)
+                else { return nil }
 
                 let editAction = UIContextualAction(
                     style: .normal,
                     title: "Edit"
                 ) { action, view, completion in
-                    completion(true)
+                    let recordForm = HostingController(
+                        rootView: RecordFormView(
+                            record: record,
+                            territory: self.territory
+                        )
+                    )
+                    recordForm.modalPresentationStyle = .formSheet
+                    self.present(
+                        recordForm,
+                        animated: true,
+                        completion: { completion(true) }
+                    )
                 }
                 editAction.image = UIImage(systemName: "pencil")
                 editAction.backgroundColor = .systemGray2
