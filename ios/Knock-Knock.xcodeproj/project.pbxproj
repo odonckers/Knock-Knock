@@ -20,7 +20,6 @@
 		E24673BB25F0623600A0653B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24673BA25F0623600A0653B /* AppDelegate.swift */; };
 		E24673C625F0625700A0653B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24673C525F0625700A0653B /* SceneDelegate.swift */; };
 		E253C5CC25F0878900C0DDD8 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E253C5CB25F0878900C0DDD8 /* SidebarViewController.swift */; };
-		E25A15BF25E072740065517B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15BE25E072740065517B /* ContentView.swift */; };
 		E25A15C425E072780065517B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C325E072780065517B /* Assets.xcassets */; };
 		E25A15C725E072780065517B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C625E072780065517B /* Preview Assets.xcassets */; };
 		E25A15D525E072780065517B /* Knock_KnockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15D425E072780065517B /* Knock_KnockTests.swift */; };
@@ -61,9 +60,6 @@
 		E25A173925E0B3880065517B /* TerritoryFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A173825E0B3880065517B /* TerritoryFormView.swift */; };
 		E25A173E25E0B3CD0065517B /* TerritoriesListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A173D25E0B3CD0065517B /* TerritoriesListRow.swift */; };
 		E25A174B25E0B4160065517B /* TerritoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A174A25E0B4160065517B /* TerritoriesView.swift */; };
-		E25A175425E0B4560065517B /* RecordsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A175325E0B4560065517B /* RecordsLabel.swift */; };
-		E25A175C25E0B46C0065517B /* SidebarNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A175B25E0B46C0065517B /* SidebarNavigationView.swift */; };
-		E25A176125E0B4A20065517B /* TabNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A176025E0B4A20065517B /* TabNavigationView.swift */; };
 		E27AAB0D25ED8B9D00342603 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AAB0C25ED8B9D00342603 /* Color+Extension.swift */; };
 		E2BB6FC125EB3F2600731EDE /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FC025EB3F2600731EDE /* UIColor+Extension.swift */; };
 		E2BB6FDB25EB6DF600731EDE /* ModelManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FDA25EB6DF600731EDE /* ModelManagedObject.swift */; };
@@ -104,7 +100,6 @@
 		E24673C525F0625700A0653B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E253C5CB25F0878900C0DDD8 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
 		E25A15B725E072740065517B /* Knock-Knock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Knock-Knock.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E25A15BE25E072740065517B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E25A15C325E072780065517B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E25A15C625E072780065517B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E25A15CB25E072780065517B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -150,9 +145,6 @@
 		E25A173825E0B3880065517B /* TerritoryFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoryFormView.swift; sourceTree = "<group>"; };
 		E25A173D25E0B3CD0065517B /* TerritoriesListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoriesListRow.swift; sourceTree = "<group>"; };
 		E25A174A25E0B4160065517B /* TerritoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoriesView.swift; sourceTree = "<group>"; };
-		E25A175325E0B4560065517B /* RecordsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsLabel.swift; sourceTree = "<group>"; };
-		E25A175B25E0B46C0065517B /* SidebarNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarNavigationView.swift; sourceTree = "<group>"; };
-		E25A176025E0B4A20065517B /* TabNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabNavigationView.swift; sourceTree = "<group>"; };
 		E25A176525E0B52B0065517B /* Knock-Knock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Knock-Knock.entitlements"; sourceTree = "<group>"; };
 		E27AAB0C25ED8B9D00342603 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		E2BB6FC025EB3F2600731EDE /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -233,14 +225,12 @@
 				E25A162F25E07B8D0065517B /* Components */,
 				E27AAB2325EEB08500342603 /* Localization */,
 				E25A161225E077FC0065517B /* Models */,
-				E25A175225E0B4450065517B /* Navigation */,
 				E25A165225E07FBA0065517B /* Services */,
 				E25A161625E079620065517B /* Theme */,
 				E25A160025E073AC0065517B /* Utilities */,
 				E25A16D825E08A380065517B /* Views */,
 				E24673BA25F0623600A0653B /* AppDelegate.swift */,
 				E24673C525F0625700A0653B /* SceneDelegate.swift */,
-				E25A15BE25E072740065517B /* ContentView.swift */,
 				E25A15CB25E072780065517B /* Info.plist */,
 				E25A176525E0B52B0065517B /* Knock-Knock.entitlements */,
 				E25A15C525E072780065517B /* Preview Content */,
@@ -383,6 +373,7 @@
 		E25A16D825E08A380065517B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E25A175225E0B4450065517B /* Navigation */,
 				E25A172E25E0B2C40065517B /* Territories */,
 				E25A172F25E0B31E0065517B /* Territory Form */,
 				E25A16FF25E095A70065517B /* Records */,
@@ -449,9 +440,6 @@
 			isa = PBXGroup;
 			children = (
 				E253C5CB25F0878900C0DDD8 /* SidebarViewController.swift */,
-				E25A175B25E0B46C0065517B /* SidebarNavigationView.swift */,
-				E25A176025E0B4A20065517B /* TabNavigationView.swift */,
-				E25A175325E0B4560065517B /* RecordsLabel.swift */,
 				7F179805260A776C0046944E /* TabBarItem.swift */,
 			);
 			path = Navigation;
@@ -603,7 +591,6 @@
 			files = (
 				E25A164825E07F8D0065517B /* Configure.swift in Sources */,
 				E25A162B25E07AC60065517B /* Knock_Knock.xcdatamodeld in Sources */,
-				E25A176125E0B4A20065517B /* TabNavigationView.swift in Sources */,
 				E25A16D125E0863C0065517B /* Record+SwiftUI.swift in Sources */,
 				E25A174B25E0B4160065517B /* TerritoriesView.swift in Sources */,
 				E25A16A325E083C20065517B /* FlatButtonStyle.swift in Sources */,
@@ -615,10 +602,8 @@
 				E25A169625E083240065517B /* Tag.swift in Sources */,
 				E25A167A25E081430065517B /* StatefulPreviewWrapper.swift in Sources */,
 				E27AAB0D25ED8B9D00342603 /* Color+Extension.swift in Sources */,
-				E25A15BF25E072740065517B /* ContentView.swift in Sources */,
 				E25A163125E07B980065517B /* ContainerView.swift in Sources */,
 				E24673BB25F0623600A0653B /* AppDelegate.swift in Sources */,
-				E25A175C25E0B46C0065517B /* SidebarNavigationView.swift in Sources */,
 				E25A171E25E0B1AB0065517B /* RecordsView.swift in Sources */,
 				E25A163E25E07CC30065517B /* FilledBackground.swift in Sources */,
 				E25A16BA25E0854C0065517B /* RecordType.swift in Sources */,
@@ -658,7 +643,6 @@
 				E25A16F225E094DB0065517B /* GridLayoutButton.swift in Sources */,
 				E25A166D25E080960065517B /* PlatformModifiers.swift in Sources */,
 				E25A168425E081B60065517B /* FormLabel.swift in Sources */,
-				E25A175425E0B4560065517B /* RecordsLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

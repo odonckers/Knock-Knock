@@ -306,7 +306,7 @@ extension SidebarViewController {
 
     private func territoriesSnapshot() -> NSDiffableDataSourceSectionSnapshot<SidebarItem> {
         var snapshot = NSDiffableDataSourceSectionSnapshot<SidebarItem>()
-        let header: SidebarItem = .header(title: "Territories")
+        let header: SidebarItem = .header(title: TabBarItem.territories.title)
 
         var items = [SidebarItem]()
         if let territories = fetchedTerritoriesController.fetchedObjects {

@@ -14,7 +14,9 @@ class RecordsViewController: UIViewController {
         get { territory }
         set(newValue) {
             territory = newValue
-            title = newValue != nil ? newValue!.wrappedName : "Records"
+            title = newValue != nil
+                ? newValue!.wrappedName
+                : TabBarItem.records.title
             refreshFetchRequests()
         }
     }
@@ -42,13 +44,13 @@ class RecordsViewController: UIViewController {
 
 extension RecordsViewController {
     private func configureNavigationBar() {
-        title = territory != nil ? territory!.wrappedName : "Records"
+        title = territory != nil
+            ? territory!.wrappedName
+            : TabBarItem.records.title
         if let navigationController = navigationController {
             navigationController.navigationBar.prefersLargeTitles = true
-            navigationController.tabBarItem.image = UIImage(
-                systemName: "note.text"
-            )
-            navigationController.tabBarItem.title = "Records"
+            navigationController.tabBarItem.image = TabBarItem.records.image
+            navigationController.tabBarItem.title = TabBarItem.records.title
         }
 
         let addRecordButton = UIBarButtonItem(
