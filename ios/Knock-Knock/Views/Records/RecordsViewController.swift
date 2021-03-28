@@ -25,7 +25,7 @@ class RecordsViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Int, Record>!
 
-    private var persistenceController: PersistenceController!
+    private var viewContext: NSManagedObjectContext!
     private var fetchedRecordsController: NSFetchedResultsController<Record>!
 
     override func viewDidLoad() {
@@ -37,7 +37,7 @@ class RecordsViewController: UIViewController {
 
         configureDataSource()
 
-        configurePersistenceController()
+        configureViewContext()
         configureFetchRequests()
     }
 }
@@ -224,9 +224,9 @@ extension RecordsViewController {
 }
 
 extension RecordsViewController {
-    private func configurePersistenceController() {
+    private func configureViewContext() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        persistenceController = appDelegate.persistenceController
+        viewContext = appDelegate.persistenceController.container.viewContext
     }
 
     private func configureFetchRequests() {
@@ -234,10 +234,11 @@ extension RecordsViewController {
         fetchRequest.sortDescriptors = [
             NSSortDescriptor(keyPath: \Record.streetName, ascending: true)
         ]
+        fetchRequest.predicate = NSPredicate(format: "territory == NULL")
 
         fetchedRecordsController = NSFetchedResultsController<Record>(
             fetchRequest: fetchRequest,
-            managedObjectContext: persistenceController.container.viewContext,
+            managedObjectContext: viewContext,
             sectionNameKeyPath: nil,
             cacheName: nil
         )
@@ -287,10 +288,8 @@ extension RecordsViewController {
     }
 
     private func deleteRecord(_ record: Record) {
-        persistenceController.container.viewContext.delete(
-            record
-        )
-        persistenceController.container.viewContext.unsafeSave()
+        viewContext.delete(record)
+        viewContext.unsafeSave()
     }
 
     private func updateRecord(at indexPath: IndexPath) {

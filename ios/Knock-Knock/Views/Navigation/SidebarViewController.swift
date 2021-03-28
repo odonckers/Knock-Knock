@@ -14,7 +14,7 @@ class SidebarViewController: UIViewController {
 
     private var dataSource: UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>!
 
-    private var persistenceController: PersistenceController!
+    private var viewContext: NSManagedObjectContext!
     private var fetchedTerritoriesController: NSFetchedResultsController<Territory>!
 
     override func viewDidLoad() {
@@ -27,7 +27,7 @@ class SidebarViewController: UIViewController {
 
         configureDataSource()
 
-        configurePersistenceController()
+        configureViewContext()
         configureFetchRequests()
     }
 }
@@ -354,9 +354,9 @@ extension SidebarViewController {
 
 @available(iOS 14, *)
 extension SidebarViewController {
-    private func configurePersistenceController() {
+    private func configureViewContext() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        persistenceController = appDelegate.persistenceController
+        viewContext = appDelegate.persistenceController.container.viewContext
     }
 
     private func configureFetchRequests() {
@@ -367,7 +367,7 @@ extension SidebarViewController {
 
         fetchedTerritoriesController = NSFetchedResultsController<Territory>(
             fetchRequest: fetchRequest,
-            managedObjectContext: persistenceController.container.viewContext,
+            managedObjectContext: viewContext,
             sectionNameKeyPath: nil,
             cacheName: nil
         )
@@ -423,19 +423,17 @@ extension SidebarViewController {
 
             let nameField = textFields[0]
 
-            let viewContext = self.persistenceController.container.viewContext
-
             var toSave: Territory
             if let territory = territory {
                 toSave = territory
                 toSave.willUpdate()
             } else {
-                toSave = Territory(context: viewContext)
+                toSave = Territory(context: self.viewContext)
                 toSave.willCreate()
             }
 
             toSave.name = nameField.text
-            viewContext.unsafeSave()
+            self.viewContext.unsafeSave()
         }
         alertController.addAction(submitAction)
 
@@ -456,8 +454,8 @@ extension SidebarViewController {
     }
 
     private func deleteTerritory(_ territory: Territory) {
-        persistenceController.container.viewContext.delete(territory)
-        persistenceController.container.viewContext.unsafeSave()
+        viewContext.delete(territory)
+        viewContext.unsafeSave()
     }
 }
 
