@@ -32,7 +32,7 @@ struct FlatButtonStyle: ButtonStyle {
 #if DEBUG
 struct FlatButtonStyle_Previews: PreviewProvider {
     static var previews: some View {
-        Button(action: { }) {
+        Button {} label: {
             Text("Hello World")
         }
         .buttonStyle(FlatButtonStyle())

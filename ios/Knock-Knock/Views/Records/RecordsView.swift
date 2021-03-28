@@ -43,7 +43,7 @@ struct RecordsView: View {
         )
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
-                Button(action: { sheet.present(.recordForm) }) {
+                Button { sheet.present(.recordForm) } label: {
                     Label("records.add", systemImage: "note.text.badge.plus")
                 }
             }
@@ -67,12 +67,12 @@ struct RecordsView: View {
             LclRow(record: record)
         }
         .contextMenu {
-            Button(action: { sheet.present(.recordForm, with: record) }) {
+            Button { sheet.present(.recordForm, with: record) } label: {
                 Label("general.edit", systemImage: "pencil")
             }
 
             Menu {
-                Button(action: { delete(record) }) {
+                Button { delete(record) } label: {
                     Label(
                         "general.permenantlyDelete",
                         systemImage: "trash"

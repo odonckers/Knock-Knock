@@ -118,26 +118,26 @@ extension RecordsViewController {
                         return
                     }
 
-                    let confirmAction = UIAlertAction(
-                        title: "Confirm",
-                        style: .default,
-                        handler: { action in
-                            self.deleteRecord(at: indexPath)
-                            completion(true)
-                        }
-                    )
+                    let deleteAction = UIAlertAction(
+                        title: "Delete",
+                        style: .destructive
+                    ) { action in
+                        self.deleteRecord(at: indexPath)
+                        completion(true)
+                    }
                     let cancelAction = UIAlertAction(
                         title: "Cancel",
-                        style: .cancel,
-                        handler: { _ in completion(false) }
-                    )
+                        style: .cancel
+                    ) { _ in
+                        completion(false)
+                    }
 
                     let alert = UIAlertController(
                         title: "Are you sure?",
-                        message: "This action will permanently delete it.",
+                        message: "This action is permanent and cannot be undone.",
                         preferredStyle: .alert
                     )
-                    alert.addAction(confirmAction)
+                    alert.addAction(deleteAction)
                     alert.addAction(cancelAction)
 
                     self.present(alert, animated: true)
@@ -185,15 +185,14 @@ extension RecordsViewController {
         }
 
         dataSource = UICollectionViewDiffableDataSource<Int, Record>(
-            collectionView: collectionView,
-            cellProvider: { collectionView, indexPath, item in
-                collectionView.dequeueConfiguredReusableCell(
-                    using: rowRegistration,
-                    for: indexPath,
-                    item: item
-                )
-            }
-        )
+            collectionView: collectionView
+        ) { collectionView, indexPath, item in
+            collectionView.dequeueConfiguredReusableCell(
+                using: rowRegistration,
+                for: indexPath,
+                item: item
+            )
+        }
     }
 
     private func recordsSnapshot() -> NSDiffableDataSourceSectionSnapshot<Record> {

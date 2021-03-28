@@ -27,12 +27,9 @@ struct DeleteConfirmation<Source: DynamicViewContent>: View {
                     title: Text(title(indexSet)),
                     message: message == nil ? nil : Text(message!),
                     primaryButton: .cancel(),
-                    secondaryButton: .destructive(
-                        Text("general.delete"),
-                        action: {
-                            withAnimation { perform(indexSet) }
-                        }
-                    )
+                    secondaryButton: .destructive(Text("general.delete")) {
+                        withAnimation { perform(indexSet) }
+                    }
                 )
             }
     }
@@ -61,9 +58,7 @@ struct DeleteConfirmation_Previews: PreviewProvider {
                 Text("Index \(i)")
             }
             .onConfirmedDelete(
-                title: { _ in
-                    "Are you sure?"
-                },
+                title: { _ in "Are you sure?" },
                 message: "This is serious..."
             ) { index in
                 print(index)

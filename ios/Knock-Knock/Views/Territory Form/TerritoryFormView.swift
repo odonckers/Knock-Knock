@@ -62,7 +62,7 @@ struct TerritoryFormView: View {
     // MARK: - Cancel Button
 
     @ViewBuilder private var cancelButton: some View {
-        Button(action: { presentationMode.wrappedValue.dismiss() }) {
+        Button { presentationMode.wrappedValue.dismiss() } label: {
             Text("general.cancel")
         }
     }

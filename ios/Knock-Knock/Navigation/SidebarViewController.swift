@@ -125,10 +125,34 @@ extension SidebarViewController {
                         style: .destructive,
                         title: "Delete"
                     ) { [weak self] action, view, completion in
-                        guard let self = self else { return }
+                        guard let self = self else {
+                            completion(false)
+                            return
+                        }
 
-                        self.deleteTerritory(at: indexPath)
-                        completion(false)
+                        let deleteAction = UIAlertAction(
+                            title: "Delete",
+                            style: .destructive
+                        ) { action in
+                            self.deleteTerritory(at: indexPath)
+                            completion(true)
+                        }
+                        let cancelAction = UIAlertAction(
+                            title: "Cancel",
+                            style: .cancel
+                        ) { _ in
+                            completion(false)
+                        }
+
+                        let alert = UIAlertController(
+                            title: "Are you sure?",
+                            message: "This action is permanent and cannot be undone.",
+                            preferredStyle: .alert
+                        )
+                        alert.addAction(deleteAction)
+                        alert.addAction(cancelAction)
+
+                        self.present(alert, animated: true)
                     }
                     deleteAction.image = UIImage(systemName: "trash")
                     deleteAction.backgroundColor = .systemRed
@@ -136,7 +160,6 @@ extension SidebarViewController {
                     let swipeConfiguration = UISwipeActionsConfiguration(
                         actions: [deleteAction, editAction]
                     )
-                    swipeConfiguration.performsFirstActionWithFullSwipe = false
                     return swipeConfiguration
                 default:
                     return nil
@@ -241,30 +264,29 @@ extension SidebarViewController {
         }
 
         dataSource = UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>(
-            collectionView: collectionView,
-            cellProvider: { collectionView, indexPath, item in
-                switch item.type {
-                case .header:
-                    return collectionView.dequeueConfiguredReusableCell(
-                        using: headerRegistration,
-                        for: indexPath,
-                        item: item
-                    )
-                case .expandableRow:
-                    return collectionView.dequeueConfiguredReusableCell(
-                        using: expandableRowRegistration,
-                        for: indexPath,
-                        item: item
-                    )
-                default:
-                    return collectionView.dequeueConfiguredReusableCell(
-                        using: rowRegistration,
-                        for: indexPath,
-                        item: item
-                    )
-                }
+            collectionView: collectionView
+        ) { collectionView, indexPath, item in
+            switch item.type {
+            case .header:
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: headerRegistration,
+                    for: indexPath,
+                    item: item
+                )
+            case .expandableRow:
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: expandableRowRegistration,
+                    for: indexPath,
+                    item: item
+                )
+            default:
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: rowRegistration,
+                    for: indexPath,
+                    item: item
+                )
             }
-        )
+        }
     }
 
     private func recordsSnapshot() -> NSDiffableDataSourceSectionSnapshot<SidebarItem> {
