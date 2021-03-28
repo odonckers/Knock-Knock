@@ -8,8 +8,9 @@
 import SwiftUI
 
 enum Spacing: CGFloat {
-    case small = 5
-    case medium = 10
-    case large = 15
-    case extraLarge = 20
+    case verySmall = 5
+    case small = 10
+    case medium = 20
+    case large = 40
+    case extraLarge = 50
 }

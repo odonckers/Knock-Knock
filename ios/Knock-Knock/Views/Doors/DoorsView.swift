@@ -89,7 +89,7 @@ struct DoorsView: View {
                 Text(record.abbreviatedType)
                     .frame(width: 65)
             }
-            FramedSpacer(spacing: .medium, direction: .horizontal)
+            FramedSpacer(spacing: .small, direction: .horizontal)
             if let apartmentNumber = record.apartmentNumber {
                 Text(apartmentNumber)
             }

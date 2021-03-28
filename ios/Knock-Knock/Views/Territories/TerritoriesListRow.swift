@@ -16,7 +16,7 @@ extension TerritoriesView {
                 Image(systemName: "folder")
                     .font(.title2)
                     .foregroundColor(.accentColor)
-                FramedSpacer(spacing: .medium, direction: .horizontal)
+                FramedSpacer(spacing: .small, direction: .horizontal)
                 VStack(alignment: .leading) {
                     Text(territory.wrappedName)
                         .font(.headline)
