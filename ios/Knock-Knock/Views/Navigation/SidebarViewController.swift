@@ -41,33 +41,17 @@ extension SidebarViewController {
     }
 
     private func setupToolbar() {
-        let addTerritoryAction = UIAction(
-            title: "Add Territory",
-            image: UIImage(systemName: "folder.badge.plus")
-        ) { [weak self] action in
-            guard let self = self else { return }
-            self.presentTerritoryForm()
-        }
-
-        let addRecordAction = UIAction(
-            title: "Add Record",
-            image: UIImage(systemName: "doc.badge.plus")
-        ) { [weak self] action in
-            guard let self = self else { return }
-
-            let recordForm = HostingController(rootView: RecordFormView())
-            recordForm.modalPresentationStyle = .formSheet
-            self.present(recordForm, animated: true, completion: nil )
-        }
-
-        let menu = UIMenu(children: [addTerritoryAction, addRecordAction])
+        let addTerritoryButton = UIBarButtonItem(
+            image: UIImage(systemName: "folder.badge.plus"),
+            primaryAction: UIAction { [weak self] action in
+                guard let self = self else { return }
+                self.presentTerritoryForm()
+            }
+        )
         setToolbarItems(
             [
                 UIBarButtonItem(systemItem: .flexibleSpace),
-                UIBarButtonItem(
-                    image: UIImage(systemName: "plus.circle.fill"),
-                    menu: menu
-                )
+                addTerritoryButton
             ],
             animated: false
         )

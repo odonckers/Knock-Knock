@@ -13,9 +13,6 @@ class RecordCellContentView: UIView, UIContentView {
         set {
             guard let newConfiguration = newValue as? RecordCellContentConfiguration
             else { return }
-
-            // Apply the new configuration to SFSymbolVerticalContentView
-            // also update currentConfiguration to newConfiguration
             apply(configuration: newConfiguration)
         }
     }

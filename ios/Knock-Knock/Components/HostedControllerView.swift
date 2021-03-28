@@ -22,6 +22,6 @@ class HostingController<V: HostedControllerView>: UIHostingController<V> {
     }
 
     func dismiss() {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true)
     }
 }

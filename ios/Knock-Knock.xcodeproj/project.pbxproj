@@ -174,19 +174,19 @@
 		7F5310FC260E663600F5F3BE /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				7F5310FD260E665900F5F3BE /* RecordCell */,
+				7F5310FD260E665900F5F3BE /* Record Cell */,
 			);
 			path = Components;
 			sourceTree = "<group>";
 		};
-		7F5310FD260E665900F5F3BE /* RecordCell */ = {
+		7F5310FD260E665900F5F3BE /* Record Cell */ = {
 			isa = PBXGroup;
 			children = (
 				7F53110E260E714900F5F3BE /* RecordCell.swift */,
 				7F5310FE260E667300F5F3BE /* RecordCellContentConfiguration.swift */,
 				7F531103260E66B400F5F3BE /* RecordCellContentView.swift */,
 			);
-			path = RecordCell;
+			path = "Record Cell";
 			sourceTree = "<group>";
 		};
 		E25A15AE25E072740065517B = {
