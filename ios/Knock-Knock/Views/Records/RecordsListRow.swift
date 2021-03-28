@@ -16,7 +16,7 @@ extension RecordsView {
             HStack {
                 Tag(color: record.typeColor) {
                     Text(record.abbreviatedType)
-                        .frame(width: 44)
+                        .frame(width: 65)
                 }
 
                 VStack(alignment: .leading) {

@@ -35,6 +35,7 @@ struct DoorsView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .filledBackground(Color.groupedBackground)
+        .navigationBarBackButtonHidden(!inPortrait)
     }
 
     @Environment(\.horizontalSizeClass)
@@ -86,7 +87,7 @@ struct DoorsView: View {
         HStack {
             Tag(color: record.typeColor) {
                 Text(record.abbreviatedType)
-                    .frame(width: 44)
+                    .frame(width: 65)
             }
             FramedSpacer(spacing: .medium, direction: .horizontal)
             if let apartmentNumber = record.apartmentNumber {

@@ -13,6 +13,7 @@
 		7F5310FF260E667300F5F3BE /* RecordCellContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5310FE260E667300F5F3BE /* RecordCellContentConfiguration.swift */; };
 		7F531104260E66B400F5F3BE /* RecordCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F531103260E66B400F5F3BE /* RecordCellContentView.swift */; };
 		7F53110F260E714900F5F3BE /* RecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53110E260E714900F5F3BE /* RecordCell.swift */; };
+		7F5311282610404D00F5F3BE /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5311272610404D00F5F3BE /* UIFont+Extension.swift */; };
 		7F590A99260E4388004CE55F /* HostedControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F590A98260E4388004CE55F /* HostedControllerView.swift */; };
 		7FF2D029260ABF7D00A54D72 /* RecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF2D028260ABF7D00A54D72 /* RecordsViewController.swift */; };
 		E21799C525EAC7F8005AB340 /* Introspect+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21799C425EAC7F8005AB340 /* Introspect+Extension.swift */; };
@@ -95,6 +96,7 @@
 		7F5310FE260E667300F5F3BE /* RecordCellContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCellContentConfiguration.swift; sourceTree = "<group>"; };
 		7F531103260E66B400F5F3BE /* RecordCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCellContentView.swift; sourceTree = "<group>"; };
 		7F53110E260E714900F5F3BE /* RecordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCell.swift; sourceTree = "<group>"; };
+		7F5311272610404D00F5F3BE /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		7F590A98260E4388004CE55F /* HostedControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostedControllerView.swift; sourceTree = "<group>"; };
 		7FF2D028260ABF7D00A54D72 /* RecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsViewController.swift; sourceTree = "<group>"; };
 		E21799C425EAC7F8005AB340 /* Introspect+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Introspect+Extension.swift"; sourceTree = "<group>"; };
@@ -198,9 +200,9 @@
 		7F5310FD260E665900F5F3BE /* RecordCell */ = {
 			isa = PBXGroup;
 			children = (
+				7F53110E260E714900F5F3BE /* RecordCell.swift */,
 				7F5310FE260E667300F5F3BE /* RecordCellContentConfiguration.swift */,
 				7F531103260E66B400F5F3BE /* RecordCellContentView.swift */,
-				7F53110E260E714900F5F3BE /* RecordCell.swift */,
 			);
 			path = RecordCell;
 			sourceTree = "<group>";
@@ -322,11 +324,12 @@
 				E25A163025E07B980065517B /* ContainerView.swift */,
 				E25A163825E07BFF0065517B /* DeleteConfirmation.swift */,
 				E25A163D25E07CC30065517B /* FilledBackground.swift */,
+				E2BB6FED25EBE12000731EDE /* FramedSpacer.swift */,
 				7F590A98260E4388004CE55F /* HostedControllerView.swift */,
 				E25A167925E081430065517B /* StatefulPreviewWrapper.swift */,
 				E25A168325E081B60065517B /* FormLabel.swift */,
 				E25A169525E083240065517B /* Tag.swift */,
-				E2BB6FED25EBE12000731EDE /* FramedSpacer.swift */,
+				7F5311272610404D00F5F3BE /* UIFont+Extension.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -648,6 +651,7 @@
 				E2BB6FEE25EBE12000731EDE /* FramedSpacer.swift in Sources */,
 				E2F2117825EC224900BD96DE /* Theme.swift in Sources */,
 				7F53110F260E714900F5F3BE /* RecordCell.swift in Sources */,
+				7F5311282610404D00F5F3BE /* UIFont+Extension.swift in Sources */,
 				7F179801260959580046944E /* ManagedObjectChangesPublisher.swift in Sources */,
 				7F179806260A776C0046944E /* TabBarItem.swift in Sources */,
 				E24673C625F0625700A0653B /* SceneDelegate.swift in Sources */,

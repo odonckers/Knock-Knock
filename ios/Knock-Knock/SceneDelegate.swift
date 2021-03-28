@@ -38,6 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             animated: false
         )
         splitViewController.setViewController(tabBarController, for: .compact)
+        splitViewController.showsSecondaryOnlyButton = true
 
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)

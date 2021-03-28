@@ -10,61 +10,29 @@ import UIKit
 
 @available(iOS 14, *)
 class SidebarViewController: UIViewController {
-    private lazy var persistenceController: PersistenceController = {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.persistenceController
-    }()
-    private lazy var fetchedTerritoriesController: NSFetchedResultsController<Territory> = {
-        let fetchRequest: NSFetchRequest = Territory.fetchRequest()
-        fetchRequest.sortDescriptors = [
-            NSSortDescriptor(keyPath: \Territory.name, ascending: true)
-        ]
+    private var collectionView: UICollectionView!
 
-        let fetchedTerritoriesController = NSFetchedResultsController<Territory>(
-            fetchRequest: fetchRequest,
-            managedObjectContext: persistenceController.container.viewContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil
-        )
-        fetchedTerritoriesController.delegate = self
-        return fetchedTerritoriesController
-    }()
-
-    private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(
-            frame: view.bounds,
-            collectionViewLayout: createLayout()
-        )
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = .systemBackground
-        collectionView.delegate = self
-        return collectionView
-    }()
     private var dataSource: UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>!
+
+    private var persistenceController: PersistenceController!
+    private var fetchedTerritoriesController: NSFetchedResultsController<Territory>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.addSubview(collectionView)
-
         configureNavigationBar()
         setupToolbar()
 
+        configureCollectionView()
+
         configureDataSource()
-        applyInitialSnapshot()
 
+        configurePersistenceController()
         configureFetchRequests()
-
-        collectionView.selectItem(
-            at: IndexPath(row: 0, section: 0),
-            animated: false,
-            scrollPosition: .centeredVertically
-        )
     }
 }
 
-// MARK: - Navigation Bar
-
+@available(iOS 14, *)
 extension SidebarViewController {
     private func configureNavigationBar() {
         title = "Home"
@@ -78,7 +46,7 @@ extension SidebarViewController {
             image: UIImage(systemName: "folder.badge.plus")
         ) { [weak self] action in
             guard let self = self else { return }
-            self.presentTerritoryFormAlert()
+            self.presentTerritoryForm()
         }
 
         let addRecordAction = UIAction(
@@ -106,69 +74,20 @@ extension SidebarViewController {
     }
 }
 
-// MARK: - Menus
-
-extension SidebarViewController {
-    private func presentTerritoryFormAlert(territory: Territory? = nil) {
-        let alertController = UIAlertController(
-            title: "New Territory",
-            message: nil,
-            preferredStyle: .alert
-        )
-
-        alertController.addTextField()
-
-        let nameTextField = alertController.textFields?.first
-        nameTextField?.placeholder = "Name"
-        nameTextField?.autocapitalizationType = .allCharacters
-
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        alertController.addAction(cancelAction)
-
-        let submitAction = UIAlertAction(title: "Submit", style: .default) {
-            [unowned alertController] _ in
-
-            guard let textFields = alertController.textFields
-            else { return }
-
-            let nameField = textFields[0]
-
-            let viewContext = self.persistenceController.container.viewContext
-
-            var toSave: Territory
-            if let territory = territory {
-                toSave = territory
-                toSave.willUpdate()
-            } else {
-                toSave = Territory(context: viewContext)
-                toSave.willCreate()
-            }
-
-            toSave.name = nameField.text
-            viewContext.unsafeSave()
-        }
-        alertController.addAction(submitAction)
-
-        if let territory = territory {
-            alertController.title = "Edit Territory"
-            alertController.message = territory.wrappedName
-
-            nameTextField?.text = territory.wrappedName
-        }
-
-        present(alertController, animated: true)
-    }
-
-    private func deleteTerritory(_ territory: Territory) {
-        persistenceController.container.viewContext.delete(territory)
-        persistenceController.container.viewContext.unsafeSave()
-    }
-}
-
-// MARK: - Collection View Config
-
 @available(iOS 14, *)
 extension SidebarViewController {
+    private func configureCollectionView() {
+        collectionView = UICollectionView(
+            frame: view.bounds,
+            collectionViewLayout: createLayout()
+        )
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.backgroundColor = .systemBackground
+        collectionView.delegate = self
+
+        view.addSubview(collectionView)
+    }
+
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout() {
             (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
@@ -185,22 +104,18 @@ extension SidebarViewController {
 
                 guard
                     let self = self,
-                    let section = SidebarSection(rawValue: indexPath.section),
-                    let sidebarItem = self.dataSource.itemIdentifier(
-                        for: indexPath
-                    )
+                    let section = SidebarSection(rawValue: indexPath.section)
                 else { return nil }
 
                 switch section {
                 case .territories:
-                    guard let territory = sidebarItem.object as? Territory
-                    else { return nil }
-
                     let editAction = UIContextualAction(
                         style: .normal,
                         title: "Edit"
-                    ) { action, view, completion in
-                        self.presentTerritoryFormAlert(territory: territory)
+                    ) { [weak self] action, view, completion in
+                        guard let self = self else { return }
+
+                        self.presentTerritoryForm(itemAt: indexPath)
                         completion(true)
                     }
                     editAction.image = UIImage(systemName: "pencil")
@@ -212,15 +127,17 @@ extension SidebarViewController {
                     ) { [weak self] action, view, completion in
                         guard let self = self else { return }
 
-                        self.deleteTerritory(territory)
-                        completion(true)
+                        self.deleteTerritory(at: indexPath)
+                        completion(false)
                     }
                     deleteAction.image = UIImage(systemName: "trash")
                     deleteAction.backgroundColor = .systemRed
 
-                    return UISwipeActionsConfiguration(
+                    let swipeConfiguration = UISwipeActionsConfiguration(
                         actions: [deleteAction, editAction]
                     )
+                    swipeConfiguration.performsFirstActionWithFullSwipe = false
+                    return swipeConfiguration
                 default:
                     return nil
                 }
@@ -289,8 +206,6 @@ extension SidebarViewController: UICollectionViewDelegate {
     }
 }
 
-// MARK: - Data Source
-
 @available(iOS 14, *)
 extension SidebarViewController {
     private typealias CellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, SidebarItem>
@@ -304,7 +219,9 @@ extension SidebarViewController {
             cell.accessories = [.outlineDisclosure()]
         }
 
-        let expandableRowRegistration = CellRegistration { cell, indexPath, item in
+        let expandableRowRegistration = CellRegistration {
+            cell, indexPath, item in
+
             var contentConfiguration = cell.defaultContentConfiguration()
             contentConfiguration.text = item.title
             contentConfiguration.secondaryText = item.subtitle
@@ -348,15 +265,6 @@ extension SidebarViewController {
                 }
             }
         )
-    }
-
-    private func configureFetchRequests() {
-        do {
-            try fetchedTerritoriesController.performFetch()
-            updateSnapshot()
-        } catch {
-            // Failed to fetch results from the database. Handle errors appropriately in your app.
-        }
     }
 
     private func recordsSnapshot() -> NSDiffableDataSourceSectionSnapshot<SidebarItem> {
@@ -408,6 +316,12 @@ extension SidebarViewController {
             to: .territories,
             animatingDifferences: false
         )
+
+        collectionView.selectItem(
+            at: IndexPath(row: 0, section: 0),
+            animated: false,
+            scrollPosition: .centeredVertically
+        )
     }
 
     private func updateSnapshot() {
@@ -416,7 +330,35 @@ extension SidebarViewController {
     }
 }
 
-// MARK: - Core Data
+@available(iOS 14, *)
+extension SidebarViewController {
+    private func configurePersistenceController() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        persistenceController = appDelegate.persistenceController
+    }
+
+    private func configureFetchRequests() {
+        let fetchRequest: NSFetchRequest = Territory.fetchRequest()
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(keyPath: \Territory.name, ascending: true)
+        ]
+
+        fetchedTerritoriesController = NSFetchedResultsController<Territory>(
+            fetchRequest: fetchRequest,
+            managedObjectContext: persistenceController.container.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        fetchedTerritoriesController.delegate = self
+
+        do {
+            try fetchedTerritoriesController.performFetch()
+            applyInitialSnapshot()
+        } catch {
+            // Failed to fetch results from the database. Handle errors appropriately in your app.
+        }
+    }
+}
 
 @available(iOS 14, *)
 extension SidebarViewController: NSFetchedResultsControllerDelegate {
@@ -427,7 +369,75 @@ extension SidebarViewController: NSFetchedResultsControllerDelegate {
     }
 }
 
-// MARK: - Enums, Structs, etc.
+@available(iOS 14, *)
+extension SidebarViewController {
+    private func presentTerritoryForm(itemAt indexPath: IndexPath) {
+        let sidebarItem = dataSource.itemIdentifier(for: indexPath)
+        guard let territory = sidebarItem?.object as? Territory else { return }
+        presentTerritoryForm(territory: territory)
+    }
+
+    private func presentTerritoryForm(territory: Territory? = nil) {
+        let alertController = UIAlertController(
+            title: "New Territory",
+            message: nil,
+            preferredStyle: .alert
+        )
+
+        alertController.addTextField()
+
+        let nameTextField = alertController.textFields?.first
+        nameTextField?.placeholder = "Name"
+        nameTextField?.autocapitalizationType = .allCharacters
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(cancelAction)
+
+        let submitAction = UIAlertAction(title: "Submit", style: .default) {
+            [unowned alertController] _ in
+
+            guard let textFields = alertController.textFields
+            else { return }
+
+            let nameField = textFields[0]
+
+            let viewContext = self.persistenceController.container.viewContext
+
+            var toSave: Territory
+            if let territory = territory {
+                toSave = territory
+                toSave.willUpdate()
+            } else {
+                toSave = Territory(context: viewContext)
+                toSave.willCreate()
+            }
+
+            toSave.name = nameField.text
+            viewContext.unsafeSave()
+        }
+        alertController.addAction(submitAction)
+
+        if let territory = territory {
+            alertController.title = "Edit Territory"
+            alertController.message = territory.wrappedName
+
+            nameTextField?.text = territory.wrappedName
+        }
+
+        present(alertController, animated: true)
+    }
+
+    private func deleteTerritory(at indexPath: IndexPath) {
+        let sidebarItem = dataSource.itemIdentifier(for: indexPath)
+        guard let territory = sidebarItem?.object as? Territory else { return }
+        deleteTerritory(territory)
+    }
+
+    private func deleteTerritory(_ territory: Territory) {
+        persistenceController.container.viewContext.delete(territory)
+        persistenceController.container.viewContext.unsafeSave()
+    }
+}
 
 @available(iOS 14.0, *)
 extension SidebarViewController {

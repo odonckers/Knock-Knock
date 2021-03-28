@@ -32,15 +32,19 @@ struct RecordCellContentConfiguration: UIContentConfiguration, Hashable {
             updatedConfiguration.tagBackgroundColor = UIColor.black.withAlphaComponent(0.1)
             updatedConfiguration.tagForegroundColor = .white
 
-            updatedConfiguration.titleFont = .boldSystemFont(ofSize: 18)
+            updatedConfiguration.titleFont = UIFont.preferredFont(
+                forTextStyle: .body
+            ).bold()
             updatedConfiguration.titleColor = .white
 
             updatedConfiguration.subtitleColor = UIColor.white.withAlphaComponent(0.7)
         } else {
-            updatedConfiguration.tagBackgroundColor = tagColor?.withAlphaComponent(0.1)
+            updatedConfiguration.tagBackgroundColor = tagColor?.withAlphaComponent(0.15)
             updatedConfiguration.tagForegroundColor = tagColor
 
-            updatedConfiguration.titleFont = .systemFont(ofSize: 18)
+            updatedConfiguration.titleFont = UIFont.preferredFont(
+                forTextStyle: .body
+            )
             updatedConfiguration.titleColor = .label
 
             updatedConfiguration.subtitleColor = .secondaryLabel

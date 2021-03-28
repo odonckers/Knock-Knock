@@ -21,9 +21,7 @@ class RecordCellContentView: UIView, UIContentView {
     }
     private var currentConfiguration: RecordCellContentConfiguration!
 
-    private var tagContainer = UIView()
-    private var tagLabel = UILabel()
-
+    private var tagView = UITag()
     private var titleLabel = UILabel()
     private var subtitleLabel = UILabel()
 
@@ -44,46 +42,22 @@ class RecordCellContentView: UIView, UIContentView {
     }
 
     private func setupTag() {
-        tagContainer.layer.cornerRadius = 6
-        tagContainer.clipsToBounds = true
+        addSubview(tagView)
 
-        tagLabel.font = .boldSystemFont(ofSize: 16)
-        tagLabel.textAlignment = .center
-        tagContainer.addSubview(tagLabel)
-
-        addSubview(tagContainer)
-
-        tagContainer.translatesAutoresizingMaskIntoConstraints = false
-        tagLabel.translatesAutoresizingMaskIntoConstraints = false
-
+        tagView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            tagContainer.leadingAnchor.constraint(
+            tagView.leadingAnchor.constraint(
                 equalTo: layoutMarginsGuide.leadingAnchor
             ),
-            tagContainer.widthAnchor.constraint(equalToConstant: 65),
-            tagContainer.centerYAnchor.constraint(
+            tagView.widthAnchor.constraint(equalToConstant: 65),
+            tagView.centerYAnchor.constraint(
                 equalTo: layoutMarginsGuide.centerYAnchor
-            ),
-
-            tagLabel.leadingAnchor.constraint(
-                equalTo: tagContainer.leadingAnchor
-            ),
-            tagLabel.trailingAnchor.constraint(
-                equalTo: tagContainer.trailingAnchor
-            ),
-            tagLabel.topAnchor.constraint(
-                equalTo: tagContainer.topAnchor,
-                constant: 5
-            ),
-            tagLabel.bottomAnchor.constraint(
-                equalTo: tagContainer.bottomAnchor,
-                constant: -5
             ),
         ])
     }
 
     private func setupTextStack() {
-        subtitleLabel.font = .systemFont(ofSize: 14)
+        subtitleLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
 
         let textStack = UIStackView()
         textStack.axis = .vertical
@@ -98,7 +72,7 @@ class RecordCellContentView: UIView, UIContentView {
 
         NSLayoutConstraint.activate([
             textStack.leadingAnchor.constraint(
-                equalTo: tagLabel.trailingAnchor,
+                equalTo: tagView.trailingAnchor,
                 constant: 20
             ),
             textStack.trailingAnchor.constraint(
@@ -119,10 +93,9 @@ class RecordCellContentView: UIView, UIContentView {
         guard currentConfiguration != configuration else { return }
         currentConfiguration = configuration
 
-        tagContainer.backgroundColor = configuration.tagBackgroundColor
-
-        tagLabel.text = configuration.tagText
-        tagLabel.textColor = configuration.tagForegroundColor
+        tagView.text = configuration.tagText
+        tagView.backgroundColor = configuration.tagBackgroundColor
+        tagView.foregroundColor = configuration.tagForegroundColor
 
         titleLabel.text = configuration.title
         titleLabel.font = configuration.titleFont

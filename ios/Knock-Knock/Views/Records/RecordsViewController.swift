@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import SwiftUI
 import UIKit
 
 class RecordsViewController: UIViewController {
@@ -13,67 +14,29 @@ class RecordsViewController: UIViewController {
         get { territory }
         set(newValue) {
             territory = newValue
-
             title = newValue != nil ? newValue!.wrappedName : "Records"
-
-            configureFetchRequests()
-            applySnapshot()
+            refreshFetchRequests()
         }
     }
     private var territory: Territory?
 
-    private lazy var persistenceController: PersistenceController = {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.persistenceController
-    }()
-    private lazy var fetchedRecordsController: NSFetchedResultsController<Record> = {
-        var fetchRequest: NSFetchRequest<Record> = Record.fetchRequest()
-        fetchRequest.sortDescriptors = [
-            NSSortDescriptor(keyPath: \Record.streetName, ascending: true)
-        ]
-
-        let fetchedRecordsController = NSFetchedResultsController<Record>(
-            fetchRequest: fetchRequest,
-            managedObjectContext: persistenceController.container.viewContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil
-        )
-        fetchedRecordsController.delegate = self
-        return fetchedRecordsController
-    }()
-
-    private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(
-            frame: view.bounds,
-            collectionViewLayout: createLayout()
-        )
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = .systemBackground
-        collectionView.delegate = self
-        return collectionView
-    }()
+    private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Int, Record>!
+
+    private var persistenceController: PersistenceController!
+    private var fetchedRecordsController: NSFetchedResultsController<Record>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.addSubview(collectionView)
-
         configureNavigationBar()
 
+        configureCollectionView()
+
         configureDataSource()
-        applySnapshot()
-        configureFetchRequests()
-    }
-}
 
-extension RecordsViewController {
-    func setTerritory(_ territory: Territory? = nil) {
-        self.territory = territory
-        title = territory != nil ? territory!.wrappedName : "Records"
-
+        configurePersistenceController()
         configureFetchRequests()
-        applySnapshot()
     }
 }
 
@@ -88,29 +51,36 @@ extension RecordsViewController {
             navigationController.tabBarItem.title = "Records"
         }
 
-        let addRecordAction = UIAction(
-            title: "Add Record",
-            image: UIImage(systemName: "doc.badge.plus")
-        ) { [weak self] action in
-            guard let self = self else { return }
-
-            let recordForm = HostingController(
-                rootView: RecordFormView(territory: self.territory)
-            )
-            recordForm.modalPresentationStyle = .formSheet
-            self.present(recordForm, animated: true, completion: nil )
-        }
-
         let addRecordButton = UIBarButtonItem(
             title: "Add Record",
             image: UIImage(systemName: "plus.circle.fill"),
-            primaryAction: addRecordAction
+            primaryAction: UIAction { [weak self] action in
+                guard let self = self else { return }
+
+                let recordForm = HostingController(
+                    rootView: RecordFormView(territory: self.territory)
+                )
+                recordForm.modalPresentationStyle = .formSheet
+                self.present(recordForm, animated: true)
+            }
         )
         navigationItem.rightBarButtonItem = addRecordButton
     }
 }
 
 extension RecordsViewController {
+    private func configureCollectionView() {
+        collectionView = UICollectionView(
+            frame: view.bounds,
+            collectionViewLayout: createLayout()
+        )
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.backgroundColor = .systemBackground
+        collectionView.delegate = self
+
+        view.addSubview(collectionView)
+    }
+
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout() {
             (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
@@ -122,29 +92,19 @@ extension RecordsViewController {
             configuration.headerMode = .none
 
             configuration.trailingSwipeActionsConfigurationProvider = {
-                [weak self] indexPath in
-
-                guard
-                    let self = self,
-                    let record = self.dataSource.itemIdentifier(for: indexPath)
-                else { return nil }
+                indexPath in
 
                 let editAction = UIContextualAction(
                     style: .normal,
                     title: "Edit"
-                ) { action, view, completion in
-                    let recordForm = HostingController(
-                        rootView: RecordFormView(
-                            record: record,
-                            territory: self.territory
-                        )
-                    )
-                    recordForm.modalPresentationStyle = .formSheet
-                    self.present(
-                        recordForm,
-                        animated: true,
-                        completion: { completion(true) }
-                    )
+                ) { [weak self] action, view, completion in
+                    guard let self = self else {
+                        completion(false)
+                        return
+                    }
+
+                    self.updateRecord(at: indexPath)
+                    completion(true)
                 }
                 editAction.image = UIImage(systemName: "pencil")
                 editAction.backgroundColor = .systemGray2
@@ -153,40 +113,42 @@ extension RecordsViewController {
                     style: .destructive,
                     title: "Delete"
                 ) { [weak self] action, view, completion in
-                    guard let self = self else { return }
-
-                    let defaultAction = UIAlertAction(
-                        title: "Confirm",
-                        style: .default
-                    ) { action in
+                    guard let self = self else {
+                        completion(false)
+                        return
                     }
+
+                    let confirmAction = UIAlertAction(
+                        title: "Confirm",
+                        style: .default,
+                        handler: { action in
+                            self.deleteRecord(at: indexPath)
+                            completion(true)
+                        }
+                    )
                     let cancelAction = UIAlertAction(
                         title: "Cancel",
-                        style: .cancel
-                    ) { action in
-                    }
+                        style: .cancel,
+                        handler: { _ in completion(false) }
+                    )
 
-                    // Create and configure the alert controller.
                     let alert = UIAlertController(
                         title: "Are you sure?",
                         message: "This action will permanently delete it.",
                         preferredStyle: .alert
                     )
-                    alert.addAction(defaultAction)
+                    alert.addAction(confirmAction)
                     alert.addAction(cancelAction)
 
-                    self.present(alert, animated: true) {
-                       // The alert was presented
-                    }
-
-                    completion(true)
+                    self.present(alert, animated: true)
                 }
                 deleteAction.image = UIImage(systemName: "trash")
                 deleteAction.backgroundColor = .systemRed
 
-                return UISwipeActionsConfiguration(
+                let swipeConfiguration = UISwipeActionsConfiguration(
                     actions: [deleteAction, editAction]
                 )
+                return swipeConfiguration
             }
 
             let section: NSCollectionLayoutSection = .list(
@@ -199,13 +161,18 @@ extension RecordsViewController {
     }
 }
 
-extension RecordsViewController: UICollectionViewDelegate {}
-
-extension RecordsViewController: NSFetchedResultsControllerDelegate {
-    func controllerDidChangeContent(
-        _ controller: NSFetchedResultsController<NSFetchRequestResult>
+extension RecordsViewController: UICollectionViewDelegate {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
     ) {
-        applySnapshot()
+        guard let record = dataSource.itemIdentifier(for: indexPath)
+        else { return }
+
+        let doorsView = DoorsView(record: record)
+        let hostedDoorsView = UIHostingController(rootView: doorsView)
+
+        showDetailViewController(hostedDoorsView, sender: nil)
     }
 }
 
@@ -229,25 +196,6 @@ extension RecordsViewController {
         )
     }
 
-    private func configureFetchRequests() {
-        let fetchRequest = fetchedRecordsController.fetchRequest
-        if let territory = territory {
-            fetchRequest.predicate = NSPredicate(
-                format: "territory == %@",
-                territory
-            )
-        } else {
-            fetchRequest.predicate = NSPredicate(format: "territory == NULL")
-        }
-
-        do {
-            try fetchedRecordsController.performFetch()
-            applySnapshot()
-        } catch {
-            // Failed to fetch results from the database. Handle errors appropriately in your app.
-        }
-    }
-
     private func recordsSnapshot() -> NSDiffableDataSourceSectionSnapshot<Record> {
         var snapshot = NSDiffableDataSourceSectionSnapshot<Record>()
 
@@ -260,8 +208,104 @@ extension RecordsViewController {
         return snapshot
     }
 
-    private func applySnapshot() {
+    private func applyInitialSnapshot() {
+        dataSource.apply(
+            recordsSnapshot(),
+            to: 0,
+            animatingDifferences: false
+        )
+    }
+
+    private func updateSnapshot() {
         let snapshot = recordsSnapshot()
-        dataSource.apply(snapshot, to: 0, animatingDifferences: false)
+        dataSource.apply(snapshot, to: 0, animatingDifferences: true)
+    }
+}
+
+extension RecordsViewController {
+    private func configurePersistenceController() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        persistenceController = appDelegate.persistenceController
+    }
+
+    private func configureFetchRequests() {
+        let fetchRequest: NSFetchRequest<Record> = Record.fetchRequest()
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(keyPath: \Record.streetName, ascending: true)
+        ]
+
+        fetchedRecordsController = NSFetchedResultsController<Record>(
+            fetchRequest: fetchRequest,
+            managedObjectContext: persistenceController.container.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        fetchedRecordsController.delegate = self
+
+        do {
+            try fetchedRecordsController.performFetch()
+            applyInitialSnapshot()
+        } catch {
+            // Failed to fetch results from the database. Handle errors appropriately in your app.
+        }
+    }
+
+    private func refreshFetchRequests() {
+        let fetchRequest = fetchedRecordsController.fetchRequest
+        if let territory = territory {
+            fetchRequest.predicate = NSPredicate(
+                format: "territory == %@",
+                territory
+            )
+        } else {
+            fetchRequest.predicate = NSPredicate(format: "territory == NULL")
+        }
+
+        do {
+            try fetchedRecordsController.performFetch()
+            applyInitialSnapshot()
+        } catch {
+            // Failed to fetch results from the database. Handle errors appropriately in your app.
+        }
+    }
+}
+
+extension RecordsViewController: NSFetchedResultsControllerDelegate {
+    func controllerDidChangeContent(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>
+    ) {
+        updateSnapshot()
+    }
+}
+
+extension RecordsViewController {
+    private func deleteRecord(at indexPath: IndexPath) {
+        guard let record = dataSource.itemIdentifier(for: indexPath)
+        else { return }
+        deleteRecord(record)
+    }
+
+    private func deleteRecord(_ record: Record) {
+        persistenceController.container.viewContext.delete(
+            record
+        )
+        persistenceController.container.viewContext.unsafeSave()
+    }
+
+    private func updateRecord(at indexPath: IndexPath) {
+        guard let record = dataSource.itemIdentifier(for: indexPath)
+        else { return }
+        updateRecord(record)
+    }
+
+    private func updateRecord(_ record: Record) {
+        let recordForm = HostingController(
+            rootView: RecordFormView(
+                record: record,
+                territory: territory
+            )
+        )
+        recordForm.modalPresentationStyle = .formSheet
+        present(recordForm, animated: true)
     }
 }
