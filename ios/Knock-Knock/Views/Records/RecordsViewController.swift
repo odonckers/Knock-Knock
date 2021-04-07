@@ -202,9 +202,11 @@ extension RecordsViewController: UICollectionViewDelegate {
         guard let record = dataSource.itemIdentifier(for: indexPath)
         else { return }
 
-        let doorsView = DoorsViewController(record: record)
+        let doorsViewController = DoorsViewController()
+        doorsViewController.selectedRecord = record
+
         let navigationDoorsView = UINavigationController(
-            rootViewController: doorsView
+            rootViewController: doorsViewController
         )
 
         if isCompact {

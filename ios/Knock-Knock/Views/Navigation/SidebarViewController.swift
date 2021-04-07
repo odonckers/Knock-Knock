@@ -183,10 +183,10 @@ extension SidebarViewController: UICollectionViewDelegate {
     private func recordsViewController() -> RecordsViewController? {
         guard
             let splitViewController = splitViewController,
-            let navigationView = splitViewController.viewController(
+            let navigationViewController = splitViewController.viewController(
                 for: .supplementary
             ) as? UINavigationController,
-            let recordsViewController = navigationView.viewControllers.first
+            let recordsViewController = navigationViewController.viewControllers.first
         else { return nil }
 
         return recordsViewController as? RecordsViewController

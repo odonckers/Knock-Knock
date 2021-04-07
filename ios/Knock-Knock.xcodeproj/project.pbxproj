@@ -37,7 +37,7 @@
 		E25A167A25E081430065517B /* StatefulPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A167925E081430065517B /* StatefulPreviewWrapper.swift */; };
 		E25A167F25E081750065517B /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A167E25E081750065517B /* UserDefault.swift */; };
 		E25A168425E081B60065517B /* FormLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A168325E081B60065517B /* FormLabel.swift */; };
-		E25A169625E083240065517B /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A169525E083240065517B /* Tag.swift */; };
+		E25A169625E083240065517B /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A169525E083240065517B /* TagView.swift */; };
 		E25A169B25E083A80065517B /* CardGroupBoxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A169A25E083A80065517B /* CardGroupBoxStyle.swift */; };
 		E25A16A825E084390065517B /* Record+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16A725E084390065517B /* Record+Extension.swift */; };
 		E25A16AD25E0847C0065517B /* Door+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16AC25E0847C0065517B /* Door+Extension.swift */; };
@@ -115,7 +115,7 @@
 		E25A167925E081430065517B /* StatefulPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulPreviewWrapper.swift; sourceTree = "<group>"; };
 		E25A167E25E081750065517B /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
 		E25A168325E081B60065517B /* FormLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormLabel.swift; sourceTree = "<group>"; };
-		E25A169525E083240065517B /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		E25A169525E083240065517B /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		E25A169A25E083A80065517B /* CardGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardGroupBoxStyle.swift; sourceTree = "<group>"; };
 		E25A16A725E084390065517B /* Record+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Record+Extension.swift"; sourceTree = "<group>"; };
 		E25A16AC25E0847C0065517B /* Door+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Door+Extension.swift"; sourceTree = "<group>"; };
@@ -299,7 +299,7 @@
 				E2BB6FED25EBE12000731EDE /* FramedSpacer.swift */,
 				7F590A98260E4388004CE55F /* HostedControllerView.swift */,
 				E25A167925E081430065517B /* StatefulPreviewWrapper.swift */,
-				E25A169525E083240065517B /* Tag.swift */,
+				E25A169525E083240065517B /* TagView.swift */,
 				7F5311272610404D00F5F3BE /* UIFont+Extension.swift */,
 			);
 			path = Components;
@@ -577,7 +577,7 @@
 				E25A167525E080D00065517B /* SheetState.swift in Sources */,
 				E2BB6FE925EBE0AA00731EDE /* Spacing.swift in Sources */,
 				7F590A99260E4388004CE55F /* HostedControllerView.swift in Sources */,
-				E25A169625E083240065517B /* Tag.swift in Sources */,
+				E25A169625E083240065517B /* TagView.swift in Sources */,
 				E25A167A25E081430065517B /* StatefulPreviewWrapper.swift in Sources */,
 				E27AAB0D25ED8B9D00342603 /* Color+Extension.swift in Sources */,
 				E24673BB25F0623600A0653B /* AppDelegate.swift in Sources */,

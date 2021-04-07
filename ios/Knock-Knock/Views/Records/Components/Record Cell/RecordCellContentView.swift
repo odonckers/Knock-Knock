@@ -18,7 +18,7 @@ class RecordCellContentView: UIView, UIContentView {
     }
     private var currentConfiguration: RecordCellContentConfiguration!
 
-    private var tagView = UITag()
+    private var tagView = TagView()
     private var titleLabel = UILabel()
     private var subtitleLabel = UILabel()
 
@@ -60,7 +60,9 @@ class RecordCellContentView: UIView, UIContentView {
         titleLabel.font =  UIFont
             .preferredFont(forTextStyle: .body)
             .bold()
+        titleLabel.adjustsFontForContentSizeCategory = true
         subtitleLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        subtitleLabel.adjustsFontForContentSizeCategory = true
 
         let textStack = UIStackView()
         textStack.axis = .vertical

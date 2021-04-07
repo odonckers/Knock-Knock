@@ -8,12 +8,18 @@
 import SwiftUI
 
 class DoorsViewController: UIHostingController<DoorsView> {
-    let record: Record
+    var selectedRecord: Record? {
+        get { record }
+        set(newValue) {
+            record = newValue
+            setupTitleView()
+            rootView = DoorsView(record: newValue)
+        }
+    }
+    private var record: Record?
 
-    init(record: Record) {
-        self.record = record
-
-        let doorsView = DoorsView(record: record)
+    init() {
+        let doorsView = DoorsView()
         super.init(rootView: doorsView)
 
         configureNavigationBar()
@@ -25,7 +31,7 @@ class DoorsViewController: UIHostingController<DoorsView> {
     }
 
     private var titleView = UIStackView()
-    private var titleTagView = UITag()
+    private var titleTagView = TagView()
     private var titleLabel = UILabel()
 }
 
@@ -47,54 +53,68 @@ extension DoorsViewController {
     }
 
     private func setupTitleTag() {
-        let color = UIColor(record.typeColor)
+        if let record = record {
+            let color = UIColor(record.typeColor)
 
-        titleTagView.text = record.abbreviatedType
-        titleTagView.backgroundColor = color.withAlphaComponent(0.15)
-        titleTagView.foregroundColor = color
+            titleTagView.text = record.abbreviatedType
+            titleTagView.backgroundColor = color.withAlphaComponent(0.15)
+            titleTagView.foregroundColor = color
 
-        titleTagView.widthAnchor.constraint(equalToConstant: 65).isActive = true
+            titleTagView
+                .widthAnchor
+                .constraint(equalToConstant: 65)
+                .isActive = true
 
-        titleView.addArrangedSubview(titleTagView)
-        titleView.setCustomSpacing(10, after: titleTagView)
+            titleView.addArrangedSubview(titleTagView)
+            titleView.setCustomSpacing(10, after: titleTagView)
+        }
     }
 
     private func setupTitleLabel() {
-        titleLabel.text = record.wrappedStreetName
-        titleLabel.font =  UIFont
-            .preferredFont(forTextStyle: .headline)
-            .bold()
+        if let record = record {
+            titleLabel.text = record.wrappedStreetName
+            titleLabel.font =  UIFont.preferredFont(forTextStyle: .headline)
+            titleLabel.adjustsFontForContentSizeCategory = true
 
-        titleView.addArrangedSubview(titleLabel)
+            titleView.addArrangedSubview(titleLabel)
+        }
     }
 }
 
 struct DoorsView: View {
-    let record: Record
+    var record: Record? = nil
 
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: gridColumns) {
-                ForEach(sectionHeaders, id: \.0) { header in
-                    let groupLabel = Label(header.0, systemImage: header.1)
-                        .foregroundColor(Color(header.2))
+        if record != nil {
+            ScrollView {
+                LazyVGrid(columns: gridColumns) {
+                    ForEach(sectionHeaders, id: \.0) { header in
+                        let groupLabel = Label(header.0, systemImage: header.1)
+                            .foregroundColor(Color(header.2))
 
-                    GroupBox(label: groupLabel) {
-                        ForEach(0..<header.0.count) { index in
-                            Text("Index \(index)")
+                        GroupBox(label: groupLabel) {
+                            ForEach(0..<header.0.count) { index in
+                                Text("Index \(index)")
+                            }
                         }
+                        .groupBoxStyle(CardGroupBoxStyle())
                     }
-                    .groupBoxStyle(CardGroupBoxStyle())
+                }
+                .padding()
+            }
+            .toolbar {
+                ToolbarItem {
+                    GridLayoutButton(selectedGridLayout: $selectedGridLayout)
                 }
             }
-            .padding()
-        }
-        .toolbar {
-            ToolbarItem {
-                GridLayoutButton(selectedGridLayout: $selectedGridLayout)
+            .filledBackground(Color.groupedBackground)
+        } else {
+            VStack(alignment: .center) {
+                Text("Select a Record")
+                    .font(.title)
+                    .foregroundColor(.gray)
             }
         }
-        .filledBackground(Color.groupedBackground)
     }
 
     @Environment(\.horizontalSizeClass)
@@ -151,7 +171,9 @@ struct DoorsViewController_Preview: UIViewControllerRepresentable {
         record.city = "City"
         record.state = "State"
 
-        let doorsViewController = DoorsViewController(record: record)
+        let doorsViewController = DoorsViewController()
+        doorsViewController.selectedRecord = record
+
         let navigationController = UINavigationController(
             rootViewController: doorsViewController
         )
@@ -163,7 +185,9 @@ struct DoorsViewController_Preview: UIViewControllerRepresentable {
 
 struct DoorsView_Previews: PreviewProvider {
     static var previews: some View {
-        DoorsViewController_Preview()
+        Group {
+            DoorsViewController_Preview()
+        }
     }
 }
 #endif

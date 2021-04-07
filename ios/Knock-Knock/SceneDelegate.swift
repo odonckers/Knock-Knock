@@ -20,19 +20,34 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         splitViewController.preferredDisplayMode = .twoDisplaceSecondary
         splitViewController.showsSecondaryOnlyButton = true
 
-        let sidebar = SidebarViewController()
-        splitViewController.setViewController(sidebar, for: .primary)
+        let sidebarViewController = SidebarViewController()
+        splitViewController
+            .setViewController(sidebarViewController, for: .primary)
 
-        let records = RecordsViewController()
-        splitViewController.setViewController(
-            UINavigationController(rootViewController: records),
-            for: .supplementary
+        let recordsViewController = RecordsViewController()
+        let recordsNavigationController = UINavigationController(
+            rootViewController: recordsViewController
+        )
+        splitViewController
+            .setViewController(recordsNavigationController, for: .supplementary)
+
+        let doorsViewController = DoorsViewController()
+        let doorsNavigationController = UINavigationController(
+            rootViewController: doorsViewController
+        )
+        splitViewController
+            .setViewController(doorsNavigationController, for: .secondary)
+
+        let compactRecordsViewController = RecordsViewController(
+            isCompact: true
+        )
+        let compactRecordsNavigationController = UINavigationController(
+            rootViewController: compactRecordsViewController
         )
 
-        let compactRecords = RecordsViewController(isCompact: true)
         let tabBarController = UITabBarController()
         tabBarController.setViewControllers(
-            [UINavigationController(rootViewController: compactRecords)],
+            [compactRecordsNavigationController],
             animated: false
         )
         splitViewController.setViewController(tabBarController, for: .compact)
