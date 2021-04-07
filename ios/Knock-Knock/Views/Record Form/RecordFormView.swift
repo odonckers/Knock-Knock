@@ -197,7 +197,8 @@ struct RecordFormView_Previews: PreviewProvider {
         record.apartmentNumber = "500"
 
         return Group {
-            RecordFormView().previewDisplayName("New Form Preview")
+            RecordFormView()
+                .previewDisplayName("New Form Preview")
             RecordFormView(record: record)
                 .previewDisplayName("Edit Form Preview")
         }

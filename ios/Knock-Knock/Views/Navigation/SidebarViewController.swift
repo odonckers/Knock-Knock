@@ -144,6 +144,7 @@ extension SidebarViewController {
                     let swipeConfiguration = UISwipeActionsConfiguration(
                         actions: [deleteAction, editAction]
                     )
+                    swipeConfiguration.performsFirstActionWithFullSwipe = false
                     return swipeConfiguration
                 default:
                     return nil
@@ -312,11 +313,8 @@ extension SidebarViewController {
     }
 
     private func applyInitialSnapshot() {
-        dataSource.apply(
-            recordsSnapshot(),
-            to: .records,
-            animatingDifferences: false
-        )
+        dataSource
+            .apply(recordsSnapshot(), to: .records, animatingDifferences: false)
         dataSource.apply(
             territoriesSnapshot(),
             to: .territories,

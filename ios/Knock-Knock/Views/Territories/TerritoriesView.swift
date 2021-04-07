@@ -22,7 +22,7 @@ struct TerritoriesView: View {
         .navigationTitle("Territories")
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
-                Button(action: { sheet.present(.territoryForm) }) {
+                Button { sheet.present(.territoryForm) } label: {
                     Label(
                         "Add Territory",
                         systemImage: "folder.fill.badge.plus"
@@ -54,12 +54,12 @@ struct TerritoriesView: View {
             LclRow(territory: territory)
         }
         .contextMenu {
-            Button(action: { sheet.present(.territoryForm, with: territory) }) {
+            Button { sheet.present(.territoryForm, with: territory) } label: {
                 Label("Edit", systemImage: "pencil")
             }
 
             Menu {
-                Button(action: { delete(territory) }) {
+                Button { delete(territory) } label: {
                     Label("Permenantly Delete", systemImage: "trash")
                 }
             } label: {

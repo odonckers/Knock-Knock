@@ -10,13 +10,22 @@ import SwiftUI
 import UIKit
 
 class RecordsViewController: UIViewController {
+    let isCompact: Bool
+
+    init(isCompact: Bool = false) {
+        self.isCompact = isCompact
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     var selectedTerritory: Territory? {
         get { territory }
         set(newValue) {
             territory = newValue
-            title = newValue != nil
-                ? newValue!.wrappedName
-                : TabBarItem.records.title
+            title = newValue?.wrappedName ?? TabBarItem.records.title
             refreshFetchRequests()
         }
     }
@@ -44,9 +53,7 @@ class RecordsViewController: UIViewController {
 
 extension RecordsViewController {
     private func configureNavigationBar() {
-        title = territory != nil
-            ? territory!.wrappedName
-            : TabBarItem.records.title
+        title = territory?.wrappedName ?? TabBarItem.records.title
         if let navigationController = navigationController {
             navigationController.navigationBar.prefersLargeTitles = true
             navigationController.tabBarItem.image = TabBarItem.records.image
@@ -85,10 +92,15 @@ extension RecordsViewController {
 
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout() {
-            (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+            [weak self] (
+                sectionIndex,
+                layoutEnvironment
+            ) -> NSCollectionLayoutSection? in
+
+            guard let self = self else { return nil }
 
             var configuration = UICollectionLayoutListConfiguration(
-                appearance: .sidebarPlain
+                appearance: self.isCompact ? .plain : .sidebarPlain
             )
             configuration.showsSeparators = true
             configuration.headerMode = .none
@@ -150,6 +162,7 @@ extension RecordsViewController {
                 let swipeConfiguration = UISwipeActionsConfiguration(
                     actions: [deleteAction, editAction]
                 )
+                swipeConfiguration.performsFirstActionWithFullSwipe = false
                 return swipeConfiguration
             }
 
@@ -182,8 +195,20 @@ extension RecordsViewController {
     private typealias CellRegistration = UICollectionView.CellRegistration<RecordCell, Record>
 
     private func configureDataSource() {
-        let rowRegistration = CellRegistration { cell, indexPath, item in
+        let rowRegistration = CellRegistration { [weak self]
+            cell, indexPath, item in
+
+            guard let self = self else { return }
+
             cell.record = item
+            if self.isCompact {
+                cell.contentInsets = UIEdgeInsets(
+                    top: 10,
+                    left: 20,
+                    bottom: 10,
+                    right: 20
+                )
+            }
         }
 
         dataSource = UICollectionViewDiffableDataSource<Int, Record>(
@@ -210,11 +235,7 @@ extension RecordsViewController {
     }
 
     private func applyInitialSnapshot() {
-        dataSource.apply(
-            recordsSnapshot(),
-            to: 0,
-            animatingDifferences: false
-        )
+        dataSource.apply(recordsSnapshot(), to: 0, animatingDifferences: false)
     }
 
     private func updateSnapshot() {

@@ -12,19 +12,15 @@ enum TabBarItem: Int, CaseIterable {
 
     var title: String {
         switch self {
-        case .records:
-            return "Records"
-        case .territories:
-            return "Territories"
+        case .records: return "Records"
+        case .territories: return "Territories"
         }
     }
 
     var image: UIImage? {
         switch self {
-        case .records:
-            return UIImage(systemName: "note.text")
-        case .territories:
-            return UIImage(systemName: "rectangle.stack.fill")
+        case .records: return UIImage(systemName: "note.text")
+        case .territories: return UIImage(systemName: "rectangle.stack.fill")
         }
     }
 }

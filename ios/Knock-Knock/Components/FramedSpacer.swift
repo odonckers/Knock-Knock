@@ -13,8 +13,12 @@ struct FramedSpacer: View {
 
     var body: some View {
         switch direction {
-        case .horizontal: return Spacer().frame(width: spacing.rawValue)
-        case .vertical: return Spacer().frame(height: spacing.rawValue)
+        case .horizontal:
+            return Spacer()
+                .frame(width: spacing.rawValue)
+        case .vertical:
+            return Spacer()
+                .frame(height: spacing.rawValue)
         }
     }
 }

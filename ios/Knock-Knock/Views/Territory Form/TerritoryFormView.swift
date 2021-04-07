@@ -30,9 +30,9 @@ struct TerritoryFormView: View {
                 }
             }
             .navigationTitle(
-                territory != nil ?
-                    "territoryForm.title.edit" :
-                    "territoryForm.title.new"
+                territory != nil
+                    ? "territoryForm.title.edit"
+                    : "territoryForm.title.new"
             )
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { cancelButton }
@@ -110,7 +110,8 @@ struct TerritoryFormView_Previews: PreviewProvider {
         territory.name = "D2D-77"
 
         return Group {
-            TerritoryFormView().previewDisplayName("New Form Preview")
+            TerritoryFormView()
+                .previewDisplayName("New Form Preview")
             TerritoryFormView(territory: territory)
                 .previewDisplayName("Edit Form Preview")
         }

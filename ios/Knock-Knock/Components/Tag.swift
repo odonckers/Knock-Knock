@@ -32,7 +32,9 @@ class UITag: UIView {
     private var label = UILabel()
 
     private func setupLabel() {
-        label.font = UIFont.preferredFont(forTextStyle: .subheadline).bold()
+        label.font = UIFont
+            .preferredFont(forTextStyle: .subheadline)
+            .bold()
         label.textAlignment = .center
 
         addSubview(label)

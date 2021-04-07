@@ -21,8 +21,10 @@ extension RecordsView {
 
                 VStack(alignment: .leading) {
                     HStack {
-                        if record.wrappedType == .apartment,
-                           let apartmentNumber = record.apartmentNumber {
+                        if
+                            record.wrappedType == .apartment,
+                            let apartmentNumber = record.apartmentNumber
+                        {
                             Text(apartmentNumber)
                         }
 

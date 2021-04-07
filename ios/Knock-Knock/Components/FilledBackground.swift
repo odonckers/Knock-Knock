@@ -13,7 +13,8 @@ private struct FilledBackground<Content: View, Background: View>: View {
 
     var body: some View {
         ZStack {
-            background().edgesIgnoringSafeArea(.all)
+            background()
+                .edgesIgnoringSafeArea(.all)
             content()
         }
     }

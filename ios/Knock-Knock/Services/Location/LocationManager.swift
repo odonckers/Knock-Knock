@@ -59,12 +59,11 @@ class LocationManager: NSObject, ObservableObject {
     private func geocode() {
         guard let location = location else { return }
 
-        geocoder.reverseGeocodeLocation(location) { places, error in
-            if error == nil {
-                self.placemark = places?[0]
-            } else {
-                self.placemark = nil
-            }
+        geocoder.reverseGeocodeLocation(location) { [weak self] places, error in
+            guard let self = self else { return }
+
+            if error == nil { self.placemark = places?[0] }
+            else { self.placemark = nil }
         }
     }
 }

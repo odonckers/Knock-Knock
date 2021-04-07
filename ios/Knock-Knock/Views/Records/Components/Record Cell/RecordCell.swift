@@ -9,9 +9,11 @@ import UIKit
 
 class RecordCell: UICollectionViewListCell {
     var record: Record?
+    var contentInsets: UIEdgeInsets?
 
     override func updateConfiguration(using state: UICellConfigurationState) {
-        var config = RecordCellContentConfiguration().updated(for: state)
+        var config = RecordCellContentConfiguration()
+            .updated(for: state)
 
         config.tagText = record?.abbreviatedType
         config.tagColor = UIColor(record?.typeColor ?? .accentColor)
@@ -26,6 +28,11 @@ class RecordCell: UICollectionViewListCell {
             secondaryTexts.append(state)
         }
         config.subtitle = secondaryTexts.joined(separator: ", ")
+
+        config.topInset = contentInsets?.top
+        config.leftInset = contentInsets?.left
+        config.bottomInset = contentInsets?.bottom
+        config.rightInset = contentInsets?.right
 
         contentConfiguration = config
     }

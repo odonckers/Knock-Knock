@@ -43,17 +43,23 @@ class RecordCellContentView: UIView, UIContentView {
 
         tagView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            tagView.leadingAnchor.constraint(
-                equalTo: layoutMarginsGuide.leadingAnchor
-            ),
+            tagView
+                .leadingAnchor
+                .constraint(
+                    equalTo: layoutMarginsGuide.leadingAnchor,
+                    constant: currentConfiguration?.leftInset ?? 0
+                ),
             tagView.widthAnchor.constraint(equalToConstant: 65),
-            tagView.centerYAnchor.constraint(
-                equalTo: layoutMarginsGuide.centerYAnchor
-            ),
+            tagView
+                .centerYAnchor
+                .constraint(equalTo: layoutMarginsGuide.centerYAnchor),
         ])
     }
 
     private func setupTextStack() {
+        titleLabel.font =  UIFont
+            .preferredFont(forTextStyle: .body)
+            .bold()
         subtitleLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
 
         let textStack = UIStackView()
@@ -66,23 +72,28 @@ class RecordCellContentView: UIView, UIContentView {
         addSubview(textStack)
 
         textStack.translatesAutoresizingMaskIntoConstraints = false
-
         NSLayoutConstraint.activate([
-            textStack.leadingAnchor.constraint(
-                equalTo: tagView.trailingAnchor,
-                constant: 20
-            ),
-            textStack.trailingAnchor.constraint(
-                equalTo: layoutMarginsGuide.trailingAnchor
-            ),
-            textStack.topAnchor.constraint(
-                equalTo: layoutMarginsGuide.topAnchor,
-                constant: 5
-            ),
-            textStack.bottomAnchor.constraint(
-                equalTo: layoutMarginsGuide.bottomAnchor,
-                constant: -5
-            ),
+            textStack
+                .leadingAnchor
+                .constraint(equalTo: tagView.trailingAnchor, constant: 20),
+            textStack
+                .trailingAnchor
+                .constraint(
+                    equalTo: layoutMarginsGuide.trailingAnchor,
+                    constant: currentConfiguration?.rightInset ?? 0
+                ),
+            textStack
+                .topAnchor
+                .constraint(
+                    equalTo: layoutMarginsGuide.topAnchor,
+                    constant: (currentConfiguration?.topInset ?? 0) + 5
+                ),
+            textStack
+                .bottomAnchor
+                .constraint(
+                    equalTo: layoutMarginsGuide.bottomAnchor,
+                    constant: (currentConfiguration?.bottomInset ?? 0) - 5
+                ),
         ])
     }
 
@@ -95,7 +106,6 @@ class RecordCellContentView: UIView, UIContentView {
         tagView.foregroundColor = configuration.tagForegroundColor
 
         titleLabel.text = configuration.title
-        titleLabel.font = configuration.titleFont
         titleLabel.textColor = configuration.titleColor
 
         if let subtitle = configuration.subtitle, subtitle != "" {
@@ -105,5 +115,12 @@ class RecordCellContentView: UIView, UIContentView {
         } else {
             subtitleLabel.isHidden = true
         }
+
+        if let inset = configuration.topInset { layoutMargins.top = inset }
+        if let inset = configuration.leftInset { layoutMargins.left = inset }
+        if let inset = configuration.bottomInset {
+            layoutMargins.bottom = inset
+        }
+        if let inset = configuration.rightInset { layoutMargins.right = inset }
     }
 }

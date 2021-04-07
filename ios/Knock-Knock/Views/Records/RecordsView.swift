@@ -115,11 +115,14 @@ struct RecordsView: View {
 #if DEBUG
 struct RecordsView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView { RecordsView().listStyle(PlainListStyle()) }
-            .environment(
-                \.managedObjectContext,
-                PersistenceController.preview.container.viewContext
-            )
+        NavigationView {
+            RecordsView()
+                .listStyle(PlainListStyle())
+        }
+        .environment(
+            \.managedObjectContext,
+            PersistenceController.preview.container.viewContext
+        )
     }
 }
 #endif
