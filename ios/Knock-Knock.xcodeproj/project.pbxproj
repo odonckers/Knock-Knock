@@ -50,8 +50,6 @@
 		E25A16ED25E093AA0065517B /* DoorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16EC25E093AA0065517B /* DoorsView.swift */; };
 		E25A16F225E094DB0065517B /* GridLayoutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16F125E094DB0065517B /* GridLayoutButton.swift */; };
 		E25A170725E095FE0065517B /* RecordFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A170625E095FE0065517B /* RecordFormView.swift */; };
-		E25A171425E0B1530065517B /* RecordsListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A171325E0B1530065517B /* RecordsListRow.swift */; };
-		E25A171E25E0B1AB0065517B /* RecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A171D25E0B1AB0065517B /* RecordsView.swift */; };
 		E25A172725E0B1D40065517B /* Territory+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A172625E0B1D40065517B /* Territory+Extension.swift */; };
 		E25A173925E0B3880065517B /* TerritoryFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A173825E0B3880065517B /* TerritoryFormView.swift */; };
 		E25A173E25E0B3CD0065517B /* TerritoriesListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A173D25E0B3CD0065517B /* TerritoriesListRow.swift */; };
@@ -130,8 +128,6 @@
 		E25A16EC25E093AA0065517B /* DoorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorsView.swift; sourceTree = "<group>"; };
 		E25A16F125E094DB0065517B /* GridLayoutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayoutButton.swift; sourceTree = "<group>"; };
 		E25A170625E095FE0065517B /* RecordFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordFormView.swift; sourceTree = "<group>"; };
-		E25A171325E0B1530065517B /* RecordsListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsListRow.swift; sourceTree = "<group>"; };
-		E25A171D25E0B1AB0065517B /* RecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsView.swift; sourceTree = "<group>"; };
 		E25A172625E0B1D40065517B /* Territory+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Territory+Extension.swift"; sourceTree = "<group>"; };
 		E25A173825E0B3880065517B /* TerritoryFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoryFormView.swift; sourceTree = "<group>"; };
 		E25A173D25E0B3CD0065517B /* TerritoriesListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoriesListRow.swift; sourceTree = "<group>"; };
@@ -382,8 +378,6 @@
 			children = (
 				7F5310FC260E663600F5F3BE /* Components */,
 				7FF2D028260ABF7D00A54D72 /* RecordsViewController.swift */,
-				E25A171D25E0B1AB0065517B /* RecordsView.swift */,
-				E25A171325E0B1530065517B /* RecordsListRow.swift */,
 			);
 			path = Records;
 			sourceTree = "<group>";
@@ -587,12 +581,10 @@
 				E25A167A25E081430065517B /* StatefulPreviewWrapper.swift in Sources */,
 				E27AAB0D25ED8B9D00342603 /* Color+Extension.swift in Sources */,
 				E24673BB25F0623600A0653B /* AppDelegate.swift in Sources */,
-				E25A171E25E0B1AB0065517B /* RecordsView.swift in Sources */,
 				E25A163E25E07CC30065517B /* FilledBackground.swift in Sources */,
 				E25A16BA25E0854C0065517B /* RecordType.swift in Sources */,
 				E25A173925E0B3880065517B /* TerritoryFormView.swift in Sources */,
 				E2BB6FC125EB3F2600731EDE /* UIColor+Extension.swift in Sources */,
-				E25A171425E0B1530065517B /* RecordsListRow.swift in Sources */,
 				E25A16B225E084BD0065517B /* Attempt+Extension.swift in Sources */,
 				E25A169B25E083A80065517B /* CardGroupBoxStyle.swift in Sources */,
 				E25A170725E095FE0065517B /* RecordFormView.swift in Sources */,

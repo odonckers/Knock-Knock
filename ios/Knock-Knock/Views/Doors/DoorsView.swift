@@ -7,6 +7,68 @@
 
 import SwiftUI
 
+class DoorsViewController: UIHostingController<DoorsView> {
+    let record: Record
+
+    init(record: Record) {
+        self.record = record
+
+        let doorsView = DoorsView(record: record)
+        super.init(rootView: doorsView)
+
+        configureNavigationBar()
+        setupTitleView()
+    }
+
+    @objc required dynamic init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private var titleView = UIStackView()
+    private var titleTagView = UITag()
+    private var titleLabel = UILabel()
+}
+
+extension DoorsViewController {
+    private func configureNavigationBar() {
+        navigationItem.largeTitleDisplayMode = .never
+    }
+}
+
+extension DoorsViewController {
+    private func setupTitleView() {
+        navigationItem.titleView = titleView
+
+        titleView.axis = .horizontal
+        titleView.alignment = .center
+
+        setupTitleTag()
+        setupTitleLabel()
+    }
+
+    private func setupTitleTag() {
+        let color = UIColor(record.typeColor)
+
+        titleTagView.text = record.abbreviatedType
+        titleTagView.backgroundColor = color.withAlphaComponent(0.15)
+        titleTagView.foregroundColor = color
+
+        titleTagView.widthAnchor.constraint(equalToConstant: 65).isActive = true
+
+        titleView.addArrangedSubview(titleTagView)
+        titleView.setCustomSpacing(10, after: titleTagView)
+    }
+
+    private func setupTitleLabel() {
+        titleLabel.text = record.wrappedStreetName
+        titleLabel.font =  UIFont
+            .preferredFont(forTextStyle: .headline)
+            .bold()
+
+        titleView.addArrangedSubview(titleLabel)
+    }
+}
+
 struct DoorsView: View {
     let record: Record
 
@@ -28,14 +90,11 @@ struct DoorsView: View {
             .padding()
         }
         .toolbar {
-            ToolbarItem(placement: .principal) { title }
             ToolbarItem {
                 GridLayoutButton(selectedGridLayout: $selectedGridLayout)
             }
         }
-        .navigationBarTitleDisplayMode(.inline)
         .filledBackground(Color.groupedBackground)
-        .navigationBarBackButtonHidden(!inPortrait)
     }
 
     @Environment(\.horizontalSizeClass)
@@ -80,28 +139,11 @@ struct DoorsView: View {
 
         return isGrid ? gridColumns : listColumns
     }
-
-    // MARK: - Title
-
-    @ViewBuilder private var title: some View {
-        HStack {
-            Tag(color: record.typeColor) {
-                Text(record.abbreviatedType)
-                    .frame(width: 65)
-            }
-            FramedSpacer(spacing: .small, direction: .horizontal)
-            if let apartmentNumber = record.apartmentNumber {
-                Text(apartmentNumber)
-            }
-            Text(record.wrappedStreetName)
-        }
-        .font(Font.body.bold())
-    }
 }
 
 #if DEBUG
-struct DoorsView_Previews: PreviewProvider {
-    static var previews: some View {
+struct DoorsViewController_Preview: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> UINavigationController {
         let record = Record(
             context: PersistenceController.preview.container.viewContext
         )
@@ -109,7 +151,19 @@ struct DoorsView_Previews: PreviewProvider {
         record.city = "City"
         record.state = "State"
 
-        return NavigationView { DoorsView(record: record) }
+        let doorsViewController = DoorsViewController(record: record)
+        let navigationController = UINavigationController(
+            rootViewController: doorsViewController
+        )
+        return navigationController
+    }
+
+    func updateUIViewController(_ uiViewController: UINavigationController, context: Context) { }
+}
+
+struct DoorsView_Previews: PreviewProvider {
+    static var previews: some View {
+        DoorsViewController_Preview()
     }
 }
 #endif

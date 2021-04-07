@@ -49,6 +49,24 @@ class RecordsViewController: UIViewController {
         configureViewContext()
         configureFetchRequests()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        deselectSelectedIndexPath()
+    }
+
+    // BUG FIX for standing collection view deselection not disappearing when returning to view.
+
+    private var selectedIndexPath: IndexPath?
+
+    private func deselectSelectedIndexPath() {
+        if let selectedIndexPath = selectedIndexPath {
+            self.selectedIndexPath = nil
+            collectionView
+                .deselectItem(at: selectedIndexPath, animated: true)
+        }
+    }
 }
 
 extension RecordsViewController {
@@ -184,10 +202,19 @@ extension RecordsViewController: UICollectionViewDelegate {
         guard let record = dataSource.itemIdentifier(for: indexPath)
         else { return }
 
-        let doorsView = DoorsView(record: record)
-        let hostedDoorsView = UIHostingController(rootView: doorsView)
+        let doorsView = DoorsViewController(record: record)
+        let navigationDoorsView = UINavigationController(
+            rootViewController: doorsView
+        )
 
-        showDetailViewController(hostedDoorsView, sender: nil)
+        if isCompact {
+            navigationController?
+                .pushViewController(doorsView, animated: true)
+        } else {
+            showDetailViewController(navigationDoorsView, sender: nil)
+        }
+
+        selectedIndexPath = indexPath
     }
 }
 

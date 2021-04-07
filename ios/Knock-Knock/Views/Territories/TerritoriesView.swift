@@ -47,7 +47,7 @@ struct TerritoriesView: View {
 
     @ViewBuilder private func rowContent(territory: Territory) -> some View {
         NavigationLink(
-            destination: RecordsView(territory: territory),
+            destination: Text("Hello, World!"),
             tag: territory.wrappedID,
             selection: $selection
         ) {
