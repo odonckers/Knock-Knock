@@ -211,7 +211,7 @@ extension RecordsViewController: UICollectionViewDelegate {
 
         if isCompact {
             navigationController?
-                .pushViewController(doorsView, animated: true)
+                .pushViewController(doorsViewController, animated: true)
         } else {
             showDetailViewController(navigationDoorsView, sender: nil)
         }
