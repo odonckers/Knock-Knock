@@ -5,7 +5,6 @@
 //  Created by Owen Donckers on 2/19/21.
 //
 
-import Introspect
 import SwiftUI
 
 struct RecordFormView: HostedControllerView {
@@ -48,7 +47,10 @@ struct RecordFormView: HostedControllerView {
                 }
 
                 Section(header: Text("recordForm.header.street")) {
-                    streetNameField
+                    TextField(
+                        "recordForm.field.streetName.required",
+                        text: $streetName
+                    )
                     TextField("recordForm.field.city", text: $city)
                     TextField("recordForm.field.state", text: $state)
                 }
@@ -98,20 +100,6 @@ struct RecordFormView: HostedControllerView {
         }
         .pickerStyle(SegmentedPickerStyle())
         .formLabel("general.type")
-    }
-
-    // MARK: - Street Name Field
-
-    @State private var wasFirstResponder = false
-
-    @ViewBuilder private var streetNameField: some View {
-        TextField("recordForm.field.streetName.required", text: $streetName)
-            .introspectTextField { textField in
-                if !wasFirstResponder {
-                    textField.becomeFirstResponder()
-                    wasFirstResponder.toggle()
-                }
-            }
     }
 
     // MARK: - Use Current Location Button

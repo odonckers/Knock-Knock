@@ -3,12 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		7F179806260A776C0046944E /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F179805260A776C0046944E /* TabBarItem.swift */; };
-		7F179818260A89CF0046944E /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 7F179817260A89CF0046944E /* Introspect */; };
 		7F27D54E2620D6B0000B7360 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F27D54D2620D6B0000B7360 /* SplitViewController.swift */; };
 		7F5310FF260E667300F5F3BE /* RecordCellContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5310FE260E667300F5F3BE /* RecordCellContentConfiguration.swift */; };
 		7F531104260E66B400F5F3BE /* RecordCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F531103260E66B400F5F3BE /* RecordCellContentView.swift */; };
@@ -150,7 +149,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F179818260A89CF0046944E /* Introspect in Frameworks */,
 				7F5DA90C2620E67A00043B18 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -456,7 +454,6 @@
 			);
 			name = "Knock Knock";
 			packageProductDependencies = (
-				7F179817260A89CF0046944E /* Introspect */,
 			);
 			productName = "Knock-Knock";
 			productReference = E25A15B725E072740065517B /* Knock Knock.app */;
@@ -530,7 +527,6 @@
 			);
 			mainGroup = E25A15AE25E072740065517B;
 			packageReferences = (
-				7F179816260A89CF0046944E /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = E25A15B825E072740065517B /* Products */;
 			projectDirPath = "";
@@ -961,25 +957,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		7F179816260A89CF0046944E /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		7F179817260A89CF0046944E /* Introspect */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7F179816260A89CF0046944E /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
-			productName = Introspect;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		E25A162925E07AC60065517B /* Knock_Knock.xcdatamodeld */ = {

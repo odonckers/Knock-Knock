@@ -5,7 +5,6 @@
 //  Created by Owen Donckers on 2/19/21.
 //
 
-import Introspect
 import SwiftUI
 
 struct TerritoryFormView: View {
@@ -22,11 +21,13 @@ struct TerritoryFormView: View {
     @Environment(\.presentationMode)
     private var presentationMode
 
+    @State private var name = ""
+
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("general.info")) {
-                    nameTextField
+                    TextField("territoryForm.field.name.required", text: $name)
                 }
             }
             .navigationTitle(
@@ -39,24 +40,6 @@ struct TerritoryFormView: View {
                 ToolbarItem(placement: .confirmationAction) { saveButton }
             }
         }
-        .introspectViewController { viewController in
-            viewController.isModalInPresentation = true
-        }
-    }
-
-    // MARK: - Name Field
-
-    @State private var name = ""
-    @State private var wasFirstResponder = false
-
-    @ViewBuilder private var nameTextField: some View {
-        TextField("territoryForm.field.name.required", text: $name)
-            .introspectTextField { textField in
-                if !wasFirstResponder {
-                    textField.becomeFirstResponder()
-                    wasFirstResponder.toggle()
-                }
-            }
     }
 
     // MARK: - Cancel Button
