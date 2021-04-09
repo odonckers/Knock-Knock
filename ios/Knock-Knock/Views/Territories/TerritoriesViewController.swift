@@ -50,11 +50,7 @@ class TerritoriesViewController: UIViewController {
 extension TerritoriesViewController {
     private func configureNavigationBar() {
         title = TabBarItem.territories.title
-        if let navigationController = navigationController {
-            navigationController.navigationBar.prefersLargeTitles = true
-            navigationController.tabBarItem.image = TabBarItem.territories.image
-            navigationController.tabBarItem.title = TabBarItem.territories.title
-        }
+        navigationController?.navigationBar.prefersLargeTitles = true
 
         let addTerritoryButton = UIBarButtonItem(
             image: UIImage(systemName: "folder.badge.plus"),

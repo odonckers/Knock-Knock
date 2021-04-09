@@ -16,49 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
-        let splitViewController = UISplitViewController(style: .tripleColumn)
-        splitViewController.preferredDisplayMode = .twoDisplaceSecondary
-        splitViewController.showsSecondaryOnlyButton = true
-
-        let sidebarViewController = SidebarViewController()
-        splitViewController
-            .setViewController(sidebarViewController, for: .primary)
-
-        let recordsViewController = RecordsViewController()
-        let recordsNavigationController = UINavigationController(
-            rootViewController: recordsViewController
-        )
-        splitViewController
-            .setViewController(recordsNavigationController, for: .supplementary)
-
-        let doorsViewController = DoorsViewController()
-        let doorsNavigationController = UINavigationController(
-            rootViewController: doorsViewController
-        )
-        splitViewController
-            .setViewController(doorsNavigationController, for: .secondary)
-
-        let compactRecordsViewController = RecordsViewController(
-            isCompact: true
-        )
-        let compactRecordsNavigationController = UINavigationController(
-            rootViewController: compactRecordsViewController
-        )
-
-        let compactTerritoriesViewController = TerritoriesViewController()
-        let compactTerritoriesNavigationContorller = UINavigationController(
-            rootViewController: compactTerritoriesViewController
-        )
-
-        let tabBarController = UITabBarController()
-        tabBarController.setViewControllers(
-            [
-                compactRecordsNavigationController,
-                compactTerritoriesNavigationContorller
-            ],
-            animated: false
-        )
-        splitViewController.setViewController(tabBarController, for: .compact)
+        let splitViewController = SplitViewController()
 
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
