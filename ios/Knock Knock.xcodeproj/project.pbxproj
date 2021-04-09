@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7F179806260A776C0046944E /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F179805260A776C0046944E /* TabBarItem.swift */; };
-		7F27D54E2620D6B0000B7360 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F27D54D2620D6B0000B7360 /* SplitViewController.swift */; };
+		7F27D54E2620D6B0000B7360 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F27D54D2620D6B0000B7360 /* RootViewController.swift */; };
 		7F5310FF260E667300F5F3BE /* RecordCellContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5310FE260E667300F5F3BE /* RecordCellContentConfiguration.swift */; };
 		7F531104260E66B400F5F3BE /* RecordCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F531103260E66B400F5F3BE /* RecordCellContentView.swift */; };
 		7F53110F260E714900F5F3BE /* RecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53110E260E714900F5F3BE /* RecordCell.swift */; };
@@ -82,7 +82,7 @@
 
 /* Begin PBXFileReference section */
 		7F179805260A776C0046944E /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
-		7F27D54D2620D6B0000B7360 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
+		7F27D54D2620D6B0000B7360 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		7F5310FE260E667300F5F3BE /* RecordCellContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCellContentConfiguration.swift; sourceTree = "<group>"; };
 		7F531103260E66B400F5F3BE /* RecordCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCellContentView.swift; sourceTree = "<group>"; };
 		7F53110E260E714900F5F3BE /* RecordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCell.swift; sourceTree = "<group>"; };
@@ -422,7 +422,7 @@
 		E25A175225E0B4450065517B /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				7F27D54D2620D6B0000B7360 /* SplitViewController.swift */,
+				7F27D54D2620D6B0000B7360 /* RootViewController.swift */,
 				E253C5CB25F0878900C0DDD8 /* SidebarViewController.swift */,
 				7F179805260A776C0046944E /* TabBarItem.swift */,
 			);
@@ -604,7 +604,7 @@
 				E25A164325E07F4C0065517B /* Bundle+Extension.swift in Sources */,
 				7F531104260E66B400F5F3BE /* RecordCellContentView.swift in Sources */,
 				E25A166825E0804E0065517B /* Binding+Extension.swift in Sources */,
-				7F27D54E2620D6B0000B7360 /* SplitViewController.swift in Sources */,
+				7F27D54E2620D6B0000B7360 /* RootViewController.swift in Sources */,
 				E25A16C225E0857B0065517B /* AttemptSymbol.swift in Sources */,
 				E25A16A825E084390065517B /* Record+Extension.swift in Sources */,
 				E253C5CC25F0878900C0DDD8 /* SidebarViewController.swift in Sources */,

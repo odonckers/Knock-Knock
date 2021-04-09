@@ -1,5 +1,5 @@
 //
-//  SplitViewController.swift
+//  RootViewController.swift
 //  Knock Knock
 //
 //  Created by Owen Donckers on 4/9/21.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SplitViewController: UISplitViewController, UISplitViewControllerDelegate {
+class RootViewController: UISplitViewController, UISplitViewControllerDelegate {
     init() {
         super.init(style: .tripleColumn)
         delegate = self
@@ -36,7 +36,7 @@ class SplitViewController: UISplitViewController, UISplitViewControllerDelegate 
     }
 }
 
-extension SplitViewController {
+extension RootViewController {
     private func setupSidebarViewController() {
         sidebarViewController = SidebarViewController()
         setViewController(sidebarViewController, for: .primary)
@@ -61,7 +61,7 @@ extension SplitViewController {
     }
 }
 
-extension SplitViewController {
+extension RootViewController {
     private func setupCompactViewController() {
         let tabBarController = UITabBarController()
         tabBarController.setViewControllers(
