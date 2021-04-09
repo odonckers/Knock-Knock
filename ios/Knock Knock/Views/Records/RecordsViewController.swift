@@ -112,10 +112,8 @@ extension RecordsViewController {
                 layoutEnvironment
             ) -> NSCollectionLayoutSection? in
 
-            guard let self = self else { return nil }
-
             var configuration = UICollectionLayoutListConfiguration(
-                appearance: self.isCompact ? .plain : .sidebarPlain
+                appearance: (self?.isCompact ?? false) ? .plain : .sidebarPlain
             )
             configuration.showsSeparators = true
             configuration.headerMode = .none
@@ -147,29 +145,10 @@ extension RecordsViewController {
                         return
                     }
 
-                    let deleteAction = UIAlertAction(
-                        title: "Delete",
-                        style: .destructive
-                    ) { action in
-                        self.deleteRecord(at: indexPath)
-                        completion(true)
-                    }
-                    let cancelAction = UIAlertAction(
-                        title: "Cancel",
-                        style: .cancel
-                    ) { _ in
-                        completion(false)
-                    }
-
-                    let alert = UIAlertController(
-                        title: "Are you sure?",
-                        message: "This action is permanent and cannot be undone.",
-                        preferredStyle: .alert
+                    self.presentDeleteRecordAlert(
+                        at: indexPath,
+                        completion: completion
                     )
-                    alert.addAction(deleteAction)
-                    alert.addAction(cancelAction)
-
-                    self.present(alert, animated: true)
                 }
                 deleteAction.image = UIImage(systemName: "trash")
                 deleteAction.backgroundColor = .systemRed
@@ -215,19 +194,79 @@ extension RecordsViewController: UICollectionViewDelegate {
 
         selectedIndexPath = indexPath
     }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        contextMenuConfigurationForItemAt indexPath: IndexPath,
+        point: CGPoint
+    ) -> UIContextMenuConfiguration? {
+        let contextMenuConfig = UIContextMenuConfiguration(
+            identifier: nil,
+            previewProvider: nil
+        ) { actions in
+            UIMenu(
+                children: [
+                    UIAction(
+                        title: "Edit",
+                        image: UIImage(systemName: "pencil")
+                    ) { [weak self] action in
+                        self?.updateRecord(at: indexPath)
+                    },
+                    UIAction(
+                        title: "Delete",
+                        image: UIImage(systemName: "trash"),
+                        attributes: .destructive
+                    ) { [weak self] action in
+                        self?.presentDeleteRecordAlert(at: indexPath)
+                    }
+                ]
+            )
+        }
+
+        return contextMenuConfig
+    }
+}
+
+extension RecordsViewController {
+    private func presentDeleteRecordAlert(
+        at indexPath: IndexPath,
+        completion: @escaping (Bool) -> Void = { _ in }
+    ) {
+        let deleteAction = UIAlertAction(
+            title: "Delete",
+            style: .destructive
+        ) { action in
+            self.deleteRecord(at: indexPath)
+            completion(true)
+        }
+        let cancelAction = UIAlertAction(
+            title: "Cancel",
+            style: .cancel
+        ) { action in
+            completion(false)
+        }
+
+        let alert = UIAlertController(
+            title: "Are you sure?",
+            message: "This action is permanent and cannot be undone.",
+            preferredStyle: .alert
+        )
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+
+        present(alert, animated: true)
+    }
 }
 
 extension RecordsViewController {
     private typealias CellRegistration = UICollectionView.CellRegistration<RecordCell, Record>
 
     private func configureDataSource() {
-        let rowRegistration = CellRegistration { [weak self]
-            cell, indexPath, item in
-
-            guard let self = self else { return }
+        let rowRegistration = CellRegistration {
+            [weak self] cell, indexPath, item in
 
             cell.record = item
-            if self.isCompact {
+            if self?.isCompact ?? false {
                 cell.contentInsets = UIEdgeInsets(
                     top: 10,
                     left: 20,

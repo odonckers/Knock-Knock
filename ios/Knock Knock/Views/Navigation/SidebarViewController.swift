@@ -42,8 +42,7 @@ extension SidebarViewController {
         let addTerritoryButton = UIBarButtonItem(
             image: UIImage(systemName: "folder.badge.plus"),
             primaryAction: UIAction { [weak self] action in
-                guard let self = self else { return }
-                self.presentTerritoryForm()
+                self?.presentTerritoryForm()
             }
         )
         setToolbarItems(
@@ -81,11 +80,9 @@ extension SidebarViewController {
                 ? .none
                 : .firstItemInSection
             configuration.trailingSwipeActionsConfigurationProvider = {
-                [weak self] indexPath in
+                indexPath in
 
-                guard
-                    let self = self,
-                    let section = SidebarSection(rawValue: indexPath.section)
+                guard let section = SidebarSection(rawValue: indexPath.section)
                 else { return nil }
 
                 switch section {
@@ -94,7 +91,10 @@ extension SidebarViewController {
                         style: .normal,
                         title: "Edit"
                     ) { [weak self] action, view, completion in
-                        guard let self = self else { return }
+                        guard let self = self else {
+                            completion(false)
+                            return
+                        }
 
                         self.presentTerritoryForm(itemAt: indexPath)
                         completion(true)
@@ -111,29 +111,10 @@ extension SidebarViewController {
                             return
                         }
 
-                        let deleteAction = UIAlertAction(
-                            title: "Delete",
-                            style: .destructive
-                        ) { action in
-                            self.deleteTerritory(at: indexPath)
-                            completion(true)
-                        }
-                        let cancelAction = UIAlertAction(
-                            title: "Cancel",
-                            style: .cancel
-                        ) { _ in
-                            completion(false)
-                        }
-
-                        let alert = UIAlertController(
-                            title: "Are you sure?",
-                            message: "This action is permanent and cannot be undone.",
-                            preferredStyle: .alert
+                        self.presentDeleteTerritoryAlert(
+                            at: indexPath,
+                            completion: completion
                         )
-                        alert.addAction(deleteAction)
-                        alert.addAction(cancelAction)
-
-                        self.present(alert, animated: true)
                     }
                     deleteAction.image = UIImage(systemName: "trash")
                     deleteAction.backgroundColor = .systemRed
@@ -166,13 +147,53 @@ extension SidebarViewController: UICollectionViewDelegate {
         guard let sidebarItem = dataSource.itemIdentifier(for: indexPath)
         else { return }
 
-        switch indexPath.section {
-        case SidebarSection.records.rawValue:
+        let section = SidebarSection(rawValue: indexPath.section)
+
+        switch section {
+        case .records:
             didSelectRecordsItem(sidebarItem, at: indexPath)
-        case SidebarSection.territories.rawValue:
+        case .territories:
             didSelectTerritoryItem(sidebarItem, at: indexPath)
         default:
-            collectionView.deselectItem(at: indexPath, animated: true)
+            break
+        }
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        contextMenuConfigurationForItemAt indexPath: IndexPath,
+        point: CGPoint
+    ) -> UIContextMenuConfiguration? {
+        let section = SidebarSection(rawValue: indexPath.section)
+
+        switch section {
+        case .territories:
+            let contextMenuConfig = UIContextMenuConfiguration(
+                identifier: nil,
+                previewProvider: nil
+            ) { actions in
+                UIMenu(
+                    children: [
+                        UIAction(
+                            title: "Edit",
+                            image: UIImage(systemName: "pencil")
+                        ) { [weak self] action in
+                            self?.presentTerritoryForm(itemAt: indexPath)
+                        },
+                        UIAction(
+                            title: "Delete",
+                            image: UIImage(systemName: "trash"),
+                            attributes: .destructive
+                        ) { [weak self] action in
+                            self?.presentDeleteTerritoryAlert(at: indexPath)
+                        }
+                    ]
+                )
+            }
+
+            return contextMenuConfig
+        default:
+            return nil
         }
     }
 
@@ -207,6 +228,37 @@ extension SidebarViewController: UICollectionViewDelegate {
         else { return }
 
         recordsViewController.selectedTerritory = territory
+    }
+}
+
+extension SidebarViewController {
+    private func presentDeleteTerritoryAlert(
+        at indexPath: IndexPath,
+        completion: @escaping (Bool) -> Void = { _ in }
+    ) {
+        let deleteAction = UIAlertAction(
+            title: "Delete",
+            style: .destructive
+        ) { action in
+            self.deleteTerritory(at: indexPath)
+            completion(true)
+        }
+        let cancelAction = UIAlertAction(
+            title: "Cancel",
+            style: .cancel
+        ) { action in
+            completion(false)
+        }
+
+        let alert = UIAlertController(
+            title: "Are you sure?",
+            message: "This action is permanent and cannot be undone.",
+            preferredStyle: .alert
+        )
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+
+        self.present(alert, animated: true)
     }
 }
 
@@ -390,7 +442,7 @@ extension SidebarViewController {
         alertController.addAction(cancelAction)
 
         let submitAction = UIAlertAction(title: "Submit", style: .default) {
-            [unowned alertController] _ in
+            [unowned alertController] action in
 
             guard let textFields = alertController.textFields
             else { return }

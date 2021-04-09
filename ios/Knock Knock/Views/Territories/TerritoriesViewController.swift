@@ -55,8 +55,7 @@ extension TerritoriesViewController {
         let addTerritoryButton = UIBarButtonItem(
             image: UIImage(systemName: "folder.badge.plus"),
             primaryAction: UIAction { [weak self] action in
-                guard let self = self else { return }
-                self.presentTerritoryForm()
+                self?.presentTerritoryForm()
             }
         )
         navigationItem.rightBarButtonItem = addTerritoryButton
@@ -78,12 +77,7 @@ extension TerritoriesViewController {
 
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout() {
-            [weak self] (
-                sectionIndex,
-                layoutEnvironment
-            ) -> NSCollectionLayoutSection? in
-
-            guard let self = self else { return nil }
+            (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
 
             var configuration = UICollectionLayoutListConfiguration(
                 appearance: .plain
@@ -128,7 +122,7 @@ extension TerritoriesViewController {
                     let cancelAction = UIAlertAction(
                         title: "Cancel",
                         style: .cancel
-                    ) { _ in
+                    ) { action in
                         completion(false)
                     }
 
@@ -297,7 +291,7 @@ extension TerritoriesViewController {
         alertController.addAction(cancelAction)
 
         let submitAction = UIAlertAction(title: "Submit", style: .default) {
-            [unowned alertController] _ in
+            [unowned alertController] action in
 
             guard let textFields = alertController.textFields
             else { return }
