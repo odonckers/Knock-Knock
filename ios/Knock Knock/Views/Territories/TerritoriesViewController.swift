@@ -112,29 +112,10 @@ extension TerritoriesViewController {
                         return
                     }
 
-                    let deleteAction = UIAlertAction(
-                        title: "Delete",
-                        style: .destructive
-                    ) { action in
-                        self.deleteTerritory(at: indexPath)
-                        completion(true)
-                    }
-                    let cancelAction = UIAlertAction(
-                        title: "Cancel",
-                        style: .cancel
-                    ) { action in
-                        completion(false)
-                    }
-
-                    let alert = UIAlertController(
-                        title: "Are you sure?",
-                        message: "This action is permanent and cannot be undone.",
-                        preferredStyle: .alert
+                    self.presentDeleteTerritoryAlert(
+                        at: indexPath,
+                        completion: completion
                     )
-                    alert.addAction(deleteAction)
-                    alert.addAction(cancelAction)
-
-                    self.present(alert, animated: true)
                 }
                 deleteAction.image = UIImage(systemName: "trash")
                 deleteAction.backgroundColor = .systemRed
@@ -173,6 +154,68 @@ extension TerritoriesViewController: UICollectionViewDelegate {
             .pushViewController(recordsViewController, animated: true)
 
         selectedIndexPath = indexPath
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        contextMenuConfigurationForItemAt indexPath: IndexPath,
+        point: CGPoint
+    ) -> UIContextMenuConfiguration? {
+        let contextMenuConfig = UIContextMenuConfiguration(
+            identifier: nil,
+            previewProvider: nil
+        ) { actions in
+            UIMenu(
+                children: [
+                    UIAction(
+                        title: "Edit",
+                        image: UIImage(systemName: "pencil")
+                    ) { [weak self] action in
+                        self?.presentTerritoryForm(itemAt: indexPath)
+                    },
+                    UIAction(
+                        title: "Delete",
+                        image: UIImage(systemName: "trash"),
+                        attributes: .destructive
+                    ) { [weak self] action in
+                        self?.presentDeleteTerritoryAlert(at: indexPath)
+                    }
+                ]
+            )
+        }
+
+        return contextMenuConfig
+    }
+}
+
+extension TerritoriesViewController {
+    private func presentDeleteTerritoryAlert(
+        at indexPath: IndexPath,
+        completion: @escaping (Bool) -> Void = { _ in }
+    ) {
+        let deleteAction = UIAlertAction(
+            title: "Delete",
+            style: .destructive
+        ) { action in
+            self.deleteTerritory(at: indexPath)
+            completion(true)
+        }
+        let cancelAction = UIAlertAction(
+            title: "Cancel",
+            style: .cancel
+        ) { action in
+            completion(false)
+        }
+
+        let alert = UIAlertController(
+            title: "Are you sure?",
+            message: "This action is permanent and cannot be undone.",
+            preferredStyle: .alert
+        )
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+
+        present(alert, animated: true)
     }
 }
 

@@ -124,8 +124,7 @@ extension SidebarViewController {
                     )
                     swipeConfiguration.performsFirstActionWithFullSwipe = false
                     return swipeConfiguration
-                default:
-                    return nil
+                default: return nil
                 }
             }
 
@@ -150,12 +149,9 @@ extension SidebarViewController: UICollectionViewDelegate {
         let section = SidebarSection(rawValue: indexPath.section)
 
         switch section {
-        case .records:
-            didSelectRecordsItem(sidebarItem, at: indexPath)
-        case .territories:
-            didSelectTerritoryItem(sidebarItem, at: indexPath)
-        default:
-            break
+        case .records: didSelectRecordsItem(sidebarItem, at: indexPath)
+        case .territories: didSelectTerritoryItem(sidebarItem, at: indexPath)
+        default: break
         }
     }
 
@@ -192,8 +188,7 @@ extension SidebarViewController: UICollectionViewDelegate {
             }
 
             return contextMenuConfig
-        default:
-            return nil
+        default: return nil
         }
     }
 

@@ -48,8 +48,8 @@
 		E25A16BA25E0854C0065517B /* RecordType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16B925E0854C0065517B /* RecordType.swift */; };
 		E25A16C225E0857B0065517B /* AttemptSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16C125E0857B0065517B /* AttemptSymbol.swift */; };
 		E25A16C725E085940065517B /* AttemptPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16C625E085940065517B /* AttemptPerson.swift */; };
-		E25A16CC25E085E50065517B /* Attempt+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16CB25E085E50065517B /* Attempt+SwiftUI.swift */; };
-		E25A16D125E0863C0065517B /* Record+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16D025E0863C0065517B /* Record+SwiftUI.swift */; };
+		E25A16CC25E085E50065517B /* Attempt+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16CB25E085E50065517B /* Attempt+UI.swift */; };
+		E25A16D125E0863C0065517B /* Record+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16D025E0863C0065517B /* Record+UI.swift */; };
 		E25A16ED25E093AA0065517B /* DoorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16EC25E093AA0065517B /* DoorsView.swift */; };
 		E25A16F225E094DB0065517B /* GridLayoutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16F125E094DB0065517B /* GridLayoutButton.swift */; };
 		E25A170725E095FE0065517B /* RecordFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A170625E095FE0065517B /* RecordFormView.swift */; };
@@ -128,8 +128,8 @@
 		E25A16B925E0854C0065517B /* RecordType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordType.swift; sourceTree = "<group>"; };
 		E25A16C125E0857B0065517B /* AttemptSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttemptSymbol.swift; sourceTree = "<group>"; };
 		E25A16C625E085940065517B /* AttemptPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttemptPerson.swift; sourceTree = "<group>"; };
-		E25A16CB25E085E50065517B /* Attempt+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attempt+SwiftUI.swift"; sourceTree = "<group>"; };
-		E25A16D025E0863C0065517B /* Record+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Record+SwiftUI.swift"; sourceTree = "<group>"; };
+		E25A16CB25E085E50065517B /* Attempt+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attempt+UI.swift"; sourceTree = "<group>"; };
+		E25A16D025E0863C0065517B /* Record+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Record+UI.swift"; sourceTree = "<group>"; };
 		E25A16EC25E093AA0065517B /* DoorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorsView.swift; sourceTree = "<group>"; };
 		E25A16F125E094DB0065517B /* GridLayoutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayoutButton.swift; sourceTree = "<group>"; };
 		E25A170625E095FE0065517B /* RecordFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordFormView.swift; sourceTree = "<group>"; };
@@ -331,7 +331,7 @@
 			isa = PBXGroup;
 			children = (
 				E25A16A725E084390065517B /* Record+Extension.swift */,
-				E25A16D025E0863C0065517B /* Record+SwiftUI.swift */,
+				E25A16D025E0863C0065517B /* Record+UI.swift */,
 				E25A16B925E0854C0065517B /* RecordType.swift */,
 			);
 			path = Record;
@@ -349,7 +349,7 @@
 			isa = PBXGroup;
 			children = (
 				E25A16B125E084BD0065517B /* Attempt+Extension.swift */,
-				E25A16CB25E085E50065517B /* Attempt+SwiftUI.swift */,
+				E25A16CB25E085E50065517B /* Attempt+UI.swift */,
 				E25A16C125E0857B0065517B /* AttemptSymbol.swift */,
 				E25A16C625E085940065517B /* AttemptPerson.swift */,
 			);
@@ -573,10 +573,10 @@
 			files = (
 				E25A164825E07F8D0065517B /* Configure.swift in Sources */,
 				E25A162B25E07AC60065517B /* Knock_Knock.xcdatamodeld in Sources */,
-				E25A16D125E0863C0065517B /* Record+SwiftUI.swift in Sources */,
+				E25A16D125E0863C0065517B /* Record+UI.swift in Sources */,
 				E25A160525E073B90065517B /* NSManagedObjectContext+Extension.swift in Sources */,
 				7FD8B3412620AF4600B51D86 /* TerritoriesViewController.swift in Sources */,
-				E25A16CC25E085E50065517B /* Attempt+SwiftUI.swift in Sources */,
+				E25A16CC25E085E50065517B /* Attempt+UI.swift in Sources */,
 				E25A167525E080D00065517B /* SheetState.swift in Sources */,
 				E2BB6FE925EBE0AA00731EDE /* Spacing.swift in Sources */,
 				7F590A99260E4388004CE55F /* HostedControllerView.swift in Sources */,
