@@ -1,42 +1,19 @@
 //
-//  RecordsViewController.swift
+//  TerritoriesViewController.swift
 //  Knock-Knock
 //
-//  Created by Owen Donckers on 3/23/21.
+//  Created by Owen Donckers on 4/9/21.
 //
 
 import CoreData
-import SwiftUI
 import UIKit
 
-class RecordsViewController: UIViewController {
-    var territory: Territory?
-    let isCompact: Bool
-
-    init(territory: Territory? = nil, isCompact: Bool = false) {
-        self.territory = territory
-        self.isCompact = isCompact
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    var selectedTerritory: Territory? {
-        get { territory }
-        set(newValue) {
-            territory = newValue
-            title = newValue?.wrappedName ?? TabBarItem.records.title
-            refreshFetchRequests()
-        }
-    }
-
+class TerritoriesViewController: UIViewController {
     private var collectionView: UICollectionView!
-    private var dataSource: UICollectionViewDiffableDataSource<Int, Record>!
+    private var dataSource: UICollectionViewDiffableDataSource<Int, Territory>!
 
     private var viewContext: NSManagedObjectContext!
-    private var fetchedRecordsController: NSFetchedResultsController<Record>!
+    private var fetchedTerritoriesController: NSFetchedResultsController<Territory>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,33 +47,27 @@ class RecordsViewController: UIViewController {
     }
 }
 
-extension RecordsViewController {
+extension TerritoriesViewController {
     private func configureNavigationBar() {
-        title = territory?.wrappedName ?? TabBarItem.records.title
+        title = TabBarItem.territories.title
         if let navigationController = navigationController {
             navigationController.navigationBar.prefersLargeTitles = true
-            navigationController.tabBarItem.image = TabBarItem.records.image
-            navigationController.tabBarItem.title = TabBarItem.records.title
+            navigationController.tabBarItem.image = TabBarItem.territories.image
+            navigationController.tabBarItem.title = TabBarItem.territories.title
         }
 
-        let addRecordButton = UIBarButtonItem(
-            title: "Add Record",
-            image: UIImage(systemName: "plus.circle.fill"),
+        let addTerritoryButton = UIBarButtonItem(
+            image: UIImage(systemName: "folder.badge.plus"),
             primaryAction: UIAction { [weak self] action in
                 guard let self = self else { return }
-
-                let recordForm = HostingController(
-                    rootView: RecordFormView(territory: self.territory)
-                )
-                recordForm.modalPresentationStyle = .formSheet
-                self.present(recordForm, animated: true)
+                self.presentTerritoryForm()
             }
         )
-        navigationItem.rightBarButtonItem = addRecordButton
+        navigationItem.rightBarButtonItem = addTerritoryButton
     }
 }
 
-extension RecordsViewController {
+extension TerritoriesViewController {
     private func configureCollectionView() {
         collectionView = UICollectionView(
             frame: view.bounds,
@@ -119,7 +90,7 @@ extension RecordsViewController {
             guard let self = self else { return nil }
 
             var configuration = UICollectionLayoutListConfiguration(
-                appearance: self.isCompact ? .plain : .sidebarPlain
+                appearance: .plain
             )
             configuration.showsSeparators = true
             configuration.headerMode = .none
@@ -136,7 +107,7 @@ extension RecordsViewController {
                         return
                     }
 
-                    self.updateRecord(at: indexPath)
+                    self.presentTerritoryForm(itemAt: indexPath)
                     completion(true)
                 }
                 editAction.image = UIImage(systemName: "pencil")
@@ -155,7 +126,7 @@ extension RecordsViewController {
                         title: "Delete",
                         style: .destructive
                     ) { action in
-                        self.deleteRecord(at: indexPath)
+                        self.deleteTerritory(at: indexPath)
                         completion(true)
                     }
                     let cancelAction = UIAlertAction(
@@ -195,53 +166,38 @@ extension RecordsViewController {
     }
 }
 
-extension RecordsViewController: UICollectionViewDelegate {
+extension TerritoriesViewController: UICollectionViewDelegate {
     func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        guard let record = dataSource.itemIdentifier(for: indexPath)
+        guard let territory = dataSource.itemIdentifier(for: indexPath)
         else { return }
 
-        let doorsViewController = DoorsViewController()
-        doorsViewController.selectedRecord = record
-
-        let navigationDoorsView = UINavigationController(
-            rootViewController: doorsViewController
+        let recordsViewController = RecordsViewController(
+            territory: territory,
+            isCompact: true
         )
 
-        if isCompact {
-            navigationController?
-                .pushViewController(doorsViewController, animated: true)
-        } else {
-            showDetailViewController(navigationDoorsView, sender: nil)
-        }
+        navigationController?
+            .pushViewController(recordsViewController, animated: true)
 
         selectedIndexPath = indexPath
     }
 }
 
-extension RecordsViewController {
-    private typealias CellRegistration = UICollectionView.CellRegistration<RecordCell, Record>
+extension TerritoriesViewController {
+    private typealias CellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Territory>
 
     private func configureDataSource() {
-        let rowRegistration = CellRegistration { [weak self]
-            cell, indexPath, item in
+        let rowRegistration = CellRegistration { cell, indexPath, item in
+            var contentConfiguration = cell.defaultContentConfiguration()
+            contentConfiguration.text = item.wrappedName
 
-            guard let self = self else { return }
-
-            cell.record = item
-            if self.isCompact {
-                cell.contentInsets = UIEdgeInsets(
-                    top: 10,
-                    left: 20,
-                    bottom: 10,
-                    right: 20
-                )
-            }
+            cell.contentConfiguration = contentConfiguration
         }
 
-        dataSource = UICollectionViewDiffableDataSource<Int, Record>(
+        dataSource = UICollectionViewDiffableDataSource<Int, Territory>(
             collectionView: collectionView
         ) { collectionView, indexPath, item in
             collectionView.dequeueConfiguredReusableCell(
@@ -252,11 +208,11 @@ extension RecordsViewController {
         }
     }
 
-    private func recordsSnapshot() -> NSDiffableDataSourceSectionSnapshot<Record> {
-        var snapshot = NSDiffableDataSourceSectionSnapshot<Record>()
+    private func territoriesSnapshot() -> NSDiffableDataSourceSectionSnapshot<Territory> {
+        var snapshot = NSDiffableDataSourceSectionSnapshot<Territory>()
 
-        var items = [Record]()
-        if let records = fetchedRecordsController.fetchedObjects {
+        var items = [Territory]()
+        if let records = fetchedTerritoriesController.fetchedObjects {
             items = records
         }
 
@@ -265,45 +221,37 @@ extension RecordsViewController {
     }
 
     private func applyInitialSnapshot() {
-        dataSource.apply(recordsSnapshot(), to: 0, animatingDifferences: false)
+        dataSource.apply(territoriesSnapshot(), to: 0, animatingDifferences: false)
     }
 
     private func updateSnapshot() {
-        let snapshot = recordsSnapshot()
+        let snapshot = territoriesSnapshot()
         dataSource.apply(snapshot, to: 0, animatingDifferences: true)
     }
 }
 
-extension RecordsViewController {
+extension TerritoriesViewController {
     private func configureViewContext() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         viewContext = appDelegate.persistenceController.container.viewContext
     }
 
     private func configureFetchRequests() {
-        let fetchRequest: NSFetchRequest<Record> = Record.fetchRequest()
+        let fetchRequest: NSFetchRequest<Territory> = Territory.fetchRequest()
         fetchRequest.sortDescriptors = [
-            NSSortDescriptor(keyPath: \Record.streetName, ascending: true)
+            NSSortDescriptor(keyPath: \Territory.name, ascending: true)
         ]
-        if let territory = territory {
-            fetchRequest.predicate = NSPredicate(
-                format: "territory == %@",
-                territory
-            )
-        } else {
-            fetchRequest.predicate = NSPredicate(format: "territory == NULL")
-        }
 
-        fetchedRecordsController = NSFetchedResultsController<Record>(
+        fetchedTerritoriesController = NSFetchedResultsController<Territory>(
             fetchRequest: fetchRequest,
             managedObjectContext: viewContext,
             sectionNameKeyPath: nil,
             cacheName: nil
         )
-        fetchedRecordsController.delegate = self
+        fetchedTerritoriesController.delegate = self
 
         do {
-            try fetchedRecordsController.performFetch()
+            try fetchedTerritoriesController.performFetch()
             applyInitialSnapshot()
         } catch {
             // Failed to fetch results from the database. Handle errors appropriately in your app.
@@ -311,18 +259,8 @@ extension RecordsViewController {
     }
 
     private func refreshFetchRequests() {
-        let fetchRequest = fetchedRecordsController.fetchRequest
-        if let territory = territory {
-            fetchRequest.predicate = NSPredicate(
-                format: "territory == %@",
-                territory
-            )
-        } else {
-            fetchRequest.predicate = NSPredicate(format: "territory == NULL")
-        }
-
         do {
-            try fetchedRecordsController.performFetch()
+            try fetchedTerritoriesController.performFetch()
             applyInitialSnapshot()
         } catch {
             // Failed to fetch results from the database. Handle errors appropriately in your app.
@@ -330,7 +268,7 @@ extension RecordsViewController {
     }
 }
 
-extension RecordsViewController: NSFetchedResultsControllerDelegate {
+extension TerritoriesViewController: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(
         _ controller: NSFetchedResultsController<NSFetchRequestResult>
     ) {
@@ -338,32 +276,71 @@ extension RecordsViewController: NSFetchedResultsControllerDelegate {
     }
 }
 
-extension RecordsViewController {
-    private func deleteRecord(at indexPath: IndexPath) {
-        guard let record = dataSource.itemIdentifier(for: indexPath)
+extension TerritoriesViewController {
+    private func presentTerritoryForm(itemAt indexPath: IndexPath) {
+        guard let territory = dataSource.itemIdentifier(for: indexPath)
         else { return }
-        deleteRecord(record)
+
+        presentTerritoryForm(territory: territory)
     }
 
-    private func deleteRecord(_ record: Record) {
-        viewContext.delete(record)
-        viewContext.unsafeSave()
-    }
-
-    private func updateRecord(at indexPath: IndexPath) {
-        guard let record = dataSource.itemIdentifier(for: indexPath)
-        else { return }
-        updateRecord(record)
-    }
-
-    private func updateRecord(_ record: Record) {
-        let recordForm = HostingController(
-            rootView: RecordFormView(
-                record: record,
-                territory: territory
-            )
+    private func presentTerritoryForm(territory: Territory? = nil) {
+        let alertController = UIAlertController(
+            title: "New Territory",
+            message: nil,
+            preferredStyle: .alert
         )
-        recordForm.modalPresentationStyle = .formSheet
-        present(recordForm, animated: true)
+
+        alertController.addTextField()
+
+        let nameTextField = alertController.textFields?.first
+        nameTextField?.placeholder = "Name"
+        nameTextField?.autocapitalizationType = .allCharacters
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(cancelAction)
+
+        let submitAction = UIAlertAction(title: "Submit", style: .default) {
+            [unowned alertController] _ in
+
+            guard let textFields = alertController.textFields
+            else { return }
+
+            let nameField = textFields[0]
+
+            var toSave: Territory
+            if let territory = territory {
+                toSave = territory
+                toSave.willUpdate()
+            } else {
+                toSave = Territory(context: self.viewContext)
+                toSave.willCreate()
+            }
+
+            toSave.name = nameField.text
+            self.viewContext.unsafeSave()
+        }
+        alertController.addAction(submitAction)
+
+        if let territory = territory {
+            alertController.title = "Edit Territory"
+            alertController.message = territory.wrappedName
+
+            nameTextField?.text = territory.wrappedName
+        }
+
+        present(alertController, animated: true)
+    }
+
+    private func deleteTerritory(at indexPath: IndexPath) {
+        guard let territory = dataSource.itemIdentifier(for: indexPath)
+        else { return }
+
+        deleteTerritory(territory)
+    }
+
+    private func deleteTerritory(_ territory: Territory) {
+        viewContext.delete(territory)
+        viewContext.unsafeSave()
     }
 }

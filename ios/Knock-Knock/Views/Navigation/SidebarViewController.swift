@@ -8,7 +8,6 @@
 import CoreData
 import UIKit
 
-@available(iOS 14, *)
 class SidebarViewController: UIViewController {
     private var collectionView: UICollectionView!
 
@@ -32,7 +31,6 @@ class SidebarViewController: UIViewController {
     }
 }
 
-@available(iOS 14, *)
 extension SidebarViewController {
     private func configureNavigationBar() {
         title = "Home"
@@ -58,7 +56,6 @@ extension SidebarViewController {
     }
 }
 
-@available(iOS 14, *)
 extension SidebarViewController {
     private func configureCollectionView() {
         collectionView = UICollectionView(
@@ -161,7 +158,6 @@ extension SidebarViewController {
     }
 }
 
-@available(iOS 14, *)
 extension SidebarViewController: UICollectionViewDelegate {
     func collectionView(
         _ collectionView: UICollectionView,
@@ -214,7 +210,6 @@ extension SidebarViewController: UICollectionViewDelegate {
     }
 }
 
-@available(iOS 14, *)
 extension SidebarViewController {
     private typealias CellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, SidebarItem>
 
@@ -334,7 +329,6 @@ extension SidebarViewController {
     }
 }
 
-@available(iOS 14, *)
 extension SidebarViewController {
     private func configureViewContext() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -364,7 +358,6 @@ extension SidebarViewController {
     }
 }
 
-@available(iOS 14, *)
 extension SidebarViewController: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(
         _ controller: NSFetchedResultsController<NSFetchRequestResult>
@@ -373,7 +366,6 @@ extension SidebarViewController: NSFetchedResultsControllerDelegate {
     }
 }
 
-@available(iOS 14, *)
 extension SidebarViewController {
     private func presentTerritoryForm(itemAt indexPath: IndexPath) {
         let sidebarItem = dataSource.itemIdentifier(for: indexPath)

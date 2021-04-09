@@ -14,6 +14,7 @@
 		7F53110F260E714900F5F3BE /* RecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53110E260E714900F5F3BE /* RecordCell.swift */; };
 		7F5311282610404D00F5F3BE /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5311272610404D00F5F3BE /* UIFont+Extension.swift */; };
 		7F590A99260E4388004CE55F /* HostedControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F590A98260E4388004CE55F /* HostedControllerView.swift */; };
+		7FD8B3412620AF4600B51D86 /* TerritoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD8B3402620AF4600B51D86 /* TerritoriesViewController.swift */; };
 		7FF2D029260ABF7D00A54D72 /* RecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF2D028260ABF7D00A54D72 /* RecordsViewController.swift */; };
 		E24673BB25F0623600A0653B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24673BA25F0623600A0653B /* AppDelegate.swift */; };
 		E24673C625F0625700A0653B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24673C525F0625700A0653B /* SceneDelegate.swift */; };
@@ -86,6 +87,7 @@
 		7F53110E260E714900F5F3BE /* RecordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCell.swift; sourceTree = "<group>"; };
 		7F5311272610404D00F5F3BE /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		7F590A98260E4388004CE55F /* HostedControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostedControllerView.swift; sourceTree = "<group>"; };
+		7FD8B3402620AF4600B51D86 /* TerritoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoriesViewController.swift; sourceTree = "<group>"; };
 		7FF2D028260ABF7D00A54D72 /* RecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsViewController.swift; sourceTree = "<group>"; };
 		E24673BA25F0623600A0653B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E24673C525F0625700A0653B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -401,6 +403,7 @@
 		E25A172E25E0B2C40065517B /* Territories */ = {
 			isa = PBXGroup;
 			children = (
+				7FD8B3402620AF4600B51D86 /* TerritoriesViewController.swift */,
 				E25A174A25E0B4160065517B /* TerritoriesView.swift */,
 				E25A173D25E0B3CD0065517B /* TerritoriesListRow.swift */,
 			);
@@ -573,6 +576,7 @@
 				E25A16D125E0863C0065517B /* Record+SwiftUI.swift in Sources */,
 				E25A174B25E0B4160065517B /* TerritoriesView.swift in Sources */,
 				E25A160525E073B90065517B /* NSManagedObjectContext+Extension.swift in Sources */,
+				7FD8B3412620AF4600B51D86 /* TerritoriesViewController.swift in Sources */,
 				E25A16CC25E085E50065517B /* Attempt+SwiftUI.swift in Sources */,
 				E25A167525E080D00065517B /* SheetState.swift in Sources */,
 				E2BB6FE925EBE0AA00731EDE /* Spacing.swift in Sources */,
@@ -793,7 +797,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "beta.donckersdev.Knock-Knock";
+				MARKETING_VERSION = 3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.donckersdev.Knock-Knock-3";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -816,7 +821,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "beta.donckersdev.Knock-Knock";
+				MARKETING_VERSION = 3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.donckersdev.Knock-Knock-3";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

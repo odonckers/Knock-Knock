@@ -45,9 +45,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             rootViewController: compactRecordsViewController
         )
 
+        let compactTerritoriesViewController = TerritoriesViewController()
+        let compactTerritoriesNavigationContorller = UINavigationController(
+            rootViewController: compactTerritoriesViewController
+        )
+
         let tabBarController = UITabBarController()
         tabBarController.setViewControllers(
-            [compactRecordsNavigationController],
+            [
+                compactRecordsNavigationController,
+                compactTerritoriesNavigationContorller
+            ],
             animated: false
         )
         splitViewController.setViewController(tabBarController, for: .compact)
