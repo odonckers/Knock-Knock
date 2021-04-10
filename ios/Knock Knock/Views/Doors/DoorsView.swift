@@ -21,8 +21,11 @@ class DoorsViewController: UIHostingController<AnyView> {
     private var record: Record?
 
     init() {
+        super.init(rootView: AnyView(EmptyView()))
+
         let doorsView = DoorsView()
-        super.init(rootView: AnyView(doorsView))
+            .environment(\.uiNavigationController, navigationController)
+        rootView = AnyView(doorsView)
 
         configureNavigationBar()
         setupTitleView()

@@ -9,63 +9,12 @@ import CoreData
 import Combine
 import SwiftUI
 
-class RecordFormViewController: UIHostingController<AnyView> {
-    private let viewContext: NSManagedObjectContext
-    private let viewModel: RecordFormViewModel
-
-    init(record: Record? = nil, territory: Territory? = nil) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        viewContext = appDelegate.persistenceController.container.viewContext
-
-        viewModel = RecordFormViewModel(record: record, territory: territory)
-
-        let recordFormView = RecordFormView()
-            .environment(\.managedObjectContext, viewContext)
-            .environmentObject(viewModel)
-
-        super.init(rootView: AnyView(recordFormView))
-        configureNavigationBar()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    @objc private func cancel(sender: UIBarButtonItem) {
-        dismiss(animated: true)
-    }
-}
-
-extension RecordFormViewController {
-    private func configureNavigationBar() {
-        title = viewModel.record?.streetName != nil
-            ? "Edit Street"
-            : "New Street"
-
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .cancel,
-            target: self,
-            action: #selector(cancel(sender:))
-        )
-
-        let confirmButton = UIBarButtonItem(
-            title: "Save",
-            primaryAction: UIAction { [weak self] action in
-                guard let self = self else { return }
-                if self.viewModel.canSave {
-                    self.viewModel.save(viewContext: self.viewContext)
-                    self.dismiss(animated: true)
-                }
-            }
-        )
-        confirmButton.style = .done
-        navigationItem.rightBarButtonItem = confirmButton
-    }
-}
-
-private struct RecordFormView: View {
+struct RecordFormView: View {
     @Environment(\.managedObjectContext)
-    private var viewContext
+    private var moc
+
+    @Environment(\.uiNavigationController)
+    private var navigationController
 
     @EnvironmentObject private var viewModel: RecordFormViewModel
 
@@ -123,7 +72,36 @@ private struct RecordFormView: View {
                 useCurrentLocationButton
             }
         }
+        .navigationTitle(
+            viewModel.record?.streetName != nil
+                ? "recordForm.title.edit"
+                : "recordForm.title.new"
+        )
         .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button(action: {
+                    navigationController?.dismiss(animated: true)
+                }) {
+                    Text("general.cancel")
+                }
+            }
+
+            ToolbarItem(placement: .confirmationAction) {
+                Button(action: {
+                    if self.viewModel.canSave {
+                        self.viewModel.save(in: self.moc)
+                        self.navigationController?.dismiss(animated: true)
+                    }
+                }) {
+                    Text("general.save")
+                }
+            }
+        }
+        .onAppear {
+            navigationController?.navigationBar.prefersLargeTitles = true
+//            navigationController?.navigationItem.largeTitleDisplayMode = .always
+        }
     }
 
     // MARK: - Use Current Location Button
@@ -154,9 +132,9 @@ private struct RecordFormView: View {
 #if DEBUG
 struct RecordFormView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewContext = PersistenceController.preview.container.viewContext
+        let moc = PersistenceController.preview.container.viewContext
 
-        let record = Record(context: viewContext)
+        let record = Record(context: moc)
         record.wrappedType = .apartment
         record.streetName = "Street name"
         record.city = "City"
@@ -172,7 +150,7 @@ struct RecordFormView_Previews: PreviewProvider {
                 .environmentObject(RecordFormViewModel(record: record))
                 .previewDisplayName("Edit Form Preview")
         }
-        .environment(\.managedObjectContext, viewContext)
+        .environment(\.managedObjectContext, moc)
     }
 }
 #endif

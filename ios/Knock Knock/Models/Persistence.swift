@@ -12,14 +12,14 @@ struct PersistenceController {
 
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
-        let viewContext = result.container.viewContext
+        let moc = result.container.viewContext
         for i in 0..<10 {
-            let newRecord = Record(context: viewContext)
+            let newRecord = Record(context: moc)
             newRecord.streetName = "Street \(i)"
             newRecord.city = "City"
             newRecord.state = "State"
         }
-        viewContext.unsafeSave()
+        moc.unsafeSave()
         return result
     }()
 

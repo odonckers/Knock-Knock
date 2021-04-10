@@ -42,13 +42,13 @@ class RecordFormViewModel: ObservableObject {
         else { return streetName != "" }
     }
 
-    func save(viewContext: NSManagedObjectContext) {
+    func save(in moc: NSManagedObjectContext) {
         var toSave: Record
         if let record = record {
             toSave = record
             toSave.willUpdate()
         } else {
-            toSave = Record(context: viewContext)
+            toSave = Record(context: moc)
             toSave.willCreate()
         }
 
@@ -59,6 +59,6 @@ class RecordFormViewModel: ObservableObject {
         toSave.state = state
         toSave.territory = territory
 
-        viewContext.unsafeSave()
+        moc.unsafeSave()
     }
 }

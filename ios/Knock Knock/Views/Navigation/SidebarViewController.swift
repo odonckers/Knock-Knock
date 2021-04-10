@@ -13,7 +13,7 @@ class SidebarViewController: UIViewController {
 
     private var dataSource: UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>!
 
-    private var viewContext: NSManagedObjectContext!
+    private var moc: NSManagedObjectContext!
     private var fetchedTerritoriesController: NSFetchedResultsController<Territory>!
 
     override func viewDidLoad() {
@@ -379,7 +379,7 @@ extension SidebarViewController {
 extension SidebarViewController {
     private func configureViewContext() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        viewContext = appDelegate.persistenceController.container.viewContext
+        moc = appDelegate.persistenceController.container.viewContext
     }
 
     private func configureFetchRequests() {
@@ -390,7 +390,7 @@ extension SidebarViewController {
 
         fetchedTerritoriesController = NSFetchedResultsController<Territory>(
             fetchRequest: fetchRequest,
-            managedObjectContext: viewContext,
+            managedObjectContext: moc,
             sectionNameKeyPath: nil,
             cacheName: nil
         )
@@ -449,12 +449,12 @@ extension SidebarViewController {
                 toSave = territory
                 toSave.willUpdate()
             } else {
-                toSave = Territory(context: self.viewContext)
+                toSave = Territory(context: self.moc)
                 toSave.willCreate()
             }
 
             toSave.name = nameField.text
-            self.viewContext.unsafeSave()
+            self.moc.unsafeSave()
         }
         alertController.addAction(submitAction)
 
@@ -475,8 +475,8 @@ extension SidebarViewController {
     }
 
     private func deleteTerritory(_ territory: Territory) {
-        viewContext.delete(territory)
-        viewContext.unsafeSave()
+        moc.delete(territory)
+        moc.unsafeSave()
     }
 }
 

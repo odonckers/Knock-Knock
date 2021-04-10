@@ -35,7 +35,7 @@ class RecordsViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Int, Record>!
 
-    private var viewContext: NSManagedObjectContext!
+    private var moc: NSManagedObjectContext!
     private var fetchedRecordsController: NSFetchedResultsController<Record>!
 
     override func viewDidLoad() {
@@ -81,13 +81,17 @@ extension RecordsViewController {
             primaryAction: UIAction { [weak self] action in
                 guard let self = self else { return }
 
-                let recordFormViewController = RecordFormViewController(
-                    territory: self.territory
-                )
-                let navigationController = UINavigationController(
-                    rootViewController: recordFormViewController
-                )
+                let viewModel = RecordFormViewModel(territory: self.territory)
+
+                let navigationController = UINavigationController()
                 navigationController.modalPresentationStyle = .formSheet
+
+                RecordFormView()
+                    .environmentObject(viewModel)
+                    .environment(\.managedObjectContext, self.moc)
+                    .environment(\.uiNavigationController, navigationController)
+                    .assignToUI(navigationController: navigationController)
+
                 self.present(navigationController, animated: true)
             }
         )
@@ -315,7 +319,7 @@ extension RecordsViewController {
 extension RecordsViewController {
     private func configureViewContext() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        viewContext = appDelegate.persistenceController.container.viewContext
+        moc = appDelegate.persistenceController.container.viewContext
     }
 
     private func configureFetchRequests() {
@@ -334,7 +338,7 @@ extension RecordsViewController {
 
         fetchedRecordsController = NSFetchedResultsController<Record>(
             fetchRequest: fetchRequest,
-            managedObjectContext: viewContext,
+            managedObjectContext: moc,
             sectionNameKeyPath: nil,
             cacheName: nil
         )
@@ -384,8 +388,8 @@ extension RecordsViewController {
     }
 
     private func deleteRecord(_ record: Record) {
-        viewContext.delete(record)
-        viewContext.unsafeSave()
+        moc.delete(record)
+        moc.unsafeSave()
     }
 
     private func updateRecord(at indexPath: IndexPath) {
@@ -395,14 +399,19 @@ extension RecordsViewController {
     }
 
     private func updateRecord(_ record: Record) {
-        let recordFormViewController = RecordFormViewController(
+        let viewModel = RecordFormViewModel(
             record: record,
             territory: territory
         )
-        let navigationController = UINavigationController(
-            rootViewController: recordFormViewController
-        )
+
+        let navigationController = UINavigationController()
         navigationController.modalPresentationStyle = .formSheet
+
+        RecordFormView()
+            .environmentObject(viewModel)
+            .environment(\.managedObjectContext, self.moc)
+            .environment(\.uiNavigationController, navigationController)
+            .assignToUI(navigationController: navigationController)
 
         present(navigationController, animated: true)
     }
