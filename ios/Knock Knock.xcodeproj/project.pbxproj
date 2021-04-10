@@ -10,6 +10,7 @@
 		7F179806260A776C0046944E /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F179805260A776C0046944E /* TabBarItem.swift */; };
 		7F27D54E2620D6B0000B7360 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F27D54D2620D6B0000B7360 /* RootViewController.swift */; };
 		7F49DFAC2620FD47006228A9 /* DoorFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F49DFAB2620FD47006228A9 /* DoorFormView.swift */; };
+		7F49DFCF26216755006228A9 /* RecordFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F49DFCE26216755006228A9 /* RecordFormViewModel.swift */; };
 		7F5310FF260E667300F5F3BE /* RecordCellContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5310FE260E667300F5F3BE /* RecordCellContentConfiguration.swift */; };
 		7F531104260E66B400F5F3BE /* RecordCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F531103260E66B400F5F3BE /* RecordCellContentView.swift */; };
 		7F53110F260E714900F5F3BE /* RecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53110E260E714900F5F3BE /* RecordCell.swift */; };
@@ -55,7 +56,6 @@
 		E25A16F225E094DB0065517B /* GridLayoutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16F125E094DB0065517B /* GridLayoutButton.swift */; };
 		E25A170725E095FE0065517B /* RecordFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A170625E095FE0065517B /* RecordFormView.swift */; };
 		E25A172725E0B1D40065517B /* Territory+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A172625E0B1D40065517B /* Territory+Extension.swift */; };
-		E25A173925E0B3880065517B /* TerritoryFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A173825E0B3880065517B /* TerritoryFormView.swift */; };
 		E27AAB0D25ED8B9D00342603 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AAB0C25ED8B9D00342603 /* Color+Extension.swift */; };
 		E2BB6FC125EB3F2600731EDE /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FC025EB3F2600731EDE /* UIColor+Extension.swift */; };
 		E2BB6FDB25EB6DF600731EDE /* ModelManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FDA25EB6DF600731EDE /* ModelManagedObject.swift */; };
@@ -85,6 +85,7 @@
 		7F179805260A776C0046944E /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		7F27D54D2620D6B0000B7360 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		7F49DFAB2620FD47006228A9 /* DoorFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorFormView.swift; sourceTree = "<group>"; };
+		7F49DFCE26216755006228A9 /* RecordFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordFormViewModel.swift; sourceTree = "<group>"; };
 		7F5310FE260E667300F5F3BE /* RecordCellContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCellContentConfiguration.swift; sourceTree = "<group>"; };
 		7F531103260E66B400F5F3BE /* RecordCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCellContentView.swift; sourceTree = "<group>"; };
 		7F53110E260E714900F5F3BE /* RecordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCell.swift; sourceTree = "<group>"; };
@@ -136,7 +137,6 @@
 		E25A16F125E094DB0065517B /* GridLayoutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayoutButton.swift; sourceTree = "<group>"; };
 		E25A170625E095FE0065517B /* RecordFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordFormView.swift; sourceTree = "<group>"; };
 		E25A172625E0B1D40065517B /* Territory+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Territory+Extension.swift"; sourceTree = "<group>"; };
-		E25A173825E0B3880065517B /* TerritoryFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoryFormView.swift; sourceTree = "<group>"; };
 		E25A176525E0B52B0065517B /* Knock Knock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Knock Knock.entitlements"; sourceTree = "<group>"; };
 		E27AAB0C25ED8B9D00342603 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		E2BB6FC025EB3F2600731EDE /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -371,7 +371,6 @@
 			children = (
 				E25A175225E0B4450065517B /* Navigation */,
 				E25A172E25E0B2C40065517B /* Territories */,
-				E25A172F25E0B31E0065517B /* Territory Form */,
 				E25A16FF25E095A70065517B /* Records */,
 				E25A170525E095D50065517B /* Record Form */,
 				E25A16D925E08A400065517B /* Doors */,
@@ -402,6 +401,7 @@
 			isa = PBXGroup;
 			children = (
 				E25A170625E095FE0065517B /* RecordFormView.swift */,
+				7F49DFCE26216755006228A9 /* RecordFormViewModel.swift */,
 			);
 			path = "Record Form";
 			sourceTree = "<group>";
@@ -420,14 +420,6 @@
 				7FD8B3402620AF4600B51D86 /* TerritoriesViewController.swift */,
 			);
 			path = Territories;
-			sourceTree = "<group>";
-		};
-		E25A172F25E0B31E0065517B /* Territory Form */ = {
-			isa = PBXGroup;
-			children = (
-				E25A173825E0B3880065517B /* TerritoryFormView.swift */,
-			);
-			path = "Territory Form";
 			sourceTree = "<group>";
 		};
 		E25A175225E0B4450065517B /* Navigation */ = {
@@ -584,6 +576,7 @@
 			files = (
 				E25A164825E07F8D0065517B /* Configure.swift in Sources */,
 				E25A162B25E07AC60065517B /* Knock_Knock.xcdatamodeld in Sources */,
+				7F49DFCF26216755006228A9 /* RecordFormViewModel.swift in Sources */,
 				E25A16D125E0863C0065517B /* Record+UI.swift in Sources */,
 				E25A160525E073B90065517B /* NSManagedObjectContext+Extension.swift in Sources */,
 				7FD8B3412620AF4600B51D86 /* TerritoriesViewController.swift in Sources */,
@@ -598,7 +591,6 @@
 				E24673BB25F0623600A0653B /* AppDelegate.swift in Sources */,
 				E25A163E25E07CC30065517B /* FilledBackground.swift in Sources */,
 				E25A16BA25E0854C0065517B /* RecordType.swift in Sources */,
-				E25A173925E0B3880065517B /* TerritoryFormView.swift in Sources */,
 				E2BB6FC125EB3F2600731EDE /* UIColor+Extension.swift in Sources */,
 				E25A16B225E084BD0065517B /* Visit+Extension.swift in Sources */,
 				E25A169B25E083A80065517B /* CardGroupBoxStyle.swift in Sources */,

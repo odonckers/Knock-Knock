@@ -81,11 +81,14 @@ extension RecordsViewController {
             primaryAction: UIAction { [weak self] action in
                 guard let self = self else { return }
 
-                let recordForm = HostingController(
-                    rootView: RecordFormView(territory: self.territory)
+                let recordFormViewController = RecordFormViewController(
+                    territory: self.territory
                 )
-                recordForm.modalPresentationStyle = .formSheet
-                self.present(recordForm, animated: true)
+                let navigationController = UINavigationController(
+                    rootViewController: recordFormViewController
+                )
+                navigationController.modalPresentationStyle = .formSheet
+                self.present(navigationController, animated: true)
             }
         )
         navigationItem.rightBarButtonItem = addRecordButton
@@ -392,13 +395,15 @@ extension RecordsViewController {
     }
 
     private func updateRecord(_ record: Record) {
-        let recordForm = HostingController(
-            rootView: RecordFormView(
-                record: record,
-                territory: territory
-            )
+        let recordFormViewController = RecordFormViewController(
+            record: record,
+            territory: territory
         )
-        recordForm.modalPresentationStyle = .formSheet
-        present(recordForm, animated: true)
+        let navigationController = UINavigationController(
+            rootViewController: recordFormViewController
+        )
+        navigationController.modalPresentationStyle = .formSheet
+
+        present(navigationController, animated: true)
     }
 }

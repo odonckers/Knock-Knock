@@ -49,8 +49,8 @@ extension View {
 struct FormLabel_Previews: PreviewProvider {
     static var previews: some View {
         Form {
-            StatefulPreviewWrapper("Inputted Text") {
-                TextField("Type here", text: $0)
+            StatefulPreviewWrapper("Inputted Text") { text in
+                TextField("Type here", text: text)
                     .formLabel("Label")
             }
         }

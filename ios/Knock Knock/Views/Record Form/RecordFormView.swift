@@ -5,101 +5,119 @@
 //  Created by Owen Donckers on 2/19/21.
 //
 
+import CoreData
+import Combine
 import SwiftUI
 
-struct RecordFormView: HostedControllerView {
-    var dismiss: (() -> Void)?
-
-    var record: Record? = nil
-    var territory: Territory? = nil
+class RecordFormViewController: UIHostingController<AnyView> {
+    private let viewModel: RecordFormViewModel
+    private var cancellables: Set<AnyCancellable> = []
 
     init(record: Record? = nil, territory: Territory? = nil) {
-        self.record = record
-        self.territory = territory
-    }
-
-    @Environment(\.presentationMode)
-    private var presentationMode
-
-    private var persistenceController: PersistenceController = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.persistenceController
-    }()
+        let viewContext = appDelegate.persistenceController.container.viewContext
 
-    @State var selectedTypeIndex = 0
-    @State var streetName = ""
-    @State var city = ""
-    @State var state = ""
-    @State var apartmentNumber = ""
+        viewModel = RecordFormViewModel(record: record, territory: territory)
 
-    var body: some View {
-        NavigationView {
-            Form {
-                Section { typePicker }
+        let recordFormView = RecordFormView()
+            .environment(\.managedObjectContext, viewContext)
+            .environmentObject(viewModel)
 
-                if selectedTypeIndex == 1 {
-                    Section(header: Text("recordForm.header.apartment")) {
-                        TextField(
-                            "recordForm.field.apartmentNumber.required",
-                            text: $apartmentNumber
-                        )
-                    }
-                }
+        super.init(rootView: AnyView(recordFormView))
 
-                Section(header: Text("recordForm.header.street")) {
-                    TextField(
-                        "recordForm.field.streetName.required",
-                        text: $streetName
-                    )
-                    TextField("recordForm.field.city", text: $city)
-                    TextField("recordForm.field.state", text: $state)
-                }
+        title = record?.streetName != nil
+            ? "Edit Street"
+            : "New Street"
 
-                Section(header: Text("recordForm.header.geolocation")) {
-                    useCurrentLocationButton
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .cancel,
+            target: self,
+            action: #selector(cancel(sender:))
+        )
+
+        let confirmButton = UIBarButtonItem(
+            title: "Save",
+            primaryAction: UIAction { [weak self] action in
+                guard let self = self else { return }
+                if self.viewModel.canSave {
+                    self.viewModel.save(viewContext: viewContext)
+                    self.dismiss(animated: true)
                 }
             }
-            .navigationTitle(
-                record?.streetName != nil ?
-                    "recordForm.title.edit" :
-                    "recordForm.title.new"
-            )
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) { cancelButton }
-                ToolbarItem(placement: .confirmationAction) { saveButton }
-            }
-        }
-        .onAppear {
-            if let record = record {
-                selectedTypeIndex = Int(record.wrappedType.rawValue)
-
-                if let streetName = record.streetName {
-                    self.streetName = streetName
-                }
-                if let city = record.city { self.city = city }
-                if let state = record.state { self.state = state }
-                if let apartmentNumber = record.apartmentNumber {
-                    self.apartmentNumber = apartmentNumber
-                }
-            }
-        }
+        )
+        confirmButton.style = .done
+        navigationItem.rightBarButtonItem = confirmButton
     }
 
-    private func closePresentation() {
-        if let dismiss = dismiss { dismiss() }
-        else { presentationMode.wrappedValue.dismiss() }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Type Picker
+    @objc private func cancel(sender: UIBarButtonItem) {
+        dismiss(animated: true)
+    }
+}
+
+private struct RecordFormView: View {
+    @Environment(\.managedObjectContext)
+    private var viewContext
+
+    @EnvironmentObject private var viewModel: RecordFormViewModel
+
+    @FetchRequest(entity: Territory.entity(), sortDescriptors: [])
+    private var territories: FetchedResults<Territory>
 
     private var typeOptions = ["Street", "Apartment"]
 
-    @ViewBuilder private var typePicker: some View {
-        Picker("general.type", selection: $selectedTypeIndex.animation()) {
-            ForEach(0 ..< typeOptions.count) { Text(typeOptions[$0]) }
+    var body: some View {
+        Form {
+            Section {
+                Picker("Territory", selection: $viewModel.territory) {
+                    Text("None")
+                        .tag(nil as Territory?)
+
+                    ForEach(territories, id: \.self) { territory in
+                        Text(territory.wrappedName)
+                            .tag(territory as Territory?)
+                    }
+                }
+            }
+
+            Section {
+                Picker(
+                    "general.type",
+                    selection: $viewModel.selectedTypeIndex.animation()
+                ) {
+                    ForEach(0..<typeOptions.count) { i in
+                        Text(typeOptions[i])
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .formLabel("general.type")
+            }
+
+            if viewModel.selectedTypeIndex == 1 {
+                Section(header: Text("recordForm.header.apartment")) {
+                    TextField(
+                        "recordForm.field.apartmentNumber.required",
+                        text: $viewModel.apartmentNumber
+                    )
+                }
+            }
+
+            Section(header: Text("recordForm.header.street")) {
+                TextField(
+                    "recordForm.field.streetName.required",
+                    text: $viewModel.streetName
+                )
+                TextField("recordForm.field.city", text: $viewModel.city)
+                TextField("recordForm.field.state", text: $viewModel.state)
+            }
+
+            Section(header: Text("recordForm.header.geolocation")) {
+                useCurrentLocationButton
+            }
         }
-        .pickerStyle(SegmentedPickerStyle())
-        .formLabel("general.type")
     }
 
     // MARK: - Use Current Location Button
@@ -117,58 +135,13 @@ struct RecordFormView: HostedControllerView {
     private func useCurrentLocation() {
         location.whenAuthorized { placemark in
             if let streetName = placemark?.thoroughfare {
-                self.streetName = streetName
+                self.viewModel.streetName = streetName
             }
-            if let city = placemark?.locality { self.city = city }
-            if let state = placemark?.administrativeArea { self.state = state }
+            if let city = placemark?.locality { self.viewModel.city = city }
+            if let state = placemark?.administrativeArea {
+                self.viewModel.state = state
+            }
         }
-    }
-
-    // MARK: - Cancel Button
-
-    @ViewBuilder private var cancelButton: some View {
-        Button(action: closePresentation) {
-            Text("general.cancel")
-        }
-    }
-
-    // MARK: - Save Button
-
-    private var isApartment: Bool { selectedTypeIndex == 1 }
-    private var canSave: Bool {
-        if isApartment {
-            return streetName != "" && apartmentNumber != ""
-        } else {
-            return streetName != ""
-        }
-    }
-
-    @ViewBuilder private var saveButton: some View {
-        Button(action: save) { Text("general.save") }
-            .disabled(!canSave)
-    }
-
-    private func save() {
-        var toSave: Record
-        if let record = record {
-            toSave = record
-            toSave.willUpdate()
-        } else {
-            toSave = Record(
-                context: persistenceController.container.viewContext
-            )
-            toSave.willCreate()
-        }
-
-        toSave.wrappedType = isApartment ? .apartment : .street
-        toSave.apartmentNumber = isApartment ? apartmentNumber : nil
-        toSave.streetName = streetName
-        toSave.city = city
-        toSave.state = state
-        toSave.territory = territory
-
-        persistenceController.container.viewContext.unsafeSave()
-        closePresentation()
     }
 }
 
@@ -186,10 +159,14 @@ struct RecordFormView_Previews: PreviewProvider {
 
         return Group {
             RecordFormView()
+                .environmentObject(RecordFormViewModel())
                 .previewDisplayName("New Form Preview")
-            RecordFormView(record: record)
+
+            RecordFormView()
+                .environmentObject(RecordFormViewModel(record: record))
                 .previewDisplayName("Edit Form Preview")
         }
+        .environment(\.managedObjectContext, viewContext)
     }
 }
 #endif

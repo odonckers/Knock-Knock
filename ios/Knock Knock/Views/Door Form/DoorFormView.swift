@@ -7,9 +7,7 @@
 
 import SwiftUI
 
-struct DoorFormView: HostedControllerView {
-    var dismiss: (() -> Void)?
-
+struct DoorFormView: View {
     var door: Door? = nil
     var record: Record? = nil
 
@@ -63,8 +61,8 @@ struct DoorFormView: HostedControllerView {
                         symbols[selectedSymbol] ?? "",
                         selection: $selectedSymbol.animation()
                     ) {
-                        ForEach(VisitSymbol.allCases, id: \.self) {
-                            Text(symbols[$0] ?? "")
+                        ForEach(VisitSymbol.allCases, id: \.self) { i in
+                            Text(symbols[i] ?? "")
                         }
                     }
                     .pickerStyle(MenuPickerStyle())
@@ -75,8 +73,8 @@ struct DoorFormView: HostedControllerView {
                             persons[selectedPerson] ?? "",
                             selection: $selectedPerson.animation(.none)
                         ) {
-                            ForEach(VisitPerson.allCases, id: \.self) {
-                                Text(persons[$0] ?? "")
+                            ForEach(VisitPerson.allCases, id: \.self) { i in
+                                Text(persons[i] ?? "")
                             }
                         }
                         .pickerStyle(MenuPickerStyle())
@@ -91,11 +89,6 @@ struct DoorFormView: HostedControllerView {
             }
             .navigationTitle("Hello, World!")
         }
-    }
-
-    private func closePresentation() {
-        if let dismiss = dismiss { dismiss() }
-        else { presentationMode.wrappedValue.dismiss() }
     }
 }
 
