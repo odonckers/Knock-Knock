@@ -2,12 +2,12 @@
   "object": {
     "pins": [
       {
-        "package": "Introspect",
-        "repositoryURL": "https://github.com/siteline/SwiftUI-Introspect.git",
+        "package": "Hero",
+        "repositoryURL": "https://github.com/HeroTransitions/Hero.git",
         "state": {
-          "branch": "master",
-          "revision": "56e1631e72192e7326f7d6c17dcd41829555e628",
-          "version": null
+          "branch": null,
+          "revision": "efa709686035831b23b7bf58f652b0c4b892aa1d",
+          "version": "1.6.1"
         }
       }
     ]

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FormLabel<Source: View>: View {
     let source: Source
+    let color: Color
     let label: String
     let position: Alignment
 
@@ -29,7 +30,7 @@ struct FormLabel<Source: View>: View {
 
     @ViewBuilder private var formLabel: some View {
         Text(LocalizedStringKey(label))
-            .foregroundColor(.placeholderText)
+            .foregroundColor(color)
             .frame(minWidth: 100, alignment: position)
     }
 }
@@ -37,9 +38,10 @@ struct FormLabel<Source: View>: View {
 extension View {
     @ViewBuilder public func formLabel(
         _ label: String,
+        color: Color = .gray,
         position: Alignment = .leading
     ) -> some View {
-        FormLabel(source: self, label: label, position: position)
+        FormLabel(source: self, color: color, label: label, position: position)
     }
 }
 

@@ -5,7 +5,7 @@
 //  Created by Owen Donckers on 2/19/21.
 //
 
-public enum AttemptPerson: Int16 {
+public enum AttemptPerson: Int16, CaseIterable {
     case nobody = 0
     case man = 1
     case woman = 2

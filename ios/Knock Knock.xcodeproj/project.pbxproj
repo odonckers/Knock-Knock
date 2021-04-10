@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7F179806260A776C0046944E /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F179805260A776C0046944E /* TabBarItem.swift */; };
 		7F27D54E2620D6B0000B7360 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F27D54D2620D6B0000B7360 /* RootViewController.swift */; };
+		7F49DFAC2620FD47006228A9 /* DoorFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F49DFAB2620FD47006228A9 /* DoorFormView.swift */; };
 		7F5310FF260E667300F5F3BE /* RecordCellContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5310FE260E667300F5F3BE /* RecordCellContentConfiguration.swift */; };
 		7F531104260E66B400F5F3BE /* RecordCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F531103260E66B400F5F3BE /* RecordCellContentView.swift */; };
 		7F53110F260E714900F5F3BE /* RecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53110E260E714900F5F3BE /* RecordCell.swift */; };
@@ -83,6 +84,7 @@
 /* Begin PBXFileReference section */
 		7F179805260A776C0046944E /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		7F27D54D2620D6B0000B7360 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		7F49DFAB2620FD47006228A9 /* DoorFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorFormView.swift; sourceTree = "<group>"; };
 		7F5310FE260E667300F5F3BE /* RecordCellContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCellContentConfiguration.swift; sourceTree = "<group>"; };
 		7F531103260E66B400F5F3BE /* RecordCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCellContentView.swift; sourceTree = "<group>"; };
 		7F53110E260E714900F5F3BE /* RecordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCell.swift; sourceTree = "<group>"; };
@@ -170,6 +172,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F49DFAA2620FD32006228A9 /* Door Form */ = {
+			isa = PBXGroup;
+			children = (
+				7F49DFAB2620FD47006228A9 /* DoorFormView.swift */,
+			);
+			path = "Door Form";
+			sourceTree = "<group>";
+		};
 		7F5310FD260E665900F5F3BE /* Record Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -365,6 +375,7 @@
 				E25A16FF25E095A70065517B /* Records */,
 				E25A170525E095D50065517B /* Record Form */,
 				E25A16D925E08A400065517B /* Doors */,
+				7F49DFAA2620FD32006228A9 /* Door Form */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -583,6 +594,7 @@
 				E25A169625E083240065517B /* TagView.swift in Sources */,
 				E25A167A25E081430065517B /* StatefulPreviewWrapper.swift in Sources */,
 				E27AAB0D25ED8B9D00342603 /* Color+Extension.swift in Sources */,
+				7F49DFAC2620FD47006228A9 /* DoorFormView.swift in Sources */,
 				E24673BB25F0623600A0653B /* AppDelegate.swift in Sources */,
 				E25A163E25E07CC30065517B /* FilledBackground.swift in Sources */,
 				E25A16BA25E0854C0065517B /* RecordType.swift in Sources */,

@@ -104,7 +104,7 @@ struct RecordFormView: HostedControllerView {
 
     // MARK: - Use Current Location Button
 
-    @State var location = LocationManager()
+    @State private var location = LocationManager()
 
     @ViewBuilder private var useCurrentLocationButton: some View {
         Button(action: useCurrentLocation) {
@@ -134,8 +134,8 @@ struct RecordFormView: HostedControllerView {
 
     // MARK: - Save Button
 
-    var isApartment: Bool { selectedTypeIndex == 1 }
-    var canSave: Bool {
+    private var isApartment: Bool { selectedTypeIndex == 1 }
+    private var canSave: Bool {
         if isApartment {
             return streetName != "" && apartmentNumber != ""
         } else {
@@ -148,7 +148,7 @@ struct RecordFormView: HostedControllerView {
             .disabled(!canSave)
     }
 
-    func save() {
+    private func save() {
         var toSave: Record
         if let record = record {
             toSave = record
