@@ -1,27 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20C69" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
-    <entity name="Attempt" representedClassName="Attempt" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="dateCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="dateUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="notes" optional="YES" attributeType="String"/>
-        <attribute name="person" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="symbol" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="uuid" optional="YES" attributeType="String"/>
-        <relationship name="door" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Door" inverseName="attempts" inverseEntity="Door"/>
-        <fetchIndex name="byDoorIndex">
-            <fetchIndexElement property="door" type="Binary" order="ascending"/>
-        </fetchIndex>
-    </entity>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20D91" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="Door" representedClassName="Door" syncable="YES" codeGenerationType="class">
-        <attribute name="attemptSymbol" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="dateCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dateUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="number" optional="YES" attributeType="String"/>
         <attribute name="unit" optional="YES" attributeType="String"/>
         <attribute name="uuid" optional="YES" attributeType="String"/>
-        <relationship name="attempts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Attempt" inverseName="door" inverseEntity="Attempt"/>
+        <attribute name="visitSymbol" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="record" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Record" inverseName="doors" inverseEntity="Record"/>
+        <relationship name="visits" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Visit" inverseName="door" inverseEntity="Visit"/>
         <fetchIndex name="byRecordIndex">
             <fetchIndexElement property="record" type="Binary" order="ascending"/>
         </fetchIndex>
@@ -48,8 +35,21 @@
         <attribute name="uuid" optional="YES" attributeType="String"/>
         <relationship name="records" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Record" inverseName="territory" inverseEntity="Record"/>
     </entity>
+    <entity name="Visit" representedClassName="Visit" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dateCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dateUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="person" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="symbol" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="uuid" optional="YES" attributeType="String"/>
+        <relationship name="door" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Door" inverseName="visits" inverseEntity="Door"/>
+        <fetchIndex name="byDoorIndex">
+            <fetchIndexElement property="door" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
     <elements>
-        <element name="Attempt" positionX="-18" positionY="72" width="128" height="149"/>
+        <element name="Visit" positionX="-18" positionY="72" width="128" height="149"/>
         <element name="Door" positionX="-36" positionY="54" width="128" height="149"/>
         <element name="Record" positionX="-63" positionY="-9" width="128" height="179"/>
         <element name="Territory" positionX="-54" positionY="36" width="128" height="104"/>

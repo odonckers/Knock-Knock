@@ -19,9 +19,9 @@ extension Color {
     static var recordTypeStreet = Color("StreetColor")
     static var recordTypeApartment = Color("ApartmentColor")
 
-    static var attemptSymbolNotAtHome = Color("NotAtHomeColor")
-    static var attemptSymbolBusy = Color("BusyColor")
-    static var attemptSymbolCallAgain = Color("CallAgainColor")
-    static var attemptSymbolNotInterested = Color("NotInterestedColor")
-    static var attemptSymbolOther = Color("OtherColor")
+    static var visitSymbolNotAtHome = Color("NotAtHomeColor")
+    static var visitSymbolBusy = Color("BusyColor")
+    static var visitSymbolCallAgain = Color("CallAgainColor")
+    static var visitSymbolNotInterested = Color("NotInterestedColor")
+    static var visitSymbolOther = Color("OtherColor")
 }

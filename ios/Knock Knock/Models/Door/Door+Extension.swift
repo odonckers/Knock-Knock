@@ -9,16 +9,16 @@ import Foundation
 
 extension Door {
     public var wrappedNumber: String { number ?? "" }
-    public var wrappedAttemptSymbol: AttemptSymbol {
-        get { AttemptSymbol(rawValue: attemptSymbol) ?? .notAtHome }
-        set { attemptSymbol = newValue.rawValue }
+    public var wrappedVisitSymbol: VisitSymbol {
+        get { VisitSymbol(rawValue: visitSymbol) ?? .notAtHome }
+        set { visitSymbol = newValue.rawValue }
     }
-    public var attemptArray: [Attempt] {
-        let set = attempts as? Set<Attempt> ?? []
+    public var visitArray: [Visit] {
+        let set = visits as? Set<Visit> ?? []
         return set.sorted { $0.wrappedDate < $1.wrappedDate }
     }
-    public var latestAttempt: Attempt? {
-        attemptArray.count <= 1 ? attemptArray.first : nil
+    public var latestVisit: Visit? {
+        visitArray.count <= 1 ? visitArray.first : nil
     }
 }
 

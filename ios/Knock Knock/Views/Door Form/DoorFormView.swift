@@ -30,22 +30,22 @@ struct DoorFormView: HostedControllerView {
     @State private var unit = ""
     @State private var date = Date()
 
-    private var symbols: [AttemptSymbol: String] = [
+    private var symbols: [VisitSymbol: String] = [
         .notAtHome: "Not-at-Home",
         .busy: "Busy",
         .callAgain: "Call Again",
         .notInterested: "Not Interested",
         .other: "Other",
     ]
-    @State private var selectedSymbol: AttemptSymbol = .notAtHome
+    @State private var selectedSymbol: VisitSymbol = .notAtHome
 
-    private var persons: [AttemptPerson: String] = [
+    private var persons: [VisitPerson: String] = [
         .nobody: "Nobody",
         .man: "Man",
         .woman: "Woman",
         .child: "Child",
     ]
-    @State private var selectedPerson: AttemptPerson = .nobody
+    @State private var selectedPerson: VisitPerson = .nobody
 
     @State private var notes = ""
 
@@ -57,13 +57,13 @@ struct DoorFormView: HostedControllerView {
                     TextField("Unit", text: $unit)
                 }
 
-                Section(header: Text("First Attempt")) {
+                Section(header: Text("First Visit")) {
                     DatePicker("Date", selection: $date)
                     Picker(
                         symbols[selectedSymbol] ?? "",
                         selection: $selectedSymbol.animation()
                     ) {
-                        ForEach(AttemptSymbol.allCases, id: \.self) {
+                        ForEach(VisitSymbol.allCases, id: \.self) {
                             Text(symbols[$0] ?? "")
                         }
                     }
@@ -75,7 +75,7 @@ struct DoorFormView: HostedControllerView {
                             persons[selectedPerson] ?? "",
                             selection: $selectedPerson.animation(.none)
                         ) {
-                            ForEach(AttemptPerson.allCases, id: \.self) {
+                            ForEach(VisitPerson.allCases, id: \.self) {
                                 Text(persons[$0] ?? "")
                             }
                         }
