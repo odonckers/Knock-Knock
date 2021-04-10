@@ -7,20 +7,22 @@
 
 import SwiftUI
 
-class DoorsViewController: UIHostingController<DoorsView> {
+class DoorsViewController: UIHostingController<AnyView> {
     var selectedRecord: Record? {
         get { record }
         set(newValue) {
             record = newValue
             setupTitleView()
-            rootView = DoorsView(record: newValue)
+
+            let doorsView = DoorsView(record: newValue)
+            rootView = AnyView(doorsView)
         }
     }
     private var record: Record?
 
     init() {
         let doorsView = DoorsView()
-        super.init(rootView: doorsView)
+        super.init(rootView: AnyView(doorsView))
 
         configureNavigationBar()
         setupTitleView()

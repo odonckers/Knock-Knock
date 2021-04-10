@@ -10,12 +10,12 @@ import Combine
 import SwiftUI
 
 class RecordFormViewController: UIHostingController<AnyView> {
+    private let viewContext: NSManagedObjectContext
     private let viewModel: RecordFormViewModel
-    private var cancellables: Set<AnyCancellable> = []
 
     init(record: Record? = nil, territory: Territory? = nil) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let viewContext = appDelegate.persistenceController.container.viewContext
+        viewContext = appDelegate.persistenceController.container.viewContext
 
         viewModel = RecordFormViewModel(record: record, territory: territory)
 
@@ -24,8 +24,21 @@ class RecordFormViewController: UIHostingController<AnyView> {
             .environmentObject(viewModel)
 
         super.init(rootView: AnyView(recordFormView))
+        configureNavigationBar()
+    }
 
-        title = record?.streetName != nil
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    @objc private func cancel(sender: UIBarButtonItem) {
+        dismiss(animated: true)
+    }
+}
+
+extension RecordFormViewController {
+    private func configureNavigationBar() {
+        title = viewModel.record?.streetName != nil
             ? "Edit Street"
             : "New Street"
 
@@ -40,21 +53,13 @@ class RecordFormViewController: UIHostingController<AnyView> {
             primaryAction: UIAction { [weak self] action in
                 guard let self = self else { return }
                 if self.viewModel.canSave {
-                    self.viewModel.save(viewContext: viewContext)
+                    self.viewModel.save(viewContext: self.viewContext)
                     self.dismiss(animated: true)
                 }
             }
         )
         confirmButton.style = .done
         navigationItem.rightBarButtonItem = confirmButton
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    @objc private func cancel(sender: UIBarButtonItem) {
-        dismiss(animated: true)
     }
 }
 
@@ -118,6 +123,7 @@ private struct RecordFormView: View {
                 useCurrentLocationButton
             }
         }
+        .navigationBarTitleDisplayMode(.large)
     }
 
     // MARK: - Use Current Location Button
