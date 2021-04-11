@@ -15,6 +15,7 @@ class DoorsViewController: UIHostingController<AnyView> {
             setupTitleView()
 
             let doorsView = DoorsView(record: newValue)
+                .environment(\.uiNavigationController, navigationController)
             rootView = AnyView(doorsView)
         }
     }

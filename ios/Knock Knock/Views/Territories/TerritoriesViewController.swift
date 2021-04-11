@@ -53,7 +53,7 @@ extension TerritoriesViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
 
         let addTerritoryButton = UIBarButtonItem(
-            image: UIImage(systemName: "folder.badge.plus"),
+            image: UIImage(systemName: "folder.fill.badge.plus"),
             primaryAction: UIAction { [weak self] action in
                 self?.presentTerritoryForm()
             }

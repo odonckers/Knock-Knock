@@ -10,13 +10,20 @@ import Combine
 import SwiftUI
 
 struct RecordFormView: View {
+    @ObservedObject var viewModel: RecordFormViewModel
+
+    init(record: Record? = nil, territory: Territory? = nil) {
+        self.viewModel = RecordFormViewModel(
+            record: record,
+            territory: territory
+        )
+    }
+
     @Environment(\.managedObjectContext)
     private var moc
 
     @Environment(\.uiNavigationController)
     private var navigationController
-
-    @EnvironmentObject private var viewModel: RecordFormViewModel
 
     @FetchRequest(entity: Territory.entity(), sortDescriptors: [])
     private var territories: FetchedResults<Territory>
@@ -26,8 +33,11 @@ struct RecordFormView: View {
     var body: some View {
         Form {
             Section {
-                Picker("Territory", selection: $viewModel.territory) {
-                    Text("None")
+                Picker(
+                    "recordForm.field.territory",
+                    selection: $viewModel.territory
+                ) {
+                    Text("none")
                         .tag(nil as Territory?)
 
                     ForEach(territories, id: \.self) { territory in
@@ -39,7 +49,7 @@ struct RecordFormView: View {
 
             Section {
                 Picker(
-                    "general.type",
+                    "type",
                     selection: $viewModel.selectedTypeIndex.animation()
                 ) {
                     ForEach(0..<typeOptions.count) { i in
@@ -47,10 +57,10 @@ struct RecordFormView: View {
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
-                .formLabel("general.type")
+                .formLabel("type")
             }
 
-            if viewModel.selectedTypeIndex == 1 {
+            if viewModel.isApartment {
                 Section(header: Text("recordForm.header.apartment")) {
                     TextField(
                         "recordForm.field.apartmentNumber.required",
@@ -77,13 +87,12 @@ struct RecordFormView: View {
                 ? "recordForm.title.edit"
                 : "recordForm.title.new"
         )
-        .navigationBarTitleDisplayMode(.large)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button(action: {
-                    navigationController?.dismiss(animated: true)
-                }) {
-                    Text("general.cancel")
+                Button(
+                    action: { navigationController?.dismiss(animated: true) }
+                ) {
+                    Text("cancel")
                 }
             }
 
@@ -94,13 +103,9 @@ struct RecordFormView: View {
                         self.navigationController?.dismiss(animated: true)
                     }
                 }) {
-                    Text("general.save")
+                    Text("save")
                 }
             }
-        }
-        .onAppear {
-            navigationController?.navigationBar.prefersLargeTitles = true
-//            navigationController?.navigationItem.largeTitleDisplayMode = .always
         }
     }
 
@@ -143,11 +148,9 @@ struct RecordFormView_Previews: PreviewProvider {
 
         return Group {
             RecordFormView()
-                .environmentObject(RecordFormViewModel())
                 .previewDisplayName("New Form Preview")
 
-            RecordFormView()
-                .environmentObject(RecordFormViewModel(record: record))
+            RecordFormView(record: record)
                 .previewDisplayName("Edit Form Preview")
         }
         .environment(\.managedObjectContext, moc)

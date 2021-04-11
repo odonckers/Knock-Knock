@@ -77,17 +77,14 @@ extension RecordsViewController {
 
         let addRecordButton = UIBarButtonItem(
             title: "Add Record",
-            image: UIImage(systemName: "plus.circle.fill"),
+            image: UIImage(systemName: "note.text.badge.plus"),
             primaryAction: UIAction { [weak self] action in
                 guard let self = self else { return }
-
-                let viewModel = RecordFormViewModel(territory: self.territory)
 
                 let navigationController = UINavigationController()
                 navigationController.modalPresentationStyle = .formSheet
 
-                RecordFormView()
-                    .environmentObject(viewModel)
+                RecordFormView(territory: self.territory)
                     .environment(\.managedObjectContext, self.moc)
                     .environment(\.uiNavigationController, navigationController)
                     .assignToUI(navigationController: navigationController)
@@ -399,16 +396,10 @@ extension RecordsViewController {
     }
 
     private func updateRecord(_ record: Record) {
-        let viewModel = RecordFormViewModel(
-            record: record,
-            territory: territory
-        )
-
         let navigationController = UINavigationController()
         navigationController.modalPresentationStyle = .formSheet
 
-        RecordFormView()
-            .environmentObject(viewModel)
+        RecordFormView(record: record, territory: territory)
             .environment(\.managedObjectContext, self.moc)
             .environment(\.uiNavigationController, navigationController)
             .assignToUI(navigationController: navigationController)

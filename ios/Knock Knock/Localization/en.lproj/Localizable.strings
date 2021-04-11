@@ -6,14 +6,15 @@
   
 */
 
-"general.cancel" = "Cancel";
-"general.delete" = "Delete";
-"general.edit" = "Edit";
-"general.home" = "Home";
-"general.info" = "Info";
-"general.permenantlyDelete" = "Permenantly Delete";
-"general.save" = "Save";
-"general.type" = "Type";
+"cancel" = "Cancel";
+"delete" = "Delete";
+"edit" = "Edit";
+"home" = "Home";
+"info" = "Info";
+"none" = "None";
+"permenantlyDelete" = "Permenantly Delete";
+"save" = "Save";
+"type" = "Type";
 
 "doors.selectRecord" = "Select a Record";
 
@@ -24,6 +25,7 @@
 "recordForm.field.state" = "State";
 "recordForm.field.streetName" = "Street Name";
 "recordForm.field.streetName.required" = "Street Name (Required)";
+"recordForm.field.territory" = "Territory";
 "recordForm.header.apartment" = "Apartment Options";
 "recordForm.header.geolocation" = "Geolocation";
 "recordForm.header.street" = "Street Info";
