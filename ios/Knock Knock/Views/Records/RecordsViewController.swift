@@ -151,6 +151,7 @@ extension RecordsViewController {
 
                     self.presentDeleteRecordAlert(
                         at: indexPath,
+                        displaced: true,
                         completion: completion
                     )
                 }
@@ -233,12 +234,13 @@ extension RecordsViewController: UICollectionViewDelegate {
 extension RecordsViewController {
     private func presentDeleteRecordAlert(
         at indexPath: IndexPath,
+        displaced: Bool = false,
         completion: @escaping (Bool) -> Void = { _ in }
     ) {
         let alertController = UIAlertController(
             title: "Are you sure?",
             message: "This action is permanent and cannot be undone.",
-            preferredStyle: .alert
+            preferredStyle: .actionSheet
         )
         alertController.view.tintColor = .accentColor
 
@@ -258,6 +260,16 @@ extension RecordsViewController {
             completion(false)
         }
         alertController.addAction(cancelAction)
+
+        if let selectedCell = collectionView.cellForItem(at: indexPath) {
+            alertController.popoverPresentationController?.sourceView = selectedCell
+            alertController.popoverPresentationController?.sourceRect = selectedCell
+                .bounds
+                .offsetBy(
+                    dx: displaced ? selectedCell.bounds.width : 0,
+                    dy: 0
+                )
+        }
 
         present(alertController, animated: true)
     }

@@ -82,11 +82,11 @@ extension SidebarViewController {
             configuration.trailingSwipeActionsConfigurationProvider = {
                 indexPath in
 
-                guard let section = SidebarSection(rawValue: indexPath.section)
+                guard let item = self.dataSource.itemIdentifier(for: indexPath)
                 else { return nil }
 
-                switch section {
-                case .territories:
+                switch item.object {
+                case is Territory:
                     let editAction = UIContextualAction(
                         style: .normal,
                         title: "Edit"
@@ -113,6 +113,7 @@ extension SidebarViewController {
 
                         self.presentDeleteTerritoryAlert(
                             at: indexPath,
+                            displaced: true,
                             completion: completion
                         )
                     }
@@ -145,11 +146,9 @@ extension SidebarViewController: UICollectionViewDelegate {
         guard let sidebarItem = dataSource.itemIdentifier(for: indexPath)
         else { return }
 
-        let section = SidebarSection(rawValue: indexPath.section)
-
-        switch section {
-        case .records: didSelectRecordsItem(sidebarItem, at: indexPath)
-        case .territories: didSelectTerritoryItem(sidebarItem, at: indexPath)
+        switch sidebarItem.object {
+        case nil: didSelectRecordsItem(sidebarItem, at: indexPath)
+        case is Territory: didSelectTerritoryItem(sidebarItem, at: indexPath)
         default: break
         }
     }
@@ -159,10 +158,11 @@ extension SidebarViewController: UICollectionViewDelegate {
         contextMenuConfigurationForItemAt indexPath: IndexPath,
         point: CGPoint
     ) -> UIContextMenuConfiguration? {
-        let section = SidebarSection(rawValue: indexPath.section)
+        guard let item = dataSource.itemIdentifier(for: indexPath)
+        else { return nil }
 
-        switch section {
-        case .territories:
+        switch item.object {
+        case is Territory:
             let contextMenuConfig = UIContextMenuConfiguration(
                 identifier: nil,
                 previewProvider: nil
@@ -228,12 +228,13 @@ extension SidebarViewController: UICollectionViewDelegate {
 extension SidebarViewController {
     private func presentDeleteTerritoryAlert(
         at indexPath: IndexPath,
+        displaced: Bool = false,
         completion: @escaping (Bool) -> Void = { _ in }
     ) {
         let alertController = UIAlertController(
             title: "Are you sure?",
             message: "This action is permanent and cannot be undone.",
-            preferredStyle: .alert
+            preferredStyle: .actionSheet
         )
         alertController.view.tintColor = .accentColor
 
@@ -253,6 +254,16 @@ extension SidebarViewController {
             completion(false)
         }
         alertController.addAction(cancelAction)
+
+        if let selectedCell = collectionView.cellForItem(at: indexPath) {
+            alertController.popoverPresentationController?.sourceView = selectedCell
+            alertController.popoverPresentationController?.sourceRect = selectedCell
+                .bounds
+                .offsetBy(
+                    dx: displaced ? selectedCell.bounds.width : 0,
+                    dy: 0
+                )
+        }
 
         self.present(alertController, animated: true)
     }
