@@ -122,7 +122,6 @@ extension SidebarViewController {
                     let swipeConfiguration = UISwipeActionsConfiguration(
                         actions: [deleteAction, editAction]
                     )
-                    swipeConfiguration.performsFirstActionWithFullSwipe = false
                     return swipeConfiguration
                 default: return nil
                 }
@@ -231,6 +230,13 @@ extension SidebarViewController {
         at indexPath: IndexPath,
         completion: @escaping (Bool) -> Void = { _ in }
     ) {
+        let alertController = UIAlertController(
+            title: "Are you sure?",
+            message: "This action is permanent and cannot be undone.",
+            preferredStyle: .alert
+        )
+        alertController.view.tintColor = .accentColor
+
         let deleteAction = UIAlertAction(
             title: "Delete",
             style: .destructive
@@ -238,22 +244,17 @@ extension SidebarViewController {
             self.deleteTerritory(at: indexPath)
             completion(true)
         }
+        alertController.addAction(deleteAction)
+
         let cancelAction = UIAlertAction(
             title: "Cancel",
             style: .cancel
         ) { action in
             completion(false)
         }
+        alertController.addAction(cancelAction)
 
-        let alert = UIAlertController(
-            title: "Are you sure?",
-            message: "This action is permanent and cannot be undone.",
-            preferredStyle: .alert
-        )
-        alert.addAction(deleteAction)
-        alert.addAction(cancelAction)
-
-        self.present(alert, animated: true)
+        self.present(alertController, animated: true)
     }
 }
 
@@ -426,6 +427,7 @@ extension SidebarViewController {
             message: nil,
             preferredStyle: .alert
         )
+        alertController.view.tintColor = .accentColor
 
         alertController.addTextField()
 

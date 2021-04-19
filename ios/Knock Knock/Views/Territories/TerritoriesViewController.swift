@@ -53,7 +53,7 @@ extension TerritoriesViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
 
         let addTerritoryButton = UIBarButtonItem(
-            image: UIImage(systemName: "folder.fill.badge.plus"),
+            image: UIImage(systemName: "plus.circle.fill"),
             primaryAction: UIAction { [weak self] action in
                 self?.presentTerritoryForm()
             }
@@ -123,7 +123,6 @@ extension TerritoriesViewController {
                 let swipeConfiguration = UISwipeActionsConfiguration(
                     actions: [deleteAction, editAction]
                 )
-                swipeConfiguration.performsFirstActionWithFullSwipe = false
                 return swipeConfiguration
             }
 
@@ -193,6 +192,13 @@ extension TerritoriesViewController {
         at indexPath: IndexPath,
         completion: @escaping (Bool) -> Void = { _ in }
     ) {
+        let alertController = UIAlertController(
+            title: "Are you sure?",
+            message: "This action is permanent and cannot be undone.",
+            preferredStyle: .alert
+        )
+        alertController.view.tintColor = .accentColor
+
         let deleteAction = UIAlertAction(
             title: "Delete",
             style: .destructive
@@ -200,22 +206,17 @@ extension TerritoriesViewController {
             self.deleteTerritory(at: indexPath)
             completion(true)
         }
+        alertController.addAction(deleteAction)
+
         let cancelAction = UIAlertAction(
             title: "Cancel",
             style: .cancel
         ) { action in
             completion(false)
         }
+        alertController.addAction(cancelAction)
 
-        let alert = UIAlertController(
-            title: "Are you sure?",
-            message: "This action is permanent and cannot be undone.",
-            preferredStyle: .alert
-        )
-        alert.addAction(deleteAction)
-        alert.addAction(cancelAction)
-
-        present(alert, animated: true)
+        present(alertController, animated: true)
     }
 }
 
@@ -323,6 +324,7 @@ extension TerritoriesViewController {
             message: nil,
             preferredStyle: .alert
         )
+        alertController.view.tintColor = .accentColor
 
         alertController.addTextField()
 
