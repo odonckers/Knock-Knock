@@ -9,30 +9,14 @@ import UIKit
 
 class RecordCell: UICollectionViewListCell {
     var record: Record?
-    var contentInsets: UIEdgeInsets?
+    var isInset = false
 
     override func updateConfiguration(using state: UICellConfigurationState) {
         var config = RecordCellContentConfiguration()
             .updated(for: state)
 
-        config.tagText = record?.abbreviatedType
-        config.tagColor = UIColor(record?.typeColor ?? .accentColor)
-
-        config.title = record?.wrappedStreetName
-
-        var secondaryTexts: [String] = []
-        if let city = record?.city, city != "" {
-            secondaryTexts.append(city)
-        }
-        if let state = record?.state, state != "" {
-            secondaryTexts.append(state)
-        }
-        config.subtitle = secondaryTexts.joined(separator: ", ")
-
-        config.topInset = contentInsets?.top
-        config.leftInset = contentInsets?.left
-        config.bottomInset = contentInsets?.bottom
-        config.rightInset = contentInsets?.right
+        config.record = record
+        config.isInset = isInset
 
         contentConfiguration = config
     }

@@ -10,7 +10,6 @@
 		7F179806260A776C0046944E /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F179805260A776C0046944E /* TabBarItem.swift */; };
 		7F27D54E2620D6B0000B7360 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F27D54D2620D6B0000B7360 /* RootViewController.swift */; };
 		7F49DFAC2620FD47006228A9 /* DoorFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F49DFAB2620FD47006228A9 /* DoorFormView.swift */; };
-		7F49DFCF26216755006228A9 /* RecordFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F49DFCE26216755006228A9 /* RecordFormViewModel.swift */; };
 		7F49DFD726221F80006228A9 /* UIEnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F49DFD626221F80006228A9 /* UIEnvironmentValues.swift */; };
 		7F5310FF260E667300F5F3BE /* RecordCellContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5310FE260E667300F5F3BE /* RecordCellContentConfiguration.swift */; };
 		7F531104260E66B400F5F3BE /* RecordCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F531103260E66B400F5F3BE /* RecordCellContentView.swift */; };
@@ -20,6 +19,9 @@
 		7F8A31732622460C003F8FB7 /* View+AssignToUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8A31722622460C003F8FB7 /* View+AssignToUI.swift */; };
 		7FD8B3412620AF4600B51D86 /* TerritoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD8B3402620AF4600B51D86 /* TerritoriesViewController.swift */; };
 		7FD8B3512620BD0100B51D86 /* CoreDataPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD8B3502620BD0100B51D86 /* CoreDataPublisher.swift */; };
+		7FE71393262DF68200FF9B10 /* MoveRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE71392262DF68200FF9B10 /* MoveRecordView.swift */; };
+		7FE7139E262E17D800FF9B10 /* RecordCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE7139D262E17D800FF9B10 /* RecordCellView.swift */; };
+		7FE713A9262E3A2F00FF9B10 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE713A8262E3A2F00FF9B10 /* VisualEffectView.swift */; };
 		7FF2D029260ABF7D00A54D72 /* RecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF2D028260ABF7D00A54D72 /* RecordsViewController.swift */; };
 		E24673BB25F0623600A0653B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24673BA25F0623600A0653B /* AppDelegate.swift */; };
 		E24673C625F0625700A0653B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24673C525F0625700A0653B /* SceneDelegate.swift */; };
@@ -86,7 +88,6 @@
 		7F179805260A776C0046944E /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		7F27D54D2620D6B0000B7360 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		7F49DFAB2620FD47006228A9 /* DoorFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorFormView.swift; sourceTree = "<group>"; };
-		7F49DFCE26216755006228A9 /* RecordFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordFormViewModel.swift; sourceTree = "<group>"; };
 		7F49DFD626221F80006228A9 /* UIEnvironmentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEnvironmentValues.swift; sourceTree = "<group>"; };
 		7F5310FE260E667300F5F3BE /* RecordCellContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCellContentConfiguration.swift; sourceTree = "<group>"; };
 		7F531103260E66B400F5F3BE /* RecordCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCellContentView.swift; sourceTree = "<group>"; };
@@ -96,6 +97,9 @@
 		7F8A31722622460C003F8FB7 /* View+AssignToUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+AssignToUI.swift"; sourceTree = "<group>"; };
 		7FD8B3402620AF4600B51D86 /* TerritoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoriesViewController.swift; sourceTree = "<group>"; };
 		7FD8B3502620BD0100B51D86 /* CoreDataPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataPublisher.swift; sourceTree = "<group>"; };
+		7FE71392262DF68200FF9B10 /* MoveRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveRecordView.swift; sourceTree = "<group>"; };
+		7FE7139D262E17D800FF9B10 /* RecordCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCellView.swift; sourceTree = "<group>"; };
+		7FE713A8262E3A2F00FF9B10 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		7FF2D028260ABF7D00A54D72 /* RecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsViewController.swift; sourceTree = "<group>"; };
 		E24673BA25F0623600A0653B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E24673C525F0625700A0653B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -185,6 +189,7 @@
 		7F5310FD260E665900F5F3BE /* Record Cell */ = {
 			isa = PBXGroup;
 			children = (
+				7FE7139D262E17D800FF9B10 /* RecordCellView.swift */,
 				7F53110E260E714900F5F3BE /* RecordCell.swift */,
 				7F5310FE260E667300F5F3BE /* RecordCellContentConfiguration.swift */,
 				7F531103260E66B400F5F3BE /* RecordCellContentView.swift */,
@@ -319,6 +324,7 @@
 				E25A169525E083240065517B /* TagView.swift */,
 				7F5311272610404D00F5F3BE /* UIFont+Extension.swift */,
 				7F8A31722622460C003F8FB7 /* View+AssignToUI.swift */,
+				7FE713A8262E3A2F00FF9B10 /* VisualEffectView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -375,7 +381,6 @@
 				E25A175225E0B4450065517B /* Navigation */,
 				E25A172E25E0B2C40065517B /* Territories */,
 				E25A16FF25E095A70065517B /* Records */,
-				E25A170525E095D50065517B /* Record Form */,
 				E25A16D925E08A400065517B /* Doors */,
 				7F49DFAA2620FD32006228A9 /* Door Form */,
 			);
@@ -395,7 +400,9 @@
 			isa = PBXGroup;
 			children = (
 				7FF2D028260ABF7D00A54D72 /* RecordsViewController.swift */,
+				7FE71392262DF68200FF9B10 /* MoveRecordView.swift */,
 				7F5310FD260E665900F5F3BE /* Record Cell */,
+				E25A170525E095D50065517B /* Record Form */,
 			);
 			path = Records;
 			sourceTree = "<group>";
@@ -404,7 +411,6 @@
 			isa = PBXGroup;
 			children = (
 				E25A170625E095FE0065517B /* RecordFormView.swift */,
-				7F49DFCE26216755006228A9 /* RecordFormViewModel.swift */,
 			);
 			path = "Record Form";
 			sourceTree = "<group>";
@@ -579,10 +585,11 @@
 			files = (
 				E25A164825E07F8D0065517B /* Configure.swift in Sources */,
 				E25A162B25E07AC60065517B /* Knock_Knock.xcdatamodeld in Sources */,
-				7F49DFCF26216755006228A9 /* RecordFormViewModel.swift in Sources */,
 				E25A16D125E0863C0065517B /* Record+UI.swift in Sources */,
+				7FE71393262DF68200FF9B10 /* MoveRecordView.swift in Sources */,
 				E25A160525E073B90065517B /* NSManagedObjectContext+Extension.swift in Sources */,
 				7FD8B3412620AF4600B51D86 /* TerritoriesViewController.swift in Sources */,
+				7FE713A9262E3A2F00FF9B10 /* VisualEffectView.swift in Sources */,
 				E25A16CC25E085E50065517B /* Visit+UI.swift in Sources */,
 				E25A167525E080D00065517B /* SheetState.swift in Sources */,
 				E2BB6FE925EBE0AA00731EDE /* Spacing.swift in Sources */,
@@ -597,6 +604,7 @@
 				E2BB6FC125EB3F2600731EDE /* UIColor+Extension.swift in Sources */,
 				E25A16B225E084BD0065517B /* Visit+Extension.swift in Sources */,
 				E25A169B25E083A80065517B /* CardGroupBoxStyle.swift in Sources */,
+				7FE7139E262E17D800FF9B10 /* RecordCellView.swift in Sources */,
 				E25A170725E095FE0065517B /* RecordFormView.swift in Sources */,
 				E25A15F125E072F10065517B /* Persistence.swift in Sources */,
 				E25A172725E0B1D40065517B /* Territory+Extension.swift in Sources */,
@@ -810,6 +818,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.owendonckers.Knock-Knock";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -836,6 +845,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.owendonckers.Knock-Knock";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

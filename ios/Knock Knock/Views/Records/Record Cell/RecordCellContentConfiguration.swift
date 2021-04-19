@@ -8,20 +8,10 @@
 import UIKit
 
 struct RecordCellContentConfiguration: UIContentConfiguration, Hashable {
-    var tagText: String?
-    var tagColor: UIColor?
-    var title: String?
-    var subtitle: String?
+    var record: Record?
 
-    var topInset: CGFloat?
-    var leftInset: CGFloat?
-    var bottomInset: CGFloat?
-    var rightInset: CGFloat?
-
-    var tagBackgroundColor: UIColor?
-    var tagForegroundColor: UIColor?
-    var titleColor: UIColor?
-    var subtitleColor: UIColor?
+    var isSelected: Bool = false
+    var isInset: Bool = false
 
     func makeContentView() -> UIView & UIContentView {
         RecordCellContentView(configuration: self)
@@ -34,24 +24,8 @@ struct RecordCellContentConfiguration: UIContentConfiguration, Hashable {
         else { return self }
 
         var updatedConfiguration = self
-        if state.isSelected {
-            updatedConfiguration.tagBackgroundColor = UIColor
-                .black
-                .withAlphaComponent(0.1)
-            updatedConfiguration.tagForegroundColor = .white
-
-            updatedConfiguration.titleColor = .white
-            updatedConfiguration.subtitleColor = UIColor
-                .white
-                .withAlphaComponent(0.7)
-        } else {
-            updatedConfiguration.tagBackgroundColor = tagColor?
-                .withAlphaComponent(0.15)
-            updatedConfiguration.tagForegroundColor = tagColor
-
-            updatedConfiguration.titleColor = .label
-            updatedConfiguration.subtitleColor = .secondaryLabel
-        }
+        updatedConfiguration.record = record
+        updatedConfiguration.isSelected = state.isSelected
 
         return updatedConfiguration
     }

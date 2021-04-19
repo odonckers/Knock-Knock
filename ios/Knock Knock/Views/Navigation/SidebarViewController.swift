@@ -111,7 +111,7 @@ extension SidebarViewController {
                             return
                         }
 
-                        self.presentDeleteTerritoryAlert(
+                        self.verifyTerritoryDeletion(
                             at: indexPath,
                             displaced: true,
                             completion: completion
@@ -180,7 +180,7 @@ extension SidebarViewController: UICollectionViewDelegate {
                             image: UIImage(systemName: "trash"),
                             attributes: .destructive
                         ) { [weak self] action in
-                            self?.presentDeleteTerritoryAlert(at: indexPath)
+                            self?.verifyTerritoryDeletion(at: indexPath)
                         }
                     ]
                 )
@@ -226,7 +226,7 @@ extension SidebarViewController: UICollectionViewDelegate {
 }
 
 extension SidebarViewController {
-    private func presentDeleteTerritoryAlert(
+    private func verifyTerritoryDeletion(
         at indexPath: IndexPath,
         displaced: Bool = false,
         completion: @escaping (Bool) -> Void = { _ in }

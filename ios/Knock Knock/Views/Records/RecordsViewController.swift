@@ -140,6 +140,21 @@ extension RecordsViewController {
                 editAction.image = UIImage(systemName: "pencil")
                 editAction.backgroundColor = .systemGray2
 
+                let moveAction = UIContextualAction(
+                    style: .normal,
+                    title: "Move"
+                ) { [weak self] action, view, completion in
+                    guard let self = self else {
+                        completion(false)
+                        return
+                    }
+
+                    self.moveRecord(at: indexPath)
+                    completion(true)
+                }
+                moveAction.image = UIImage(systemName: "folder.fill")
+                moveAction.backgroundColor = .systemIndigo
+
                 let deleteAction = UIContextualAction(
                     style: .destructive,
                     title: "Delete"
@@ -149,7 +164,7 @@ extension RecordsViewController {
                         return
                     }
 
-                    self.presentDeleteRecordAlert(
+                    self.verifyRecordDeletion(
                         at: indexPath,
                         displaced: true,
                         completion: completion
@@ -159,7 +174,7 @@ extension RecordsViewController {
                 deleteAction.backgroundColor = .systemRed
 
                 let swipeConfiguration = UISwipeActionsConfiguration(
-                    actions: [deleteAction, editAction]
+                    actions: [deleteAction, moveAction, editAction]
                 )
                 return swipeConfiguration
             }
@@ -197,6 +212,8 @@ extension RecordsViewController: UICollectionViewDelegate {
         }
 
         selectedIndexPath = indexPath
+
+        view.window?.windowScene?.title = record.wrappedStreetName
     }
 
     func collectionView(
@@ -221,7 +238,7 @@ extension RecordsViewController: UICollectionViewDelegate {
                         image: UIImage(systemName: "trash"),
                         attributes: .destructive
                     ) { [weak self] action in
-                        self?.presentDeleteRecordAlert(at: indexPath)
+                        self?.verifyRecordDeletion(at: indexPath)
                     }
                 ]
             )
@@ -232,7 +249,7 @@ extension RecordsViewController: UICollectionViewDelegate {
 }
 
 extension RecordsViewController {
-    private func presentDeleteRecordAlert(
+    private func verifyRecordDeletion(
         at indexPath: IndexPath,
         displaced: Bool = false,
         completion: @escaping (Bool) -> Void = { _ in }
@@ -283,14 +300,7 @@ extension RecordsViewController {
             [weak self] cell, indexPath, item in
 
             cell.record = item
-            if self?.isCompact ?? false {
-                cell.contentInsets = UIEdgeInsets(
-                    top: 10,
-                    left: 20,
-                    bottom: 10,
-                    right: 20
-                )
-            }
+            cell.isInset = self?.isCompact ?? false
         }
 
         dataSource = UICollectionViewDiffableDataSource<Int, Record>(
@@ -400,6 +410,24 @@ extension RecordsViewController {
     private func deleteRecord(_ record: Record) {
         moc.delete(record)
         moc.unsafeSave()
+    }
+
+    private func moveRecord(at indexPath: IndexPath) {
+        guard let record = dataSource.itemIdentifier(for: indexPath)
+        else { return }
+        moveRecord(record)
+    }
+
+    private func moveRecord(_ record: Record) {
+        let navigationController = UINavigationController()
+        navigationController.modalPresentationStyle = .formSheet
+
+        MoveRecordView(record: record)
+            .environment(\.managedObjectContext, self.moc)
+            .environment(\.uiNavigationController, navigationController)
+            .assignToUI(navigationController: navigationController)
+
+        present(navigationController, animated: true)
     }
 
     private func updateRecord(at indexPath: IndexPath) {

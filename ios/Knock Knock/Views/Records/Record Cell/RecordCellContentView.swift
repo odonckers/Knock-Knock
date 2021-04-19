@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class RecordCellContentView: UIView, UIContentView {
     var configuration: UIContentConfiguration {
@@ -18,10 +19,6 @@ class RecordCellContentView: UIView, UIContentView {
     }
     private var currentConfiguration: RecordCellContentConfiguration!
 
-    private var tagView = TagView()
-    private var titleLabel = UILabel()
-    private var subtitleLabel = UILabel()
-
     init(configuration: RecordCellContentConfiguration) {
         super.init(frame: .zero)
 
@@ -33,69 +30,19 @@ class RecordCellContentView: UIView, UIContentView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private var rootView = UIHostingController(
+        rootView: AnyView(EmptyView())
+    )
+
     private func setupAllViews() {
-        setupTag()
-        setupTextStack()
-    }
+        addSubview(rootView.view)
 
-    private func setupTag() {
-        addSubview(tagView)
-
-        tagView.translatesAutoresizingMaskIntoConstraints = false
+        rootView.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            tagView
-                .leadingAnchor
-                .constraint(
-                    equalTo: layoutMarginsGuide.leadingAnchor,
-                    constant: currentConfiguration?.leftInset ?? 0
-                ),
-            tagView.widthAnchor.constraint(equalToConstant: 65),
-            tagView
-                .centerYAnchor
-                .constraint(equalTo: layoutMarginsGuide.centerYAnchor),
-        ])
-    }
-
-    private func setupTextStack() {
-        titleLabel.font =  UIFont
-            .preferredFont(forTextStyle: .body)
-            .bold()
-        titleLabel.adjustsFontForContentSizeCategory = true
-        subtitleLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        subtitleLabel.adjustsFontForContentSizeCategory = true
-
-        let textStack = UIStackView()
-        textStack.axis = .vertical
-        textStack.alignment = .fill
-
-        textStack.addArrangedSubview(titleLabel)
-        textStack.addArrangedSubview(subtitleLabel)
-
-        addSubview(textStack)
-
-        textStack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            textStack
-                .leadingAnchor
-                .constraint(equalTo: tagView.trailingAnchor, constant: 20),
-            textStack
-                .trailingAnchor
-                .constraint(
-                    equalTo: layoutMarginsGuide.trailingAnchor,
-                    constant: currentConfiguration?.rightInset ?? 0
-                ),
-            textStack
-                .topAnchor
-                .constraint(
-                    equalTo: layoutMarginsGuide.topAnchor,
-                    constant: (currentConfiguration?.topInset ?? 0) + 5
-                ),
-            textStack
-                .bottomAnchor
-                .constraint(
-                    equalTo: layoutMarginsGuide.bottomAnchor,
-                    constant: (currentConfiguration?.bottomInset ?? 0) - 5
-                ),
+            rootView.view.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
+            rootView.view.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor),
+            rootView.view.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
+            rootView.view.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor),
         ])
     }
 
@@ -103,26 +50,17 @@ class RecordCellContentView: UIView, UIContentView {
         guard currentConfiguration != configuration else { return }
         currentConfiguration = configuration
 
-        tagView.text = configuration.tagText
-        tagView.backgroundColor = configuration.tagBackgroundColor
-        tagView.foregroundColor = configuration.tagForegroundColor
+        if let record = configuration.record {
+            rootView.rootView = AnyView(
+                RecordCellView(
+                    record: record,
+                    isSelected: configuration.isSelected
+                )
+                .padding(.vertical, configuration.isInset ? 10 : 5)
+                .padding(.horizontal, configuration.isInset ? 10 : 0)
+            )
 
-        titleLabel.text = configuration.title
-        titleLabel.textColor = configuration.titleColor
-
-        if let subtitle = configuration.subtitle, subtitle != "" {
-            subtitleLabel.isHidden = false
-            subtitleLabel.text = subtitle
-            subtitleLabel.textColor = configuration.subtitleColor
-        } else {
-            subtitleLabel.isHidden = true
+            rootView.view.backgroundColor = .clear
         }
-
-        if let inset = configuration.topInset { layoutMargins.top = inset }
-        if let inset = configuration.leftInset { layoutMargins.left = inset }
-        if let inset = configuration.bottomInset {
-            layoutMargins.bottom = inset
-        }
-        if let inset = configuration.rightInset { layoutMargins.right = inset }
     }
 }
