@@ -7,17 +7,8 @@
 
 import UIKit
 
-class RootViewController: UISplitViewController, UISplitViewControllerDelegate {
-    init() {
-        super.init(style: .tripleColumn)
-        delegate = self
-        preferredDisplayMode = .twoDisplaceSecondary
-        showsSecondaryOnlyButton = true
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+class RootViewController: UIViewController {
+    private var primaryViewController: UIViewController!
 
     private var sidebarViewController: SidebarViewController!
     private var recordsViewController: RecordsViewController!
@@ -29,40 +20,37 @@ class RootViewController: UISplitViewController, UISplitViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupSidebarViewController()
-        setupRecordsViewController()
-        setupDoorsViewContorller()
-        setupCompactViewController()
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad: configureSplitViewController()
+        default: configureTabViewController()
+        }
+
+        view.addSubview(primaryViewController.view)
+        addChild(primaryViewController)
+
+        primaryViewController.view.frame = view.bounds
+        primaryViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
 }
 
 extension RootViewController {
-    private func setupSidebarViewController() {
-        sidebarViewController = SidebarViewController()
-        setViewController(sidebarViewController, for: .primary)
+    private func configureSplitViewController() {
+        primaryViewController = UISplitViewController(style: .tripleColumn)
+
+        guard let primaryViewController = primaryViewController as? UISplitViewController
+        else { return }
+        
+        primaryViewController.delegate = self
+        primaryViewController.preferredDisplayMode = .twoDisplaceSecondary
+        primaryViewController.showsSecondaryOnlyButton = true
+
+        setupSidebarViewController(in: primaryViewController)
+        setupRecordsViewController(in: primaryViewController)
+        setupDoorsViewContorller(in: primaryViewController)
+        setupCompactViewController(in: primaryViewController)
     }
 
-    private func setupRecordsViewController() {
-        recordsViewController = RecordsViewController()
-
-        let navigationController = UINavigationController(
-            rootViewController: recordsViewController
-        )
-        setViewController(navigationController, for: .supplementary)
-    }
-
-    private func setupDoorsViewContorller() {
-        doorsViewController = DoorsViewController()
-
-        let navigationController = UINavigationController(
-            rootViewController: doorsViewController
-        )
-        setViewController(navigationController, for: .secondary)
-    }
-}
-
-extension RootViewController {
-    private func setupCompactViewController() {
+    private func configureTabViewController() {
         let tabBarController = UITabBarController()
         tabBarController.setViewControllers(
             [
@@ -71,7 +59,54 @@ extension RootViewController {
             ],
             animated: false
         )
-        setViewController(tabBarController, for: .compact)
+        primaryViewController = tabBarController
+    }
+}
+
+extension RootViewController {
+    private func setupSidebarViewController(
+        in splitViewController: UISplitViewController
+    ) {
+        sidebarViewController = SidebarViewController()
+        splitViewController.setViewController(sidebarViewController, for: .primary)
+    }
+
+    private func setupRecordsViewController(
+        in splitViewController: UISplitViewController
+    ) {
+        recordsViewController = RecordsViewController()
+
+        let navigationController = UINavigationController(
+            rootViewController: recordsViewController
+        )
+        splitViewController.setViewController(navigationController, for: .supplementary)
+    }
+
+    private func setupDoorsViewContorller(
+        in splitViewController: UISplitViewController
+    ) {
+        doorsViewController = DoorsViewController()
+
+        let navigationController = UINavigationController(
+            rootViewController: doorsViewController
+        )
+        splitViewController.setViewController(navigationController, for: .secondary)
+    }
+}
+
+extension RootViewController {
+    private func setupCompactViewController(
+        in splitViewController: UISplitViewController
+    ) {
+        let tabBarController = UITabBarController()
+        tabBarController.setViewControllers(
+            [
+                compactRecordsNavigationController(),
+                compactTerritoriesNavigationController(),
+            ],
+            animated: false
+        )
+        splitViewController.setViewController(tabBarController, for: .compact)
     }
 
     private func compactRecordsNavigationController() -> UINavigationController {
@@ -96,3 +131,5 @@ extension RootViewController {
         return navigationController
     }
 }
+
+extension RootViewController: UISplitViewControllerDelegate { }

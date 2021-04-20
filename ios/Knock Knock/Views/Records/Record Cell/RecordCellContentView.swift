@@ -56,7 +56,7 @@ class RecordCellContentView: UIView, UIContentView {
                     record: record,
                     isSelected: configuration.isSelected
                 )
-                .padding(.vertical, configuration.isInset ? 10 : 5)
+                .padding(.vertical, 5)
                 .padding(.horizontal, configuration.isInset ? 10 : 0)
             )
 
