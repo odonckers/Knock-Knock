@@ -1,5 +1,5 @@
 //
-//  RecordCellContentConfiguration.swift
+//  RecordCollectionViewListCellContentConfiguration.swift
 //  Knock Knock
 //
 //  Created by Owen Donckers on 3/26/21.
@@ -7,19 +7,19 @@
 
 import UIKit
 
-struct RecordCellContentConfiguration: UIContentConfiguration, Hashable {
+struct RecordCollectionViewListCellContentConfiguration: UIContentConfiguration, Hashable {
     var record: Record?
 
     var isSelected: Bool = false
     var isInset: Bool = false
 
     func makeContentView() -> UIView & UIContentView {
-        RecordCellContentView(configuration: self)
+        RecordCollectionViewListCellContentView(configuration: self)
     }
 
     func updated(
         for state: UIConfigurationState
-    ) -> RecordCellContentConfiguration {
+    ) -> RecordCollectionViewListCellContentConfiguration {
         guard let state = state as? UICellConfigurationState
         else { return self }
 

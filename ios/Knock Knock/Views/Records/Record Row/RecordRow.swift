@@ -1,5 +1,5 @@
 //
-//  RecordCellView.swift
+//  RecordRow.swift
 //  Knock Knock
 //
 //  Created by Owen Donckers on 4/19/21.
@@ -7,18 +7,23 @@
 
 import SwiftUI
 
-struct RecordCellView: View {
-    var record: Record
+struct RecordRow: View {
+    @ObservedObject var record: Record
     var isSelected = false
 
-    var body: some View {
+    private var subtitle: String? {
         var secondaryTexts: [String] = []
         if let city = record.city, city != "" { secondaryTexts.append(city) }
         if let state = record.state, state != "" { secondaryTexts.append(state) }
 
-        let subtitle = secondaryTexts.joined(separator: ", ")
+        if secondaryTexts.count == 0 { return nil }
 
-        return HStack(alignment: .center, spacing: 20) {
+        let subtitle = secondaryTexts.joined(separator: ", ")
+        return subtitle
+    }
+
+    var body: some View {
+        HStack(alignment: .center, spacing: 20) {
             Tag(
                 text: record.abbreviatedType,
                 backgroundColor: isSelected ? Color.black.opacity(0.9) : record.typeColor
@@ -26,11 +31,14 @@ struct RecordCellView: View {
             .foregroundColor(isSelected ? .white : record.typeColor)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(record.wrappedStreetName)
-                    .font(.headline)
-                    .foregroundColor(isSelected ? .white : nil)
+                HStack {
+                    if let apartmentNumber = record.apartmentNumber { Text(apartmentNumber) }
+                    Text(record.wrappedStreetName)
+                }
+                .font(.headline)
+                .foregroundColor(isSelected ? .white : nil)
 
-                if let subtitle = subtitle, subtitle != "" {
+                if let subtitle = subtitle {
                     Text(subtitle)
                         .font(.callout)
                         .foregroundColor(isSelected ? Color.white.opacity(0.7) : .gray)
@@ -55,8 +63,8 @@ struct RecordCellView_Previews: PreviewProvider {
         record.apartmentNumber = "500"
 
         return Group {
-            RecordCellView(record: record, isSelected: false)
-            RecordCellView(record: record, isSelected: true)
+            RecordRow(record: record, isSelected: false)
+            RecordRow(record: record, isSelected: true)
                 .background(Color.accentColor)
         }
         .frame(width: 400)

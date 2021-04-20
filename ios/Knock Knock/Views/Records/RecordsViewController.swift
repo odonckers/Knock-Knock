@@ -278,7 +278,7 @@ extension RecordsViewController {
 }
 
 extension RecordsViewController {
-    private typealias CellRegistration = UICollectionView.CellRegistration<RecordCell, Record>
+    private typealias CellRegistration = UICollectionView.CellRegistration<RecordCollectionViewListCell, Record>
 
     private func configureDataSource() {
         let rowRegistration = CellRegistration { [weak self] cell, indexPath, item in

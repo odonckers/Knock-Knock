@@ -21,7 +21,7 @@ struct MoveRecordView: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
-            RecordCellView(record: record)
+            RecordRow(record: record)
                 .padding()
                 .background(
                     VisualEffectView(effect: UIBlurEffect(style: .systemChromeMaterial))

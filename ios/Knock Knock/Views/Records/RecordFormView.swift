@@ -16,17 +16,6 @@ struct RecordFormView: View {
     init(record: Record? = nil, territory: Territory? = nil) {
         self.record = record
         self.territory = territory
-
-        if let record = record {
-            selectedTypeIndex = Int(record.wrappedType.rawValue)
-
-            if let streetName = record.streetName { self.streetName = streetName }
-            if let city = record.city { self.city = city }
-            if let state = record.state { self.state = state }
-            if let apartmentNumber = record.apartmentNumber {
-                self.apartmentNumber = apartmentNumber
-            }
-        }
     }
 
     @Environment(\.managedObjectContext)
@@ -52,7 +41,7 @@ struct RecordFormView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             if let record = record {
-                RecordCellView(record: record)
+                RecordRow(record: record)
                     .padding()
                     .background(
                         VisualEffectView(effect: UIBlurEffect(style: .systemChromeMaterial))
@@ -117,7 +106,16 @@ struct RecordFormView: View {
             }
         }
         .onAppear {
-            if record != nil {
+            if let record = record {
+                selectedTypeIndex = Int(record.wrappedType.rawValue)
+
+                if let streetName = record.streetName { self.streetName = streetName }
+                if let city = record.city { self.city = city }
+                if let state = record.state { self.state = state }
+                if let apartmentNumber = record.apartmentNumber {
+                    self.apartmentNumber = apartmentNumber
+                }
+
                 navigationController?.navigationBar.shadowImage = UIImage()
             }
         }
