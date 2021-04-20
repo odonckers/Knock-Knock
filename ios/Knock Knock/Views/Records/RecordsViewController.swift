@@ -64,8 +64,7 @@ class RecordsViewController: UIViewController {
     private func deselectSelectedIndexPath() {
         if let selectedIndexPath = selectedIndexPath {
             self.selectedIndexPath = nil
-            collectionView
-                .deselectItem(at: selectedIndexPath, animated: true)
+            collectionView.deselectItem(at: selectedIndexPath, animated: true)
         }
     }
 }
@@ -98,10 +97,7 @@ extension RecordsViewController {
 
 extension RecordsViewController {
     private func configureCollectionView() {
-        collectionView = UICollectionView(
-            frame: view.bounds,
-            collectionViewLayout: createLayout()
-        )
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.backgroundColor = .systemBackground
         collectionView.delegate = self
@@ -111,10 +107,7 @@ extension RecordsViewController {
 
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout() {
-            [weak self] (
-                sectionIndex,
-                layoutEnvironment
-            ) -> NSCollectionLayoutSection? in
+            [weak self] (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
 
             var configuration = UICollectionLayoutListConfiguration(
                 appearance: (self?.isCompact ?? false) ? .plain : .sidebarPlain
@@ -122,13 +115,10 @@ extension RecordsViewController {
             configuration.showsSeparators = true
             configuration.headerMode = .none
 
-            configuration.trailingSwipeActionsConfigurationProvider = {
-                indexPath in
+            configuration.trailingSwipeActionsConfigurationProvider = { indexPath in
+                let editAction = UIContextualAction(style: .normal, title: "Edit") {
+                    [weak self] action, view, completion in
 
-                let editAction = UIContextualAction(
-                    style: .normal,
-                    title: "Edit"
-                ) { [weak self] action, view, completion in
                     guard let self = self else {
                         completion(false)
                         return
@@ -140,10 +130,9 @@ extension RecordsViewController {
                 editAction.image = UIImage(systemName: "pencil")
                 editAction.backgroundColor = .systemGray2
 
-                let moveAction = UIContextualAction(
-                    style: .normal,
-                    title: "Move"
-                ) { [weak self] action, view, completion in
+                let moveAction = UIContextualAction(style: .normal, title: "Move") {
+                    [weak self] action, view, completion in
+
                     guard let self = self else {
                         completion(false)
                         return
@@ -155,10 +144,9 @@ extension RecordsViewController {
                 moveAction.image = UIImage(systemName: "folder.fill")
                 moveAction.backgroundColor = .systemIndigo
 
-                let deleteAction = UIContextualAction(
-                    style: .destructive,
-                    title: "Delete"
-                ) { [weak self] action, view, completion in
+                let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
+                    [weak self] action, view, completion in
+
                     guard let self = self else {
                         completion(false)
                         return
@@ -200,13 +188,10 @@ extension RecordsViewController: UICollectionViewDelegate {
         let doorsViewController = DoorsViewController()
         doorsViewController.selectedRecord = record
 
-        let navigationDoorsView = UINavigationController(
-            rootViewController: doorsViewController
-        )
+        let navigationDoorsView = UINavigationController(rootViewController: doorsViewController)
 
         if isCompact {
-            navigationController?
-                .pushViewController(doorsViewController, animated: true)
+            navigationController?.pushViewController(doorsViewController, animated: true)
         } else {
             showDetailViewController(navigationDoorsView, sender: nil)
         }
@@ -221,26 +206,23 @@ extension RecordsViewController: UICollectionViewDelegate {
         contextMenuConfigurationForItemAt indexPath: IndexPath,
         point: CGPoint
     ) -> UIContextMenuConfiguration? {
-        let contextMenuConfig = UIContextMenuConfiguration(
-            identifier: nil,
-            previewProvider: nil
-        ) { actions in
+        let contextMenuConfig = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) {
+            actions in
+
             UIMenu(
                 children: [
                     UIMenu(
                         title: "Edit...",
                         options: .displayInline,
                         children: [
-                            UIAction(
-                                title: "Edit",
-                                image: UIImage(systemName: "pencil")
-                            ) { [weak self] action in
+                            UIAction(title: "Edit", image: UIImage(systemName: "pencil")) {
+                                [weak self] action in
+
                                 self?.updateRecord(at: indexPath)
                             },
-                            UIAction(
-                                title: "Move",
-                                image: UIImage(systemName: "folder")
-                            ) { [weak self] action in
+                            UIAction(title: "Move", image: UIImage(systemName: "folder")) {
+                                [weak self] action in
+
                                 self?.moveRecord(at: indexPath)
                             },
                         ]
@@ -251,7 +233,7 @@ extension RecordsViewController: UICollectionViewDelegate {
                         attributes: .destructive
                     ) { [weak self] action in
                         self?.verifyRecordDeletion(at: indexPath)
-                    }
+                    },
                 ]
             )
         }
@@ -273,19 +255,13 @@ extension RecordsViewController {
         )
         alertController.view.tintColor = .accentColor
 
-        let deleteAction = UIAlertAction(
-            title: "Delete",
-            style: .destructive
-        ) { action in
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { action in
             self.deleteRecord(at: indexPath)
             completion(true)
         }
         alertController.addAction(deleteAction)
 
-        let cancelAction = UIAlertAction(
-            title: "Cancel",
-            style: .cancel
-        ) { action in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
             completion(false)
         }
         alertController.addAction(cancelAction)
@@ -294,10 +270,7 @@ extension RecordsViewController {
             alertController.popoverPresentationController?.sourceView = selectedCell
             alertController.popoverPresentationController?.sourceRect = selectedCell
                 .bounds
-                .offsetBy(
-                    dx: displaced ? selectedCell.bounds.width : 0,
-                    dy: 0
-                )
+                .offsetBy(dx: displaced ? selectedCell.bounds.width : 0, dy: 0)
         }
 
         present(alertController, animated: true)
@@ -308,9 +281,7 @@ extension RecordsViewController {
     private typealias CellRegistration = UICollectionView.CellRegistration<RecordCell, Record>
 
     private func configureDataSource() {
-        let rowRegistration = CellRegistration {
-            [weak self] cell, indexPath, item in
-
+        let rowRegistration = CellRegistration { [weak self] cell, indexPath, item in
             cell.record = item
             cell.isInset = self?.isCompact ?? false
         }
@@ -360,10 +331,7 @@ extension RecordsViewController {
             NSSortDescriptor(keyPath: \Record.streetName, ascending: true)
         ]
         if let territory = territory {
-            fetchRequest.predicate = NSPredicate(
-                format: "territory == %@",
-                territory
-            )
+            fetchRequest.predicate = NSPredicate(format: "territory == %@", territory)
         } else {
             fetchRequest.predicate = NSPredicate(format: "territory == NULL")
         }
@@ -387,10 +355,7 @@ extension RecordsViewController {
     private func refreshFetchRequests() {
         let fetchRequest = fetchedRecordsController.fetchRequest
         if let territory = territory {
-            fetchRequest.predicate = NSPredicate(
-                format: "territory == %@",
-                territory
-            )
+            fetchRequest.predicate = NSPredicate(format: "territory == %@", territory)
         } else {
             fetchRequest.predicate = NSPredicate(format: "territory == NULL")
         }

@@ -52,12 +52,9 @@ class RecordCellContentView: UIView, UIContentView {
 
         if let record = configuration.record {
             rootView.rootView = AnyView(
-                RecordCellView(
-                    record: record,
-                    isSelected: configuration.isSelected
-                )
-                .padding(.vertical, 5)
-                .padding(.horizontal, configuration.isInset ? 10 : 0)
+                RecordCellView(record: record, isSelected: configuration.isSelected)
+                    .padding(.vertical, 5)
+                    .padding(.horizontal, configuration.isInset ? 10 : 0)
             )
 
             rootView.view.backgroundColor = .clear

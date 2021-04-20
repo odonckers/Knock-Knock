@@ -44,9 +44,7 @@ class LocationManager: NSObject, ObservableObject {
         locationManager.stopUpdatingLocation()
     }
     
-    func whenAuthorized(
-        completionHandler: @escaping (_ placement: CLPlacemark?) -> ()
-    ) {
+    func whenAuthorized(completionHandler: @escaping (_ placement: CLPlacemark?) -> ()) {
         guard let status = status else { return }
 
         if status == .authorizedAlways || status == .authorizedWhenInUse {
@@ -74,10 +72,7 @@ extension LocationManager: CLLocationManagerDelegate {
         self.status = status
     }
 
-    func locationManager(
-        _ manager: CLLocationManager,
-        didUpdateLocations locations: [CLLocation]
-    ) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
 
         self.location = location

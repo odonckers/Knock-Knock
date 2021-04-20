@@ -13,20 +13,15 @@ struct RecordCellView: View {
 
     var body: some View {
         var secondaryTexts: [String] = []
-        if let city = record.city, city != "" {
-            secondaryTexts.append(city)
-        }
-        if let state = record.state, state != "" {
-            secondaryTexts.append(state)
-        }
+        if let city = record.city, city != "" { secondaryTexts.append(city) }
+        if let state = record.state, state != "" { secondaryTexts.append(state) }
+
         let subtitle = secondaryTexts.joined(separator: ", ")
 
         return HStack(alignment: .center, spacing: 20) {
             Tag(
                 text: record.abbreviatedType,
-                backgroundColor: isSelected
-                    ? Color.black.opacity(0.9)
-                    : record.typeColor
+                backgroundColor: isSelected ? Color.black.opacity(0.9) : record.typeColor
             )
             .foregroundColor(isSelected ? .white : record.typeColor)
 
@@ -38,11 +33,7 @@ struct RecordCellView: View {
                 if let subtitle = subtitle, subtitle != "" {
                     Text(subtitle)
                         .font(.callout)
-                        .foregroundColor(
-                            isSelected
-                                ? Color.white.opacity(0.7)
-                                : .gray
-                        )
+                        .foregroundColor(isSelected ? Color.white.opacity(0.7) : .gray)
                 }
             }
 

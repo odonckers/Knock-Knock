@@ -24,11 +24,11 @@ struct MoveRecordView: View {
             RecordCellView(record: record)
                 .padding()
                 .background(
-                    VisualEffectView(
-                        effect: UIBlurEffect(style: .systemChromeMaterial)
-                    )
-                    .edgesIgnoringSafeArea([.leading, .trailing])
+                    VisualEffectView(effect: UIBlurEffect(style: .systemChromeMaterial))
+                        .edgesIgnoringSafeArea([.leading, .trailing])
                 )
+
+            Divider()
 
             List {
                 if record.territory == nil {
@@ -49,10 +49,8 @@ struct MoveRecordView: View {
                 }
 
                 ForEach(territories) { territory in
-                    if
-                        let existingTerritory = record.territory,
-                        existingTerritory == territory
-                    {
+                    if let existingTerritory = record.territory,
+                       existingTerritory == territory {
                         HStack {
                             Label(territory.wrappedName, systemImage: "folder")
                                 .foregroundColor(.gray)
@@ -74,9 +72,7 @@ struct MoveRecordView: View {
         .navigationTitle("Select a territory")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(
-                    action: { navigationController?.dismiss(animated: true) }
-                ) {
+                Button(action: { navigationController?.dismiss(animated: true) }) {
                     Text("cancel")
                 }
             }

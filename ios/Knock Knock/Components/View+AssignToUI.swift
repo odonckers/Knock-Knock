@@ -13,8 +13,7 @@ extension View {
         navigationController: UINavigationController
     ) -> some View {
         let viewController = UIHostingController(rootView: self)
-        navigationController
-            .setViewControllers([viewController], animated: false)
+        navigationController.setViewControllers([viewController], animated: false)
         return self
     }
 }

@@ -41,8 +41,7 @@ class TerritoriesViewController: UIViewController {
     private func deselectSelectedIndexPath() {
         if let selectedIndexPath = selectedIndexPath {
             self.selectedIndexPath = nil
-            collectionView
-                .deselectItem(at: selectedIndexPath, animated: true)
+            collectionView.deselectItem(at: selectedIndexPath, animated: true)
         }
     }
 }
@@ -79,19 +78,14 @@ extension TerritoriesViewController {
         let layout = UICollectionViewCompositionalLayout() {
             (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
 
-            var configuration = UICollectionLayoutListConfiguration(
-                appearance: .plain
-            )
+            var configuration = UICollectionLayoutListConfiguration(appearance: .plain)
             configuration.showsSeparators = true
             configuration.headerMode = .none
 
-            configuration.trailingSwipeActionsConfigurationProvider = {
-                indexPath in
+            configuration.trailingSwipeActionsConfigurationProvider = { indexPath in
+                let editAction = UIContextualAction(style: .normal, title: "Edit") {
+                    [weak self] action, view, completion in
 
-                let editAction = UIContextualAction(
-                    style: .normal,
-                    title: "Edit"
-                ) { [weak self] action, view, completion in
                     guard let self = self else {
                         completion(false)
                         return
@@ -103,10 +97,9 @@ extension TerritoriesViewController {
                 editAction.image = UIImage(systemName: "pencil")
                 editAction.backgroundColor = .systemGray2
 
-                let deleteAction = UIContextualAction(
-                    style: .destructive,
-                    title: "Delete"
-                ) { [weak self] action, view, completion in
+                let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
+                    [weak self] action, view, completion in
+
                     guard let self = self else {
                         completion(false)
                         return
@@ -138,20 +131,13 @@ extension TerritoriesViewController {
 }
 
 extension TerritoriesViewController: UICollectionViewDelegate {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        didSelectItemAt indexPath: IndexPath
-    ) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let territory = dataSource.itemIdentifier(for: indexPath)
         else { return }
 
-        let recordsViewController = RecordsViewController(
-            territory: territory,
-            isCompact: true
-        )
+        let recordsViewController = RecordsViewController(territory: territory, isCompact: true)
 
-        navigationController?
-            .pushViewController(recordsViewController, animated: true)
+        navigationController?.pushViewController(recordsViewController, animated: true)
 
         selectedIndexPath = indexPath
     }
@@ -161,16 +147,14 @@ extension TerritoriesViewController: UICollectionViewDelegate {
         contextMenuConfigurationForItemAt indexPath: IndexPath,
         point: CGPoint
     ) -> UIContextMenuConfiguration? {
-        let contextMenuConfig = UIContextMenuConfiguration(
-            identifier: nil,
-            previewProvider: nil
-        ) { actions in
+        let contextMenuConfig = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) {
+            actions in
+
             UIMenu(
                 children: [
-                    UIAction(
-                        title: "Edit",
-                        image: UIImage(systemName: "pencil")
-                    ) { [weak self] action in
+                    UIAction(title: "Edit", image: UIImage(systemName: "pencil")) {
+                        [weak self] action in
+
                         self?.presentTerritoryForm(itemAt: indexPath)
                     },
                     UIAction(
@@ -183,7 +167,6 @@ extension TerritoriesViewController: UICollectionViewDelegate {
                 ]
             )
         }
-
         return contextMenuConfig
     }
 }
@@ -201,19 +184,13 @@ extension TerritoriesViewController {
         )
         alertController.view.tintColor = .accentColor
 
-        let deleteAction = UIAlertAction(
-            title: "Delete",
-            style: .destructive
-        ) { action in
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { action in
             self.deleteTerritory(at: indexPath)
             completion(true)
         }
         alertController.addAction(deleteAction)
 
-        let cancelAction = UIAlertAction(
-            title: "Cancel",
-            style: .cancel
-        ) { action in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
             completion(false)
         }
         alertController.addAction(cancelAction)
@@ -222,10 +199,7 @@ extension TerritoriesViewController {
             alertController.popoverPresentationController?.sourceView = selectedCell
             alertController.popoverPresentationController?.sourceRect = selectedCell
                 .bounds
-                .offsetBy(
-                    dx: displaced ? selectedCell.bounds.width : 0,
-                    dy: 0
-                )
+                .offsetBy(dx: displaced ? selectedCell.bounds.width : 0, dy: 0)
         }
 
         present(alertController, animated: true)

@@ -9,21 +9,17 @@ import SwiftUI
 
 extension Bundle {
     var icon: Image? {
-        if
-            let icons = infoDictionary?["CFBundleIcons"] as? [String: Any],
-            let primaryIcon = icons["CFBundlePrimaryIcon"] as? [String: Any],
-            let iconFiles = primaryIcon["CFBundleIconFiles"] as? [String],
-            let lastIcon = iconFiles.last
-        {
+        if let icons = infoDictionary?["CFBundleIcons"] as? [String: Any],
+           let primaryIcon = icons["CFBundlePrimaryIcon"] as? [String: Any],
+           let iconFiles = primaryIcon["CFBundleIconFiles"] as? [String],
+           let lastIcon = iconFiles.last {
             return Image(lastIcon)
         }
         return nil
     }
 
     static var appName: String {
-        guard let name = main.infoDictionary?["CFBundleName"] as? String else {
-            return ""
-        }
+        guard let name = main.infoDictionary?["CFBundleName"] as? String else { return "" }
         return name
     }
 

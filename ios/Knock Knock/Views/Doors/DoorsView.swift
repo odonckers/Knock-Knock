@@ -37,8 +37,6 @@ class DoorsViewController: UIHostingController<AnyView> {
     }
 
     private var titleView = UIStackView()
-    private var titleTagView = TagView()
-    private var titleLabel = UILabel()
 }
 
 extension DoorsViewController {
@@ -60,24 +58,23 @@ extension DoorsViewController {
 
     private func setupTitleTag() {
         if let record = record {
-            let color = UIColor(record.typeColor)
-
-            titleTagView.text = record.abbreviatedType
-            titleTagView.backgroundColor = color.withAlphaComponent(0.15)
-            titleTagView.foregroundColor = color
-
-            titleTagView
-                .widthAnchor
-                .constraint(equalToConstant: 65)
-                .isActive = true
+            let hostingController = UIHostingController(
+                rootView: Tag(
+                    text: record.abbreviatedType,
+                    backgroundColor: record.typeColor
+                )
+                .foregroundColor(record.typeColor)
+            )
+            guard let titleTagView = hostingController.view else { return }
+            titleTagView.backgroundColor = .clear
 
             titleView.addArrangedSubview(titleTagView)
-            titleView.setCustomSpacing(10, after: titleTagView)
         }
     }
 
     private func setupTitleLabel() {
         if let record = record {
+            let titleLabel = UILabel()
             titleLabel.text = record.wrappedStreetName
             titleLabel.font =  UIFont.preferredFont(forTextStyle: .headline)
             titleLabel.adjustsFontForContentSizeCategory = true
@@ -109,9 +106,7 @@ struct DoorsView: View {
                 .padding()
             }
             .toolbar {
-                ToolbarItem {
-                    GridLayoutButton(selectedGridLayout: $selectedGridLayout)
-                }
+                ToolbarItem { GridLayoutButton(selectedGridLayout: $selectedGridLayout) }
             }
             .filledBackground(Color.groupedBackground)
         } else {
@@ -133,9 +128,7 @@ struct DoorsView: View {
 
     @State private var selectedGridLayout: GridLayoutOptions = .grid
 
-    private var inPortrait: Bool {
-        horizontalSize == .compact && verticalSize == .regular
-    }
+    private var inPortrait: Bool { horizontalSize == .compact && verticalSize == .regular }
     private var isGrid: Bool { selectedGridLayout == .grid }
 
     private let sectionHeaders: [(String, String, String)] = [
@@ -147,18 +140,10 @@ struct DoorsView: View {
     ]
 
     private var gridColumns: [GridItem] {
-        let gridColumnItem = GridItem(
-            .flexible(),
-            spacing: 8,
-            alignment: .top
-        )
+        let gridColumnItem = GridItem(.flexible(), spacing: 8, alignment: .top)
 
         let portraitColumns = [gridColumnItem, gridColumnItem]
-        let landscapeColumns = [
-            gridColumnItem,
-            gridColumnItem,
-            gridColumnItem
-        ]
+        let landscapeColumns = [gridColumnItem, gridColumnItem, gridColumnItem]
 
         let gridColumns = inPortrait ? portraitColumns : landscapeColumns
         let listColumns = [gridColumnItem]
@@ -170,9 +155,7 @@ struct DoorsView: View {
 #if DEBUG
 struct DoorsViewController_Preview: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UINavigationController {
-        let record = Record(
-            context: PersistenceController.preview.container.viewContext
-        )
+        let record = Record(context: PersistenceController.preview.container.viewContext)
         record.streetName = "Street Name"
         record.city = "City"
         record.state = "State"
@@ -180,9 +163,7 @@ struct DoorsViewController_Preview: UIViewControllerRepresentable {
         let doorsViewController = DoorsViewController()
         doorsViewController.selectedRecord = record
 
-        let navigationController = UINavigationController(
-            rootViewController: doorsViewController
-        )
+        let navigationController = UINavigationController(rootViewController: doorsViewController)
         return navigationController
     }
 

@@ -27,14 +27,9 @@ extension View {
     ///     }
     /// }
     /// ```
-    @ViewBuilder func modify(
-        @ViewBuilder _ handler: (_: Self) -> AnyView?
-    ) -> some View {
-        if let content = handler(self) {
-            content
-        } else {
-            self
-        }
+    @ViewBuilder func modify(@ViewBuilder _ handler: (_: Self) -> AnyView?) -> some View {
+        if let content = handler(self) { content }
+        else { self }
     }
     
     /// Conditionally apply modifiers depending on the target operating system.
@@ -54,11 +49,8 @@ extension View {
         _ operatingSystems: OperatingSystem...,
         handler: @escaping (_: Self) -> Content
     ) -> some View where Content: View {
-        if operatingSystems.contains(OperatingSystem.current) {
-            handler(self)
-        } else {
-            self
-        }
+        if operatingSystems.contains(OperatingSystem.current) { handler(self) }
+        else { self }
     }
     
     /// Returns a type-erased version of `self`.
@@ -68,10 +60,7 @@ extension View {
 }
 
 enum OperatingSystem {
-    case macOS
-    case iOS
-    case tvOS
-    case watchOS
+    case macOS, iOS, tvOS, watchOS
 
     #if os(macOS)
     static let current = macOS

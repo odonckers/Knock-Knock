@@ -64,40 +64,28 @@ extension RootViewController {
 }
 
 extension RootViewController {
-    private func setupSidebarViewController(
-        in splitViewController: UISplitViewController
-    ) {
+    private func setupSidebarViewController(in splitViewController: UISplitViewController) {
         sidebarViewController = SidebarViewController()
         splitViewController.setViewController(sidebarViewController, for: .primary)
     }
 
-    private func setupRecordsViewController(
-        in splitViewController: UISplitViewController
-    ) {
+    private func setupRecordsViewController(in splitViewController: UISplitViewController) {
         recordsViewController = RecordsViewController()
 
-        let navigationController = UINavigationController(
-            rootViewController: recordsViewController
-        )
+        let navigationController = UINavigationController(rootViewController: recordsViewController)
         splitViewController.setViewController(navigationController, for: .supplementary)
     }
 
-    private func setupDoorsViewContorller(
-        in splitViewController: UISplitViewController
-    ) {
+    private func setupDoorsViewContorller(in splitViewController: UISplitViewController) {
         doorsViewController = DoorsViewController()
 
-        let navigationController = UINavigationController(
-            rootViewController: doorsViewController
-        )
+        let navigationController = UINavigationController(rootViewController: doorsViewController)
         splitViewController.setViewController(navigationController, for: .secondary)
     }
 }
 
 extension RootViewController {
-    private func setupCompactViewController(
-        in splitViewController: UISplitViewController
-    ) {
+    private func setupCompactViewController(in splitViewController: UISplitViewController) {
         let tabBarController = UITabBarController()
         tabBarController.setViewControllers(
             [

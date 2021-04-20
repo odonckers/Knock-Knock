@@ -25,13 +25,14 @@ struct FramedSpacer: View {
 
 extension FramedSpacer {
     enum Direction {
-        case horizontal
-        case vertical
+        case horizontal, vertical
     }
 }
 
+#if DEBUG
 struct FramedSpacer_Previews: PreviewProvider {
     static var previews: some View {
         FramedSpacer(spacing: .small, direction: .horizontal)
     }
 }
+#endif

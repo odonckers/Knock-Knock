@@ -41,12 +41,7 @@ extension DynamicViewContent {
         message: String? = nil,
         perform: @escaping (IndexSet) -> Void
     ) -> some View {
-        DeleteConfirmation(
-            source: self,
-            title: title,
-            message: message,
-            perform: perform
-        )
+        DeleteConfirmation(source: self, title: title, message: message, perform: perform)
     }
 }
 
@@ -57,10 +52,9 @@ struct DeleteConfirmation_Previews: PreviewProvider {
             ForEach(0..<10) { i in
                 Text("Index \(i)")
             }
-            .onConfirmedDelete(
-                title: { _ in "Are you sure?" },
-                message: "This is serious..."
-            ) { index in
+            .onConfirmedDelete(title: { _ in "Are you sure?" }, message: "This is serious..." ) {
+                index in
+
                 print(index)
             }
         }

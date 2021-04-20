@@ -25,8 +25,7 @@ struct GridLayoutButton: View {
     private var horizontalSizeClass
 
     private var isCompact: Bool {
-        horizontalSizeClass == .compact ||
-            UIDevice.current.userInterfaceIdiom == .phone
+        horizontalSizeClass == .compact || UIDevice.current.userInterfaceIdiom == .phone
     }
 
     var body: some View {

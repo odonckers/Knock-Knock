@@ -6,6 +6,5 @@
 //
 
 enum LocationRequest {
-    case always
-    case whenInUse
+    case always, whenInUse
 }

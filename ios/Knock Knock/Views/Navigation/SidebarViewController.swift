@@ -72,25 +72,18 @@ extension SidebarViewController {
         let layout = UICollectionViewCompositionalLayout() {
             (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
 
-            var configuration = UICollectionLayoutListConfiguration(
-                appearance: .sidebar
-            )
+            var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
             configuration.showsSeparators = false
-            configuration.headerMode = sectionIndex == 0
-                ? .none
-                : .firstItemInSection
-            configuration.trailingSwipeActionsConfigurationProvider = {
-                indexPath in
-
+            configuration.headerMode = sectionIndex == 0 ? .none : .firstItemInSection
+            configuration.trailingSwipeActionsConfigurationProvider = { indexPath in
                 guard let item = self.dataSource.itemIdentifier(for: indexPath)
                 else { return nil }
 
                 switch item.object {
                 case is Territory:
-                    let editAction = UIContextualAction(
-                        style: .normal,
-                        title: "Edit"
-                    ) { [weak self] action, view, completion in
+                    let editAction = UIContextualAction(style: .normal, title: "Edit") {
+                        [weak self] action, view, completion in
+
                         guard let self = self else {
                             completion(false)
                             return
@@ -102,10 +95,9 @@ extension SidebarViewController {
                     editAction.image = UIImage(systemName: "pencil")
                     editAction.backgroundColor = .systemGray2
 
-                    let deleteAction = UIContextualAction(
-                        style: .destructive,
-                        title: "Delete"
-                    ) { [weak self] action, view, completion in
+                    let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
+                        [weak self] action, view, completion in
+
                         guard let self = self else {
                             completion(false)
                             return
@@ -139,10 +131,7 @@ extension SidebarViewController {
 }
 
 extension SidebarViewController: UICollectionViewDelegate {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        didSelectItemAt indexPath: IndexPath
-    ) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let sidebarItem = dataSource.itemIdentifier(for: indexPath)
         else { return }
 
@@ -169,10 +158,9 @@ extension SidebarViewController: UICollectionViewDelegate {
             ) { actions in
                 UIMenu(
                     children: [
-                        UIAction(
-                            title: "Edit",
-                            image: UIImage(systemName: "pencil")
-                        ) { [weak self] action in
+                        UIAction(title: "Edit", image: UIImage(systemName: "pencil")) {
+                            [weak self] action in
+
                             self?.presentTerritoryForm(itemAt: indexPath)
                         },
                         UIAction(
@@ -185,7 +173,6 @@ extension SidebarViewController: UICollectionViewDelegate {
                     ]
                 )
             }
-
             return contextMenuConfig
         default: return nil
         }
@@ -194,28 +181,21 @@ extension SidebarViewController: UICollectionViewDelegate {
     private func recordsViewController() -> RecordsViewController? {
         guard
             let splitViewController = splitViewController,
-            let navigationViewController = splitViewController.viewController(
-                for: .supplementary
-            ) as? UINavigationController,
+            let navigationViewController = splitViewController
+                .viewController(for: .supplementary) as? UINavigationController,
             let recordsViewController = navigationViewController.viewControllers.first
         else { return nil }
 
         return recordsViewController as? RecordsViewController
     }
 
-    private func didSelectRecordsItem(
-        _ sidebarItem: SidebarItem,
-        at indexPath: IndexPath
-    ) {
+    private func didSelectRecordsItem(_ sidebarItem: SidebarItem, at indexPath: IndexPath) {
         if let recordsViewController = recordsViewController() {
             recordsViewController.selectedTerritory = nil
         }
     }
 
-    private func didSelectTerritoryItem(
-        _ sidebarItem: SidebarItem,
-        at indexPath: IndexPath
-    ) {
+    private func didSelectTerritoryItem(_ sidebarItem: SidebarItem, at indexPath: IndexPath) {
         guard
             let territory = sidebarItem.object as? Territory,
             let recordsViewController = recordsViewController()
@@ -238,19 +218,13 @@ extension SidebarViewController {
         )
         alertController.view.tintColor = .accentColor
 
-        let deleteAction = UIAlertAction(
-            title: "Delete",
-            style: .destructive
-        ) { action in
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { action in
             self.deleteTerritory(at: indexPath)
             completion(true)
         }
         alertController.addAction(deleteAction)
 
-        let cancelAction = UIAlertAction(
-            title: "Cancel",
-            style: .cancel
-        ) { action in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
             completion(false)
         }
         alertController.addAction(cancelAction)
@@ -259,18 +233,18 @@ extension SidebarViewController {
             alertController.popoverPresentationController?.sourceView = selectedCell
             alertController.popoverPresentationController?.sourceRect = selectedCell
                 .bounds
-                .offsetBy(
-                    dx: displaced ? selectedCell.bounds.width : 0,
-                    dy: 0
-                )
+                .offsetBy(dx: displaced ? selectedCell.bounds.width : 0, dy: 0)
         }
 
-        self.present(alertController, animated: true)
+        present(alertController, animated: true)
     }
 }
 
 extension SidebarViewController {
-    private typealias CellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, SidebarItem>
+    private typealias CellRegistration = UICollectionView.CellRegistration<
+        UICollectionViewListCell,
+        SidebarItem
+    >
 
     private func configureDataSource() {
         let headerRegistration = CellRegistration { cell, indexPath, item in
@@ -281,9 +255,7 @@ extension SidebarViewController {
             cell.accessories = [.outlineDisclosure()]
         }
 
-        let expandableRowRegistration = CellRegistration {
-            cell, indexPath, item in
-
+        let expandableRowRegistration = CellRegistration { cell, indexPath, item in
             var contentConfiguration = cell.defaultContentConfiguration()
             contentConfiguration.text = item.title
             contentConfiguration.secondaryText = item.subtitle
@@ -367,13 +339,8 @@ extension SidebarViewController {
     }
 
     private func applyInitialSnapshot() {
-        dataSource
-            .apply(recordsSnapshot(), to: .records, animatingDifferences: false)
-        dataSource.apply(
-            territoriesSnapshot(),
-            to: .territories,
-            animatingDifferences: false
-        )
+        dataSource.apply(recordsSnapshot(), to: .records, animatingDifferences: false)
+        dataSource.apply(territoriesSnapshot(), to: .territories, animatingDifferences: false)
 
         collectionView.selectItem(
             at: IndexPath(row: 0, section: 0),
@@ -511,18 +478,8 @@ extension SidebarViewController {
         let image: UIImage?
         var object: NSManagedObject?
 
-        static func header(
-            title: String,
-            id: String = UUID().uuidString
-        ) -> Self {
-            SidebarItem(
-                id: id,
-                type: .header,
-                title: title,
-                subtitle: nil,
-                image: nil,
-                object: nil
-            )
+        static func header(title: String, id: String = UUID().uuidString) -> Self {
+            SidebarItem(id: id, type: .header, title: title, subtitle: nil, image: nil, object: nil)
         }
 
         static func expandableRow(

@@ -20,9 +20,7 @@ struct RecordFormView: View {
         if let record = record {
             selectedTypeIndex = Int(record.wrappedType.rawValue)
 
-            if let streetName = record.streetName {
-                self.streetName = streetName
-            }
+            if let streetName = record.streetName { self.streetName = streetName }
             if let city = record.city { self.city = city }
             if let state = record.state { self.state = state }
             if let apartmentNumber = record.apartmentNumber {
@@ -57,19 +55,16 @@ struct RecordFormView: View {
                 RecordCellView(record: record)
                     .padding()
                     .background(
-                        VisualEffectView(
-                            effect: UIBlurEffect(style: .systemChromeMaterial)
-                        )
-                        .edgesIgnoringSafeArea([.leading, .trailing])
+                        VisualEffectView(effect: UIBlurEffect(style: .systemChromeMaterial))
+                            .edgesIgnoringSafeArea([.leading, .trailing])
                     )
+
+                Divider()
             }
 
             Form {
                 Section {
-                    Picker(
-                        "type",
-                        selection: $selectedTypeIndex.animation()
-                    ) {
+                    Picker("type", selection: $selectedTypeIndex.animation()) {
                         ForEach(0..<typeOptions.count) { i in
                             Text(typeOptions[i])
                         }
@@ -102,15 +97,11 @@ struct RecordFormView: View {
             }
         }
         .navigationTitle(
-            record?.streetName != nil
-                ? "recordForm.title.edit"
-                : "recordForm.title.new"
+            record?.streetName != nil ? "recordForm.title.edit" : "recordForm.title.new"
         )
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button(
-                    action: { navigationController?.dismiss(animated: true) }
-                ) {
+                Button(action: { navigationController?.dismiss(animated: true) }) {
                     Text("cancel")
                 }
             }
@@ -166,13 +157,9 @@ struct RecordFormView: View {
 
     private func useCurrentLocation() {
         location.whenAuthorized { placemark in
-            if let streetName = placemark?.thoroughfare {
-                self.streetName = streetName
-            }
+            if let streetName = placemark?.thoroughfare { self.streetName = streetName }
             if let city = placemark?.locality { self.city = city }
-            if let state = placemark?.administrativeArea {
-                self.state = state
-            }
+            if let state = placemark?.administrativeArea { self.state = state }
         }
     }
 }

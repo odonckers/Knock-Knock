@@ -27,7 +27,11 @@ class CoreDataPublisher<Entity: NSManagedObject>: NSObject, NSFetchedResultsCont
         super.init()
     }
 
-    func receive<S: Subscriber>(subscriber: S) where CoreDataPublisher.Failure == S.Failure, CoreDataPublisher.Output == S.Input {
+    func receive<S: Subscriber>(subscriber: S)
+    where
+        CoreDataPublisher.Failure == S.Failure,
+        CoreDataPublisher.Output == S.Input
+    {
         var start = false
 
         objc_sync_enter(self)
@@ -54,10 +58,7 @@ class CoreDataPublisher<Entity: NSManagedObject>: NSObject, NSFetchedResultsCont
             resultController = controller as? NSFetchedResultsController<NSManagedObject>
         }
 
-        CoreDataSubscription(
-            fetchPublisher: self,
-            subscriber: AnySubscriber(subscriber)
-        )
+        CoreDataSubscription(fetchPublisher: self, subscriber: AnySubscriber(subscriber))
     }
 
     func controllerDidChangeContent(
@@ -88,21 +89,14 @@ extension CoreDataPublisher {
         private var cancellable: AnyCancellable?
 
         @discardableResult
-        init(
-            fetchPublisher: CoreDataPublisher,
-            subscriber: AnySubscriber<Output, Failure>
-        ) {
+        init(fetchPublisher: CoreDataPublisher, subscriber: AnySubscriber<Output, Failure>) {
             self.fetchPublisher = fetchPublisher
 
             subscriber.receive(subscription: self)
 
             cancellable = fetchPublisher.subject.sink(
-                receiveCompletion: { completion in
-                    subscriber.receive(completion: completion)
-                },
-                receiveValue: { value in
-                    _ = subscriber.receive(value)
-                }
+                receiveCompletion: { completion in subscriber.receive(completion: completion) },
+                receiveValue: { value in _ = subscriber.receive(value) }
             )
         }
 

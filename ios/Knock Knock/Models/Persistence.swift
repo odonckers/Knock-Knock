@@ -28,9 +28,7 @@ struct PersistenceController {
     init(inMemory: Bool = false) {
         container = NSPersistentCloudKitContainer(name: "Knock_Knock")
         if inMemory {
-            container.persistentStoreDescriptions.first!.url = URL(
-                fileURLWithPath: "/dev/null"
-            )
+            container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
         container.loadPersistentStores { storeDescription, error in
             if let error = error as NSError? {
