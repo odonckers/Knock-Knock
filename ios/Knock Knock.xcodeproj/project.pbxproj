@@ -401,18 +401,10 @@
 			children = (
 				7FF2D028260ABF7D00A54D72 /* RecordsViewController.swift */,
 				7FE71392262DF68200FF9B10 /* MoveRecordView.swift */,
+				E25A170625E095FE0065517B /* RecordFormView.swift */,
 				7F5310FD260E665900F5F3BE /* Record Cell */,
-				E25A170525E095D50065517B /* Record Form */,
 			);
 			path = Records;
-			sourceTree = "<group>";
-		};
-		E25A170525E095D50065517B /* Record Form */ = {
-			isa = PBXGroup;
-			children = (
-				E25A170625E095FE0065517B /* RecordFormView.swift */,
-			);
-			path = "Record Form";
 			sourceTree = "<group>";
 		};
 		E25A172525E0B1C70065517B /* Territory */ = {
@@ -818,7 +810,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.owendonckers.Knock-Knock";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -845,7 +837,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.owendonckers.Knock-Knock";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

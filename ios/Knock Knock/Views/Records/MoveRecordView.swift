@@ -23,7 +23,12 @@ struct MoveRecordView: View {
         VStack(alignment: .center, spacing: 0) {
             RecordCellView(record: record)
                 .padding()
-                .background(VisualEffectView(effect: UIBlurEffect(style: .systemChromeMaterial)))
+                .background(
+                    VisualEffectView(
+                        effect: UIBlurEffect(style: .systemChromeMaterial)
+                    )
+                    .edgesIgnoringSafeArea([.leading, .trailing])
+                )
 
             List {
                 if record.territory == nil {

@@ -227,12 +227,24 @@ extension RecordsViewController: UICollectionViewDelegate {
         ) { actions in
             UIMenu(
                 children: [
-                    UIAction(
-                        title: "Edit",
-                        image: UIImage(systemName: "pencil")
-                    ) { [weak self] action in
-                        self?.updateRecord(at: indexPath)
-                    },
+                    UIMenu(
+                        title: "Edit...",
+                        options: .displayInline,
+                        children: [
+                            UIAction(
+                                title: "Edit",
+                                image: UIImage(systemName: "pencil")
+                            ) { [weak self] action in
+                                self?.updateRecord(at: indexPath)
+                            },
+                            UIAction(
+                                title: "Move",
+                                image: UIImage(systemName: "folder")
+                            ) { [weak self] action in
+                                self?.moveRecord(at: indexPath)
+                            },
+                        ]
+                    ),
                     UIAction(
                         title: "Delete",
                         image: UIImage(systemName: "trash"),

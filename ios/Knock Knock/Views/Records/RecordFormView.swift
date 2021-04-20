@@ -56,7 +56,12 @@ struct RecordFormView: View {
             if let record = record {
                 RecordCellView(record: record)
                     .padding()
-                    .background(VisualEffectView(effect: UIBlurEffect(style: .systemChromeMaterial)))
+                    .background(
+                        VisualEffectView(
+                            effect: UIBlurEffect(style: .systemChromeMaterial)
+                        )
+                        .edgesIgnoringSafeArea([.leading, .trailing])
+                    )
             }
 
             Form {
