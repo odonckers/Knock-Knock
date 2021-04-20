@@ -38,6 +38,19 @@ class RecordsViewController: UIViewController {
     private var moc: NSManagedObjectContext!
     private var fetchedRecordsController: NSFetchedResultsController<Record>!
 
+    private var sortRecordsButton = UIBarButtonItem(
+        title: "Sort",
+        image: UIImage(systemName: "arrow.up.arrow.down")
+    )
+    private var isAscendingRecords = true
+    private var selectedSortRecordsKey = "streetName"
+    private var sortRecordsKeys: [String: String] = [
+        "dateCreated": "Date Created",
+        "streetName": "Street Name",
+        "city": "City",
+        "state": "State",
+    ]
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -76,7 +89,7 @@ extension RecordsViewController {
 
         let addRecordButton = UIBarButtonItem(
             title: "Add Record",
-            image: UIImage(systemName: "plus.circle.fill"),
+            image: UIImage(systemName: "plus"),
             primaryAction: UIAction { [weak self] action in
                 guard let self = self else { return }
 
@@ -91,7 +104,56 @@ extension RecordsViewController {
                 self.present(navigationController, animated: true)
             }
         )
-        navigationItem.rightBarButtonItem = addRecordButton
+
+        assignSortRecordsMenu()
+        navigationItem.setRightBarButtonItems([addRecordButton, sortRecordsButton], animated: false)
+    }
+
+    private func assignSortRecordsMenu() {
+        sortRecordsButton.menu = UIMenu(
+            title: "Sort By",
+            children: [
+                UIMenu(
+                    options: .displayInline,
+                    children: [
+                        UIAction(
+                            title: "Ascending",
+                            image: UIImage(systemName: "arrow.up"),
+                            state: isAscendingRecords ? .on : .off,
+                            handler: { [weak self] action in
+                                self?.isAscendingRecords = true
+                                self?.refreshFetchRequests()
+                                self?.assignSortRecordsMenu()
+                            }
+                        ),
+                        UIAction(
+                            title: "Descending",
+                            image: UIImage(systemName: "arrow.down"),
+                            state: isAscendingRecords ? .off : .on,
+                            handler: { [weak self] action in
+                                self?.isAscendingRecords = false
+                                self?.refreshFetchRequests()
+                                self?.assignSortRecordsMenu()
+                            }
+                        ),
+                    ]
+                ),
+                UIMenu(
+                    options: .displayInline,
+                    children: sortRecordsKeys.compactMap { (key, value) in
+                        UIAction(
+                            title: value,
+                            state: key == selectedSortRecordsKey ? .on : .off,
+                            handler: { [weak self] action in
+                                self?.selectedSortRecordsKey = key
+                                self?.refreshFetchRequests()
+                                self?.assignSortRecordsMenu()
+                            }
+                        )
+                    }
+                ),
+            ]
+        )
     }
 }
 
@@ -328,7 +390,7 @@ extension RecordsViewController {
     private func configureFetchRequests() {
         let fetchRequest: NSFetchRequest<Record> = Record.fetchRequest()
         fetchRequest.sortDescriptors = [
-            NSSortDescriptor(keyPath: \Record.streetName, ascending: true)
+            NSSortDescriptor(key: selectedSortRecordsKey, ascending: isAscendingRecords)
         ]
         if let territory = territory {
             fetchRequest.predicate = NSPredicate(format: "territory == %@", territory)
@@ -354,6 +416,9 @@ extension RecordsViewController {
 
     private func refreshFetchRequests() {
         let fetchRequest = fetchedRecordsController.fetchRequest
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: selectedSortRecordsKey, ascending: isAscendingRecords)
+        ]
         if let territory = territory {
             fetchRequest.predicate = NSPredicate(format: "territory == %@", territory)
         } else {

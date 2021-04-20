@@ -31,7 +31,7 @@ struct CardGroupBoxStyle: GroupBoxStyle {
 #if DEBUG
 struct CardGroupBox_Previews: PreviewProvider {
     static var previews: some View {
-        GroupBox(label: Label("Label", systemImage: "checkmark.circle.fill")) {
+        GroupBox(label: Label("Label", systemImage: "checkmark")) {
             Text("Content")
         }
         .groupBoxStyle(CardGroupBoxStyle())
