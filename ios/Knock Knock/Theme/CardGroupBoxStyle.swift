@@ -8,21 +8,31 @@
 import SwiftUI
 
 struct CardGroupBoxStyle: GroupBoxStyle {
-    @Environment(\.colorScheme)
-    private var colorScheme
+    var headerTintColor: Color?
+
+    @Environment(\.colorScheme) private var colorScheme
 
     func makeBody(configuration: Configuration) -> some View {
-        HStack {
-            VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack {
                 configuration.label
                     .font(.headline)
-                    .padding(.bottom, 4)
+                    .padding()
+                Spacer()
+            }
+            .background(
+                VisualEffectView(
+                    effect: UIBlurEffect(style: .systemUltraThinMaterial),
+                    tintColor: headerTintColor
+                )
+            )
+            Divider()
+            VStack(alignment: .leading) {
                 configuration.content
                 Spacer()
             }
-            Spacer()
+            .padding()
         }
-        .padding()
         .background(Color.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
     }
@@ -34,9 +44,9 @@ struct CardGroupBox_Previews: PreviewProvider {
         GroupBox(label: Label("Label", systemImage: "checkmark")) {
             Text("Content")
         }
-        .groupBoxStyle(CardGroupBoxStyle())
+        .groupBoxStyle(CardGroupBoxStyle(headerTintColor: .red))
         .padding()
-        .background(Color.gray)
+        .background(Color.white)
         .previewLayout(.fixed(width: 414, height: 216))
     }
 }

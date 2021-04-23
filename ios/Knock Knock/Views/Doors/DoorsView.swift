@@ -12,150 +12,150 @@ class DoorsViewController: UIHostingController<AnyView> {
         get { record }
         set(newValue) {
             record = newValue
-            setupTitleView()
-
-            let doorsView = DoorsView(record: newValue)
-                .environment(\.uiNavigationController, navigationController)
-            rootView = AnyView(doorsView)
+            rootView = compileRootView()
         }
     }
     private var record: Record?
 
     init() {
-        super.init(rootView: AnyView(EmptyView()))
-
-        let doorsView = DoorsView()
-            .environment(\.uiNavigationController, navigationController)
-        rootView = AnyView(doorsView)
-
-        configureNavigationBar()
-        setupTitleView()
+        super.init(rootView: AnyView(DoorsView.emptyBody))
+        navigationItem.largeTitleDisplayMode = .never
     }
 
     @objc required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private var titleView = UIStackView()
-}
-
-extension DoorsViewController {
-    private func configureNavigationBar() {
-        navigationItem.largeTitleDisplayMode = .never
-    }
-}
-
-extension DoorsViewController {
-    private func setupTitleView() {
-        navigationItem.titleView = titleView
-
-        titleView.axis = .horizontal
-        titleView.alignment = .center
-
-        setupTitleTag()
-        setupTitleLabel()
-    }
-
-    private func setupTitleTag() {
+    private func compileRootView() -> AnyView {
         if let record = record {
-            let hostingController = UIHostingController(
-                rootView: Tag(
-                    text: record.abbreviatedType,
-                    backgroundColor: record.typeColor
-                )
-                .foregroundColor(record.typeColor)
-            )
-            guard let titleTagView = hostingController.view else { return }
-            titleTagView.backgroundColor = .clear
-
-            titleView.addArrangedSubview(titleTagView)
+            let doorsView = DoorsView(record: record)
+                .environment(\.uiNavigationController, navigationController)
+            return AnyView(doorsView)
         }
-    }
 
-    private func setupTitleLabel() {
-        if let record = record {
-            let titleLabel = UILabel()
-            titleLabel.text = record.wrappedStreetName
-            titleLabel.font =  UIFont.preferredFont(forTextStyle: .headline)
-            titleLabel.adjustsFontForContentSizeCategory = true
-
-            titleView.addArrangedSubview(titleLabel)
-        }
+        return AnyView(DoorsView.emptyBody)
     }
 }
 
 struct DoorsView: View {
-    var record: Record? = nil
+    @ObservedObject var record: Record
 
-    var body: some View {
-        if record != nil {
-            ScrollView {
-                LazyVGrid(columns: gridColumns) {
-                    ForEach(sectionHeaders, id: \.0) { header in
-                        let groupLabel = Label(header.0, systemImage: header.1)
-                            .foregroundColor(Color(header.2))
-
-                        GroupBox(label: groupLabel) {
-                            ForEach(0..<header.0.count) { index in
-                                Text("Index \(index)")
-                            }
-                        }
-                        .groupBoxStyle(CardGroupBoxStyle())
-                    }
-                }
-                .padding()
-            }
-            .toolbar {
-                ToolbarItem { GridLayoutButton(selectedGridLayout: $selectedGridLayout) }
-            }
-            .filledBackground(Color.groupedBackground)
-        } else {
-            VStack(alignment: .center) {
-                Text("Select a Record")
-                    .font(.title)
-                    .foregroundColor(.gray)
-            }
-        }
-    }
-
-    @Environment(\.horizontalSizeClass)
-    private var horizontalSize
-
-    @Environment(\.verticalSizeClass)
-    private var verticalSize
-
-    // MARK: - Grid
-
-    @State private var selectedGridLayout: GridLayoutOptions = .grid
+    @Environment(\.horizontalSizeClass) private var horizontalSize
+    @Environment(\.verticalSizeClass) private var verticalSize
 
     private var inPortrait: Bool { horizontalSize == .compact && verticalSize == .regular }
-    private var isGrid: Bool { selectedGridLayout == .grid }
+    private var isCompact: Bool {
+        horizontalSize == .compact || UIDevice.current.userInterfaceIdiom == .phone
+    }
 
-    private let sectionHeaders: [(String, String, String)] = [
-        ("Not-at-Homes", "house.fill", "NotAtHomeColor"),
-        ("Busy", "megaphone.fill", "BusyColor"),
-        ("Call Again", "person.fill.checkmark", "CallAgainColor"),
-        ("Not Interested", "person.fill.xmark", "NotInterestedColor"),
-        ("Other", "dot.squareshape.fill", "OtherColor")
-    ]
-
+    @State private var selectedGridLayout: GridLayoutOptions = .grid
     private var gridColumns: [GridItem] {
         let gridColumnItem = GridItem(.flexible(), spacing: 8, alignment: .top)
 
-        let portraitColumns = [gridColumnItem, gridColumnItem]
-        let landscapeColumns = [gridColumnItem, gridColumnItem, gridColumnItem]
+        let portraitColumns = (1...2).map { _ in gridColumnItem }
+        let landscapeColumns = (1...3).map { _ in gridColumnItem }
 
         let gridColumns = inPortrait ? portraitColumns : landscapeColumns
         let listColumns = [gridColumnItem]
 
-        return isGrid ? gridColumns : listColumns
+        return selectedGridLayout == .grid ? gridColumns : listColumns
+    }
+
+    private let sectionHeaders: [(String, String, Color)] = [
+        ("Not-at-Homes", "house.fill", .visitSymbolNotAtHome),
+        ("Busy", "megaphone.fill", .visitSymbolBusy),
+        ("Call Again", "person.fill.checkmark", .visitSymbolCallAgain),
+        ("Not Interested", "person.fill.xmark", .visitSymbolNotInterested),
+        ("Other", "dot.squareshape.fill", .visitSymbolOther),
+    ]
+
+    var body: some View {
+        ScrollView {
+            LazyVGrid(columns: gridColumns) {
+                ForEach(sectionHeaders, id: \.0) { text, image, color in
+                    let groupLabel = Label(text, systemImage: image)
+                        .foregroundColor(color)
+
+                    GroupBox(label: groupLabel) {
+                        ForEach(0..<text.count) { index in
+                            Text("Index \(index)")
+                        }
+                    }
+                    .groupBoxStyle(CardGroupBoxStyle())
+                }
+            }
+            .padding()
+        }
+        .toolbar {
+            ToolbarItem(placement: .principal) { toolbarTitle }
+            ToolbarItem { gridLayoutButton }
+        }
+        .filledBackground(Color.groupedBackground)
+    }
+
+    // MARK: - Toolbar Title
+
+    @ViewBuilder private var toolbarTitle: some View {
+        HStack(alignment: .center, spacing: 10) {
+            Tag(text: record.abbreviatedType, backgroundColor: record.typeColor)
+                .foregroundColor(record.typeColor)
+            Text(record.wrappedStreetName)
+                .font(.headline)
+        }
+    }
+
+    // MARK: - Grid Layout Button
+
+    private let options: [GridLayoutOptions: (String, String)] = [
+        .grid: ("Grid", "square.grid.3x2.fill"),
+        .list: ("List", "rectangle.grid.1x2.fill")
+    ]
+
+    @ViewBuilder private var picker: some View {
+        Picker("Layout", selection: $selectedGridLayout.animation()) {
+            ForEach(GridLayoutOptions.allCases, id: \.id) { value in
+                let option = options[value]!
+                Label(option.0, systemImage: option.1)
+                    .tag(value)
+            }
+        }
+    }
+
+    @ViewBuilder private var gridLayoutButton: some View {
+        if isCompact {
+            Menu { picker } label: {
+                Label("Sort", systemImage: "arrow.up.arrow.down")
+                    .font(.title2)
+            }
+        } else {
+            picker.pickerStyle(InlinePickerStyle())
+        }
+    }
+
+    // MARK: - Empty Body
+
+    @ViewBuilder static var emptyBody: some View {
+        VStack(alignment: .center) {
+            Text("Select a Record")
+                .font(.title)
+                .foregroundColor(.gray)
+        }
+    }
+}
+
+extension DoorsView {
+    private enum GridLayoutOptions: String, Identifiable, CaseIterable {
+        var id: String { rawValue }
+        case grid, list
     }
 }
 
 #if DEBUG
 struct DoorsViewController_Preview: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UINavigationController {
-        let record = Record(context: PersistenceController.preview.container.viewContext)
+        let moc = PersistenceController.preview.container.viewContext
+
+        let record = Record(context: moc)
         record.streetName = "Street Name"
         record.city = "City"
         record.state = "State"

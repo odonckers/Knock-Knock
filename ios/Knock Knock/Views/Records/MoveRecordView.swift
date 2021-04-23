@@ -10,11 +10,8 @@ import SwiftUI
 struct MoveRecordView: View {
     var record: Record
 
-    @Environment(\.managedObjectContext)
-    private var moc
-
-    @Environment(\.uiNavigationController)
-    private var navigationController
+    @Environment(\.managedObjectContext) private var moc
+    @Environment(\.uiNavigationController) private var navigationController
 
     @FetchRequest(entity: Territory.entity(), sortDescriptors: [])
     private var territories: FetchedResults<Territory>
@@ -81,7 +78,9 @@ struct MoveRecordView: View {
             navigationController?.navigationBar.shadowImage = UIImage()
         }
     }
+}
 
+extension MoveRecordView {
     private func save(selected: Territory?) {
         record.willUpdate()
         record.territory = selected

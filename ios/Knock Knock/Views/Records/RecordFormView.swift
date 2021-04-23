@@ -18,11 +18,8 @@ struct RecordFormView: View {
         self.territory = territory
     }
 
-    @Environment(\.managedObjectContext)
-    private var moc
-
-    @Environment(\.uiNavigationController)
-    private var navigationController
+    @Environment(\.managedObjectContext) private var moc
+    @Environment(\.uiNavigationController) private var navigationController
 
     @State private var selectedTypeIndex = 0
     private var typeOptions = ["Street", "Apartment"]
@@ -31,6 +28,8 @@ struct RecordFormView: View {
     @State private var city = ""
     @State private var state = ""
     @State private var apartmentNumber = ""
+
+    @State private var location = LocationManager()
 
     private var isApartment: Bool { selectedTypeIndex == 1 }
     private var canSave: Bool {
@@ -81,7 +80,11 @@ struct RecordFormView: View {
                 }
 
                 Section(header: Text("recordForm.header.geolocation")) {
-                    useCurrentLocationButton
+                    Button(action: useCurrentLocation) {
+                        Text("recordForm.button.currentLocation")
+                    }
+                    .onAppear { location.request() }
+                    .onDisappear { location.stopUpdatingPlacement() }
                 }
             }
         }
@@ -120,7 +123,9 @@ struct RecordFormView: View {
             }
         }
     }
+}
 
+extension RecordFormView {
     private func save() {
         var toSave: Record
         if let record = record {
@@ -139,18 +144,6 @@ struct RecordFormView: View {
         toSave.territory = territory
 
         moc.unsafeSave()
-    }
-
-    // MARK: - Use Current Location Button
-
-    @State private var location = LocationManager()
-
-    @ViewBuilder private var useCurrentLocationButton: some View {
-        Button(action: useCurrentLocation) {
-            Text("recordForm.button.currentLocation")
-        }
-        .onAppear { location.request() }
-        .onDisappear { location.stopUpdatingPlacement() }
     }
 
     private func useCurrentLocation() {

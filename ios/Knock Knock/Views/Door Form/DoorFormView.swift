@@ -16,13 +16,7 @@ struct DoorFormView: View {
         self.record = record
     }
 
-    @Environment(\.presentationMode)
-    private var presentationMode
-
-    private var persistenceController: PersistenceController = {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.persistenceController
-    }()
+    @Environment(\.presentationMode) private var presentationMode
 
     @State private var number = ""
     @State private var unit = ""
