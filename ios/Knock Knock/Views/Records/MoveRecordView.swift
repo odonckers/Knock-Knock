@@ -5,6 +5,7 @@
 //  Created by Owen Donckers on 4/19/21.
 //
 
+import CoreData
 import SwiftUI
 
 struct MoveRecordView: View {
@@ -13,7 +14,14 @@ struct MoveRecordView: View {
     @Environment(\.managedObjectContext) private var moc
     @Environment(\.uiNavigationController) private var navigationController
 
-    @FetchRequest(entity: Territory.entity(), sortDescriptors: [])
+    static private var territoryFetchRequest: NSFetchRequest<Territory> {
+        let fetchRequest: NSFetchRequest = Territory.fetchRequest()
+        fetchRequest.sortDescriptors = []
+
+        return fetchRequest
+    }
+
+    @FetchRequest(fetchRequest: territoryFetchRequest)
     private var territories: FetchedResults<Territory>
 
     var body: some View {

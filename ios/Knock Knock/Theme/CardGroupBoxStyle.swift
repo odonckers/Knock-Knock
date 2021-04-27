@@ -7,8 +7,12 @@
 
 import SwiftUI
 
-struct CardGroupBoxStyle: GroupBoxStyle {
-    var headerTintColor: Color?
+struct CardGroupBoxStyle<TrailingContent>: GroupBoxStyle where TrailingContent: View {
+    let trailingContent: TrailingContent?
+
+    init(@ViewBuilder trailingContent: () -> TrailingContent? = { nil }) {
+        self.trailingContent = trailingContent()
+    }
 
     @Environment(\.colorScheme) private var colorScheme
 
@@ -19,14 +23,11 @@ struct CardGroupBoxStyle: GroupBoxStyle {
                     .font(.headline)
                     .padding()
                 Spacer()
+                if let trailingContent = trailingContent { trailingContent }
             }
-            .background(
-                VisualEffectView(
-                    effect: UIBlurEffect(style: .systemUltraThinMaterial),
-                    tintColor: headerTintColor
-                )
-            )
+
             Divider()
+
             VStack(alignment: .leading) {
                 configuration.content
                 Spacer()
@@ -44,9 +45,16 @@ struct CardGroupBox_Previews: PreviewProvider {
         GroupBox(label: Label("Label", systemImage: "checkmark")) {
             Text("Content")
         }
-        .groupBoxStyle(CardGroupBoxStyle(headerTintColor: .red))
+        .groupBoxStyle(
+            CardGroupBoxStyle(
+                trailingContent: {
+                    Image(systemName: "more")
+                    Image(systemName: "chevron.right")
+                }
+            )
+        )
         .padding()
-        .background(Color.white)
+        .background(Color.gray)
         .previewLayout(.fixed(width: 414, height: 216))
     }
 }

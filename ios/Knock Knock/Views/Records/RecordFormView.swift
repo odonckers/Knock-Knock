@@ -161,20 +161,11 @@ struct RecordFormView_Previews: PreviewProvider {
         let moc = PersistenceController.preview.container.viewContext
 
         let record = Record(context: moc)
-        record.wrappedType = .apartment
-        record.streetName = "Street name"
+        record.streetName = "Street Name"
         record.city = "City"
         record.state = "State"
-        record.apartmentNumber = "500"
 
-        return Group {
-            RecordFormView()
-                .previewDisplayName("New Form Preview")
-
-            RecordFormView(record: record)
-                .previewDisplayName("Edit Form Preview")
-        }
-        .environment(\.managedObjectContext, moc)
+        return EnvironmentUIPreviewWrapper { RecordFormView(record: record) }
     }
 }
 #endif

@@ -226,6 +226,7 @@ extension RecordsViewController {
                 let swipeConfiguration = UISwipeActionsConfiguration(
                     actions: [deleteAction, moveAction, editAction]
                 )
+                swipeConfiguration.performsFirstActionWithFullSwipe = false
                 return swipeConfiguration
             }
 
@@ -247,15 +248,23 @@ extension RecordsViewController: UICollectionViewDelegate {
         guard let record = dataSource.itemIdentifier(for: indexPath)
         else { return }
 
-        let doorsViewController = DoorsViewController()
-        doorsViewController.selectedRecord = record
-
-        let navigationDoorsView = UINavigationController(rootViewController: doorsViewController)
+        let doorsView = DoorsView(record: record)
+            .environment(\.managedObjectContext, moc)
 
         if isCompact {
-            navigationController?.pushViewController(doorsViewController, animated: true)
+            let doorsHostingController = UIHostingController(rootView: doorsView)
+            doorsHostingController.navigationItem.largeTitleDisplayMode = .never
+
+            navigationController?.pushViewController(doorsHostingController, animated: true)
         } else {
-            showDetailViewController(navigationDoorsView, sender: nil)
+            let navigationController = UINavigationController()
+            navigationController.navigationItem.largeTitleDisplayMode = .never
+
+            doorsView
+                .environment(\.uiNavigationController, navigationController)
+                .assignToUI(navigationController: navigationController)
+
+            showDetailViewController(navigationController, sender: nil)
         }
 
         selectedIndexPath = indexPath

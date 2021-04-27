@@ -117,6 +117,7 @@ extension TerritoriesViewController {
                 let swipeConfiguration = UISwipeActionsConfiguration(
                     actions: [deleteAction, editAction]
                 )
+                swipeConfiguration.performsFirstActionWithFullSwipe = false
                 return swipeConfiguration
             }
 

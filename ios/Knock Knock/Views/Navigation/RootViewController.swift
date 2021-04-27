@@ -12,7 +12,6 @@ class RootViewController: UIViewController {
 
     private var sidebarViewController: SidebarViewController!
     private var recordsViewController: RecordsViewController!
-    private var doorsViewController: DoorsViewController!
 
     private var compactRecordsViewController: RecordsViewController!
     private var compactTerrititoriesViewController: TerritoriesViewController!
@@ -77,9 +76,14 @@ extension RootViewController {
     }
 
     private func setupDoorsViewContorller(in splitViewController: UISplitViewController) {
-        doorsViewController = DoorsViewController()
+        let moc = PersistenceController.shared.container.viewContext
+        let navigationController = UINavigationController()
 
-        let navigationController = UINavigationController(rootViewController: doorsViewController)
+        DoorsView.emptyBody
+            .environment(\.managedObjectContext, moc)
+            .environment(\.uiNavigationController, navigationController)
+            .assignToUI(navigationController: navigationController)
+
         splitViewController.setViewController(navigationController, for: .secondary)
     }
 }

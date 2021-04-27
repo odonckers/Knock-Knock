@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7F179806260A776C0046944E /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F179805260A776C0046944E /* TabBarItem.swift */; };
 		7F27D54E2620D6B0000B7360 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F27D54D2620D6B0000B7360 /* RootViewController.swift */; };
+		7F2892D2263391EA009A8ADE /* ScaleButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2892D1263391EA009A8ADE /* ScaleButtonStyle.swift */; };
 		7F49DFAC2620FD47006228A9 /* DoorFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F49DFAB2620FD47006228A9 /* DoorFormView.swift */; };
 		7F49DFD726221F80006228A9 /* UIEnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F49DFD626221F80006228A9 /* UIEnvironmentValues.swift */; };
 		7F5310FF260E667300F5F3BE /* RecordCollectionViewListCellContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5310FE260E667300F5F3BE /* RecordCollectionViewListCellContentConfiguration.swift */; };
@@ -17,6 +18,7 @@
 		7F5311282610404D00F5F3BE /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5311272610404D00F5F3BE /* UIFont+Extension.swift */; };
 		7F5DA90C2620E67A00043B18 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F5DA90B2620E67A00043B18 /* CloudKit.framework */; };
 		7F8A31732622460C003F8FB7 /* View+AssignToUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8A31722622460C003F8FB7 /* View+AssignToUI.swift */; };
+		7FB7416A2633504000D0C224 /* EnvironmentUIPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB741692633504000D0C224 /* EnvironmentUIPreviewWrapper.swift */; };
 		7FD8B3412620AF4600B51D86 /* TerritoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD8B3402620AF4600B51D86 /* TerritoriesViewController.swift */; };
 		7FD8B3512620BD0100B51D86 /* CoreDataPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD8B3502620BD0100B51D86 /* CoreDataPublisher.swift */; };
 		7FE71393262DF68200FF9B10 /* MoveRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE71392262DF68200FF9B10 /* MoveRecordView.swift */; };
@@ -84,6 +86,7 @@
 /* Begin PBXFileReference section */
 		7F179805260A776C0046944E /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		7F27D54D2620D6B0000B7360 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		7F2892D1263391EA009A8ADE /* ScaleButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleButtonStyle.swift; sourceTree = "<group>"; };
 		7F49DFAB2620FD47006228A9 /* DoorFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorFormView.swift; sourceTree = "<group>"; };
 		7F49DFD626221F80006228A9 /* UIEnvironmentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEnvironmentValues.swift; sourceTree = "<group>"; };
 		7F5310FE260E667300F5F3BE /* RecordCollectionViewListCellContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCollectionViewListCellContentConfiguration.swift; sourceTree = "<group>"; };
@@ -92,6 +95,7 @@
 		7F5311272610404D00F5F3BE /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		7F5DA90B2620E67A00043B18 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		7F8A31722622460C003F8FB7 /* View+AssignToUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+AssignToUI.swift"; sourceTree = "<group>"; };
+		7FB741692633504000D0C224 /* EnvironmentUIPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentUIPreviewWrapper.swift; sourceTree = "<group>"; };
 		7FD8B3402620AF4600B51D86 /* TerritoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoriesViewController.swift; sourceTree = "<group>"; };
 		7FD8B3502620BD0100B51D86 /* CoreDataPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataPublisher.swift; sourceTree = "<group>"; };
 		7FE71392262DF68200FF9B10 /* MoveRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveRecordView.swift; sourceTree = "<group>"; };
@@ -172,14 +176,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7F49DFAA2620FD32006228A9 /* Door Form */ = {
-			isa = PBXGroup;
-			children = (
-				7F49DFAB2620FD47006228A9 /* DoorFormView.swift */,
-			);
-			path = "Door Form";
-			sourceTree = "<group>";
-		};
 		7F5310FD260E665900F5F3BE /* Record Row */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,6 +298,7 @@
 				E25A15C325E072780065517B /* Assets.xcassets */,
 				E27AAB0C25ED8B9D00342603 /* Color+Extension.swift */,
 				E25A169A25E083A80065517B /* CardGroupBoxStyle.swift */,
+				7F2892D1263391EA009A8ADE /* ScaleButtonStyle.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -310,6 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				E25A163825E07BFF0065517B /* DeleteConfirmation.swift */,
+				7FB741692633504000D0C224 /* EnvironmentUIPreviewWrapper.swift */,
 				E25A163D25E07CC30065517B /* FilledBackground.swift */,
 				E25A168325E081B60065517B /* FormLabel.swift */,
 				E25A167925E081430065517B /* StatefulPreviewWrapper.swift */,
@@ -374,7 +372,6 @@
 				E25A172E25E0B2C40065517B /* Territories */,
 				E25A16FF25E095A70065517B /* Records */,
 				E25A16D925E08A400065517B /* Doors */,
-				7F49DFAA2620FD32006228A9 /* Door Form */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -383,6 +380,7 @@
 			isa = PBXGroup;
 			children = (
 				E25A16EC25E093AA0065517B /* DoorsView.swift */,
+				7F49DFAB2620FD47006228A9 /* DoorFormView.swift */,
 			);
 			path = Doors;
 			sourceTree = "<group>";
@@ -594,6 +592,7 @@
 				E25A165425E07FC70065517B /* LocationManager.swift in Sources */,
 				E25A16AD25E0847C0065517B /* Door+Extension.swift in Sources */,
 				E25A166025E080190065517B /* LocationRequest.swift in Sources */,
+				7F2892D2263391EA009A8ADE /* ScaleButtonStyle.swift in Sources */,
 				7F5310FF260E667300F5F3BE /* RecordCollectionViewListCellContentConfiguration.swift in Sources */,
 				E25A167F25E081750065517B /* UserDefault.swift in Sources */,
 				7FF2D029260ABF7D00A54D72 /* RecordsViewController.swift in Sources */,
@@ -610,6 +609,7 @@
 				E2BB6FDB25EB6DF600731EDE /* ModelManagedObject.swift in Sources */,
 				7F53110F260E714900F5F3BE /* RecordCollectionViewListCell.swift in Sources */,
 				7FD8B3512620BD0100B51D86 /* CoreDataPublisher.swift in Sources */,
+				7FB7416A2633504000D0C224 /* EnvironmentUIPreviewWrapper.swift in Sources */,
 				7F5311282610404D00F5F3BE /* UIFont+Extension.swift in Sources */,
 				7F179806260A776C0046944E /* TabBarItem.swift in Sources */,
 				E24673C625F0625700A0653B /* SceneDelegate.swift in Sources */,

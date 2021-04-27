@@ -9,14 +9,16 @@ import SwiftUI
 
 struct DoorFormView: View {
     var door: Door? = nil
-    var record: Record? = nil
+    var record: Record
 
-    init(door: Door? = nil, record: Record? = nil) {
+    init(door: Door? = nil, record: Record) {
         self.door = door
         self.record = record
     }
 
+    @Environment(\.managedObjectContext) private var moc
     @Environment(\.presentationMode) private var presentationMode
+    @Environment(\.uiNavigationController) private var navigationController
 
     @State private var number = ""
     @State private var unit = ""
@@ -42,13 +44,13 @@ struct DoorFormView: View {
     @State private var notes = ""
 
     var body: some View {
-        NavigationView {
-            Form {
-                Section {
-                    TextField("Number", text: $number)
-                    TextField("Unit", text: $unit)
-                }
+        Form {
+            Section {
+                TextField("Number", text: $number)
+                TextField("Unit", text: $unit)
+            }
 
+            if door == nil {
                 Section(header: Text("First Visit")) {
                     DatePicker("Date", selection: $date)
                     Picker(
@@ -81,15 +83,57 @@ struct DoorFormView: View {
                         .frame(minHeight: 100)
                 }
             }
-            .navigationTitle("Hello, World!")
         }
+        .navigationTitle(door?.wrappedNumber != nil ? "Edit Door" : "New Door")
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            if let door = door {
+                if let number = door.number { self.number = number }
+                if let unit = door.unit { self.unit = unit }
+            }
+        }
+    }
+}
+
+extension DoorFormView {
+    private func save() {
+        var toSave: Door
+        if let door = door {
+            toSave = door
+            toSave.willUpdate()
+
+            let firstVisit = Visit(context: moc)
+            firstVisit.willCreate()
+
+            firstVisit.date = date
+            firstVisit.wrappedSymbol = selectedSymbol
+            firstVisit.wrappedPerson = selectedPerson
+            firstVisit.notes = notes
+
+            firstVisit.door = door
+        } else {
+            toSave = Door(context: moc)
+            toSave.willCreate()
+        }
+
+        toSave.number = number
+        toSave.unit = unit
+
+        moc.unsafeSave()
     }
 }
 
 #if DEBUG
 struct DoorFormView_Previews: PreviewProvider {
     static var previews: some View {
-        DoorFormView()
+        let moc = PersistenceController.preview.container.viewContext
+
+        let record = Record(context: moc)
+        record.streetName = "Street Name"
+        record.city = "City"
+        record.state = "State"
+
+        return EnvironmentUIPreviewWrapper { DoorFormView(record: record) }
     }
 }
 #endif

@@ -7,41 +7,12 @@
 
 import SwiftUI
 
-class DoorsViewController: UIHostingController<AnyView> {
-    var selectedRecord: Record? {
-        get { record }
-        set(newValue) {
-            record = newValue
-            rootView = compileRootView()
-        }
-    }
-    private var record: Record?
-
-    init() {
-        super.init(rootView: AnyView(DoorsView.emptyBody))
-        navigationItem.largeTitleDisplayMode = .never
-    }
-
-    @objc required dynamic init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func compileRootView() -> AnyView {
-        if let record = record {
-            let doorsView = DoorsView(record: record)
-                .environment(\.uiNavigationController, navigationController)
-            return AnyView(doorsView)
-        }
-
-        return AnyView(DoorsView.emptyBody)
-    }
-}
-
 struct DoorsView: View {
     @ObservedObject var record: Record
 
     @Environment(\.horizontalSizeClass) private var horizontalSize
     @Environment(\.verticalSizeClass) private var verticalSize
+    @Environment(\.uiNavigationController) private var navigationController
 
     private var inPortrait: Bool { horizontalSize == .compact && verticalSize == .regular }
     private var isCompact: Bool {
@@ -69,6 +40,8 @@ struct DoorsView: View {
         ("Other", "dot.squareshape.fill", .visitSymbolOther),
     ]
 
+    @State private var isSelected = false
+
     var body: some View {
         ScrollView {
             LazyVGrid(columns: gridColumns) {
@@ -76,12 +49,21 @@ struct DoorsView: View {
                     let groupLabel = Label(text, systemImage: image)
                         .foregroundColor(color)
 
-                    GroupBox(label: groupLabel) {
-                        ForEach(0..<text.count) { index in
-                            Text("Index \(index)")
+                    Button(action: { withAnimation { isSelected.toggle() } }) {
+                        GroupBox(label: groupLabel) {
+                            ForEach(0..<text.count) { index in
+                                Text("Index \(index)")
+                            }
                         }
+                        .groupBoxStyle(
+                            CardGroupBoxStyle {
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.gray)
+                                    .padding()
+                            }
+                        )
                     }
-                    .groupBoxStyle(CardGroupBoxStyle())
+                    .buttonStyle(ScaleButtonStyle())
                 }
             }
             .padding()
@@ -151,8 +133,8 @@ extension DoorsView {
 }
 
 #if DEBUG
-struct DoorsViewController_Preview: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> UINavigationController {
+struct DoorsView_Previews: PreviewProvider {
+    static var previews: some View {
         let moc = PersistenceController.preview.container.viewContext
 
         let record = Record(context: moc)
@@ -160,21 +142,7 @@ struct DoorsViewController_Preview: UIViewControllerRepresentable {
         record.city = "City"
         record.state = "State"
 
-        let doorsViewController = DoorsViewController()
-        doorsViewController.selectedRecord = record
-
-        let navigationController = UINavigationController(rootViewController: doorsViewController)
-        return navigationController
-    }
-
-    func updateUIViewController(_ uiViewController: UINavigationController, context: Context) { }
-}
-
-struct DoorsView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            DoorsViewController_Preview()
-        }
+        return EnvironmentUIPreviewWrapper { DoorsView(record: record) }
     }
 }
 #endif
