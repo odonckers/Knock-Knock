@@ -45,6 +45,25 @@ extension SidebarViewController {
         title = "Records"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.setToolbarHidden(false, animated: false)
+
+        let addRecordButton = UIBarButtonItem(
+            title: "Add Record",
+            image: UIImage(systemName: "plus"),
+            primaryAction: UIAction { [weak self] action in
+                guard let self = self else { return }
+
+                let navigationController = UINavigationController()
+                navigationController.modalPresentationStyle = .formSheet
+
+                RecordFormView()
+                    .environment(\.managedObjectContext, self.moc)
+                    .environment(\.uiNavigationController, navigationController)
+                    .assignToUI(navigationController: navigationController)
+
+                self.present(navigationController, animated: true)
+            }
+        )
+        navigationItem.setRightBarButtonItems([addRecordButton], animated: false)
     }
 
     private func setupToolbar() {
@@ -86,6 +105,15 @@ extension SidebarViewController {
             var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
             configuration.showsSeparators = false
             configuration.headerMode = sectionIndex == 0 ? .none : .firstItemInSection
+            configuration.leadingSwipeActionsConfigurationProvider = { [weak self] indexPath in
+                guard let item = self?.dataSource.itemIdentifier(for: indexPath)
+                else { return nil }
+
+                switch item.object {
+                case is Territory: return self?.territoryLeadingSwipeActions(at: indexPath)
+                default: return nil
+                }
+            }
             configuration.trailingSwipeActionsConfigurationProvider = { [weak self] indexPath in
                 guard let item = self?.dataSource.itemIdentifier(for: indexPath)
                 else { return nil }
@@ -159,6 +187,38 @@ extension SidebarViewController {
         return swipeConfiguration
     }
 
+    private func territoryLeadingSwipeActions(at indexPath: IndexPath) -> UISwipeActionsConfiguration {
+        let addAction = UIContextualAction(style: .normal, title: "Add Record") {
+            [weak self] action, view, completion in
+
+            guard
+                let self = self,
+                let item = self.dataSource.itemIdentifier(for: indexPath),
+                let territory = item.object as? Territory
+            else {
+                completion(false)
+                return
+            }
+
+            let navigationController = UINavigationController()
+            navigationController.modalPresentationStyle = .formSheet
+
+            RecordFormView(territory: territory)
+                .environment(\.managedObjectContext, self.moc)
+                .environment(\.uiNavigationController, navigationController)
+                .assignToUI(navigationController: navigationController)
+
+            self.present(navigationController, animated: true)
+
+            completion(true)
+        }
+        addAction.image = UIImage(systemName: "plus")
+        addAction.backgroundColor = .accentColor
+
+        let swipeConfiguration = UISwipeActionsConfiguration(actions: [addAction])
+        return swipeConfiguration
+    }
+
     private func territoryTrailingSwipeActions(at indexPath: IndexPath) -> UISwipeActionsConfiguration {
         let editAction = UIContextualAction(style: .normal, title: "Edit") {
             [weak self] action, view, completion in
@@ -191,9 +251,7 @@ extension SidebarViewController {
         deleteAction.image = UIImage(systemName: "trash")
         deleteAction.backgroundColor = .systemRed
 
-        let swipeConfiguration = UISwipeActionsConfiguration(
-            actions: [deleteAction, editAction]
-        )
+        let swipeConfiguration = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
         swipeConfiguration.performsFirstActionWithFullSwipe = false
         return swipeConfiguration
     }
@@ -375,14 +433,13 @@ extension SidebarViewController {
         let submitAction = UIAlertAction(title: "Submit", style: .default) {
             [weak self, unowned alertController] action in
 
-            guard let self = self, let textFields = alertController.textFields
-            else { return }
+            guard let textFields = alertController.textFields else { return }
 
             let nameField = textFields[0].text
             if let territory = territory {
-                self.updateTerritory(territory: territory, to: nameField)
+                self?.updateTerritory(territory: territory, to: nameField)
             } else {
-                self.addTerritory(named: nameField)
+                self?.addTerritory(named: nameField)
             }
         }
         alertController.addAction(submitAction)
