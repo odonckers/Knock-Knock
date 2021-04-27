@@ -20,15 +20,13 @@
 		7F8A31732622460C003F8FB7 /* View+AssignToUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8A31722622460C003F8FB7 /* View+AssignToUI.swift */; };
 		7FA3CAC42637B73000F9E130 /* DoorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3CAC32637B73000F9E130 /* DoorsViewController.swift */; };
 		7FB7416A2633504000D0C224 /* EnvironmentUIPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB741692633504000D0C224 /* EnvironmentUIPreviewWrapper.swift */; };
-		7FD8B3412620AF4600B51D86 /* TerritoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD8B3402620AF4600B51D86 /* TerritoriesViewController.swift */; };
 		7FD8B3512620BD0100B51D86 /* CoreDataPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD8B3502620BD0100B51D86 /* CoreDataPublisher.swift */; };
 		7FE71393262DF68200FF9B10 /* MoveRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE71392262DF68200FF9B10 /* MoveRecordView.swift */; };
 		7FE7139E262E17D800FF9B10 /* RecordRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE7139D262E17D800FF9B10 /* RecordRow.swift */; };
 		7FE713A9262E3A2F00FF9B10 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE713A8262E3A2F00FF9B10 /* VisualEffectView.swift */; };
-		7FF2D029260ABF7D00A54D72 /* RecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF2D028260ABF7D00A54D72 /* RecordsViewController.swift */; };
 		E24673BB25F0623600A0653B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24673BA25F0623600A0653B /* AppDelegate.swift */; };
 		E24673C625F0625700A0653B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24673C525F0625700A0653B /* SceneDelegate.swift */; };
-		E253C5CC25F0878900C0DDD8 /* RecordsSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E253C5CB25F0878900C0DDD8 /* RecordsSidebarViewController.swift */; };
+		E253C5CC25F0878900C0DDD8 /* RecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E253C5CB25F0878900C0DDD8 /* RecordsViewController.swift */; };
 		E25A15C425E072780065517B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C325E072780065517B /* Assets.xcassets */; };
 		E25A15C725E072780065517B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25A15C625E072780065517B /* Preview Assets.xcassets */; };
 		E25A15D525E072780065517B /* Knock_KnockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15D425E072780065517B /* Knock_KnockTests.swift */; };
@@ -98,15 +96,13 @@
 		7F8A31722622460C003F8FB7 /* View+AssignToUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+AssignToUI.swift"; sourceTree = "<group>"; };
 		7FA3CAC32637B73000F9E130 /* DoorsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorsViewController.swift; sourceTree = "<group>"; };
 		7FB741692633504000D0C224 /* EnvironmentUIPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentUIPreviewWrapper.swift; sourceTree = "<group>"; };
-		7FD8B3402620AF4600B51D86 /* TerritoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerritoriesViewController.swift; sourceTree = "<group>"; };
 		7FD8B3502620BD0100B51D86 /* CoreDataPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataPublisher.swift; sourceTree = "<group>"; };
 		7FE71392262DF68200FF9B10 /* MoveRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveRecordView.swift; sourceTree = "<group>"; };
 		7FE7139D262E17D800FF9B10 /* RecordRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRow.swift; sourceTree = "<group>"; };
 		7FE713A8262E3A2F00FF9B10 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
-		7FF2D028260ABF7D00A54D72 /* RecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsViewController.swift; sourceTree = "<group>"; };
 		E24673BA25F0623600A0653B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E24673C525F0625700A0653B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E253C5CB25F0878900C0DDD8 /* RecordsSidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsSidebarViewController.swift; sourceTree = "<group>"; };
+		E253C5CB25F0878900C0DDD8 /* RecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsViewController.swift; sourceTree = "<group>"; };
 		E25A15B725E072740065517B /* Knock Knock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Knock Knock.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E25A15C325E072780065517B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E25A15C625E072780065517B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -371,7 +367,6 @@
 			isa = PBXGroup;
 			children = (
 				E25A175225E0B4450065517B /* Navigation */,
-				E25A172E25E0B2C40065517B /* Territories */,
 				E25A16FF25E095A70065517B /* Records */,
 				E25A16D925E08A400065517B /* Doors */,
 			);
@@ -391,8 +386,7 @@
 		E25A16FF25E095A70065517B /* Records */ = {
 			isa = PBXGroup;
 			children = (
-				E253C5CB25F0878900C0DDD8 /* RecordsSidebarViewController.swift */,
-				7FF2D028260ABF7D00A54D72 /* RecordsViewController.swift */,
+				E253C5CB25F0878900C0DDD8 /* RecordsViewController.swift */,
 				7FE71392262DF68200FF9B10 /* MoveRecordView.swift */,
 				E25A170625E095FE0065517B /* RecordFormView.swift */,
 				7F5310FD260E665900F5F3BE /* Record Row */,
@@ -406,14 +400,6 @@
 				E25A172625E0B1D40065517B /* Territory+Extension.swift */,
 			);
 			path = Territory;
-			sourceTree = "<group>";
-		};
-		E25A172E25E0B2C40065517B /* Territories */ = {
-			isa = PBXGroup;
-			children = (
-				7FD8B3402620AF4600B51D86 /* TerritoriesViewController.swift */,
-			);
-			path = Territories;
 			sourceTree = "<group>";
 		};
 		E25A175225E0B4450065517B /* Navigation */ = {
@@ -572,7 +558,6 @@
 				E25A16D125E0863C0065517B /* Record+UI.swift in Sources */,
 				7FE71393262DF68200FF9B10 /* MoveRecordView.swift in Sources */,
 				E25A160525E073B90065517B /* NSManagedObjectContext+Extension.swift in Sources */,
-				7FD8B3412620AF4600B51D86 /* TerritoriesViewController.swift in Sources */,
 				7FE713A9262E3A2F00FF9B10 /* VisualEffectView.swift in Sources */,
 				E25A16CC25E085E50065517B /* Visit+UI.swift in Sources */,
 				E25A167525E080D00065517B /* SheetState.swift in Sources */,
@@ -598,7 +583,6 @@
 				7F2892D2263391EA009A8ADE /* ScaleButtonStyle.swift in Sources */,
 				7F5310FF260E667300F5F3BE /* RecordCollectionViewListCellContentConfiguration.swift in Sources */,
 				E25A167F25E081750065517B /* UserDefault.swift in Sources */,
-				7FF2D029260ABF7D00A54D72 /* RecordsViewController.swift in Sources */,
 				E25A16C725E085940065517B /* VisitPerson.swift in Sources */,
 				E25A164325E07F4C0065517B /* Bundle+Extension.swift in Sources */,
 				7F8A31732622460C003F8FB7 /* View+AssignToUI.swift in Sources */,
@@ -607,7 +591,7 @@
 				7F27D54E2620D6B0000B7360 /* RootViewController.swift in Sources */,
 				E25A16C225E0857B0065517B /* VisitSymbol.swift in Sources */,
 				E25A16A825E084390065517B /* Record+Extension.swift in Sources */,
-				E253C5CC25F0878900C0DDD8 /* RecordsSidebarViewController.swift in Sources */,
+				E253C5CC25F0878900C0DDD8 /* RecordsViewController.swift in Sources */,
 				E25A16ED25E093AA0065517B /* DoorsView.swift in Sources */,
 				7FA3CAC42637B73000F9E130 /* DoorsViewController.swift in Sources */,
 				E2BB6FDB25EB6DF600731EDE /* ModelManagedObject.swift in Sources */,

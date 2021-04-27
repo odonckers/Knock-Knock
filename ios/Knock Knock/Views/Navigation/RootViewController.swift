@@ -9,12 +9,7 @@ import UIKit
 
 class RootViewController: UIViewController {
     private var primaryViewController: UISplitViewController!
-
-    private var sidebarViewController: RecordsSidebarViewController!
-    private var recordsViewController: RecordsViewController!
-
-    private var compactRecordsViewController: RecordsViewController!
-    private var compactTerrititoriesViewController: TerritoriesViewController!
+    private var sidebarViewController: RecordsViewController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +18,7 @@ class RootViewController: UIViewController {
 
         view.addSubview(primaryViewController.view)
         addChild(primaryViewController)
+        primaryViewController.didMove(toParent: self)
 
         primaryViewController.view.frame = view.bounds
         primaryViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -45,7 +41,7 @@ extension RootViewController {
 
 extension RootViewController {
     private func setupSidebarViewController(in splitViewController: UISplitViewController) {
-        sidebarViewController = RecordsSidebarViewController(isCompact: false)
+        sidebarViewController = RecordsViewController(isCompact: false)
         splitViewController.setViewController(sidebarViewController, for: .primary)
     }
 
@@ -64,7 +60,7 @@ extension RootViewController {
 
 extension RootViewController {
     private func setupCompactViewController(in splitViewController: UISplitViewController) {
-        let recordsViewController = RecordsSidebarViewController(isCompact: true)
+        let recordsViewController = RecordsViewController(isCompact: true)
         let navigationController = UINavigationController(rootViewController: recordsViewController)
         splitViewController.setViewController(navigationController, for: .compact)
     }
