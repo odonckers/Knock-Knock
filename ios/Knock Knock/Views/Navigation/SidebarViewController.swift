@@ -19,14 +19,10 @@ class SidebarViewController: UIViewController {
     private var fetchedRecordsController: NSFetchedResultsController<Record>!
     private var fetchedTerritoriesController: NSFetchedResultsController<Territory>!
 
-    private var cancellables = Set<AnyCancellable>()
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureNavigationBar()
-        setupToolbar()
-
         configureCollectionView()
 
         configureDataSource()
@@ -44,42 +40,38 @@ extension SidebarViewController {
     private func configureNavigationBar() {
         title = "Records"
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.setToolbarHidden(false, animated: false)
 
         let addRecordButton = UIBarButtonItem(
             title: "Add Record",
-            image: UIImage(systemName: "plus"),
-            primaryAction: UIAction { [weak self] action in
-                guard let self = self else { return }
+            image: UIImage(systemName: "plus.circle.fill"),
+            menu: UIMenu(
+                children: [
+                    UIAction(
+                        title: "Add Record",
+                        image: UIImage(systemName: "note.text.badge.plus")
+                    ) { [weak self] action in
+                        guard let self = self else { return }
 
-                let navigationController = UINavigationController()
-                navigationController.modalPresentationStyle = .formSheet
+                        let navigationController = UINavigationController()
+                        navigationController.modalPresentationStyle = .formSheet
 
-                RecordFormView()
-                    .environment(\.managedObjectContext, self.moc)
-                    .environment(\.uiNavigationController, navigationController)
-                    .assignToUI(navigationController: navigationController)
+                        RecordFormView()
+                            .environment(\.managedObjectContext, self.moc)
+                            .environment(\.uiNavigationController, navigationController)
+                            .assignToUI(navigationController: navigationController)
 
-                self.present(navigationController, animated: true)
-            }
+                        self.present(navigationController, animated: true)
+                    },
+                    UIAction(
+                        title: "Add Territory",
+                        image: UIImage(systemName: "folder.fill.badge.plus")
+                    ) { [weak self] action in
+                        self?.presentTerritoryForm()
+                    }
+                ]
+            )
         )
         navigationItem.setRightBarButtonItems([addRecordButton], animated: false)
-    }
-
-    private func setupToolbar() {
-        let addTerritoryButton = UIBarButtonItem(
-            image: UIImage(systemName: "folder.fill.badge.plus"),
-            primaryAction: UIAction { [weak self] action in
-                self?.presentTerritoryForm()
-            }
-        )
-        setToolbarItems(
-            [
-                UIBarButtonItem(systemItem: .flexibleSpace),
-                addTerritoryButton
-            ],
-            animated: false
-        )
     }
 }
 
@@ -92,7 +84,6 @@ extension SidebarViewController {
             collectionViewLayout: createLayout()
         )
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = .systemBackground
         collectionView.delegate = self
 
         view.addSubview(collectionView)
@@ -267,7 +258,6 @@ extension SidebarViewController: UICollectionViewDelegate {
         switch sidebarItem.object {
         case nil: didSelectRecordsItem(sidebarItem, at: indexPath)
         case is Record: didSelectRecordItem(sidebarItem, at: indexPath)
-//        case is Territory: didSelectTerritoryItem(sidebarItem, at: indexPath)
         default: break
         }
     }
@@ -461,18 +451,43 @@ extension SidebarViewController {
         ) { actions in
             UIMenu(
                 children: [
-                    UIAction(title: "Edit", image: UIImage(systemName: "pencil")) {
+                    UIAction(title: "Add Record", image: UIImage(systemName: "plus")) {
                         [weak self] action in
 
-                        self?.presentTerritoryForm(itemAt: indexPath)
+                        guard
+                            let self = self,
+                            let item = self.dataSource.itemIdentifier(for: indexPath),
+                            let territory = item.object as? Territory
+                        else { return }
+
+                        let navigationController = UINavigationController()
+                        navigationController.modalPresentationStyle = .formSheet
+
+                        RecordFormView(territory: territory)
+                            .environment(\.managedObjectContext, self.moc)
+                            .environment(\.uiNavigationController, navigationController)
+                            .assignToUI(navigationController: navigationController)
+
+                        self.present(navigationController, animated: true)
                     },
-                    UIAction(
-                        title: "Delete",
-                        image: UIImage(systemName: "trash"),
-                        attributes: .destructive
-                    ) { [weak self] action in
-                        self?.verifyTerritoryDeletion(at: indexPath)
-                    }
+                    UIMenu(
+                        title: "Edit...",
+                        options: .displayInline,
+                        children: [
+                            UIAction(title: "Edit", image: UIImage(systemName: "pencil")) {
+                                [weak self] action in
+
+                                self?.presentTerritoryForm(itemAt: indexPath)
+                            },
+                            UIAction(
+                                title: "Delete",
+                                image: UIImage(systemName: "trash"),
+                                attributes: .destructive
+                            ) { [weak self] action in
+                                self?.verifyTerritoryDeletion(at: indexPath)
+                            },
+                        ]
+                    ),
                 ]
             )
         }
@@ -529,7 +544,7 @@ extension SidebarViewController {
             cell.tintColor = item.tintColor
 
             cell.contentConfiguration = contentConfiguration
-            cell.accessories = [.outlineDisclosure()]
+            if item.hasExpander ?? false { cell.accessories = [.outlineDisclosure()] }
         }
 
         let expandableRowRegistration = CellRegistration { cell, indexPath, item in
@@ -541,7 +556,7 @@ extension SidebarViewController {
             cell.tintColor = item.tintColor
 
             cell.contentConfiguration = contentConfiguration
-            cell.accessories = [.outlineDisclosure()]
+            if item.hasExpander ?? false { cell.accessories = [.outlineDisclosure()] }
         }
 
         let rowRegistration = CellRegistration { cell, indexPath, item in
@@ -583,14 +598,32 @@ extension SidebarViewController {
 
     private func recordsSnapshot() -> NSDiffableDataSourceSectionSnapshot<SidebarItem> {
         var snapshot = NSDiffableDataSourceSectionSnapshot<SidebarItem>()
-        let items: [SidebarItem] = [
-            .row(
-                title: TabBarItem.records.title,
-                subtitle: nil,
-                image: TabBarItem.records.image,
-                id: RowIdentifier.records
-            )
-        ]
+        var items = [SidebarItem]()
+
+        if let records = fetchedRecordsController.fetchedObjects {
+            items = records.map { record in
+                var subtitle = [String]()
+                if let city = record.city { subtitle.append(city) }
+                if let state = record.state { subtitle.append(state) }
+
+                return .row(
+                    title: record.wrappedStreetName,
+                    subtitle: subtitle.joined(separator: ", "),
+                    image: UIImage(
+                        systemName: record.wrappedType == .apartment
+                            ? "a.square.fill"
+                            : "s.square.fill"
+                    ),
+                    tintColor: UIColor(
+                        record.wrappedType == .apartment
+                            ? .recordTypeApartment
+                            : .recordTypeStreet
+                    ),
+                    id: record.wrappedID,
+                    object: record
+                )
+            }
+        }
 
         snapshot.append(items)
         return snapshot
@@ -599,12 +632,12 @@ extension SidebarViewController {
     private func territoriesSnapshot() -> NSDiffableDataSourceSectionSnapshot<SidebarItem> {
         var snapshot = NSDiffableDataSourceSectionSnapshot<SidebarItem>()
 
-        let header: SidebarItem = .header(title: TabBarItem.territories.title)
+        let header: SidebarItem = .header(title: TabBarItem.territories.title, hasExpander: false)
         snapshot.append([header])
         snapshot.expand([header])
 
         if let territories = fetchedTerritoriesController.fetchedObjects {
-            for territory in territories {
+            territories.forEach { territory in
                 let expandableRow: SidebarItem = .expandableRow(
                     title: territory.wrappedName,
                     subtitle: nil,
@@ -824,16 +857,22 @@ extension SidebarViewController {
         let title: String?
         let subtitle: String?
         let image: UIImage?
+        let hasExpander: Bool?
         let tintColor: UIColor?
         let object: NSManagedObject?
 
-        static func header(title: String, id: String = UUID().uuidString) -> SidebarItem {
+        static func header(
+            title: String,
+            hasExpander: Bool = true,
+            id: String = UUID().uuidString
+        ) -> SidebarItem {
             SidebarItem(
                 id: id,
                 type: .header,
                 title: title,
                 subtitle: nil,
                 image: nil,
+                hasExpander: hasExpander,
                 tintColor: nil,
                 object: nil
             )
@@ -843,6 +882,7 @@ extension SidebarViewController {
             title: String,
             subtitle: String?,
             image: UIImage?,
+            hasExpander: Bool = true,
             tintColor: UIColor? = nil,
             id: String = UUID().uuidString,
             object: NSManagedObject? = nil
@@ -853,6 +893,7 @@ extension SidebarViewController {
                 title: title,
                 subtitle: subtitle,
                 image: image,
+                hasExpander: hasExpander,
                 tintColor: tintColor,
                 object: object
             )
@@ -872,6 +913,7 @@ extension SidebarViewController {
                 title: title,
                 subtitle: subtitle,
                 image: image,
+                hasExpander: nil,
                 tintColor: tintColor,
                 object: object
             )

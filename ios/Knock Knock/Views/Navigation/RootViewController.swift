@@ -34,17 +34,16 @@ class RootViewController: UIViewController {
 
 extension RootViewController {
     private func configureSplitViewController() {
-        primaryViewController = UISplitViewController(style: .tripleColumn)
+        primaryViewController = UISplitViewController(style: .doubleColumn)
 
         guard let primaryViewController = primaryViewController as? UISplitViewController
         else { return }
         
         primaryViewController.delegate = self
-        primaryViewController.preferredDisplayMode = .twoDisplaceSecondary
+        primaryViewController.preferredDisplayMode = .oneBesideSecondary
         primaryViewController.showsSecondaryOnlyButton = true
 
         setupSidebarViewController(in: primaryViewController)
-        setupRecordsViewController(in: primaryViewController)
         setupDoorsViewContorller(in: primaryViewController)
         setupCompactViewController(in: primaryViewController)
     }
@@ -66,13 +65,6 @@ extension RootViewController {
     private func setupSidebarViewController(in splitViewController: UISplitViewController) {
         sidebarViewController = SidebarViewController()
         splitViewController.setViewController(sidebarViewController, for: .primary)
-    }
-
-    private func setupRecordsViewController(in splitViewController: UISplitViewController) {
-        recordsViewController = RecordsViewController()
-
-        let navigationController = UINavigationController(rootViewController: recordsViewController)
-        splitViewController.setViewController(navigationController, for: .supplementary)
     }
 
     private func setupDoorsViewContorller(in splitViewController: UISplitViewController) {
