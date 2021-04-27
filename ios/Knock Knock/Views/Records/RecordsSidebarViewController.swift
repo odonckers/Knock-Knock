@@ -1,16 +1,25 @@
 //
-//  SidebarNavigationViewController.swift
+//  RecordsSidebarViewController.swift
 //  Knock Knock
 //
 //  Created by Owen Donckers on 3/3/21.
 //
 
-import Combine
 import CoreData
-import SwiftUI
 import UIKit
 
-class SidebarViewController: UIViewController {
+class RecordsSidebarViewController: UIViewController {
+    let isCompact: Bool
+
+    init(isCompact: Bool) {
+        self.isCompact = isCompact
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     private var collectionView: UICollectionView!
 
     private var dataSource: UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>!
@@ -18,6 +27,8 @@ class SidebarViewController: UIViewController {
     private var moc: NSManagedObjectContext!
     private var fetchedRecordsController: NSFetchedResultsController<Record>!
     private var fetchedTerritoriesController: NSFetchedResultsController<Territory>!
+
+    private let largeSymbolConfig = UIImage.SymbolConfiguration(textStyle: .title3)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +47,7 @@ class SidebarViewController: UIViewController {
 
 // MARK: - Top Bar
 
-extension SidebarViewController {
+extension RecordsSidebarViewController {
     private func configureNavigationBar() {
         title = "Records"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -77,7 +88,7 @@ extension SidebarViewController {
 
 // MARK: - Collection Layout
 
-extension SidebarViewController {
+extension RecordsSidebarViewController {
     private func configureCollectionView() {
         collectionView = UICollectionView(
             frame: view.bounds,
@@ -91,10 +102,14 @@ extension SidebarViewController {
 
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout() {
-            (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+            [weak self] (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
 
-            var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
-            configuration.showsSeparators = false
+            guard let self = self else { return nil }
+
+            var configuration = UICollectionLayoutListConfiguration(
+                appearance: self.isCompact ? .insetGrouped : .sidebar
+            )
+            configuration.showsSeparators = self.isCompact
             configuration.headerMode = sectionIndex == 0 ? .none : .firstItemInSection
             configuration.leadingSwipeActionsConfigurationProvider = { [weak self] indexPath in
                 guard let item = self?.dataSource.itemIdentifier(for: indexPath)
@@ -137,8 +152,11 @@ extension SidebarViewController {
             self.updateRecord(at: indexPath)
             completion(true)
         }
-        editAction.image = UIImage(systemName: "pencil")
-        editAction.backgroundColor = .systemGray2
+        editAction.image = UIImage(
+            systemName: "pencil.circle.fill",
+            withConfiguration: largeSymbolConfig
+        )
+        editAction.backgroundColor = .systemGray3
 
         let moveAction = UIContextualAction(style: .normal, title: "Move") {
             [weak self] action, view, completion in
@@ -151,7 +169,10 @@ extension SidebarViewController {
             self.moveRecord(at: indexPath)
             completion(true)
         }
-        moveAction.image = UIImage(systemName: "folder.fill")
+        moveAction.image = UIImage(
+            systemName: "folder.circle.fill",
+            withConfiguration: largeSymbolConfig
+        )
         moveAction.backgroundColor = .systemIndigo
 
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
@@ -168,7 +189,10 @@ extension SidebarViewController {
                 completion: completion
             )
         }
-        deleteAction.image = UIImage(systemName: "trash")
+        deleteAction.image = UIImage(
+            systemName: "trash.circle.fill",
+            withConfiguration: largeSymbolConfig
+        )
         deleteAction.backgroundColor = .systemRed
 
         let swipeConfiguration = UISwipeActionsConfiguration(
@@ -203,7 +227,10 @@ extension SidebarViewController {
 
             completion(true)
         }
-        addAction.image = UIImage(systemName: "plus")
+        addAction.image = UIImage(
+            systemName: "note.text.badge.plus",
+            withConfiguration: largeSymbolConfig
+        )
         addAction.backgroundColor = .accentColor
 
         let swipeConfiguration = UISwipeActionsConfiguration(actions: [addAction])
@@ -222,8 +249,11 @@ extension SidebarViewController {
             self.presentTerritoryForm(itemAt: indexPath)
             completion(true)
         }
-        editAction.image = UIImage(systemName: "pencil")
-        editAction.backgroundColor = .systemGray2
+        editAction.image = UIImage(
+            systemName: "pencil.circle.fill",
+            withConfiguration: largeSymbolConfig
+        )
+        editAction.backgroundColor = .systemGray3
 
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
             [weak self] action, view, completion in
@@ -239,7 +269,10 @@ extension SidebarViewController {
                 completion: completion
             )
         }
-        deleteAction.image = UIImage(systemName: "trash")
+        deleteAction.image = UIImage(
+            systemName: "trash.circle.fill",
+            withConfiguration: largeSymbolConfig
+        )
         deleteAction.backgroundColor = .systemRed
 
         let swipeConfiguration = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
@@ -250,7 +283,19 @@ extension SidebarViewController {
 
 // MARK: - Collection View Delegate
 
-extension SidebarViewController: UICollectionViewDelegate {
+extension RecordsSidebarViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        guard let sidebarItem = dataSource.itemIdentifier(for: indexPath)
+        else { return false }
+
+        if sidebarItem.type == .header { return false }
+
+        switch sidebarItem.object {
+        case is Territory: return false
+        default: return true
+        }
+    }
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let sidebarItem = dataSource.itemIdentifier(for: indexPath)
         else { return }
@@ -325,9 +370,158 @@ extension SidebarViewController: UICollectionViewDelegate {
     }
 }
 
+// MARK: - Collection Cell Registration & Snapshots
+
+extension RecordsSidebarViewController {
+    private typealias CellRegistration = UICollectionView.CellRegistration<
+        UICollectionViewListCell,
+        SidebarItem
+    >
+
+    private func configureDataSource() {
+        let headerRegistration = CellRegistration { cell, indexPath, item in
+            var contentConfiguration = cell.defaultContentConfiguration()
+            contentConfiguration.text = item.title
+
+            cell.tintColor = item.tintColor
+
+            cell.contentConfiguration = contentConfiguration
+            if item.hasExpander ?? false {
+                let headerDiscosureOption = UICellAccessory.OutlineDisclosureOptions(style: .header)
+                cell.accessories = [.outlineDisclosure(options: headerDiscosureOption)]
+            }
+        }
+
+        let expandableRowRegistration = CellRegistration { cell, indexPath, item in
+            var contentConfiguration = cell.defaultContentConfiguration()
+            contentConfiguration.text = item.title
+            contentConfiguration.secondaryText = item.subtitle
+            contentConfiguration.image = item.image
+
+            cell.tintColor = item.tintColor
+
+            cell.contentConfiguration = contentConfiguration
+            if item.hasExpander ?? false {
+                let headerDiscosureOption = UICellAccessory.OutlineDisclosureOptions(style: .header)
+                cell.accessories = [.outlineDisclosure(options: headerDiscosureOption)]
+            }
+        }
+
+        let rowRegistration = CellRegistration { cell, indexPath, item in
+            var contentConfiguration = cell.defaultContentConfiguration()
+            contentConfiguration.text = item.title
+            contentConfiguration.secondaryText = item.subtitle
+            contentConfiguration.image = item.image
+
+            cell.tintColor = item.tintColor
+
+            cell.contentConfiguration = contentConfiguration
+        }
+
+        dataSource = UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>(
+            collectionView: collectionView
+        ) { collectionView, indexPath, item in
+            switch item.type {
+            case .header:
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: headerRegistration,
+                    for: indexPath,
+                    item: item
+                )
+            case .expandableRow:
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: expandableRowRegistration,
+                    for: indexPath,
+                    item: item
+                )
+            default:
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: rowRegistration,
+                    for: indexPath,
+                    item: item
+                )
+            }
+        }
+    }
+
+    private func recordRow(record: Record) -> SidebarItem {
+        var title = [String]()
+        if let apartmentNumber = record.apartmentNumber { title.append(apartmentNumber) }
+        title.append(record.wrappedStreetName)
+
+        var subtitle = [String]()
+        if let city = record.city { subtitle.append(city) }
+        if let state = record.state { subtitle.append(state) }
+
+        return .row(
+            title: title.joined(separator: " "),
+            subtitle: subtitle.joined(separator: ", "),
+            image: UIImage(
+                systemName: record.wrappedType == .apartment
+                    ? "a.square.fill"
+                    : "s.square.fill"
+            ),
+            tintColor: UIColor(
+                record.wrappedType == .apartment
+                    ? .recordTypeApartment
+                    : .recordTypeStreet
+            ),
+            id: record.wrappedID,
+            object: record
+        )
+    }
+
+    private func recordsSnapshot() -> NSDiffableDataSourceSectionSnapshot<SidebarItem> {
+        var snapshot = NSDiffableDataSourceSectionSnapshot<SidebarItem>()
+        var items = [SidebarItem]()
+
+        if let records = fetchedRecordsController.fetchedObjects {
+            items = records.map { record in recordRow(record: record) }
+        }
+
+        snapshot.append(items)
+        return snapshot
+    }
+
+    private func territoriesSnapshot() -> NSDiffableDataSourceSectionSnapshot<SidebarItem> {
+        var snapshot = NSDiffableDataSourceSectionSnapshot<SidebarItem>()
+
+        let header: SidebarItem = .header(title: TabBarItem.territories.title, hasExpander: false)
+        snapshot.append([header])
+        snapshot.expand([header])
+
+        if let territories = fetchedTerritoriesController.fetchedObjects {
+            territories.forEach { territory in
+                let expandableRow: SidebarItem = .expandableRow(
+                    title: territory.wrappedName,
+                    subtitle: nil,
+                    image: UIImage(systemName: "folder"),
+                    id: territory.wrappedID,
+                    object: territory
+                )
+
+                let items: [SidebarItem] = territory.recordArray.map { record in
+                    recordRow(record: record)
+                }
+
+                snapshot.append([expandableRow], to: header)
+                snapshot.expand([expandableRow])
+                snapshot.append(items, to: expandableRow)
+            }
+        }
+
+        return snapshot
+    }
+
+    private func updatedTerritoriesSnapshot() {
+        let snapshot = territoriesSnapshot()
+        dataSource.apply(snapshot, to: .territories)
+    }
+}
+
 // MARK: - Popups
 
-extension SidebarViewController {
+extension RecordsSidebarViewController {
     private func recordContextMenu(at indexPath: IndexPath) -> UIContextMenuConfiguration {
         let contextMenuConfig = UIContextMenuConfiguration(
             identifier: nil,
@@ -528,165 +722,9 @@ extension SidebarViewController {
     }
 }
 
-// MARK: - Collection Cell Registration & Snapshots
-
-extension SidebarViewController {
-    private typealias CellRegistration = UICollectionView.CellRegistration<
-        UICollectionViewListCell,
-        SidebarItem
-    >
-
-    private func configureDataSource() {
-        let headerRegistration = CellRegistration { cell, indexPath, item in
-            var contentConfiguration = cell.defaultContentConfiguration()
-            contentConfiguration.text = item.title
-
-            cell.tintColor = item.tintColor
-
-            cell.contentConfiguration = contentConfiguration
-            if item.hasExpander ?? false { cell.accessories = [.outlineDisclosure()] }
-        }
-
-        let expandableRowRegistration = CellRegistration { cell, indexPath, item in
-            var contentConfiguration = cell.defaultContentConfiguration()
-            contentConfiguration.text = item.title
-            contentConfiguration.secondaryText = item.subtitle
-            contentConfiguration.image = item.image
-
-            cell.tintColor = item.tintColor
-
-            cell.contentConfiguration = contentConfiguration
-            if item.hasExpander ?? false { cell.accessories = [.outlineDisclosure()] }
-        }
-
-        let rowRegistration = CellRegistration { cell, indexPath, item in
-            var contentConfiguration = cell.defaultContentConfiguration()
-            contentConfiguration.text = item.title
-            contentConfiguration.secondaryText = item.subtitle
-            contentConfiguration.image = item.image
-
-            cell.tintColor = item.tintColor
-
-            cell.contentConfiguration = contentConfiguration
-        }
-
-        dataSource = UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>(
-            collectionView: collectionView
-        ) { collectionView, indexPath, item in
-            switch item.type {
-            case .header:
-                return collectionView.dequeueConfiguredReusableCell(
-                    using: headerRegistration,
-                    for: indexPath,
-                    item: item
-                )
-            case .expandableRow:
-                return collectionView.dequeueConfiguredReusableCell(
-                    using: expandableRowRegistration,
-                    for: indexPath,
-                    item: item
-                )
-            default:
-                return collectionView.dequeueConfiguredReusableCell(
-                    using: rowRegistration,
-                    for: indexPath,
-                    item: item
-                )
-            }
-        }
-    }
-
-    private func recordsSnapshot() -> NSDiffableDataSourceSectionSnapshot<SidebarItem> {
-        var snapshot = NSDiffableDataSourceSectionSnapshot<SidebarItem>()
-        var items = [SidebarItem]()
-
-        if let records = fetchedRecordsController.fetchedObjects {
-            items = records.map { record in
-                var subtitle = [String]()
-                if let city = record.city { subtitle.append(city) }
-                if let state = record.state { subtitle.append(state) }
-
-                return .row(
-                    title: record.wrappedStreetName,
-                    subtitle: subtitle.joined(separator: ", "),
-                    image: UIImage(
-                        systemName: record.wrappedType == .apartment
-                            ? "a.square.fill"
-                            : "s.square.fill"
-                    ),
-                    tintColor: UIColor(
-                        record.wrappedType == .apartment
-                            ? .recordTypeApartment
-                            : .recordTypeStreet
-                    ),
-                    id: record.wrappedID,
-                    object: record
-                )
-            }
-        }
-
-        snapshot.append(items)
-        return snapshot
-    }
-
-    private func territoriesSnapshot() -> NSDiffableDataSourceSectionSnapshot<SidebarItem> {
-        var snapshot = NSDiffableDataSourceSectionSnapshot<SidebarItem>()
-
-        let header: SidebarItem = .header(title: TabBarItem.territories.title, hasExpander: false)
-        snapshot.append([header])
-        snapshot.expand([header])
-
-        if let territories = fetchedTerritoriesController.fetchedObjects {
-            territories.forEach { territory in
-                let expandableRow: SidebarItem = .expandableRow(
-                    title: territory.wrappedName,
-                    subtitle: nil,
-                    image: UIImage(systemName: "folder"),
-                    id: territory.wrappedID,
-                    object: territory
-                )
-
-                let items: [SidebarItem] = territory.recordArray.map { record in
-                    var subtitle = [String]()
-                    if let city = record.city { subtitle.append(city) }
-                    if let state = record.state { subtitle.append(state) }
-
-                    return .row(
-                        title: record.wrappedStreetName,
-                        subtitle: subtitle.joined(separator: ", "),
-                        image: UIImage(
-                            systemName: record.wrappedType == .apartment
-                                ? "a.square.fill"
-                                : "s.square.fill"
-                        ),
-                        tintColor: UIColor(
-                            record.wrappedType == .apartment
-                                ? .recordTypeApartment
-                                : .recordTypeStreet
-                        ),
-                        id: record.wrappedID,
-                        object: record
-                    )
-                }
-
-                snapshot.append([expandableRow], to: header)
-                snapshot.expand([expandableRow])
-                snapshot.append(items, to: expandableRow)
-            }
-        }
-
-        return snapshot
-    }
-
-    private func updatedTerritoriesSnapshot() {
-        let snapshot = territoriesSnapshot()
-        dataSource.apply(snapshot, to: .territories)
-    }
-}
-
 // MARK: - Persistence Controller & Fetch Requests
 
-extension SidebarViewController {
+extension RecordsSidebarViewController {
     private func configureViewContext() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         moc = appDelegate.persistenceController.container.viewContext
@@ -740,7 +778,7 @@ extension SidebarViewController {
 
 // MARK: - Fetched Results Controller Delegate
 
-extension SidebarViewController: NSFetchedResultsControllerDelegate {
+extension RecordsSidebarViewController: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(
         _ controller: NSFetchedResultsController<NSFetchRequestResult>
     ) {
@@ -760,7 +798,7 @@ extension SidebarViewController: NSFetchedResultsControllerDelegate {
 
 // MARK: - CRUD
 
-extension SidebarViewController {
+extension RecordsSidebarViewController {
     private func moveRecord(at indexPath: IndexPath) {
         guard
             let item = dataSource.itemIdentifier(for: indexPath),
@@ -842,7 +880,7 @@ extension SidebarViewController {
 // MARK: - Enums, Structs, etc.
 
 @available(iOS 14.0, *)
-extension SidebarViewController {
+extension RecordsSidebarViewController {
     private enum SidebarItemType: Int {
         case header, expandableRow, row
     }
