@@ -38,6 +38,8 @@ class SidebarViewController: UIViewController {
     }
 }
 
+// MARK: - Top Bar
+
 extension SidebarViewController {
     private func configureNavigationBar() {
         title = "Records"
@@ -62,6 +64,8 @@ extension SidebarViewController {
     }
 }
 
+// MARK: - Collection Layout
+
 extension SidebarViewController {
     private func configureCollectionView() {
         collectionView = UICollectionView(
@@ -82,99 +86,13 @@ extension SidebarViewController {
             var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
             configuration.showsSeparators = false
             configuration.headerMode = sectionIndex == 0 ? .none : .firstItemInSection
-            configuration.trailingSwipeActionsConfigurationProvider = { indexPath in
-                guard let item = self.dataSource.itemIdentifier(for: indexPath)
+            configuration.trailingSwipeActionsConfigurationProvider = { [weak self] indexPath in
+                guard let item = self?.dataSource.itemIdentifier(for: indexPath)
                 else { return nil }
 
                 switch item.object {
-                case is Record:
-                    let editAction = UIContextualAction(style: .normal, title: "Edit") {
-                        [weak self] action, view, completion in
-
-                        guard let self = self else {
-                            completion(false)
-                            return
-                        }
-
-                        self.updateRecord(at: indexPath)
-                        completion(true)
-                    }
-                    editAction.image = UIImage(systemName: "pencil")
-                    editAction.backgroundColor = .systemGray2
-
-                    let moveAction = UIContextualAction(style: .normal, title: "Move") {
-                        [weak self] action, view, completion in
-
-                        guard let self = self else {
-                            completion(false)
-                            return
-                        }
-
-                        self.moveRecord(at: indexPath)
-                        completion(true)
-                    }
-                    moveAction.image = UIImage(systemName: "folder.fill")
-                    moveAction.backgroundColor = .systemIndigo
-
-                    let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
-                        [weak self] action, view, completion in
-
-                        guard let self = self else {
-                            completion(false)
-                            return
-                        }
-
-                        self.verifyRecordDeletion(
-                            at: indexPath,
-                            displaced: true,
-                            completion: completion
-                        )
-                    }
-                    deleteAction.image = UIImage(systemName: "trash")
-                    deleteAction.backgroundColor = .systemRed
-
-                    let swipeConfiguration = UISwipeActionsConfiguration(
-                        actions: [deleteAction, moveAction, editAction]
-                    )
-                    swipeConfiguration.performsFirstActionWithFullSwipe = false
-                    return swipeConfiguration
-                case is Territory:
-                    let editAction = UIContextualAction(style: .normal, title: "Edit") {
-                        [weak self] action, view, completion in
-
-                        guard let self = self else {
-                            completion(false)
-                            return
-                        }
-
-                        self.presentTerritoryForm(itemAt: indexPath)
-                        completion(true)
-                    }
-                    editAction.image = UIImage(systemName: "pencil")
-                    editAction.backgroundColor = .systemGray2
-
-                    let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
-                        [weak self] action, view, completion in
-
-                        guard let self = self else {
-                            completion(false)
-                            return
-                        }
-
-                        self.verifyTerritoryDeletion(
-                            at: indexPath,
-                            displaced: true,
-                            completion: completion
-                        )
-                    }
-                    deleteAction.image = UIImage(systemName: "trash")
-                    deleteAction.backgroundColor = .systemRed
-
-                    let swipeConfiguration = UISwipeActionsConfiguration(
-                        actions: [deleteAction, editAction]
-                    )
-                    swipeConfiguration.performsFirstActionWithFullSwipe = false
-                    return swipeConfiguration
+                case is Record: return self?.recordTrailingSwipeActions(at: indexPath)
+                case is Territory: return self?.territoryTrailingSwipeActions(at: indexPath)
                 default: return nil
                 }
             }
@@ -187,7 +105,101 @@ extension SidebarViewController {
         }
         return layout
     }
+
+    private func recordTrailingSwipeActions(at indexPath: IndexPath) -> UISwipeActionsConfiguration {
+        let editAction = UIContextualAction(style: .normal, title: "Edit") {
+            [weak self] action, view, completion in
+
+            guard let self = self else {
+                completion(false)
+                return
+            }
+
+            self.updateRecord(at: indexPath)
+            completion(true)
+        }
+        editAction.image = UIImage(systemName: "pencil")
+        editAction.backgroundColor = .systemGray2
+
+        let moveAction = UIContextualAction(style: .normal, title: "Move") {
+            [weak self] action, view, completion in
+
+            guard let self = self else {
+                completion(false)
+                return
+            }
+
+            self.moveRecord(at: indexPath)
+            completion(true)
+        }
+        moveAction.image = UIImage(systemName: "folder.fill")
+        moveAction.backgroundColor = .systemIndigo
+
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
+            [weak self] action, view, completion in
+
+            guard let self = self else {
+                completion(false)
+                return
+            }
+
+            self.verifyRecordDeletion(
+                at: indexPath,
+                displaced: true,
+                completion: completion
+            )
+        }
+        deleteAction.image = UIImage(systemName: "trash")
+        deleteAction.backgroundColor = .systemRed
+
+        let swipeConfiguration = UISwipeActionsConfiguration(
+            actions: [deleteAction, moveAction, editAction]
+        )
+        swipeConfiguration.performsFirstActionWithFullSwipe = false
+        return swipeConfiguration
+    }
+
+    private func territoryTrailingSwipeActions(at indexPath: IndexPath) -> UISwipeActionsConfiguration {
+        let editAction = UIContextualAction(style: .normal, title: "Edit") {
+            [weak self] action, view, completion in
+
+            guard let self = self else {
+                completion(false)
+                return
+            }
+
+            self.presentTerritoryForm(itemAt: indexPath)
+            completion(true)
+        }
+        editAction.image = UIImage(systemName: "pencil")
+        editAction.backgroundColor = .systemGray2
+
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
+            [weak self] action, view, completion in
+
+            guard let self = self else {
+                completion(false)
+                return
+            }
+
+            self.verifyTerritoryDeletion(
+                at: indexPath,
+                displaced: true,
+                completion: completion
+            )
+        }
+        deleteAction.image = UIImage(systemName: "trash")
+        deleteAction.backgroundColor = .systemRed
+
+        let swipeConfiguration = UISwipeActionsConfiguration(
+            actions: [deleteAction, editAction]
+        )
+        swipeConfiguration.performsFirstActionWithFullSwipe = false
+        return swipeConfiguration
+    }
 }
+
+// MARK: - Collection View Delegate
 
 extension SidebarViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -211,63 +223,8 @@ extension SidebarViewController: UICollectionViewDelegate {
         else { return nil }
 
         switch item.object {
-        case is Record:
-            let contextMenuConfig = UIContextMenuConfiguration(
-                identifier: nil,
-                previewProvider: nil
-            ) { actions in
-                UIMenu(
-                    children: [
-                        UIMenu(
-                            title: "Edit...",
-                            options: .displayInline,
-                            children: [
-                                UIAction(title: "Edit", image: UIImage(systemName: "pencil")) {
-                                    [weak self] action in
-
-                                    self?.updateRecord(at: indexPath)
-                                },
-                                UIAction(title: "Move", image: UIImage(systemName: "folder")) {
-                                    [weak self] action in
-
-                                    self?.moveRecord(at: indexPath)
-                                },
-                            ]
-                        ),
-                        UIAction(
-                            title: "Delete",
-                            image: UIImage(systemName: "trash"),
-                            attributes: .destructive
-                        ) { [weak self] action in
-                            self?.verifyRecordDeletion(at: indexPath)
-                        },
-                    ]
-                )
-            }
-            return contextMenuConfig
-        case is Territory:
-            let contextMenuConfig = UIContextMenuConfiguration(
-                identifier: nil,
-                previewProvider: nil
-            ) { actions in
-                UIMenu(
-                    children: [
-                        UIAction(title: "Edit", image: UIImage(systemName: "pencil")) {
-                            [weak self] action in
-
-                            self?.presentTerritoryForm(itemAt: indexPath)
-                        },
-                        UIAction(
-                            title: "Delete",
-                            image: UIImage(systemName: "trash"),
-                            attributes: .destructive
-                        ) { [weak self] action in
-                            self?.verifyTerritoryDeletion(at: indexPath)
-                        }
-                    ]
-                )
-            }
-            return contextMenuConfig
+        case is Record: return recordContextMenu(at: indexPath)
+        case is Territory: return territoryContextMenu(at: indexPath)
         default: return nil
         }
     }
@@ -320,7 +277,45 @@ extension SidebarViewController: UICollectionViewDelegate {
     }
 }
 
+// MARK: - Popups
+
 extension SidebarViewController {
+    private func recordContextMenu(at indexPath: IndexPath) -> UIContextMenuConfiguration {
+        let contextMenuConfig = UIContextMenuConfiguration(
+            identifier: nil,
+            previewProvider: nil
+        ) { actions in
+            UIMenu(
+                children: [
+                    UIMenu(
+                        title: "Edit...",
+                        options: .displayInline,
+                        children: [
+                            UIAction(title: "Edit", image: UIImage(systemName: "pencil")) {
+                                [weak self] action in
+
+                                self?.updateRecord(at: indexPath)
+                            },
+                            UIAction(title: "Move", image: UIImage(systemName: "folder")) {
+                                [weak self] action in
+
+                                self?.moveRecord(at: indexPath)
+                            },
+                        ]
+                    ),
+                    UIAction(
+                        title: "Delete",
+                        image: UIImage(systemName: "trash"),
+                        attributes: .destructive
+                    ) { [weak self] action in
+                        self?.verifyRecordDeletion(at: indexPath)
+                    },
+                ]
+            )
+        }
+        return contextMenuConfig
+    }
+
     private func verifyRecordDeletion(
         at indexPath: IndexPath,
         displaced: Bool = false,
@@ -352,6 +347,79 @@ extension SidebarViewController {
         }
 
         present(alertController, animated: true)
+    }
+
+    private func presentTerritoryForm(itemAt indexPath: IndexPath) {
+        let sidebarItem = dataSource.itemIdentifier(for: indexPath)
+        guard let territory = sidebarItem?.object as? Territory else { return }
+        presentTerritoryForm(territory: territory)
+    }
+
+    private func presentTerritoryForm(territory: Territory? = nil) {
+        let alertController = UIAlertController(
+            title: "New Territory",
+            message: nil,
+            preferredStyle: .alert
+        )
+        alertController.view.tintColor = .accentColor
+
+        alertController.addTextField()
+
+        let nameTextField = alertController.textFields?.first
+        nameTextField?.placeholder = "Name"
+        nameTextField?.autocapitalizationType = .allCharacters
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(cancelAction)
+
+        let submitAction = UIAlertAction(title: "Submit", style: .default) {
+            [weak self, unowned alertController] action in
+
+            guard let self = self, let textFields = alertController.textFields
+            else { return }
+
+            let nameField = textFields[0].text
+            if let territory = territory {
+                self.updateTerritory(territory: territory, to: nameField)
+            } else {
+                self.addTerritory(named: nameField)
+            }
+        }
+        alertController.addAction(submitAction)
+
+        if let territory = territory {
+            alertController.title = "Edit Territory"
+            alertController.message = territory.wrappedName
+
+            nameTextField?.text = territory.wrappedName
+        }
+
+        present(alertController, animated: true)
+    }
+
+    private func territoryContextMenu(at indexPath: IndexPath) -> UIContextMenuConfiguration {
+        let contextMenuConfig = UIContextMenuConfiguration(
+            identifier: nil,
+            previewProvider: nil
+        ) { actions in
+            UIMenu(
+                children: [
+                    UIAction(title: "Edit", image: UIImage(systemName: "pencil")) {
+                        [weak self] action in
+
+                        self?.presentTerritoryForm(itemAt: indexPath)
+                    },
+                    UIAction(
+                        title: "Delete",
+                        image: UIImage(systemName: "trash"),
+                        attributes: .destructive
+                    ) { [weak self] action in
+                        self?.verifyTerritoryDeletion(at: indexPath)
+                    }
+                ]
+            )
+        }
+        return contextMenuConfig
     }
 
     private func verifyTerritoryDeletion(
@@ -387,6 +455,8 @@ extension SidebarViewController {
         present(alertController, animated: true)
     }
 }
+
+// MARK: - Collection Cell Registration & Snapshots
 
 extension SidebarViewController {
     private typealias CellRegistration = UICollectionView.CellRegistration<
@@ -524,6 +594,8 @@ extension SidebarViewController {
     }
 }
 
+// MARK: - Persistence Controller & Fetch Requests
+
 extension SidebarViewController {
     private func configureViewContext() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -576,6 +648,8 @@ extension SidebarViewController {
     }
 }
 
+// MARK: - Fetched Results Controller Delegate
+
 extension SidebarViewController: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(
         _ controller: NSFetchedResultsController<NSFetchRequestResult>
@@ -594,20 +668,9 @@ extension SidebarViewController: NSFetchedResultsControllerDelegate {
     }
 }
 
+// MARK: - CRUD
+
 extension SidebarViewController {
-    private func deleteRecord(at indexPath: IndexPath) {
-        guard
-            let item = dataSource.itemIdentifier(for: indexPath),
-            let record = item.object as? Record
-        else { return }
-        deleteRecord(record)
-    }
-
-    private func deleteRecord(_ record: Record) {
-        moc.delete(record)
-        moc.unsafeSave()
-    }
-
     private func moveRecord(at indexPath: IndexPath) {
         guard
             let item = dataSource.itemIdentifier(for: indexPath),
@@ -647,62 +710,31 @@ extension SidebarViewController {
 
         present(navigationController, animated: true)
     }
-}
 
-extension SidebarViewController {
-    private func presentTerritoryForm(itemAt indexPath: IndexPath) {
-        let sidebarItem = dataSource.itemIdentifier(for: indexPath)
-        guard let territory = sidebarItem?.object as? Territory else { return }
-        presentTerritoryForm(territory: territory)
+    private func deleteRecord(at indexPath: IndexPath) {
+        guard
+            let item = dataSource.itemIdentifier(for: indexPath),
+            let record = item.object as? Record
+        else { return }
+        deleteRecord(record)
     }
 
-    private func presentTerritoryForm(territory: Territory? = nil) {
-        let alertController = UIAlertController(
-            title: "New Territory",
-            message: nil,
-            preferredStyle: .alert
-        )
-        alertController.view.tintColor = .accentColor
+    private func deleteRecord(_ record: Record) {
+        moc.delete(record)
+        moc.unsafeSave()
+    }
 
-        alertController.addTextField()
+    private func addTerritory(named name: String?) {
+        let toSave = Territory(context: self.moc)
+        toSave.willCreate()
+        toSave.name = name
+        self.moc.unsafeSave()
+    }
 
-        let nameTextField = alertController.textFields?.first
-        nameTextField?.placeholder = "Name"
-        nameTextField?.autocapitalizationType = .allCharacters
-
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        alertController.addAction(cancelAction)
-
-        let submitAction = UIAlertAction(title: "Submit", style: .default) {
-            [unowned alertController] action in
-
-            guard let textFields = alertController.textFields
-            else { return }
-
-            let nameField = textFields[0]
-
-            var toSave: Territory
-            if let territory = territory {
-                toSave = territory
-                toSave.willUpdate()
-            } else {
-                toSave = Territory(context: self.moc)
-                toSave.willCreate()
-            }
-
-            toSave.name = nameField.text
-            self.moc.unsafeSave()
-        }
-        alertController.addAction(submitAction)
-
-        if let territory = territory {
-            alertController.title = "Edit Territory"
-            alertController.message = territory.wrappedName
-
-            nameTextField?.text = territory.wrappedName
-        }
-
-        present(alertController, animated: true)
+    private func updateTerritory(territory: Territory, to name: String?) {
+        territory.willUpdate()
+        territory.name = name
+        self.moc.unsafeSave()
     }
 
     private func deleteTerritory(at indexPath: IndexPath) {
@@ -716,6 +748,8 @@ extension SidebarViewController {
         moc.unsafeSave()
     }
 }
+
+// MARK: - Enums, Structs, etc.
 
 @available(iOS 14.0, *)
 extension SidebarViewController {
