@@ -86,6 +86,22 @@ struct DoorFormView: View {
         }
         .navigationTitle(door?.wrappedNumber != nil ? "Edit Door" : "New Door")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button(action: { navigationController?.dismiss(animated: true) }) {
+                    Text("cancel")
+                }
+            }
+
+            ToolbarItem(placement: .confirmationAction) {
+                Button(action: {
+                    save()
+                    navigationController?.dismiss(animated: true)
+                }) {
+                    Text("save")
+                }
+            }
+        }
         .onAppear {
             if let door = door {
                 if let number = door.number { self.number = number }
@@ -101,6 +117,9 @@ extension DoorFormView {
         if let door = door {
             toSave = door
             toSave.willUpdate()
+        } else {
+            toSave = Door(context: moc)
+            toSave.willCreate()
 
             let firstVisit = Visit(context: moc)
             firstVisit.willCreate()
@@ -110,14 +129,13 @@ extension DoorFormView {
             firstVisit.wrappedPerson = selectedPerson
             firstVisit.notes = notes
 
-            firstVisit.door = door
-        } else {
-            toSave = Door(context: moc)
-            toSave.willCreate()
+            firstVisit.door = toSave
         }
 
         toSave.number = number
         toSave.unit = unit
+
+        toSave.record = record
 
         moc.unsafeSave()
     }

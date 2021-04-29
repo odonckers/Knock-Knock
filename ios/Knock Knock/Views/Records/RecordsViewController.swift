@@ -20,11 +20,12 @@ class RecordsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private var collectionView: UICollectionView!
+    private lazy var addRecordBarButton = makeAddRecordBarButton()
 
-    private var dataSource: UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>!
+    private lazy var collectionView = makeCollectionView()
+    private lazy var dataSource = makeDataSource()
 
-    private var moc: NSManagedObjectContext!
+    private lazy var moc = makeMoc()
     private var fetchedRecordsController: NSFetchedResultsController<Record>!
     private var fetchedTerritoriesController: NSFetchedResultsController<Territory>!
 
@@ -33,26 +34,21 @@ class RecordsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureNavigationBar()
-        configureCollectionView()
+        title = "Records"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.rightBarButtonItem = addRecordBarButton
 
-        configureDataSource()
+        view.addSubview(collectionView)
 
-        configureViewContext()
-
-        configureRecordFetchRequest()
-        configuredTerritoryFetchRequest()
+        configureFetchRequests()
     }
 }
 
 // MARK: - Top Bar
 
 extension RecordsViewController {
-    private func configureNavigationBar() {
-        title = "Records"
-        navigationController?.navigationBar.prefersLargeTitles = true
-
-        let addRecordButton = UIBarButtonItem(
+    private func makeAddRecordBarButton() -> UIBarButtonItem {
+        UIBarButtonItem(
             title: "Add Record",
             image: UIImage(systemName: "plus.circle.fill"),
             menu: UIMenu(
@@ -82,25 +78,24 @@ extension RecordsViewController {
                 ]
             )
         )
-        navigationItem.setRightBarButtonItems([addRecordButton], animated: false)
     }
 }
 
 // MARK: - Collection Layout
 
 extension RecordsViewController {
-    private func configureCollectionView() {
-        collectionView = UICollectionView(
+    private func makeCollectionView() -> UICollectionView {
+        let collectionView = UICollectionView(
             frame: view.bounds,
-            collectionViewLayout: createLayout()
+            collectionViewLayout: makeLayout()
         )
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.delegate = self
 
-        view.addSubview(collectionView)
+        return collectionView
     }
 
-    private func createLayout() -> UICollectionViewLayout {
+    private func makeLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout() {
             [weak self] (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
 
@@ -140,7 +135,9 @@ extension RecordsViewController {
         return layout
     }
 
-    private func recordTrailingSwipeActions(at indexPath: IndexPath) -> UISwipeActionsConfiguration {
+    private func recordTrailingSwipeActions(
+        at indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration {
         let editAction = UIContextualAction(style: .normal, title: "Edit") {
             [weak self] action, view, completion in
 
@@ -241,7 +238,9 @@ extension RecordsViewController {
         return swipeConfiguration
     }
 
-    private func territoryTrailingSwipeActions(at indexPath: IndexPath) -> UISwipeActionsConfiguration {
+    private func territoryTrailingSwipeActions(
+        at indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration {
         let editAction = UIContextualAction(style: .normal, title: "Edit") {
             [weak self] action, view, completion in
 
@@ -306,7 +305,7 @@ extension RecordsViewController: UICollectionViewDelegate {
         guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
 
         switch item.object {
-        case is Record: didSelectRecord(at: indexPath)
+        case is Record: didSelectRecord(item.object as! Record)
         default: break
         }
     }
@@ -326,24 +325,9 @@ extension RecordsViewController: UICollectionViewDelegate {
         }
     }
 
-    private func didSelectRecord(at indexPath: IndexPath) {
-        guard
-            let item = dataSource.itemIdentifier(for: indexPath),
-            let record = item.object as? Record
-        else { return }
-        didSelectRecord(record)
-    }
-
     private func didSelectRecord(_ record: Record) {
-        let doorsView = DoorsView(record: record)
-            .environment(\.managedObjectContext, moc)
-
-        let navigationController = UINavigationController()
-        navigationController.navigationItem.largeTitleDisplayMode = .never
-
-        doorsView
-            .environment(\.uiNavigationController, navigationController)
-            .assignToUI(navigationController: navigationController)
+        let doorsViewController = DoorsViewController(in: record)
+        let navigationController = UINavigationController(rootViewController: doorsViewController)
 
         showDetailViewController(navigationController, sender: nil)
 
@@ -351,7 +335,7 @@ extension RecordsViewController: UICollectionViewDelegate {
     }
 }
 
-// MARK: - Collection Cell Registration & Snapshots
+// MARK: - Data Source & Snapshots
 
 extension RecordsViewController {
     private typealias CellRegistration = UICollectionView.CellRegistration<
@@ -359,7 +343,12 @@ extension RecordsViewController {
         SidebarItem
     >
 
-    private func configureDataSource() {
+    private typealias DataSource = UICollectionViewDiffableDataSource<
+        SidebarSection,
+        SidebarItem
+    >
+
+    private func makeDataSource() -> DataSource {
         let headerRegistration = CellRegistration { cell, indexPath, item in
             var contentConfiguration = cell.defaultContentConfiguration()
             contentConfiguration.text = item.title
@@ -402,9 +391,7 @@ extension RecordsViewController {
             }
         }
 
-        dataSource = UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>(
-            collectionView: collectionView
-        ) { collectionView, indexPath, item in
+        return DataSource(collectionView: collectionView) { collectionView, indexPath, item in
             switch item.type {
             case .header:
                 return collectionView.dequeueConfiguredReusableCell(
@@ -471,7 +458,7 @@ extension RecordsViewController {
     private func territoriesSnapshot() -> NSDiffableDataSourceSectionSnapshot<SidebarItem> {
         var snapshot = NSDiffableDataSourceSectionSnapshot<SidebarItem>()
 
-        let header: SidebarItem = .header(title: TabBarItem.territories.title, hasExpander: false)
+        let header: SidebarItem = .header(title: "Territories", hasExpander: false)
         snapshot.append([header])
         snapshot.expand([header])
 
@@ -496,11 +483,6 @@ extension RecordsViewController {
         }
 
         return snapshot
-    }
-
-    private func updatedTerritoriesSnapshot() {
-        let snapshot = territoriesSnapshot()
-        dataSource.apply(snapshot, to: .territories)
     }
 }
 
@@ -709,12 +691,17 @@ extension RecordsViewController {
     }
 }
 
-// MARK: - Persistence Controller & Fetch Requests
+// MARK: - Fetch Requests
 
 extension RecordsViewController {
-    private func configureViewContext() {
+    private func makeMoc() -> NSManagedObjectContext {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        moc = appDelegate.persistenceController.container.viewContext
+        return appDelegate.persistenceController.container.viewContext
+    }
+
+    private func configureFetchRequests() {
+        configureRecordFetchRequest()
+        configuredTerritoryFetchRequest()
     }
 
     private func configureRecordFetchRequest() {

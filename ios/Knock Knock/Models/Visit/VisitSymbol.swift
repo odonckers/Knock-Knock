@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public enum VisitSymbol: Int16, CaseIterable {
+@objc public enum VisitSymbol: Int16, CaseIterable {
     case notAtHome = 0
     case busy = 1
     case callAgain = 2

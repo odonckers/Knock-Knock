@@ -9,7 +9,7 @@ import Foundation
 
 extension Visit {
     public var wrappedDate: Date { date ?? Date() }
-    public var wrappedSymbol: VisitSymbol {
+    @objc public var wrappedSymbol: VisitSymbol {
         get { VisitSymbol(rawValue: symbol) ?? .notAtHome }
         set { symbol = newValue.rawValue }
     }

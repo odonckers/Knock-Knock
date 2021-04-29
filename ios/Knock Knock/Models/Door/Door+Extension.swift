@@ -17,7 +17,7 @@ extension Door {
         let set = visits as? Set<Visit> ?? []
         return set.sorted { $0.wrappedDate < $1.wrappedDate }
     }
-    public var latestVisit: Visit? {
+    @objc public var latestVisit: Visit? {
         visitArray.count <= 1 ? visitArray.first : nil
     }
 }

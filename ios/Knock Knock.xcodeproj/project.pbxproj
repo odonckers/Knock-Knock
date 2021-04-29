@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7F179806260A776C0046944E /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F179805260A776C0046944E /* TabBarItem.swift */; };
 		7F27D54E2620D6B0000B7360 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F27D54D2620D6B0000B7360 /* RootViewController.swift */; };
 		7F2892D2263391EA009A8ADE /* ScaleButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2892D1263391EA009A8ADE /* ScaleButtonStyle.swift */; };
 		7F49DFAC2620FD47006228A9 /* DoorFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F49DFAB2620FD47006228A9 /* DoorFormView.swift */; };
@@ -24,6 +23,9 @@
 		7FE71393262DF68200FF9B10 /* MoveRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE71392262DF68200FF9B10 /* MoveRecordView.swift */; };
 		7FE7139E262E17D800FF9B10 /* RecordRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE7139D262E17D800FF9B10 /* RecordRow.swift */; };
 		7FE713A9262E3A2F00FF9B10 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE713A8262E3A2F00FF9B10 /* VisualEffectView.swift */; };
+		7FFEBE012638C9C40098C160 /* CollectionListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEBE002638C9C40098C160 /* CollectionListHeader.swift */; };
+		7FFEBE032638CBBB0098C160 /* CollectionListHeaderCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEBE022638CBBB0098C160 /* CollectionListHeaderCellContentView.swift */; };
+		7FFEBE052638CBF80098C160 /* CollectionListHeaderCellContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEBE042638CBF80098C160 /* CollectionListHeaderCellContentConfiguration.swift */; };
 		E24673BB25F0623600A0653B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24673BA25F0623600A0653B /* AppDelegate.swift */; };
 		E24673C625F0625700A0653B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24673C525F0625700A0653B /* SceneDelegate.swift */; };
 		E253C5CC25F0878900C0DDD8 /* RecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E253C5CB25F0878900C0DDD8 /* RecordsViewController.swift */; };
@@ -83,7 +85,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7F179805260A776C0046944E /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		7F27D54D2620D6B0000B7360 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		7F2892D1263391EA009A8ADE /* ScaleButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleButtonStyle.swift; sourceTree = "<group>"; };
 		7F49DFAB2620FD47006228A9 /* DoorFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorFormView.swift; sourceTree = "<group>"; };
@@ -100,6 +101,9 @@
 		7FE71392262DF68200FF9B10 /* MoveRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveRecordView.swift; sourceTree = "<group>"; };
 		7FE7139D262E17D800FF9B10 /* RecordRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRow.swift; sourceTree = "<group>"; };
 		7FE713A8262E3A2F00FF9B10 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
+		7FFEBE002638C9C40098C160 /* CollectionListHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionListHeader.swift; sourceTree = "<group>"; };
+		7FFEBE022638CBBB0098C160 /* CollectionListHeaderCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionListHeaderCellContentView.swift; sourceTree = "<group>"; };
+		7FFEBE042638CBF80098C160 /* CollectionListHeaderCellContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionListHeaderCellContentConfiguration.swift; sourceTree = "<group>"; };
 		E24673BA25F0623600A0653B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E24673C525F0625700A0653B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E253C5CB25F0878900C0DDD8 /* RecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsViewController.swift; sourceTree = "<group>"; };
@@ -191,6 +195,16 @@
 				7F5DA90B2620E67A00043B18 /* CloudKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7FFEBDFF2638C6660098C160 /* Collection List Header */ = {
+			isa = PBXGroup;
+			children = (
+				7FFEBE002638C9C40098C160 /* CollectionListHeader.swift */,
+				7FFEBE042638CBF80098C160 /* CollectionListHeaderCellContentConfiguration.swift */,
+				7FFEBE022638CBBB0098C160 /* CollectionListHeaderCellContentView.swift */,
+			);
+			path = "Collection List Header";
 			sourceTree = "<group>";
 		};
 		E25A15AE25E072740065517B = {
@@ -304,6 +318,7 @@
 		E25A162F25E07B8D0065517B /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				7FFEBDFF2638C6660098C160 /* Collection List Header */,
 				E25A163825E07BFF0065517B /* DeleteConfirmation.swift */,
 				7FB741692633504000D0C224 /* EnvironmentUIPreviewWrapper.swift */,
 				E25A163D25E07CC30065517B /* FilledBackground.swift */,
@@ -366,7 +381,7 @@
 		E25A16D825E08A380065517B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E25A175225E0B4450065517B /* Navigation */,
+				7F27D54D2620D6B0000B7360 /* RootViewController.swift */,
 				E25A16FF25E095A70065517B /* Records */,
 				E25A16D925E08A400065517B /* Doors */,
 			);
@@ -400,15 +415,6 @@
 				E25A172625E0B1D40065517B /* Territory+Extension.swift */,
 			);
 			path = Territory;
-			sourceTree = "<group>";
-		};
-		E25A175225E0B4450065517B /* Navigation */ = {
-			isa = PBXGroup;
-			children = (
-				7F27D54D2620D6B0000B7360 /* RootViewController.swift */,
-				7F179805260A776C0046944E /* TabBarItem.swift */,
-			);
-			path = Navigation;
 			sourceTree = "<group>";
 		};
 		E27AAB2325EEB08500342603 /* Localization */ = {
@@ -557,6 +563,7 @@
 				E25A162B25E07AC60065517B /* Knock_Knock.xcdatamodeld in Sources */,
 				E25A16D125E0863C0065517B /* Record+UI.swift in Sources */,
 				7FE71393262DF68200FF9B10 /* MoveRecordView.swift in Sources */,
+				7FFEBE012638C9C40098C160 /* CollectionListHeader.swift in Sources */,
 				E25A160525E073B90065517B /* NSManagedObjectContext+Extension.swift in Sources */,
 				7FE713A9262E3A2F00FF9B10 /* VisualEffectView.swift in Sources */,
 				E25A16CC25E085E50065517B /* Visit+UI.swift in Sources */,
@@ -569,6 +576,7 @@
 				E24673BB25F0623600A0653B /* AppDelegate.swift in Sources */,
 				E25A163E25E07CC30065517B /* FilledBackground.swift in Sources */,
 				E25A16BA25E0854C0065517B /* RecordType.swift in Sources */,
+				7FFEBE052638CBF80098C160 /* CollectionListHeaderCellContentConfiguration.swift in Sources */,
 				E2BB6FC125EB3F2600731EDE /* UIColor+Extension.swift in Sources */,
 				E25A16B225E084BD0065517B /* Visit+Extension.swift in Sources */,
 				E25A169B25E083A80065517B /* CardGroupBoxStyle.swift in Sources */,
@@ -580,6 +588,7 @@
 				E25A165425E07FC70065517B /* LocationManager.swift in Sources */,
 				E25A16AD25E0847C0065517B /* Door+Extension.swift in Sources */,
 				E25A166025E080190065517B /* LocationRequest.swift in Sources */,
+				7FFEBE032638CBBB0098C160 /* CollectionListHeaderCellContentView.swift in Sources */,
 				7F2892D2263391EA009A8ADE /* ScaleButtonStyle.swift in Sources */,
 				7F5310FF260E667300F5F3BE /* RecordCollectionViewListCellContentConfiguration.swift in Sources */,
 				E25A167F25E081750065517B /* UserDefault.swift in Sources */,
@@ -599,7 +608,6 @@
 				7FD8B3512620BD0100B51D86 /* CoreDataPublisher.swift in Sources */,
 				7FB7416A2633504000D0C224 /* EnvironmentUIPreviewWrapper.swift in Sources */,
 				7F5311282610404D00F5F3BE /* UIFont+Extension.swift in Sources */,
-				7F179806260A776C0046944E /* TabBarItem.swift in Sources */,
 				E24673C625F0625700A0653B /* SceneDelegate.swift in Sources */,
 				E25A166D25E080960065517B /* PlatformModifiers.swift in Sources */,
 				E25A168425E081B60065517B /* FormLabel.swift in Sources */,
