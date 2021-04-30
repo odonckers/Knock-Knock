@@ -7,21 +7,23 @@
 
 import SwiftUI
 
-struct CollectionListHeader<Title, Icon>: View where Title: View, Icon: View {
-    let label: Label<Title, Icon>
+struct CollectionListHeader<Content>: View where Content: View {
+    let content: Content
 
-    init(@ViewBuilder label: @escaping () -> Label<Title, Icon>) {
-        self.label = label()
+    init(@ViewBuilder content: @escaping () -> Content) {
+        self.content = content()
     }
 
     var body: some View {
         HStack(alignment: .bottom) {
-            label
+            content
                 .font(.title2.bold())
+                .imageScale(.small)
             Spacer()
         }
-        .padding([.top], 50)
-        .padding([.horizontal, .bottom])
+        .padding(.top, 30)
+        .padding(.bottom, 5)
+        .padding(.horizontal)
     }
 }
 

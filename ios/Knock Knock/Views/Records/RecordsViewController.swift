@@ -353,13 +353,16 @@ extension RecordsViewController {
             var contentConfiguration = cell.defaultContentConfiguration()
             contentConfiguration.text = item.title
 
+            cell.contentConfiguration = contentConfiguration
             cell.tintColor = item.tintColor
 
-            cell.contentConfiguration = contentConfiguration
-            if item.hasExpander ?? false {
+            var accessories = [UICellAccessory]()
+            if item.hasExpander {
                 let headerDiscosureOption = UICellAccessory.OutlineDisclosureOptions(style: .header)
-                cell.accessories = [.outlineDisclosure(options: headerDiscosureOption)]
+                accessories.append(.outlineDisclosure(options: headerDiscosureOption))
             }
+
+            cell.accessories = accessories
         }
 
         let expandableRowRegistration = CellRegistration { cell, indexPath, item in
@@ -368,13 +371,16 @@ extension RecordsViewController {
             contentConfiguration.secondaryText = item.subtitle
             contentConfiguration.image = item.image
 
+            cell.contentConfiguration = contentConfiguration
             cell.tintColor = item.tintColor
 
-            cell.contentConfiguration = contentConfiguration
-            if item.hasExpander ?? false {
+            var accessories = [UICellAccessory]()
+            if item.hasExpander {
                 let headerDiscosureOption = UICellAccessory.OutlineDisclosureOptions(style: .header)
-                cell.accessories = [.outlineDisclosure(options: headerDiscosureOption)]
+                accessories.append(.outlineDisclosure(options: headerDiscosureOption))
             }
+
+            cell.accessories = accessories
         }
 
         let rowRegistration = CellRegistration { [weak self] cell, indexPath, item in
@@ -383,12 +389,15 @@ extension RecordsViewController {
             contentConfiguration.secondaryText = item.subtitle
             contentConfiguration.image = item.image
 
+            cell.contentConfiguration = contentConfiguration
             cell.tintColor = item.tintColor
 
-            cell.contentConfiguration = contentConfiguration
-            if item.hasChild ?? false && self?.isCompact ?? false {
-                cell.accessories = [.disclosureIndicator()]
+            var accessories = [UICellAccessory]()
+            if item.hasChild && self?.isCompact ?? false {
+                accessories.append(.disclosureIndicator())
             }
+
+            cell.accessories = accessories
         }
 
         return DataSource(collectionView: collectionView) { collectionView, indexPath, item in
@@ -425,19 +434,15 @@ extension RecordsViewController {
         if let state = record.state { subtitle.append(state) }
 
         return .row(
+            image: UIImage(
+                systemName: record.wrappedType == .apartment ? "a.square.fill" : "s.square.fill"
+            ),
             title: title.joined(separator: " "),
             subtitle: subtitle.joined(separator: ", "),
-            image: UIImage(
-                systemName: record.wrappedType == .apartment
-                    ? "a.square.fill"
-                    : "s.square.fill"
+            tintColor: UIColor(
+                record.wrappedType == .apartment ? .recordTypeApartment : .recordTypeStreet
             ),
             hasChild: true,
-            tintColor: UIColor(
-                record.wrappedType == .apartment
-                    ? .recordTypeApartment
-                    : .recordTypeStreet
-            ),
             id: record.wrappedID,
             object: record
         )
@@ -458,16 +463,16 @@ extension RecordsViewController {
     private func territoriesSnapshot() -> NSDiffableDataSourceSectionSnapshot<SidebarItem> {
         var snapshot = NSDiffableDataSourceSectionSnapshot<SidebarItem>()
 
-        let header: SidebarItem = .header(title: "Territories", hasExpander: false)
+        let header: SidebarItem = .header(title: "Territories")
         snapshot.append([header])
         snapshot.expand([header])
 
         if let territories = fetchedTerritoriesController.fetchedObjects {
             territories.forEach { territory in
                 let expandableRow: SidebarItem = .expandableRow(
+                    image: UIImage(systemName: "folder"),
                     title: territory.wrappedName,
                     subtitle: nil,
-                    image: UIImage(systemName: "folder"),
                     id: territory.wrappedID,
                     object: territory
                 )
@@ -502,12 +507,10 @@ extension RecordsViewController {
                         children: [
                             UIAction(title: "Edit", image: UIImage(systemName: "pencil")) {
                                 [weak self] action in
-
                                 self?.updateRecord(at: indexPath)
                             },
                             UIAction(title: "Move", image: UIImage(systemName: "folder")) {
                                 [weak self] action in
-
                                 self?.moveRecord(at: indexPath)
                             },
                         ]
@@ -639,7 +642,6 @@ extension RecordsViewController {
                         children: [
                             UIAction(title: "Edit", image: UIImage(systemName: "pencil")) {
                                 [weak self] action in
-
                                 self?.presentTerritoryForm(from: indexPath)
                             },
                             UIAction(
@@ -865,79 +867,63 @@ extension RecordsViewController {
 
     private struct SidebarItem: Hashable, Identifiable {
         let id: String
-        let type: SidebarItemType
-        let title: String?
-        let subtitle: String?
-        let image: UIImage?
-        let hasExpander: Bool?
-        let hasChild: Bool?
-        let tintColor: UIColor?
-        let object: NSManagedObject?
+        private(set) var object: NSManagedObject? = nil
+        private(set) var type: SidebarItemType
+        private(set) var image: UIImage? = nil
+        private(set) var title: String? = nil
+        private(set) var subtitle: String? = nil
+        private(set) var tintColor: UIColor? = nil
+        private(set) var hasExpander: Bool = false
+        private(set) var hasChild: Bool = false
 
         static func header(
             title: String,
             hasExpander: Bool = true,
             id: String = UUID().uuidString
-        ) -> SidebarItem {
-            SidebarItem(
-                id: id,
-                type: .header,
-                title: title,
-                subtitle: nil,
-                image: nil,
-                hasExpander: hasExpander,
-                hasChild: nil,
-                tintColor: nil,
-                object: nil
-            )
+        ) -> Self {
+            SidebarItem(id: id, type: .header, title: title, hasExpander: hasExpander)
         }
 
         static func expandableRow(
+            image: UIImage? = nil,
             title: String,
-            subtitle: String?,
-            image: UIImage?,
-            hasExpander: Bool = true,
+            subtitle: String? = nil,
             tintColor: UIColor? = nil,
+            hasExpander: Bool = true,
             id: String = UUID().uuidString,
             object: NSManagedObject? = nil
         ) -> SidebarItem {
             SidebarItem(
                 id: id,
+                object: object,
                 type: .expandableRow,
+                image: image,
                 title: title,
                 subtitle: subtitle,
-                image: image,
-                hasExpander: hasExpander,
-                hasChild: nil,
                 tintColor: tintColor,
-                object: object
+                hasExpander: hasExpander
             )
         }
 
         static func row(
+            image: UIImage? = nil,
             title: String,
-            subtitle: String?,
-            image: UIImage?,
-            hasChild: Bool = false,
+            subtitle: String? = nil,
             tintColor: UIColor? = nil,
+            hasChild: Bool = false,
             id: String = UUID().uuidString,
             object: NSManagedObject? = nil
         ) -> SidebarItem {
             SidebarItem(
                 id: id,
+                object: object,
                 type: .row,
+                image: image,
                 title: title,
                 subtitle: subtitle,
-                image: image,
-                hasExpander: nil,
-                hasChild: hasChild,
                 tintColor: tintColor,
-                object: object
+                hasChild: hasChild
             )
         }
-    }
-
-    private struct RowIdentifier {
-        static let records = UUID().uuidString
     }
 }

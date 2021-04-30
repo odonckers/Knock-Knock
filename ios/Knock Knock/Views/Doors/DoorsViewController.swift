@@ -48,27 +48,20 @@ extension DoorsViewController {
     private func makeAddDoorBarButton() -> UIBarButtonItem {
         UIBarButtonItem(
             title: "Add Door",
-            image: UIImage(systemName: "plus.circle.fill"),
-            menu: UIMenu(
-                children: [
-                    UIAction(
-                        title: "Add Door",
-                        image: UIImage(systemName: "note.text.badge.plus")
-                    ) { [weak self] action in
-                        guard let self = self else { return }
+            image: UIImage(systemName: "plus.circle"),
+            primaryAction: UIAction { [weak self] action in
+                guard let self = self else { return }
 
-                        let navigationController = UINavigationController()
-                        navigationController.modalPresentationStyle = .formSheet
+                let navigationController = UINavigationController()
+                navigationController.modalPresentationStyle = .formSheet
 
-                        DoorFormView(record: self.record)
-                            .environment(\.managedObjectContext, self.moc)
-                            .environment(\.uiNavigationController, navigationController)
-                            .assignToUI(navigationController: navigationController)
+                DoorFormView(record: self.record)
+                    .environment(\.managedObjectContext, self.moc)
+                    .environment(\.uiNavigationController, navigationController)
+                    .assignToUI(navigationController: navigationController)
 
-                        self.present(navigationController, animated: true)
-                    },
-                ]
-            )
+                self.present(navigationController, animated: true)
+            }
         )
     }
 }
@@ -113,6 +106,11 @@ extension DoorsViewController: UICollectionViewDelegate { }
 // MARK: - Data Source & Snapshots
 
 extension DoorsViewController {
+    private typealias HeaderRegistration = UICollectionView.CellRegistration<
+        CollectionListHeaderCell,
+        CollectionItem
+    >
+
     private typealias CellRegistration = UICollectionView.CellRegistration<
         UICollectionViewListCell,
         CollectionItem
@@ -124,46 +122,31 @@ extension DoorsViewController {
     >
 
     private func makeDataSource() -> DataSource {
-        let headerRegistration = CellRegistration { cell, indexPath, item in
-            var contentConfiguration = cell.defaultContentConfiguration()
-            contentConfiguration.text = item.title
-
-            cell.tintColor = item.tintColor
-
-            cell.contentConfiguration = contentConfiguration
-            if item.hasExpander ?? false {
-                let headerDiscosureOption = UICellAccessory.OutlineDisclosureOptions(style: .header)
-                cell.accessories = [.outlineDisclosure(options: headerDiscosureOption)]
-            }
-        }
-
-        let expandableRowRegistration = CellRegistration { cell, indexPath, item in
-            var contentConfiguration = cell.defaultContentConfiguration()
-            contentConfiguration.text = item.title
-            contentConfiguration.secondaryText = item.subtitle
-            contentConfiguration.image = item.image
-
-            cell.tintColor = item.tintColor
+        let headerRegistration = HeaderRegistration { cell, indexPath, item in
+            var contentConfiguration = CollectionListHeaderCellContentConfiguration()
+            contentConfiguration.systemImage = item.systemImage
+            contentConfiguration.title = item.title
+            contentConfiguration.foregroundColor = item.foregroundColor
 
             cell.contentConfiguration = contentConfiguration
-            if item.hasExpander ?? false {
-                let headerDiscosureOption = UICellAccessory.OutlineDisclosureOptions(style: .header)
-                cell.accessories = [.outlineDisclosure(options: headerDiscosureOption)]
-            }
+            cell.backgroundColor = .systemBackground
         }
 
         let rowRegistration = CellRegistration { cell, indexPath, item in
             var contentConfiguration = cell.defaultContentConfiguration()
             contentConfiguration.text = item.title
             contentConfiguration.secondaryText = item.subtitle
-            contentConfiguration.image = item.image
-
-            cell.tintColor = item.tintColor
+            if let systemImage = item.systemImage {
+                contentConfiguration.image = UIImage(systemName: systemImage)
+            }
 
             cell.contentConfiguration = contentConfiguration
-            if item.hasChild ?? false {
-                cell.accessories = [.disclosureIndicator()]
-            }
+            cell.tintColor = item.foregroundColor
+
+            var accessories = [UICellAccessory]()
+            if item.hasChild { accessories.append(.disclosureIndicator()) }
+
+            cell.accessories = accessories
         }
 
         return DataSource(collectionView: collectionView) { collectionView, indexPath, item in
@@ -171,12 +154,6 @@ extension DoorsViewController {
             case .header:
                 return collectionView.dequeueConfiguredReusableCell(
                     using: headerRegistration,
-                    for: indexPath,
-                    item: item
-                )
-            case .expandableRow:
-                return collectionView.dequeueConfiguredReusableCell(
-                    using: expandableRowRegistration,
                     for: indexPath,
                     item: item
                 )
@@ -199,8 +176,13 @@ extension DoorsViewController {
                 let visitSymbol = VisitSymbol(rawValue: sectionInt),
                 let doors = section.objects as? [Door]
             {
-                let header: CollectionItem = .header(title: section.name, hasExpander: true)
-                var items = [header]
+                var items: [CollectionItem] = [
+                    .header(
+                        systemImage: visitSymbol.systemImage,
+                        title: visitSymbol.text,
+                        foregroundColor: UIColor(visitSymbol.color)
+                    )
+                ]
                 doors.forEach { door in items.append(doorRow(door)) }
 
                 snapshot.appendSections([visitSymbol])
@@ -219,10 +201,8 @@ extension DoorsViewController {
 
         return .row(
             title: door.wrappedNumber,
-            subtitle: nil,
-            image: nil,
+            foregroundColor: symbolColor,
             hasChild: false,
-            tintColor: symbolColor,
             id: door.wrappedID,
             object: door
         )
@@ -285,79 +265,52 @@ extension DoorsViewController {
     }
 
     private enum CollectionItemType: Int {
-        case header, expandableRow, row
+        case header, row
     }
 
     private struct CollectionItem: Hashable, Identifiable {
         let id: String
-        let type: CollectionItemType
-        let title: String?
-        let subtitle: String?
-        let image: UIImage?
-        let hasExpander: Bool?
-        let hasChild: Bool?
-        let tintColor: UIColor?
-        let object: NSManagedObject?
+        private(set) var object: NSManagedObject?
+        private(set) var type: CollectionItemType
+        private(set) var systemImage: String? = nil
+        private(set) var title: String? = nil
+        private(set) var subtitle: String? = nil
+        private(set) var foregroundColor: UIColor? = nil
+        private(set) var hasChild: Bool = false
 
         static func header(
+            systemImage: String? = nil,
             title: String,
-            hasExpander: Bool = true,
+            foregroundColor: UIColor = .label,
             id: String = UUID().uuidString
-        ) -> CollectionItem {
+        ) -> Self {
             CollectionItem(
                 id: id,
                 type: .header,
+                systemImage: systemImage,
                 title: title,
-                subtitle: nil,
-                image: nil,
-                hasExpander: hasExpander,
-                hasChild: nil,
-                tintColor: nil,
-                object: nil
-            )
-        }
-
-        static func expandableRow(
-            title: String,
-            subtitle: String?,
-            image: UIImage?,
-            hasExpander: Bool = true,
-            tintColor: UIColor? = nil,
-            id: String = UUID().uuidString,
-            object: NSManagedObject? = nil
-        ) -> CollectionItem {
-            CollectionItem(
-                id: id,
-                type: .expandableRow,
-                title: title,
-                subtitle: subtitle,
-                image: image,
-                hasExpander: hasExpander,
-                hasChild: nil,
-                tintColor: tintColor,
-                object: object
+                foregroundColor: foregroundColor
             )
         }
 
         static func row(
+            systemImage: String? = nil,
             title: String,
-            subtitle: String?,
-            image: UIImage?,
+            subtitle: String? = nil,
+            foregroundColor: UIColor? = nil,
             hasChild: Bool = false,
-            tintColor: UIColor? = nil,
             id: String = UUID().uuidString,
             object: NSManagedObject? = nil
-        ) -> CollectionItem {
+        ) -> Self {
             CollectionItem(
                 id: id,
+                object: object,
                 type: .row,
+                systemImage: systemImage,
                 title: title,
                 subtitle: subtitle,
-                image: image,
-                hasExpander: nil,
-                hasChild: hasChild,
-                tintColor: tintColor,
-                object: object
+                foregroundColor: foregroundColor,
+                hasChild: hasChild
             )
         }
     }

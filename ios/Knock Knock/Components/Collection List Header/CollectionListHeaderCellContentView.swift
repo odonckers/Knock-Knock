@@ -39,10 +39,10 @@ class CollectionListHeaderCellContentView: UIView, UIContentView {
 
         rootView.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            rootView.view.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            rootView.view.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor),
-            rootView.view.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            rootView.view.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor),
+            rootView.view.leadingAnchor.constraint(equalTo: leadingAnchor),
+            rootView.view.topAnchor.constraint(equalTo: topAnchor),
+            rootView.view.trailingAnchor.constraint(equalTo: trailingAnchor),
+            rootView.view.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 
@@ -53,7 +53,15 @@ class CollectionListHeaderCellContentView: UIView, UIContentView {
         if let title = configuration.title {
             rootView.rootView = AnyView(
                 CollectionListHeader {
-                    Label(title, systemImage: "")
+                    if let foregroundColor = configuration.foregroundColor {
+                        if let systemImage = configuration.systemImage {
+                            Label(title, systemImage: systemImage)
+                                .foregroundColor(Color(foregroundColor))
+                        } else {
+                            Text(title)
+                                .foregroundColor(Color(foregroundColor))
+                        }
+                    }
                 }
             )
         }

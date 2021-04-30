@@ -8,6 +8,7 @@
 import UIKit
 
 struct CollectionListHeaderCellContentConfiguration: UIContentConfiguration, Hashable {
+    var systemImage: String?
     var title: String?
     var foregroundColor: UIColor?
 
@@ -16,14 +17,11 @@ struct CollectionListHeaderCellContentConfiguration: UIContentConfiguration, Has
     }
 
     func updated(for state: UIConfigurationState) -> Self {
-        self
-//        guard let state = state as? UICellConfigurationState
-//        else { return self }
+        var updatedConfiguration = self
+        updatedConfiguration.systemImage = systemImage
+        updatedConfiguration.title = title
+        updatedConfiguration.foregroundColor = foregroundColor
 
-//        var updatedConfiguration = self
-//        updatedConfiguration.record = record
-//        updatedConfiguration.isSelected = state.isSelected
-
-//        return updatedConfiguration
+        return updatedConfiguration
     }
 }

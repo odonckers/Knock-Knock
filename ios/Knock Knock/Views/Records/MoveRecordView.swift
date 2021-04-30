@@ -34,6 +34,7 @@ struct MoveRecordView: View {
                 )
 
             Divider()
+                .edgesIgnoringSafeArea(.horizontal)
 
             List {
                 if record.territory == nil {

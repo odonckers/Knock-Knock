@@ -48,6 +48,7 @@ struct RecordFormView: View {
                     )
 
                 Divider()
+                    .edgesIgnoringSafeArea(.horizontal)
             }
 
             Form {

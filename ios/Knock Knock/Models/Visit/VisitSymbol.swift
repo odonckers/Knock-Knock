@@ -23,4 +23,24 @@ import SwiftUI
         case .other: return .visitSymbolOther
         }
     }
+
+    public var text: String {
+        switch self {
+        case .notAtHome: return "Not at Home"
+        case .busy: return "Busy"
+        case .callAgain: return "Call Again"
+        case .notInterested: return "Not Interested"
+        case .other: return "Other"
+        }
+    }
+
+    public var systemImage: String {
+        switch self {
+        case .notAtHome: return "xmark.octagon"
+        case .busy: return "alarm"
+        case .callAgain: return "checkmark.circle"
+        case .notInterested: return "minus.circle"
+        case .other: return "o.circle"
+        }
+    }
 }
