@@ -34,7 +34,9 @@ class DoorsViewController: UIViewController {
 
         title = record.wrappedStreetName
         navigationItem.largeTitleDisplayMode = .never
-        navigationItem.rightBarButtonItem = addDoorBarButtonItem
+
+        toolbarItems = [.flexibleSpace(), addDoorBarButtonItem]
+        navigationController?.isToolbarHidden = false
 
         view.addSubview(collectionView)
 

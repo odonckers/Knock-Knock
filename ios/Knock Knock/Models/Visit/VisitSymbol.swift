@@ -36,11 +36,11 @@ import SwiftUI
 
     public var systemImage: String {
         switch self {
-        case .notAtHome: return "xmark.octagon"
-        case .busy: return "alarm"
-        case .callAgain: return "checkmark.circle"
-        case .notInterested: return "minus.circle"
-        case .other: return "o.circle"
+        case .notAtHome: return "xmark.square.fill"
+        case .busy: return "alarm.fill"
+        case .callAgain: return "checkmark.square.fill"
+        case .notInterested: return "minus.square.fill"
+        case .other: return "o.square.fill"
         }
     }
 }

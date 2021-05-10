@@ -5,6 +5,7 @@
 //  Created by Owen Donckers on 3/3/21.
 //
 
+import Combine
 import CoreData
 import UIKit
 
@@ -20,6 +21,9 @@ class RecordsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private var cancellables = Set<AnyCancellable>()
+
+    private lazy var addTerritoryBarButton = makeAddTerritoryBarButton()
     private lazy var addRecordBarButton = makeAddRecordBarButton()
 
     private lazy var collectionView = makeCollectionView()
@@ -31,52 +35,62 @@ class RecordsViewController: UIViewController {
 
     private let largeSymbolConfig = UIImage.SymbolConfiguration(textStyle: .title3)
 
+    private var selectedCollectionCell: IndexPath? = nil
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         title = "Records"
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.rightBarButtonItem = addRecordBarButton
+
+        toolbarItems = [addTerritoryBarButton, .flexibleSpace(), addRecordBarButton]
+        navigationController?.isToolbarHidden = false
 
         view.addSubview(collectionView)
 
         configureFetchRequests()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if let selectedCollectionCell = selectedCollectionCell {
+            collectionView.deselectItem(at: selectedCollectionCell, animated: animated)
+            self.selectedCollectionCell = nil
+        }
     }
 }
 
 // MARK: - Top Bar
 
 extension RecordsViewController {
+    private func makeAddTerritoryBarButton() -> UIBarButtonItem {
+        UIBarButtonItem(
+            title: "Add Territory",
+            image: UIImage(systemName: "folder.badge.plus"),
+            primaryAction: UIAction { [weak self] action in
+                self?.presentTerritoryForm()
+            }
+        )
+    }
+
     private func makeAddRecordBarButton() -> UIBarButtonItem {
         UIBarButtonItem(
             title: "Add Record",
-            image: UIImage(systemName: "plus.circle.fill"),
-            menu: UIMenu(
-                children: [
-                    UIAction(
-                        title: "Add Record",
-                        image: UIImage(systemName: "note.text.badge.plus")
-                    ) { [weak self] action in
-                        guard let self = self else { return }
+            image: UIImage(systemName: "note.text.badge.plus"),
+            primaryAction: UIAction { [weak self] action in
+                guard let self = self else { return }
 
-                        let navigationController = UINavigationController()
-                        navigationController.modalPresentationStyle = .formSheet
+                let navigationController = UINavigationController()
+                navigationController.modalPresentationStyle = .formSheet
 
-                        RecordFormView()
-                            .environment(\.managedObjectContext, self.moc)
-                            .environment(\.uiNavigationController, navigationController)
-                            .assignToUI(navigationController: navigationController)
+                RecordFormView()
+                    .environment(\.managedObjectContext, self.moc)
+                    .environment(\.uiNavigationController, navigationController)
+                    .assignToUI(navigationController: navigationController)
 
-                        self.present(navigationController, animated: true)
-                    },
-                    UIAction(
-                        title: "Add Territory",
-                        image: UIImage(systemName: "folder.fill.badge.plus")
-                    ) { [weak self] action in
-                        self?.presentTerritoryForm()
-                    }
-                ]
-            )
+                self.present(navigationController, animated: true)
+            }
         )
     }
 }
@@ -308,6 +322,8 @@ extension RecordsViewController: UICollectionViewDelegate {
         case is Record: didSelectRecord(item.object as! Record)
         default: break
         }
+
+        selectedCollectionCell = indexPath
     }
 
     func collectionView(
@@ -335,7 +351,7 @@ extension RecordsViewController: UICollectionViewDelegate {
     }
 }
 
-// MARK: - Data Source & Snapshots
+// MARK: - Cell Registration
 
 extension RecordsViewController {
     private typealias CellRegistration = UICollectionView.CellRegistration<
@@ -343,15 +359,18 @@ extension RecordsViewController {
         SidebarItem
     >
 
-    private typealias DataSource = UICollectionViewDiffableDataSource<
-        SidebarSection,
-        SidebarItem
-    >
-
-    private func makeDataSource() -> DataSource {
-        let headerRegistration = CellRegistration { cell, indexPath, item in
+    private func headerRegistration() -> CellRegistration {
+        CellRegistration { [weak self] cell, indexPath, item in
             var contentConfiguration = cell.defaultContentConfiguration()
             contentConfiguration.text = item.title
+
+            if let self = self, self.isCompact {
+                contentConfiguration.textProperties.color = .label
+                contentConfiguration.textProperties.transform = .none
+                contentConfiguration.textProperties.font = UIFont
+                    .preferredFont(forTextStyle: .title3)
+                    .withTraits(.traitBold)
+            }
 
             cell.contentConfiguration = contentConfiguration
             cell.tintColor = item.tintColor
@@ -364,8 +383,10 @@ extension RecordsViewController {
 
             cell.accessories = accessories
         }
+    }
 
-        let expandableRowRegistration = CellRegistration { cell, indexPath, item in
+    private func expandableRowRegistration() -> CellRegistration {
+        CellRegistration { cell, indexPath, item in
             var contentConfiguration = cell.defaultContentConfiguration()
             contentConfiguration.text = item.title
             contentConfiguration.secondaryText = item.subtitle
@@ -382,8 +403,10 @@ extension RecordsViewController {
 
             cell.accessories = accessories
         }
+    }
 
-        let rowRegistration = CellRegistration { [weak self] cell, indexPath, item in
+    private func rowRegistration() -> CellRegistration {
+        CellRegistration { [weak self] cell, indexPath, item in
             var contentConfiguration = cell.defaultContentConfiguration()
             contentConfiguration.text = item.title
             contentConfiguration.secondaryText = item.subtitle
@@ -398,29 +421,6 @@ extension RecordsViewController {
             }
 
             cell.accessories = accessories
-        }
-
-        return DataSource(collectionView: collectionView) { collectionView, indexPath, item in
-            switch item.type {
-            case .header:
-                return collectionView.dequeueConfiguredReusableCell(
-                    using: headerRegistration,
-                    for: indexPath,
-                    item: item
-                )
-            case .expandableRow:
-                return collectionView.dequeueConfiguredReusableCell(
-                    using: expandableRowRegistration,
-                    for: indexPath,
-                    item: item
-                )
-            default:
-                return collectionView.dequeueConfiguredReusableCell(
-                    using: rowRegistration,
-                    for: indexPath,
-                    item: item
-                )
-            }
         }
     }
 
@@ -446,6 +446,44 @@ extension RecordsViewController {
             id: record.wrappedID,
             object: record
         )
+    }
+}
+
+// MARK: - Data Source & Snapshots
+
+extension RecordsViewController {
+    private typealias DataSource = UICollectionViewDiffableDataSource<
+        SidebarSection,
+        SidebarItem
+    >
+
+    private func makeDataSource() -> DataSource {
+        let headerRegistration = headerRegistration()
+        let expandableRowRegistration = expandableRowRegistration()
+        let rowRegistration = rowRegistration()
+
+        return DataSource(collectionView: collectionView) { collectionView, indexPath, item in
+            switch item.type {
+            case .header:
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: headerRegistration,
+                    for: indexPath,
+                    item: item
+                )
+            case .expandableRow:
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: expandableRowRegistration,
+                    for: indexPath,
+                    item: item
+                )
+            default:
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: rowRegistration,
+                    for: indexPath,
+                    item: item
+                )
+            }
+        }
     }
 
     private func recordsSnapshot() -> NSDiffableDataSourceSectionSnapshot<SidebarItem> {
@@ -572,38 +610,31 @@ extension RecordsViewController {
     private func presentTerritoryForm(_ territory: Territory? = nil) {
         let alertController = UIAlertController(
             title: "New Territory",
-            message: nil,
+            message: territory == nil ? "Enter a name for this territory." : nil,
             preferredStyle: .alert
         )
         alertController.view.tintColor = .accentColor
 
-        alertController.addTextField()
-
+        alertController.addTextField { nameTextField in
+            nameTextField.placeholder = "Name"
+            nameTextField.autocapitalizationType = .allCharacters
+        }
         let nameTextField = alertController.textFields?.first
-        nameTextField?.placeholder = "Name"
-        nameTextField?.autocapitalizationType = .allCharacters
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         alertController.addAction(cancelAction)
 
-        let submitAction = UIAlertAction(title: "Submit", style: .default) {
-            [weak self, unowned alertController] action in
-
-            guard let textFields = alertController.textFields else { return }
-
-            let nameField = textFields[0].text
+        let submitAction = UIAlertAction(title: "Save", style: .default) { [weak self] action in
             if let territory = territory {
-                self?.updateTerritory(territory: territory, to: nameField)
+                self?.updateTerritory(territory: territory, to: nameTextField?.text)
             } else {
-                self?.addTerritory(named: nameField)
+                self?.addTerritory(named: nameTextField?.text)
             }
         }
         alertController.addAction(submitAction)
 
         if let territory = territory {
             alertController.title = "Edit Territory"
-            alertController.message = territory.wrappedName
-
             nameTextField?.text = territory.wrappedName
         }
 

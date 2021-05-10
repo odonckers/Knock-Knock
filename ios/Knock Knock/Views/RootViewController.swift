@@ -5,6 +5,7 @@
 //  Created by Owen Donckers on 4/9/21.
 //
 
+import SwiftUI
 import UIKit
 
 class RootViewController: UIViewController {
@@ -49,10 +50,14 @@ extension RootViewController {
         let moc = PersistenceController.shared.container.viewContext
         let navigationController = UINavigationController()
 
-        DoorsView.emptyBody
-            .environment(\.managedObjectContext, moc)
-            .environment(\.uiNavigationController, navigationController)
-            .assignToUI(navigationController: navigationController)
+        VStack(alignment: .center) {
+            Text("Select a Record")
+                .font(.title)
+                .foregroundColor(.gray)
+        }
+        .environment(\.managedObjectContext, moc)
+        .environment(\.uiNavigationController, navigationController)
+        .assignToUI(navigationController: navigationController)
 
         return navigationController
     }

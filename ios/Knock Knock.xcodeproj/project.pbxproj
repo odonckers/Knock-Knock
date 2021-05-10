@@ -59,7 +59,6 @@
 		E25A16C725E085940065517B /* VisitPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16C625E085940065517B /* VisitPerson.swift */; };
 		E25A16CC25E085E50065517B /* Visit+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16CB25E085E50065517B /* Visit+UI.swift */; };
 		E25A16D125E0863C0065517B /* Record+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16D025E0863C0065517B /* Record+UI.swift */; };
-		E25A16ED25E093AA0065517B /* DoorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A16EC25E093AA0065517B /* DoorsView.swift */; };
 		E25A170725E095FE0065517B /* RecordFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A170625E095FE0065517B /* RecordFormView.swift */; };
 		E25A172725E0B1D40065517B /* Territory+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A172625E0B1D40065517B /* Territory+Extension.swift */; };
 		E27AAB0D25ED8B9D00342603 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AAB0C25ED8B9D00342603 /* Color+Extension.swift */; };
@@ -144,7 +143,6 @@
 		E25A16C625E085940065517B /* VisitPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitPerson.swift; sourceTree = "<group>"; };
 		E25A16CB25E085E50065517B /* Visit+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Visit+UI.swift"; sourceTree = "<group>"; };
 		E25A16D025E0863C0065517B /* Record+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Record+UI.swift"; sourceTree = "<group>"; };
-		E25A16EC25E093AA0065517B /* DoorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorsView.swift; sourceTree = "<group>"; };
 		E25A170625E095FE0065517B /* RecordFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordFormView.swift; sourceTree = "<group>"; };
 		E25A172625E0B1D40065517B /* Territory+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Territory+Extension.swift"; sourceTree = "<group>"; };
 		E25A176525E0B52B0065517B /* Knock Knock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Knock Knock.entitlements"; sourceTree = "<group>"; };
@@ -396,7 +394,6 @@
 			children = (
 				7FA3CAC32637B73000F9E130 /* DoorsViewController.swift */,
 				7F49DFAB2620FD47006228A9 /* DoorFormView.swift */,
-				E25A16EC25E093AA0065517B /* DoorsView.swift */,
 			);
 			path = Doors;
 			sourceTree = "<group>";
@@ -605,7 +602,6 @@
 				E25A16C225E0857B0065517B /* VisitSymbol.swift in Sources */,
 				E25A16A825E084390065517B /* Record+Extension.swift in Sources */,
 				E253C5CC25F0878900C0DDD8 /* RecordsViewController.swift in Sources */,
-				E25A16ED25E093AA0065517B /* DoorsView.swift in Sources */,
 				7FA3CAC42637B73000F9E130 /* DoorsViewController.swift in Sources */,
 				E2BB6FDB25EB6DF600731EDE /* ModelManagedObject.swift in Sources */,
 				7F53110F260E714900F5F3BE /* RecordCollectionViewListCell.swift in Sources */,
