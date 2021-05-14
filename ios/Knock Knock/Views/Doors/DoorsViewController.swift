@@ -32,7 +32,10 @@ class DoorsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = record.wrappedStreetName
+        var title = [record.wrappedStreetName]
+        if let apartmentNumber = record.apartmentNumber { title.insert(apartmentNumber, at: 0) }
+
+        self.title = title.joined(separator: " ")
         navigationItem.largeTitleDisplayMode = .never
 
         toolbarItems = [.flexibleSpace(), addDoorBarButtonItem]

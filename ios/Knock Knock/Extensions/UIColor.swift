@@ -1,5 +1,5 @@
 //
-//  UIColor+Extension.swift
+//  UIColor.swift
 //  Knock Knock
 //
 //  Created by Owen Donckers on 2/27/21.

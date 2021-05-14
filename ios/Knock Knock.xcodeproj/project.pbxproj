@@ -7,10 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F0835E9264C969200A940FA /* RecordsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0835E8264C969200A940FA /* RecordsViewModel.swift */; };
+		7F0835EB264CA30400A940FA /* FetchedObjectList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0835EA264CA30400A940FA /* FetchedObjectList.swift */; };
+		7F0835ED264CA7AB00A940FA /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0835EC264CA7AB00A940FA /* Publisher.swift */; };
 		7F27D54E2620D6B0000B7360 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F27D54D2620D6B0000B7360 /* RootViewController.swift */; };
 		7F2892D2263391EA009A8ADE /* ScaleButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2892D1263391EA009A8ADE /* ScaleButtonStyle.swift */; };
 		7F49DFAC2620FD47006228A9 /* DoorFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F49DFAB2620FD47006228A9 /* DoorFormView.swift */; };
 		7F49DFD726221F80006228A9 /* UIEnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F49DFD626221F80006228A9 /* UIEnvironmentValues.swift */; };
+		7F5018CD264C222D0085EF93 /* RecordsCellRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5018CC264C222D0085EF93 /* RecordsCellRegistration.swift */; };
+		7F5018CF264C22D90085EF93 /* RecordsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5018CE264C22D90085EF93 /* RecordsCollectionView.swift */; };
 		7F5310FF260E667300F5F3BE /* RecordCollectionViewListCellContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5310FE260E667300F5F3BE /* RecordCollectionViewListCellContentConfiguration.swift */; };
 		7F531104260E66B400F5F3BE /* RecordCollectionViewListCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F531103260E66B400F5F3BE /* RecordCollectionViewListCellContentView.swift */; };
 		7F53110F260E714900F5F3BE /* RecordCollectionViewListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53110E260E714900F5F3BE /* RecordCollectionViewListCell.swift */; };
@@ -35,15 +40,15 @@
 		E25A15D525E072780065517B /* Knock_KnockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15D425E072780065517B /* Knock_KnockTests.swift */; };
 		E25A15E025E072780065517B /* Knock_KnockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15DF25E072780065517B /* Knock_KnockUITests.swift */; };
 		E25A15F125E072F10065517B /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A15F025E072F10065517B /* Persistence.swift */; };
-		E25A160525E073B90065517B /* NSManagedObjectContext+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A160425E073B90065517B /* NSManagedObjectContext+Extension.swift */; };
+		E25A160525E073B90065517B /* NSManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A160425E073B90065517B /* NSManagedObjectContext.swift */; };
 		E25A162B25E07AC60065517B /* Knock_Knock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E25A162925E07AC60065517B /* Knock_Knock.xcdatamodeld */; };
 		E25A163925E07BFF0065517B /* DeleteConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A163825E07BFF0065517B /* DeleteConfirmation.swift */; };
 		E25A163E25E07CC30065517B /* FilledBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A163D25E07CC30065517B /* FilledBackground.swift */; };
-		E25A164325E07F4C0065517B /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A164225E07F4C0065517B /* Bundle+Extension.swift */; };
+		E25A164325E07F4C0065517B /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A164225E07F4C0065517B /* Bundle.swift */; };
 		E25A164825E07F8D0065517B /* Configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A164725E07F8D0065517B /* Configure.swift */; };
 		E25A165425E07FC70065517B /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A165325E07FC70065517B /* LocationManager.swift */; };
 		E25A166025E080190065517B /* LocationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A165F25E080190065517B /* LocationRequest.swift */; };
-		E25A166825E0804E0065517B /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A166725E0804E0065517B /* Binding+Extension.swift */; };
+		E25A166825E0804E0065517B /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A166725E0804E0065517B /* Binding.swift */; };
 		E25A166D25E080960065517B /* PlatformModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A166C25E080960065517B /* PlatformModifiers.swift */; };
 		E25A167525E080D00065517B /* SheetState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A167425E080D00065517B /* SheetState.swift */; };
 		E25A167A25E081430065517B /* StatefulPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A167925E081430065517B /* StatefulPreviewWrapper.swift */; };
@@ -62,7 +67,7 @@
 		E25A170725E095FE0065517B /* RecordFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A170625E095FE0065517B /* RecordFormView.swift */; };
 		E25A172725E0B1D40065517B /* Territory+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A172625E0B1D40065517B /* Territory+Extension.swift */; };
 		E27AAB0D25ED8B9D00342603 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AAB0C25ED8B9D00342603 /* Color+Extension.swift */; };
-		E2BB6FC125EB3F2600731EDE /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FC025EB3F2600731EDE /* UIColor+Extension.swift */; };
+		E2BB6FC125EB3F2600731EDE /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FC025EB3F2600731EDE /* UIColor.swift */; };
 		E2BB6FDB25EB6DF600731EDE /* ModelManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB6FDA25EB6DF600731EDE /* ModelManagedObject.swift */; };
 		E2C9A75C25EEBA4700F50817 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2C9A75E25EEBA4700F50817 /* Localizable.strings */; };
 /* End PBXBuildFile section */
@@ -85,10 +90,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7F0835E8264C969200A940FA /* RecordsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsViewModel.swift; sourceTree = "<group>"; };
+		7F0835EA264CA30400A940FA /* FetchedObjectList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedObjectList.swift; sourceTree = "<group>"; };
+		7F0835EC264CA7AB00A940FA /* Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
 		7F27D54D2620D6B0000B7360 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		7F2892D1263391EA009A8ADE /* ScaleButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleButtonStyle.swift; sourceTree = "<group>"; };
 		7F49DFAB2620FD47006228A9 /* DoorFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorFormView.swift; sourceTree = "<group>"; };
 		7F49DFD626221F80006228A9 /* UIEnvironmentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEnvironmentValues.swift; sourceTree = "<group>"; };
+		7F5018CC264C222D0085EF93 /* RecordsCellRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsCellRegistration.swift; sourceTree = "<group>"; };
+		7F5018CE264C22D90085EF93 /* RecordsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsCollectionView.swift; sourceTree = "<group>"; };
 		7F5310FE260E667300F5F3BE /* RecordCollectionViewListCellContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCollectionViewListCellContentConfiguration.swift; sourceTree = "<group>"; };
 		7F531103260E66B400F5F3BE /* RecordCollectionViewListCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCollectionViewListCellContentView.swift; sourceTree = "<group>"; };
 		7F53110E260E714900F5F3BE /* RecordCollectionViewListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCollectionViewListCell.swift; sourceTree = "<group>"; };
@@ -119,15 +129,15 @@
 		E25A15DF25E072780065517B /* Knock_KnockUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Knock_KnockUITests.swift; sourceTree = "<group>"; };
 		E25A15E125E072780065517B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E25A15F025E072F10065517B /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		E25A160425E073B90065517B /* NSManagedObjectContext+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Extension.swift"; sourceTree = "<group>"; };
+		E25A160425E073B90065517B /* NSManagedObjectContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObjectContext.swift; sourceTree = "<group>"; };
 		E25A162A25E07AC60065517B /* Knock_Knock.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Knock_Knock.xcdatamodel; sourceTree = "<group>"; };
 		E25A163825E07BFF0065517B /* DeleteConfirmation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteConfirmation.swift; sourceTree = "<group>"; };
 		E25A163D25E07CC30065517B /* FilledBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilledBackground.swift; sourceTree = "<group>"; };
-		E25A164225E07F4C0065517B /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
+		E25A164225E07F4C0065517B /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		E25A164725E07F8D0065517B /* Configure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configure.swift; sourceTree = "<group>"; };
 		E25A165325E07FC70065517B /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		E25A165F25E080190065517B /* LocationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRequest.swift; sourceTree = "<group>"; };
-		E25A166725E0804E0065517B /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
+		E25A166725E0804E0065517B /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 		E25A166C25E080960065517B /* PlatformModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformModifiers.swift; sourceTree = "<group>"; };
 		E25A167425E080D00065517B /* SheetState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetState.swift; sourceTree = "<group>"; };
 		E25A167925E081430065517B /* StatefulPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulPreviewWrapper.swift; sourceTree = "<group>"; };
@@ -147,7 +157,7 @@
 		E25A172625E0B1D40065517B /* Territory+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Territory+Extension.swift"; sourceTree = "<group>"; };
 		E25A176525E0B52B0065517B /* Knock Knock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Knock Knock.entitlements"; sourceTree = "<group>"; };
 		E27AAB0C25ED8B9D00342603 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
-		E2BB6FC025EB3F2600731EDE /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		E2BB6FC025EB3F2600731EDE /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		E2BB6FDA25EB6DF600731EDE /* ModelManagedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManagedObject.swift; sourceTree = "<group>"; };
 		E2C9A75D25EEBA4700F50817 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -178,6 +188,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F0835E6264C960F00A940FA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E25A166725E0804E0065517B /* Binding.swift */,
+				E25A164225E07F4C0065517B /* Bundle.swift */,
+				E25A160425E073B90065517B /* NSManagedObjectContext.swift */,
+				E2BB6FC025EB3F2600731EDE /* UIColor.swift */,
+				7F0835EC264CA7AB00A940FA /* Publisher.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		7F0835E7264C967600A940FA /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				7F0835E8264C969200A940FA /* RecordsViewModel.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
 		7F5310FD260E665900F5F3BE /* Record Row */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,12 +265,14 @@
 				E24673BA25F0623600A0653B /* AppDelegate.swift */,
 				E24673C525F0625700A0653B /* SceneDelegate.swift */,
 				E25A16D825E08A380065517B /* Views */,
+				7F0835E7264C967600A940FA /* View Models */,
 				E25A162F25E07B8D0065517B /* Components */,
 				E25A161625E079620065517B /* Theme */,
 				E27AAB2325EEB08500342603 /* Localization */,
 				E25A161225E077FC0065517B /* Models */,
 				E25A165225E07FBA0065517B /* Services */,
 				E25A160025E073AC0065517B /* Utilities */,
+				7F0835E6264C960F00A940FA /* Extensions */,
 				E25A15CB25E072780065517B /* Info.plist */,
 				E25A176525E0B52B0065517B /* Knock Knock.entitlements */,
 				E25A15C525E072780065517B /* Preview Content */,
@@ -277,16 +309,13 @@
 		E25A160025E073AC0065517B /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				E25A166725E0804E0065517B /* Binding+Extension.swift */,
-				E25A164225E07F4C0065517B /* Bundle+Extension.swift */,
 				7FD8B3502620BD0100B51D86 /* CoreDataPublisher.swift */,
 				E25A164725E07F8D0065517B /* Configure.swift */,
+				7F0835EA264CA30400A940FA /* FetchedObjectList.swift */,
 				E2BB6FDA25EB6DF600731EDE /* ModelManagedObject.swift */,
-				E25A160425E073B90065517B /* NSManagedObjectContext+Extension.swift */,
 				E25A166C25E080960065517B /* PlatformModifiers.swift */,
 				E25A167425E080D00065517B /* SheetState.swift */,
 				E25A167E25E081750065517B /* UserDefault.swift */,
-				E2BB6FC025EB3F2600731EDE /* UIColor+Extension.swift */,
 				7F49DFD626221F80006228A9 /* UIEnvironmentValues.swift */,
 			);
 			path = Utilities;
@@ -402,8 +431,10 @@
 			isa = PBXGroup;
 			children = (
 				E253C5CB25F0878900C0DDD8 /* RecordsViewController.swift */,
-				7FE71392262DF68200FF9B10 /* MoveRecordView.swift */,
+				7F5018CE264C22D90085EF93 /* RecordsCollectionView.swift */,
+				7F5018CC264C222D0085EF93 /* RecordsCellRegistration.swift */,
 				E25A170625E095FE0065517B /* RecordFormView.swift */,
+				7FE71392262DF68200FF9B10 /* MoveRecordView.swift */,
 				7F5310FD260E665900F5F3BE /* Record Row */,
 			);
 			path = Records;
@@ -560,11 +591,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E25A164825E07F8D0065517B /* Configure.swift in Sources */,
+				7F5018CF264C22D90085EF93 /* RecordsCollectionView.swift in Sources */,
 				E25A162B25E07AC60065517B /* Knock_Knock.xcdatamodeld in Sources */,
 				E25A16D125E0863C0065517B /* Record+UI.swift in Sources */,
 				7FE71393262DF68200FF9B10 /* MoveRecordView.swift in Sources */,
 				7FFEBE012638C9C40098C160 /* CollectionListHeader.swift in Sources */,
-				E25A160525E073B90065517B /* NSManagedObjectContext+Extension.swift in Sources */,
+				E25A160525E073B90065517B /* NSManagedObjectContext.swift in Sources */,
 				7FE713A9262E3A2F00FF9B10 /* VisualEffectView.swift in Sources */,
 				E25A16CC25E085E50065517B /* Visit+UI.swift in Sources */,
 				E25A167525E080D00065517B /* SheetState.swift in Sources */,
@@ -577,16 +609,20 @@
 				E25A163E25E07CC30065517B /* FilledBackground.swift in Sources */,
 				E25A16BA25E0854C0065517B /* RecordType.swift in Sources */,
 				7FFEBE052638CBF80098C160 /* CollectionListHeaderCellContentConfiguration.swift in Sources */,
-				E2BB6FC125EB3F2600731EDE /* UIColor+Extension.swift in Sources */,
+				E2BB6FC125EB3F2600731EDE /* UIColor.swift in Sources */,
+				7F5018CD264C222D0085EF93 /* RecordsCellRegistration.swift in Sources */,
 				7FFEBE07263B8B270098C160 /* CollectionListHeaderCell.swift in Sources */,
 				E25A16B225E084BD0065517B /* Visit+Extension.swift in Sources */,
 				E25A169B25E083A80065517B /* CardGroupBoxStyle.swift in Sources */,
 				7FE7139E262E17D800FF9B10 /* RecordRow.swift in Sources */,
+				7F0835ED264CA7AB00A940FA /* Publisher.swift in Sources */,
 				E25A170725E095FE0065517B /* RecordFormView.swift in Sources */,
 				E25A15F125E072F10065517B /* Persistence.swift in Sources */,
+				7F0835EB264CA30400A940FA /* FetchedObjectList.swift in Sources */,
 				E25A172725E0B1D40065517B /* Territory+Extension.swift in Sources */,
 				E25A163925E07BFF0065517B /* DeleteConfirmation.swift in Sources */,
 				E25A165425E07FC70065517B /* LocationManager.swift in Sources */,
+				7F0835E9264C969200A940FA /* RecordsViewModel.swift in Sources */,
 				E25A16AD25E0847C0065517B /* Door+Extension.swift in Sources */,
 				E25A166025E080190065517B /* LocationRequest.swift in Sources */,
 				7FFEBE032638CBBB0098C160 /* CollectionListHeaderCellContentView.swift in Sources */,
@@ -594,10 +630,10 @@
 				7F5310FF260E667300F5F3BE /* RecordCollectionViewListCellContentConfiguration.swift in Sources */,
 				E25A167F25E081750065517B /* UserDefault.swift in Sources */,
 				E25A16C725E085940065517B /* VisitPerson.swift in Sources */,
-				E25A164325E07F4C0065517B /* Bundle+Extension.swift in Sources */,
+				E25A164325E07F4C0065517B /* Bundle.swift in Sources */,
 				7F8A31732622460C003F8FB7 /* View+AssignToUI.swift in Sources */,
 				7F531104260E66B400F5F3BE /* RecordCollectionViewListCellContentView.swift in Sources */,
-				E25A166825E0804E0065517B /* Binding+Extension.swift in Sources */,
+				E25A166825E0804E0065517B /* Binding.swift in Sources */,
 				7F27D54E2620D6B0000B7360 /* RootViewController.swift in Sources */,
 				E25A16C225E0857B0065517B /* VisitSymbol.swift in Sources */,
 				E25A16A825E084390065517B /* Record+Extension.swift in Sources */,

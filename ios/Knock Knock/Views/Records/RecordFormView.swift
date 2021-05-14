@@ -21,6 +21,8 @@ struct RecordFormView: View {
     @Environment(\.managedObjectContext) private var moc
     @Environment(\.uiNavigationController) private var navigationController
 
+    @EnvironmentObject private var viewModel: RecordsViewModel
+
     @State private var selectedTypeIndex = 0
     private var typeOptions = ["Street", "Apartment"]
 
@@ -101,7 +103,15 @@ struct RecordFormView: View {
 
             ToolbarItem(placement: .confirmationAction) {
                 Button(action: {
-                    save()
+                    viewModel.saveRecord(
+                        type: RecordType(rawValue: Int16(selectedTypeIndex)) ?? .street,
+                        streetName: streetName,
+                        city: city,
+                        state: state,
+                        apartmentNumber: apartmentNumber,
+                        territory: territory,
+                        to: record
+                    )
                     navigationController?.dismiss(animated: true)
                 }) {
                     Text("save")
@@ -127,26 +137,6 @@ struct RecordFormView: View {
 }
 
 extension RecordFormView {
-    private func save() {
-        var toSave: Record
-        if let record = record {
-            toSave = record
-            toSave.willUpdate()
-        } else {
-            toSave = Record(context: moc)
-            toSave.willCreate()
-        }
-
-        toSave.wrappedType = isApartment ? .apartment : .street
-        toSave.apartmentNumber = isApartment ? apartmentNumber : nil
-        toSave.streetName = streetName
-        toSave.city = city
-        toSave.state = state
-        toSave.territory = territory
-
-        moc.unsafeSave()
-    }
-
     private func useCurrentLocation() {
         location.whenAuthorized { placemark in
             if let streetName = placemark?.thoroughfare { self.streetName = streetName }

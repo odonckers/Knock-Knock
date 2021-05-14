@@ -14,6 +14,8 @@ struct MoveRecordView: View {
     @Environment(\.managedObjectContext) private var moc
     @Environment(\.uiNavigationController) private var navigationController
 
+    @EnvironmentObject private var viewModel: RecordsViewModel
+
     static private var territoryFetchRequest: NSFetchRequest<Territory> {
         let fetchRequest: NSFetchRequest = Territory.fetchRequest()
         fetchRequest.sortDescriptors = []
@@ -47,7 +49,7 @@ struct MoveRecordView: View {
                     }
                 } else {
                     Button(action: {
-                        save(selected: nil)
+                        viewModel.moveRecord(record, to: .none)
                         navigationController?.dismiss(animated: true)
                     }) {
                         Label("Records", systemImage: "note.text")
@@ -66,7 +68,7 @@ struct MoveRecordView: View {
                         }
                     } else {
                         Button(action: {
-                            save(selected: territory)
+                            viewModel.moveRecord(record, to: territory)
                             navigationController?.dismiss(animated: true)
                         }) {
                             Label(territory.wrappedName, systemImage: "folder")
@@ -89,19 +91,11 @@ struct MoveRecordView: View {
     }
 }
 
-extension MoveRecordView {
-    private func save(selected: Territory?) {
-        record.willUpdate()
-        record.territory = selected
-
-        moc.unsafeSave()
-    }
-}
-
 #if DEBUG
 struct MoveRecordView_Previews: PreviewProvider {
     static var previews: some View {
         let moc = PersistenceController.preview.container.viewContext
+        let viewModel = RecordsViewModel(moc: moc)
 
         let record = Record(context: moc)
         record.wrappedType = .apartment
@@ -112,6 +106,7 @@ struct MoveRecordView_Previews: PreviewProvider {
 
         return NavigationView {
             MoveRecordView(record: record)
+                .environmentObject(viewModel)
         }
         .environment(\.managedObjectContext, moc)
     }

@@ -62,7 +62,7 @@ struct DoorFormView: View {
                         }
                     }
                     .pickerStyle(MenuPickerStyle())
-                    .formLabel("Symbol", color: .black)
+                    .formLabel("Symbol", color: .label)
 
                     if selectedSymbol != .notAtHome {
                         Picker(
@@ -74,7 +74,8 @@ struct DoorFormView: View {
                             }
                         }
                         .pickerStyle(MenuPickerStyle())
-                        .formLabel("Person", color: .black)
+                        .hoverEffect()
+                        .formLabel("Person", color: .label)
                     }
                 }
 
