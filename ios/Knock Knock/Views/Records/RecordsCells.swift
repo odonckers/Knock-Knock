@@ -1,5 +1,5 @@
 //
-//  RecordsCellRegistration.swift
+//  RecordsCells.swift
 //  Knock Knock
 //
 //  Created by Owen Donckers on 5/12/21.
@@ -107,64 +107,72 @@ extension RecordsViewController {
             object: record
         )
     }
+}
 
+extension RecordsViewController {
     func recordTrailingSwipeActions(at indexPath: IndexPath) -> UISwipeActionsConfiguration {
-        let editAction = UIContextualAction(style: .normal, title: "Edit") {
-            [weak self] action, view, completion in
+        let editAction = UIContextualAction(
+            style: .normal,
+            title: "Edit",
+            handler: { [weak self] action, view, completion in
+                guard
+                    let self = self,
+                    let sidebarItem = self.dataSource.itemIdentifier(for: indexPath),
+                    let record = sidebarItem.object as? Record
+                else {
+                    completion(false)
+                    return
+                }
 
-            guard
-                let self = self,
-                let sidebarItem = self.dataSource.itemIdentifier(for: indexPath),
-                let record = sidebarItem.object as? Record
-            else {
-                completion(false)
-                return
+                self.presentRecordFormView(record: record)
+                completion(true)
             }
-
-            self.presentRecordFormView(record: record)
-            completion(true)
-        }
+        )
         editAction.image = UIImage(
             systemName: "pencil.circle.fill",
             withConfiguration: largeSymbolConfig
         )
         editAction.backgroundColor = .systemGray3
 
-        let moveAction = UIContextualAction(style: .normal, title: "Move") {
-            [weak self] action, view, completion in
+        let moveAction = UIContextualAction(
+            style: .normal,
+            title: "Move",
+            handler: { [weak self] action, view, completion in
+                guard
+                    let self = self,
+                    let sidebarItem = self.dataSource.itemIdentifier(for: indexPath),
+                    let record = sidebarItem.object as? Record
+                else {
+                    completion(false)
+                    return
+                }
 
-            guard
-                let self = self,
-                let sidebarItem = self.dataSource.itemIdentifier(for: indexPath),
-                let record = sidebarItem.object as? Record
-            else {
-                completion(false)
-                return
+                self.presentMoveRecordView(record: record)
+                completion(true)
             }
-
-            self.presentMoveRecordView(record: record)
-            completion(true)
-        }
+        )
         moveAction.image = UIImage(
             systemName: "folder.circle.fill",
             withConfiguration: largeSymbolConfig
         )
         moveAction.backgroundColor = .systemIndigo
 
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
-            [weak self] action, view, completion in
+        let deleteAction = UIContextualAction(
+            style: .destructive,
+            title: "Delete",
+            handler: { [weak self] action, view, completion in
+                guard let self = self else {
+                    completion(false)
+                    return
+                }
 
-            guard let self = self else {
-                completion(false)
-                return
+                self.verifyRecordDeletion(
+                    at: indexPath,
+                    displaced: true,
+                    completion: completion
+                )
             }
-
-            self.verifyRecordDeletion(
-                at: indexPath,
-                displaced: true,
-                completion: completion
-            )
-        }
+        )
         deleteAction.image = UIImage(
             systemName: "trash.circle.fill",
             withConfiguration: largeSymbolConfig
@@ -179,57 +187,63 @@ extension RecordsViewController {
     }
 
     func recordContextMenu(at indexPath: IndexPath) -> UIContextMenuConfiguration {
-        let editAction = UIAction(title: "Edit", image: UIImage(systemName: "pencil")) {
-            [weak self] action in
+        let editAction = UIAction(
+            title: "Edit",
+            image: UIImage(systemName: "pencil"),
+            handler: { [weak self] action in
+                guard
+                    let self = self,
+                    let sidebarItem = self.dataSource.itemIdentifier(
+                        for: indexPath
+                    ),
+                    let record = sidebarItem.object as? Record
+                else { return }
 
-            guard
-                let self = self,
-                let sidebarItem = self.dataSource.itemIdentifier(
-                    for: indexPath
-                ),
-                let record = sidebarItem.object as? Record
-            else { return }
+                self.presentRecordFormView(record: record)
+            }
+        )
 
-            self.presentRecordFormView(record: record)
-        }
+        let moveAction = UIAction(
+            title: "Move",
+            image: UIImage(systemName: "folder"),
+            handler: { [weak self] action in
+                guard
+                    let self = self,
+                    let sidebarItem = self.dataSource.itemIdentifier(
+                        for: indexPath
+                    ),
+                    let record = sidebarItem.object as? Record
+                else { return }
 
-        let moveAction = UIAction(title: "Move", image: UIImage(systemName: "folder")) {
-            [weak self] action in
-
-            guard
-                let self = self,
-                let sidebarItem = self.dataSource.itemIdentifier(
-                    for: indexPath
-                ),
-                let record = sidebarItem.object as? Record
-            else { return }
-
-            self.presentMoveRecordView(record: record)
-        }
+                self.presentMoveRecordView(record: record)
+            }
+        )
 
         let deleteAction = UIAction(
             title: "Delete",
             image: UIImage(systemName: "trash"),
-            attributes: .destructive
-        ) { [weak self] action in
-            self?.verifyRecordDeletion(at: indexPath)
-        }
+            attributes: .destructive,
+            handler: { [weak self] action in
+                self?.verifyRecordDeletion(at: indexPath)
+            }
+        )
 
         let contextMenuConfig = UIContextMenuConfiguration(
             identifier: nil,
-            previewProvider: nil
-        ) { actions in
-            UIMenu(
-                children: [
-                    UIMenu(
-                        title: "Edit...",
-                        options: .displayInline,
-                        children: [editAction, moveAction]
-                    ),
-                    deleteAction
-                ]
-            )
-        }
+            previewProvider: nil,
+            actionProvider: { actions in
+                UIMenu(
+                    children: [
+                        UIMenu(
+                            title: "Edit...",
+                            options: .displayInline,
+                            children: [editAction, moveAction]
+                        ),
+                        deleteAction
+                    ]
+                )
+            }
+        )
         return contextMenuConfig
     }
 
@@ -245,23 +259,29 @@ extension RecordsViewController {
         )
         alertController.view.tintColor = .accentColor
 
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) {
-            [weak self] action in
+        let deleteAction = UIAlertAction(
+            title: "Delete",
+            style: .destructive,
+            handler: { [weak self] action in
+                guard
+                    let self = self,
+                    let sidebarItem = self.dataSource.itemIdentifier(for: indexPath),
+                    let record = sidebarItem.object as? Record
+                else { return }
 
-            guard
-                let self = self,
-                let sidebarItem = self.dataSource.itemIdentifier(for: indexPath),
-                let record = sidebarItem.object as? Record
-            else { return }
-
-            self.viewModel.deleteRecord(record)
-            completion(true)
-        }
+                self.viewModel.deleteRecord(record)
+                completion(true)
+            }
+        )
         alertController.addAction(deleteAction)
 
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
-            completion(false)
-        }
+        let cancelAction = UIAlertAction(
+            title: "Cancel",
+            style: .cancel,
+            handler: { action in
+                completion(false)
+            }
+        )
         alertController.addAction(cancelAction)
 
         if let selectedCell = collectionView.cellForItem(at: indexPath) {
@@ -282,7 +302,6 @@ extension RecordsViewController {
         MoveRecordView(record: record)
             .environment(\.managedObjectContext, viewModel.moc)
             .environment(\.uiNavigationController, navigationController)
-            .environmentObject(viewModel)
             .assignToUI(navigationController: navigationController)
 
         present(navigationController, animated: true)
@@ -296,7 +315,6 @@ extension RecordsViewController {
         RecordFormView(record: record, territory: record?.territory)
             .environment(\.managedObjectContext, viewModel.moc)
             .environment(\.uiNavigationController, navigationController)
-            .environmentObject(viewModel)
             .assignToUI(navigationController: navigationController)
 
         present(navigationController, animated: true)
@@ -310,7 +328,6 @@ extension RecordsViewController {
         RecordFormView(territory: territory)
             .environment(\.managedObjectContext, viewModel.moc)
             .environment(\.uiNavigationController, navigationController)
-            .environmentObject(viewModel)
             .assignToUI(navigationController: navigationController)
 
         present(navigationController, animated: true)
@@ -319,18 +336,20 @@ extension RecordsViewController {
 
 extension RecordsViewController {
     func territoryLeadingSwipeActions(_ territory: Territory) -> UISwipeActionsConfiguration {
-        let addAction = UIContextualAction(style: .normal, title: "Add Record") {
-            [weak self] action, view, completion in
+        let addAction = UIContextualAction(
+            style: .normal,
+            title: "Add Record",
+            handler: { [weak self] action, view, completion in
+                guard let self = self else {
+                    completion(false)
+                    return
+                }
 
-            guard let self = self else {
-                completion(false)
-                return
+                self.presentRecordFormView(territory: territory)
+
+                completion(true)
             }
-
-            self.presentRecordFormView(territory: territory)
-
-            completion(true)
-        }
+        )
         addAction.image = UIImage(
             systemName: "note.text.badge.plus",
             withConfiguration: largeSymbolConfig
@@ -342,37 +361,41 @@ extension RecordsViewController {
     }
 
     func territoryTrailingSwipeActions(at indexPath: IndexPath) -> UISwipeActionsConfiguration {
-        let editAction = UIContextualAction(style: .normal, title: "Edit") {
-            [weak self] action, view, completion in
+        let editAction = UIContextualAction(
+            style: .normal,
+            title: "Edit",
+            handler: { [weak self] action, view, completion in
+                guard let self = self else {
+                    completion(false)
+                    return
+                }
 
-            guard let self = self else {
-                completion(false)
-                return
+                self.presentTerritoryForm(from: indexPath)
+                completion(true)
             }
-
-            self.presentTerritoryForm(from: indexPath)
-            completion(true)
-        }
+        )
         editAction.image = UIImage(
             systemName: "pencil.circle.fill",
             withConfiguration: largeSymbolConfig
         )
         editAction.backgroundColor = .systemGray3
 
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
-            [weak self] action, view, completion in
+        let deleteAction = UIContextualAction(
+            style: .destructive,
+            title: "Delete",
+            handler: { [weak self] action, view, completion in
+                guard let self = self else {
+                    completion(false)
+                    return
+                }
 
-            guard let self = self else {
-                completion(false)
-                return
+                self.verifyTerritoryDeletion(
+                    at: indexPath,
+                    displaced: true,
+                    completion: completion
+                )
             }
-
-            self.verifyTerritoryDeletion(
-                at: indexPath,
-                displaced: true,
-                completion: completion
-            )
-        }
+        )
         deleteAction.image = UIImage(
             systemName: "trash.circle.fill",
             withConfiguration: largeSymbolConfig
@@ -385,46 +408,53 @@ extension RecordsViewController {
     }
 
     func territoryContextMenu(at indexPath: IndexPath) -> UIContextMenuConfiguration {
-        let addRecordAction = UIAction(title: "Add Record", image: UIImage(systemName: "plus")) {
-            [weak self] action in
+        let addRecordAction = UIAction(
+            title: "Add Record",
+            image: UIImage(systemName: "plus"),
+            handler: { [weak self] action in
+                guard
+                    let self = self,
+                    let item = self.dataSource.itemIdentifier(for: indexPath),
+                    let territory = item.object as? Territory
+                else { return }
 
-            guard
-                let self = self,
-                let item = self.dataSource.itemIdentifier(for: indexPath),
-                let territory = item.object as? Territory
-            else { return }
+                self.presentRecordFormView(territory: territory)
+            }
+        )
 
-            self.presentRecordFormView(territory: territory)
-        }
-
-        let editAction = UIAction(title: "Edit", image: UIImage(systemName: "pencil")) {
-            [weak self] action in
-            self?.presentTerritoryForm(from: indexPath)
-        }
+        let editAction = UIAction(
+            title: "Edit",
+            image: UIImage(systemName: "pencil"),
+            handler: { [weak self] action in
+                self?.presentTerritoryForm(from: indexPath)
+            }
+        )
 
         let deleteAction = UIAction(
             title: "Delete",
             image: UIImage(systemName: "trash"),
-            attributes: .destructive
-        ) { [weak self] action in
-            self?.verifyTerritoryDeletion(at: indexPath)
-        }
+            attributes: .destructive,
+            handler: { [weak self] action in
+                self?.verifyTerritoryDeletion(at: indexPath)
+            }
+        )
 
         let contextMenuConfig = UIContextMenuConfiguration(
             identifier: nil,
-            previewProvider: nil
-        ) { actions in
-            UIMenu(
-                children: [
-                    addRecordAction,
-                    UIMenu(
-                        title: "Edit...",
-                        options: .displayInline,
-                        children: [editAction, deleteAction]
-                    ),
-                ]
-            )
-        }
+            previewProvider: nil,
+            actionProvider: { actions in
+                UIMenu(
+                    children: [
+                        addRecordAction,
+                        UIMenu(
+                            title: "Edit...",
+                            options: .displayInline,
+                            children: [editAction, deleteAction]
+                        ),
+                    ]
+                )
+            }
+        )
         return contextMenuConfig
     }
 
@@ -440,23 +470,29 @@ extension RecordsViewController {
         )
         alertController.view.tintColor = .accentColor
 
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) {
-            [weak self] action in
+        let deleteAction = UIAlertAction(
+            title: "Delete",
+            style: .destructive,
+            handler: { [weak self] action in
+                guard
+                    let self = self,
+                    let sidebarItem = self.dataSource.itemIdentifier(for: indexPath),
+                    let territory = sidebarItem.object as? Territory
+                else { return }
 
-            guard
-                let self = self,
-                let sidebarItem = self.dataSource.itemIdentifier(for: indexPath),
-                let territory = sidebarItem.object as? Territory
-            else { return }
-
-            self.viewModel.deleteTerritory(territory)
-            completion(true)
-        }
+                self.viewModel.deleteTerritory(territory)
+                completion(true)
+            }
+        )
         alertController.addAction(deleteAction)
 
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
-            completion(false)
-        }
+        let cancelAction = UIAlertAction(
+            title: "Cancel",
+            style: .cancel,
+            handler: { action in
+                completion(false)
+            }
+        )
         alertController.addAction(cancelAction)
 
         if let selectedCell = collectionView.cellForItem(at: indexPath) {

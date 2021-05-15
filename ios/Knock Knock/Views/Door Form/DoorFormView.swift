@@ -17,7 +17,6 @@ struct DoorFormView: View {
     }
 
     @Environment(\.managedObjectContext) private var moc
-    @Environment(\.presentationMode) private var presentationMode
     @Environment(\.uiNavigationController) private var navigationController
 
     @State private var number = ""
@@ -67,7 +66,7 @@ struct DoorFormView: View {
                     if selectedSymbol != .notAtHome {
                         Picker(
                             persons[selectedPerson] ?? "",
-                            selection: $selectedPerson.animation(.none)
+                            selection: $selectedPerson.animation(nil)
                         ) {
                             ForEach(VisitPerson.allCases, id: \.self) { i in
                                 Text(persons[i] ?? "")

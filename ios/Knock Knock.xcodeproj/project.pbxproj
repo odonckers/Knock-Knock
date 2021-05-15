@@ -14,7 +14,7 @@
 		7F2892D2263391EA009A8ADE /* ScaleButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2892D1263391EA009A8ADE /* ScaleButtonStyle.swift */; };
 		7F49DFAC2620FD47006228A9 /* DoorFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F49DFAB2620FD47006228A9 /* DoorFormView.swift */; };
 		7F49DFD726221F80006228A9 /* UIEnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F49DFD626221F80006228A9 /* UIEnvironmentValues.swift */; };
-		7F5018CD264C222D0085EF93 /* RecordsCellRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5018CC264C222D0085EF93 /* RecordsCellRegistration.swift */; };
+		7F5018CD264C222D0085EF93 /* RecordsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5018CC264C222D0085EF93 /* RecordsCells.swift */; };
 		7F5018CF264C22D90085EF93 /* RecordsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5018CE264C22D90085EF93 /* RecordsCollectionView.swift */; };
 		7F5310FF260E667300F5F3BE /* RecordCollectionViewListCellContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5310FE260E667300F5F3BE /* RecordCollectionViewListCellContentConfiguration.swift */; };
 		7F531104260E66B400F5F3BE /* RecordCollectionViewListCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F531103260E66B400F5F3BE /* RecordCollectionViewListCellContentView.swift */; };
@@ -28,6 +28,8 @@
 		7FE71393262DF68200FF9B10 /* MoveRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE71392262DF68200FF9B10 /* MoveRecordView.swift */; };
 		7FE7139E262E17D800FF9B10 /* RecordRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE7139D262E17D800FF9B10 /* RecordRow.swift */; };
 		7FE713A9262E3A2F00FF9B10 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE713A8262E3A2F00FF9B10 /* VisualEffectView.swift */; };
+		7FE9BD6B264F73EC00E5FB18 /* NavigationSubheader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE9BD6A264F73EC00E5FB18 /* NavigationSubheader.swift */; };
+		7FE9BD6E264F777600E5FB18 /* DoorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE9BD6D264F777600E5FB18 /* DoorsViewModel.swift */; };
 		7FFEBE012638C9C40098C160 /* CollectionListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEBE002638C9C40098C160 /* CollectionListHeader.swift */; };
 		7FFEBE032638CBBB0098C160 /* CollectionListHeaderCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEBE022638CBBB0098C160 /* CollectionListHeaderCellContentView.swift */; };
 		7FFEBE052638CBF80098C160 /* CollectionListHeaderCellContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FFEBE042638CBF80098C160 /* CollectionListHeaderCellContentConfiguration.swift */; };
@@ -97,7 +99,7 @@
 		7F2892D1263391EA009A8ADE /* ScaleButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleButtonStyle.swift; sourceTree = "<group>"; };
 		7F49DFAB2620FD47006228A9 /* DoorFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorFormView.swift; sourceTree = "<group>"; };
 		7F49DFD626221F80006228A9 /* UIEnvironmentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEnvironmentValues.swift; sourceTree = "<group>"; };
-		7F5018CC264C222D0085EF93 /* RecordsCellRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsCellRegistration.swift; sourceTree = "<group>"; };
+		7F5018CC264C222D0085EF93 /* RecordsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsCells.swift; sourceTree = "<group>"; };
 		7F5018CE264C22D90085EF93 /* RecordsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsCollectionView.swift; sourceTree = "<group>"; };
 		7F5310FE260E667300F5F3BE /* RecordCollectionViewListCellContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCollectionViewListCellContentConfiguration.swift; sourceTree = "<group>"; };
 		7F531103260E66B400F5F3BE /* RecordCollectionViewListCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCollectionViewListCellContentView.swift; sourceTree = "<group>"; };
@@ -111,6 +113,8 @@
 		7FE71392262DF68200FF9B10 /* MoveRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveRecordView.swift; sourceTree = "<group>"; };
 		7FE7139D262E17D800FF9B10 /* RecordRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRow.swift; sourceTree = "<group>"; };
 		7FE713A8262E3A2F00FF9B10 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
+		7FE9BD6A264F73EC00E5FB18 /* NavigationSubheader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSubheader.swift; sourceTree = "<group>"; };
+		7FE9BD6D264F777600E5FB18 /* DoorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorsViewModel.swift; sourceTree = "<group>"; };
 		7FFEBE002638C9C40098C160 /* CollectionListHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionListHeader.swift; sourceTree = "<group>"; };
 		7FFEBE022638CBBB0098C160 /* CollectionListHeaderCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionListHeaderCellContentView.swift; sourceTree = "<group>"; };
 		7FFEBE042638CBF80098C160 /* CollectionListHeaderCellContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionListHeaderCellContentConfiguration.swift; sourceTree = "<group>"; };
@@ -204,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				7F0835E8264C969200A940FA /* RecordsViewModel.swift */,
+				7FE9BD6D264F777600E5FB18 /* DoorsViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -225,6 +230,30 @@
 				7F5DA90B2620E67A00043B18 /* CloudKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7FE9BD67264F700B00E5FB18 /* Record Form */ = {
+			isa = PBXGroup;
+			children = (
+				E25A170625E095FE0065517B /* RecordFormView.swift */,
+			);
+			path = "Record Form";
+			sourceTree = "<group>";
+		};
+		7FE9BD68264F70BD00E5FB18 /* Move Record */ = {
+			isa = PBXGroup;
+			children = (
+				7FE71392262DF68200FF9B10 /* MoveRecordView.swift */,
+			);
+			path = "Move Record";
+			sourceTree = "<group>";
+		};
+		7FE9BD6C264F769D00E5FB18 /* Door Form */ = {
+			isa = PBXGroup;
+			children = (
+				7F49DFAB2620FD47006228A9 /* DoorFormView.swift */,
+			);
+			path = "Door Form";
 			sourceTree = "<group>";
 		};
 		7FFEBDFF2638C6660098C160 /* Collection List Header */ = {
@@ -349,10 +378,12 @@
 			isa = PBXGroup;
 			children = (
 				7FFEBDFF2638C6660098C160 /* Collection List Header */,
+				7F5310FD260E665900F5F3BE /* Record Row */,
 				E25A163825E07BFF0065517B /* DeleteConfirmation.swift */,
 				7FB741692633504000D0C224 /* EnvironmentUIPreviewWrapper.swift */,
 				E25A163D25E07CC30065517B /* FilledBackground.swift */,
 				E25A168325E081B60065517B /* FormLabel.swift */,
+				7FE9BD6A264F73EC00E5FB18 /* NavigationSubheader.swift */,
 				E25A167925E081430065517B /* StatefulPreviewWrapper.swift */,
 				E25A169525E083240065517B /* Tag.swift */,
 				7F5311272610404D00F5F3BE /* UIFont+Extension.swift */,
@@ -414,6 +445,9 @@
 				7F27D54D2620D6B0000B7360 /* RootViewController.swift */,
 				E25A16FF25E095A70065517B /* Records */,
 				E25A16D925E08A400065517B /* Doors */,
+				7FE9BD67264F700B00E5FB18 /* Record Form */,
+				7FE9BD68264F70BD00E5FB18 /* Move Record */,
+				7FE9BD6C264F769D00E5FB18 /* Door Form */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -422,7 +456,6 @@
 			isa = PBXGroup;
 			children = (
 				7FA3CAC32637B73000F9E130 /* DoorsViewController.swift */,
-				7F49DFAB2620FD47006228A9 /* DoorFormView.swift */,
 			);
 			path = Doors;
 			sourceTree = "<group>";
@@ -432,10 +465,7 @@
 			children = (
 				E253C5CB25F0878900C0DDD8 /* RecordsViewController.swift */,
 				7F5018CE264C22D90085EF93 /* RecordsCollectionView.swift */,
-				7F5018CC264C222D0085EF93 /* RecordsCellRegistration.swift */,
-				E25A170625E095FE0065517B /* RecordFormView.swift */,
-				7FE71392262DF68200FF9B10 /* MoveRecordView.swift */,
-				7F5310FD260E665900F5F3BE /* Record Row */,
+				7F5018CC264C222D0085EF93 /* RecordsCells.swift */,
 			);
 			path = Records;
 			sourceTree = "<group>";
@@ -595,6 +625,7 @@
 				E25A162B25E07AC60065517B /* Knock_Knock.xcdatamodeld in Sources */,
 				E25A16D125E0863C0065517B /* Record+UI.swift in Sources */,
 				7FE71393262DF68200FF9B10 /* MoveRecordView.swift in Sources */,
+				7FE9BD6B264F73EC00E5FB18 /* NavigationSubheader.swift in Sources */,
 				7FFEBE012638C9C40098C160 /* CollectionListHeader.swift in Sources */,
 				E25A160525E073B90065517B /* NSManagedObjectContext.swift in Sources */,
 				7FE713A9262E3A2F00FF9B10 /* VisualEffectView.swift in Sources */,
@@ -610,7 +641,8 @@
 				E25A16BA25E0854C0065517B /* RecordType.swift in Sources */,
 				7FFEBE052638CBF80098C160 /* CollectionListHeaderCellContentConfiguration.swift in Sources */,
 				E2BB6FC125EB3F2600731EDE /* UIColor.swift in Sources */,
-				7F5018CD264C222D0085EF93 /* RecordsCellRegistration.swift in Sources */,
+				7FE9BD6E264F777600E5FB18 /* DoorsViewModel.swift in Sources */,
+				7F5018CD264C222D0085EF93 /* RecordsCells.swift in Sources */,
 				7FFEBE07263B8B270098C160 /* CollectionListHeaderCell.swift in Sources */,
 				E25A16B225E084BD0065517B /* Visit+Extension.swift in Sources */,
 				E25A169B25E083A80065517B /* CardGroupBoxStyle.swift in Sources */,

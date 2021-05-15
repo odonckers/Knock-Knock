@@ -14,11 +14,15 @@ class FetchedObjectList<Object: NSManagedObject>: NSObject, NSFetchedResultsCont
     private let onContentChange = PassthroughSubject<(), Never>()
     private let onObjectChange = PassthroughSubject<Object, Never>()
 
-    init(fetchRequest: NSFetchRequest<Object>, moc: NSManagedObjectContext) {
+    init(
+        fetchRequest: NSFetchRequest<Object>,
+        moc: NSManagedObjectContext,
+        sectionNameKeyPath: String? = nil
+    ) {
         fetchedResultsController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
             managedObjectContext: moc,
-            sectionNameKeyPath: nil,
+            sectionNameKeyPath: sectionNameKeyPath,
             cacheName: nil
         )
         super.init()
@@ -33,6 +37,7 @@ class FetchedObjectList<Object: NSManagedObject>: NSObject, NSFetchedResultsCont
     }
 
     var objects: [Object] { fetchedResultsController.fetchedObjects ?? [] }
+    var sections: [NSFetchedResultsSectionInfo] { fetchedResultsController.sections ?? [] }
     var contentDidChange: AnyPublisher<(), Never> { onContentChange.eraseToAnyPublisher() }
     var objectDidChange: AnyPublisher<Object, Never> { onObjectChange.eraseToAnyPublisher() }
 

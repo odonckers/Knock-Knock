@@ -12,6 +12,7 @@ extension RecordsViewController {
         SidebarSection,
         SidebarItem
     >
+    typealias Snapshot = NSDiffableDataSourceSectionSnapshot<SidebarItem>
 
     func makeCollectionView() -> UICollectionView {
         let collectionView = UICollectionView(
@@ -25,43 +26,45 @@ extension RecordsViewController {
     }
 
     private func makeLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout() {
-            [weak self] (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+        let layout = UICollectionViewCompositionalLayout(
+            sectionProvider: {
+                [weak self] (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
 
-            guard let self = self else { return nil }
+                guard let self = self else { return nil }
 
-            var configuration = UICollectionLayoutListConfiguration(
-                appearance: self.isCompact ? .insetGrouped : .sidebar
-            )
-            configuration.showsSeparators = self.isCompact
-            configuration.headerMode = sectionIndex == 0 ? .none : .firstItemInSection
-            configuration.leadingSwipeActionsConfigurationProvider = { [weak self] indexPath in
-                guard let item = self?.dataSource.itemIdentifier(for: indexPath)
-                else { return nil }
+                var configuration = UICollectionLayoutListConfiguration(
+                    appearance: self.isCompact ? .insetGrouped : .sidebar
+                )
+                configuration.showsSeparators = self.isCompact
+                configuration.headerMode = sectionIndex == 0 ? .none : .firstItemInSection
+                configuration.leadingSwipeActionsConfigurationProvider = { [weak self] indexPath in
+                    guard let item = self?.dataSource.itemIdentifier(for: indexPath)
+                    else { return nil }
 
-                switch item.object {
-                case is Territory:
-                    return self?.territoryLeadingSwipeActions(item.object as! Territory)
-                default: return nil
+                    switch item.object {
+                    case is Territory:
+                        return self?.territoryLeadingSwipeActions(item.object as! Territory)
+                    default: return nil
+                    }
                 }
-            }
-            configuration.trailingSwipeActionsConfigurationProvider = { [weak self] indexPath in
-                guard let item = self?.dataSource.itemIdentifier(for: indexPath)
-                else { return nil }
+                configuration.trailingSwipeActionsConfigurationProvider = { [weak self] indexPath in
+                    guard let item = self?.dataSource.itemIdentifier(for: indexPath)
+                    else { return nil }
 
-                switch item.object {
-                case is Record: return self?.recordTrailingSwipeActions(at: indexPath)
-                case is Territory: return self?.territoryTrailingSwipeActions(at: indexPath)
-                default: return nil
+                    switch item.object {
+                    case is Record: return self?.recordTrailingSwipeActions(at: indexPath)
+                    case is Territory: return self?.territoryTrailingSwipeActions(at: indexPath)
+                    default: return nil
+                    }
                 }
-            }
 
-            let section: NSCollectionLayoutSection = .list(
-                using: configuration,
-                layoutEnvironment: layoutEnvironment
-            )
-            return section
-        }
+                let section: NSCollectionLayoutSection = .list(
+                    using: configuration,
+                    layoutEnvironment: layoutEnvironment
+                )
+                return section
+            }
+        )
         return layout
     }
 
@@ -70,40 +73,43 @@ extension RecordsViewController {
         let expandableRowRegistration = expandableRowRegistration()
         let rowRegistration = rowRegistration()
 
-        return DataSource(collectionView: collectionView) { collectionView, indexPath, item in
-            switch item.type {
-            case .header:
-                return collectionView.dequeueConfiguredReusableCell(
-                    using: headerRegistration,
-                    for: indexPath,
-                    item: item
-                )
-            case .expandableRow:
-                return collectionView.dequeueConfiguredReusableCell(
-                    using: expandableRowRegistration,
-                    for: indexPath,
-                    item: item
-                )
-            default:
-                return collectionView.dequeueConfiguredReusableCell(
-                    using: rowRegistration,
-                    for: indexPath,
-                    item: item
-                )
+        return DataSource(
+            collectionView: collectionView,
+            cellProvider: { collectionView, indexPath, item in
+                switch item.type {
+                case .header:
+                    return collectionView.dequeueConfiguredReusableCell(
+                        using: headerRegistration,
+                        for: indexPath,
+                        item: item
+                    )
+                case .expandableRow:
+                    return collectionView.dequeueConfiguredReusableCell(
+                        using: expandableRowRegistration,
+                        for: indexPath,
+                        item: item
+                    )
+                default:
+                    return collectionView.dequeueConfiguredReusableCell(
+                        using: rowRegistration,
+                        for: indexPath,
+                        item: item
+                    )
+                }
             }
-        }
+        )
     }
 
-    func recordsSnapshot() -> NSDiffableDataSourceSectionSnapshot<SidebarItem> {
-        var snapshot = NSDiffableDataSourceSectionSnapshot<SidebarItem>()
+    func recordsSnapshot() -> Snapshot {
+        var snapshot = Snapshot()
         let items = viewModel.fetchedRecordsList.objects.map { record in recordRow(record: record) }
 
         snapshot.append(items)
         return snapshot
     }
 
-    func territoriesSnapshot() -> NSDiffableDataSourceSectionSnapshot<SidebarItem> {
-        var snapshot = NSDiffableDataSourceSectionSnapshot<SidebarItem>()
+    func territoriesSnapshot() -> Snapshot {
+        var snapshot = Snapshot()
 
         let header: SidebarItem = .header(title: "Territories")
         snapshot.append([header])

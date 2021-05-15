@@ -14,8 +14,6 @@ struct MoveRecordView: View {
     @Environment(\.managedObjectContext) private var moc
     @Environment(\.uiNavigationController) private var navigationController
 
-    @EnvironmentObject private var viewModel: RecordsViewModel
-
     static private var territoryFetchRequest: NSFetchRequest<Territory> {
         let fetchRequest: NSFetchRequest = Territory.fetchRequest()
         fetchRequest.sortDescriptors = []
@@ -27,21 +25,29 @@ struct MoveRecordView: View {
     private var territories: FetchedResults<Territory>
 
     var body: some View {
-        VStack(alignment: .center, spacing: 0) {
-            RecordRow(record: record)
-                .padding()
-                .background(
-                    VisualEffectView(effect: UIBlurEffect(style: .systemChromeMaterial))
-                        .edgesIgnoringSafeArea([.leading, .trailing])
-                )
+        List {
+            if record.territory == nil {
+                HStack {
+                    Label("Records", systemImage: "note.text")
+                        .foregroundColor(.gray)
+                    Spacer()
+                    Image(systemName: "checkmark")
+                        .foregroundColor(.accentColor)
+                }
+            } else {
+                Button(action: {
+                    move(record: record, to: nil)
+                    navigationController?.dismiss(animated: true)
+                }) {
+                    Label("Records", systemImage: "note.text")
+                }
+            }
 
-            Divider()
-                .edgesIgnoringSafeArea(.horizontal)
-
-            List {
-                if record.territory == nil {
+            ForEach(territories) { territory in
+                if let existingTerritory = record.territory,
+                   existingTerritory == territory {
                     HStack {
-                        Label("Records", systemImage: "note.text")
+                        Label(territory.wrappedName, systemImage: "folder")
                             .foregroundColor(.gray)
                         Spacer()
                         Image(systemName: "checkmark")
@@ -49,30 +55,10 @@ struct MoveRecordView: View {
                     }
                 } else {
                     Button(action: {
-                        viewModel.moveRecord(record, to: .none)
+                        move(record: record, to: territory)
                         navigationController?.dismiss(animated: true)
                     }) {
-                        Label("Records", systemImage: "note.text")
-                    }
-                }
-
-                ForEach(territories) { territory in
-                    if let existingTerritory = record.territory,
-                       existingTerritory == territory {
-                        HStack {
-                            Label(territory.wrappedName, systemImage: "folder")
-                                .foregroundColor(.gray)
-                            Spacer()
-                            Image(systemName: "checkmark")
-                                .foregroundColor(.accentColor)
-                        }
-                    } else {
-                        Button(action: {
-                            viewModel.moveRecord(record, to: territory)
-                            navigationController?.dismiss(animated: true)
-                        }) {
-                            Label(territory.wrappedName, systemImage: "folder")
-                        }
+                        Label(territory.wrappedName, systemImage: "folder")
                     }
                 }
             }
@@ -85,9 +71,19 @@ struct MoveRecordView: View {
                 }
             }
         }
+        .navigationSubheader { RecordRow(record: record) }
         .onAppear {
             navigationController?.navigationBar.shadowImage = UIImage()
         }
+    }
+}
+
+extension MoveRecordView {
+    private func move(record: Record, to territory: Territory?) {
+        record.willUpdate()
+        record.territory = territory
+
+        moc.unsafeSave()
     }
 }
 
@@ -95,7 +91,6 @@ struct MoveRecordView: View {
 struct MoveRecordView_Previews: PreviewProvider {
     static var previews: some View {
         let moc = PersistenceController.preview.container.viewContext
-        let viewModel = RecordsViewModel(moc: moc)
 
         let record = Record(context: moc)
         record.wrappedType = .apartment
@@ -106,7 +101,6 @@ struct MoveRecordView_Previews: PreviewProvider {
 
         return NavigationView {
             MoveRecordView(record: record)
-                .environmentObject(viewModel)
         }
         .environment(\.managedObjectContext, moc)
     }

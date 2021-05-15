@@ -28,7 +28,7 @@ class RecordsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
 
     private lazy var addTerritoryBarButton = makeAddTerritoryBarButton()
     private lazy var addRecordBarButton = makeAddRecordBarButton()
@@ -43,7 +43,7 @@ class RecordsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureDataSource()
+        applyInitialSnapshots()
 
         title = "Records"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -112,13 +112,17 @@ extension RecordsViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         alertController.addAction(cancelAction)
 
-        let submitAction = UIAlertAction(title: "Save", style: .default) { [weak self] action in
-            if let territory = territory {
-                self?.viewModel.updateTerritory(territory: territory, to: nameTextField?.text)
-            } else {
-                self?.viewModel.addTerritory(named: nameTextField?.text)
+        let submitAction = UIAlertAction(
+            title: "Save",
+            style: .default,
+            handler: { [weak self] action in
+                if let territory = territory {
+                    self?.viewModel.updateTerritory(territory: territory, to: nameTextField?.text)
+                } else {
+                    self?.viewModel.addTerritory(named: nameTextField?.text)
+                }
             }
-        }
+        )
         alertController.addAction(submitAction)
 
         if let territory = territory {
@@ -131,7 +135,7 @@ extension RecordsViewController {
 }
 
 extension RecordsViewController {
-    private func configureDataSource() {
+    private func applyInitialSnapshots() {
         dataSource.apply(recordsSnapshot(), to: .records, animatingDifferences: false)
         dataSource.apply(territoriesSnapshot(), to: .territories, animatingDifferences: false)
 

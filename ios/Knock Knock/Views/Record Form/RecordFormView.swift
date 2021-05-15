@@ -21,8 +21,6 @@ struct RecordFormView: View {
     @Environment(\.managedObjectContext) private var moc
     @Environment(\.uiNavigationController) private var navigationController
 
-    @EnvironmentObject private var viewModel: RecordsViewModel
-
     @State private var selectedTypeIndex = 0
     private var typeOptions = ["Street", "Apartment"]
 
@@ -40,55 +38,41 @@ struct RecordFormView: View {
     }
 
     var body: some View {
-        VStack(alignment: .center, spacing: 0) {
-            if let record = record {
-                RecordRow(record: record)
-                    .padding()
-                    .background(
-                        VisualEffectView(effect: UIBlurEffect(style: .systemChromeMaterial))
-                            .edgesIgnoringSafeArea([.leading, .trailing])
-                    )
-
-                Divider()
-                    .edgesIgnoringSafeArea(.horizontal)
+        Form {
+            Section {
+                Picker("type", selection: $selectedTypeIndex.animation()) {
+                    ForEach(0..<typeOptions.count) { i in
+                        Text(typeOptions[i])
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .formLabel("type")
             }
 
-            Form {
-                Section {
-                    Picker("type", selection: $selectedTypeIndex.animation()) {
-                        ForEach(0..<typeOptions.count) { i in
-                            Text(typeOptions[i])
-                        }
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .formLabel("type")
-                }
-
-                if isApartment {
-                    Section(header: Text("recordForm.header.apartment")) {
-                        TextField(
-                            "recordForm.field.apartmentNumber.required",
-                            text: $apartmentNumber
-                        )
-                    }
-                }
-
-                Section(header: Text("recordForm.header.street")) {
+            if isApartment {
+                Section(header: Text("recordForm.header.apartment")) {
                     TextField(
-                        "recordForm.field.streetName.required",
-                        text: $streetName
+                        "recordForm.field.apartmentNumber.required",
+                        text: $apartmentNumber
                     )
-                    TextField("recordForm.field.city", text: $city)
-                    TextField("recordForm.field.state", text: $state)
                 }
+            }
 
-                Section(header: Text("recordForm.header.geolocation")) {
-                    Button(action: useCurrentLocation) {
-                        Text("recordForm.button.currentLocation")
-                    }
-                    .onAppear { location.request() }
-                    .onDisappear { location.stopUpdatingPlacement() }
+            Section(header: Text("recordForm.header.street")) {
+                TextField(
+                    "recordForm.field.streetName.required",
+                    text: $streetName
+                )
+                TextField("recordForm.field.city", text: $city)
+                TextField("recordForm.field.state", text: $state)
+            }
+
+            Section(header: Text("recordForm.header.geolocation")) {
+                Button(action: useCurrentLocation) {
+                    Text("recordForm.button.currentLocation")
                 }
+                .onAppear { location.request() }
+                .onDisappear { location.stopUpdatingPlacement() }
             }
         }
         .navigationTitle(
@@ -103,21 +87,21 @@ struct RecordFormView: View {
 
             ToolbarItem(placement: .confirmationAction) {
                 Button(action: {
-                    viewModel.saveRecord(
-                        type: RecordType(rawValue: Int16(selectedTypeIndex)) ?? .street,
-                        streetName: streetName,
-                        city: city,
-                        state: state,
-                        apartmentNumber: apartmentNumber,
-                        territory: territory,
-                        to: record
-                    )
+                    save()
                     navigationController?.dismiss(animated: true)
                 }) {
                     Text("save")
                 }
                 .disabled(!canSave)
             }
+        }
+        .modify {
+            if let record = record {
+                return $0
+                    .navigationSubheader { RecordRow(record: record) }
+                    .eraseType()
+            }
+            return $0.eraseType()
         }
         .onAppear {
             if let record = record {
@@ -137,6 +121,26 @@ struct RecordFormView: View {
 }
 
 extension RecordFormView {
+    private func save() {
+        var toSave: Record
+        if let record = record {
+            toSave = record
+            toSave.willUpdate()
+        } else {
+            toSave = Record(context: moc)
+            toSave.willCreate()
+        }
+
+        toSave.wrappedType = isApartment ? .apartment : .street
+        toSave.apartmentNumber = isApartment ? apartmentNumber : nil
+        toSave.streetName = streetName
+        toSave.city = city
+        toSave.state = state
+        toSave.territory = territory
+
+        moc.unsafeSave()
+    }
+
     private func useCurrentLocation() {
         location.whenAuthorized { placemark in
             if let streetName = placemark?.thoroughfare { self.streetName = streetName }

@@ -5,14 +5,22 @@
 //  Created by Owen Donckers on 4/26/21.
 //
 
+import Combine
 import CoreData
 import UIKit
 
 class DoorsViewController: UIViewController {
     let record: Record
 
+    var moc: NSManagedObjectContext
+    let viewModel: DoorsViewModel
+
     init(in record: Record) {
         self.record = record
+
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        moc = appDelegate.persistenceController.container.viewContext
+        viewModel = DoorsViewModel(moc: moc, record: record)
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -21,16 +29,25 @@ class DoorsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private var cancellables = Set<AnyCancellable>()
+
     private lazy var addDoorBarButtonItem = makeAddDoorBarButton()
 
     private lazy var collectionView = makeCollectionView()
     private lazy var dataSource = makeDataSource()
 
-    private lazy var moc = makeMoc()
-    private var fetchedDoorsController: NSFetchedResultsController<Door>!
-
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        dataSource.apply(doorsSnapshot(), animatingDifferences: false)
+        viewModel.fetchedDoorsList.contentDidChange
+            .sink { [weak self] in
+                guard let self = self else { return }
+
+                let snapshot = self.doorsSnapshot()
+                self.dataSource.apply(snapshot, animatingDifferences: true)
+            }
+            .store(in: &cancellables)
 
         var title = [record.wrappedStreetName]
         if let apartmentNumber = record.apartmentNumber { title.insert(apartmentNumber, at: 0) }
@@ -42,8 +59,6 @@ class DoorsViewController: UIViewController {
         navigationController?.isToolbarHidden = false
 
         view.addSubview(collectionView)
-
-        configureFetchRequests()
     }
 }
 
@@ -87,19 +102,19 @@ extension DoorsViewController {
     }
 
     private func makeLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout() {
-            (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+        let layout = UICollectionViewCompositionalLayout(
+            sectionProvider: { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+                var configuration = UICollectionLayoutListConfiguration(appearance: .plain)
+                configuration.showsSeparators = true
+                configuration.headerMode = .firstItemInSection
 
-            var configuration = UICollectionLayoutListConfiguration(appearance: .plain)
-            configuration.showsSeparators = true
-            configuration.headerMode = .firstItemInSection
-
-            let section: NSCollectionLayoutSection = .list(
-                using: configuration,
-                layoutEnvironment: layoutEnvironment
-            )
-            return section
-        }
+                let section: NSCollectionLayoutSection = .list(
+                    using: configuration,
+                    layoutEnvironment: layoutEnvironment
+                )
+                return section
+            }
+        )
         return layout
     }
 }
@@ -154,28 +169,31 @@ extension DoorsViewController {
             cell.accessories = accessories
         }
 
-        return DataSource(collectionView: collectionView) { collectionView, indexPath, item in
-            switch item.type {
-            case .header:
-                return collectionView.dequeueConfiguredReusableCell(
-                    using: headerRegistration,
-                    for: indexPath,
-                    item: item
-                )
-            default:
-                return collectionView.dequeueConfiguredReusableCell(
-                    using: rowRegistration,
-                    for: indexPath,
-                    item: item
-                )
+        return DataSource(
+            collectionView: collectionView,
+            cellProvider: { collectionView, indexPath, item in
+                switch item.type {
+                case .header:
+                    return collectionView.dequeueConfiguredReusableCell(
+                        using: headerRegistration,
+                        for: indexPath,
+                        item: item
+                    )
+                default:
+                    return collectionView.dequeueConfiguredReusableCell(
+                        using: rowRegistration,
+                        for: indexPath,
+                        item: item
+                    )
+                }
             }
-        }
+        )
     }
 
     private func doorsSnapshot() -> NSDiffableDataSourceSnapshot<VisitSymbol, CollectionItem> {
         var snapshot = NSDiffableDataSourceSnapshot<VisitSymbol, CollectionItem>()
 
-        fetchedDoorsController.sections?.forEach { section in
+        viewModel.fetchedDoorsList.sections.forEach { section in
             if
                 let sectionInt = Int16(section.name),
                 let visitSymbol = VisitSymbol(rawValue: sectionInt),
@@ -211,53 +229,6 @@ extension DoorsViewController {
             id: door.wrappedID,
             object: door
         )
-    }
-}
-
-// MARK: - Fetch Requests
-
-extension DoorsViewController {
-    private func makeMoc() -> NSManagedObjectContext {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.persistenceController.container.viewContext
-    }
-
-    private func configureFetchRequests() {
-        configureDoorFetchRequest()
-    }
-
-    private func configureDoorFetchRequest() {
-        let fetchRequest: NSFetchRequest = Door.fetchRequest()
-        fetchRequest.sortDescriptors = [
-            NSSortDescriptor(keyPath: \Door.number, ascending: true)
-        ]
-        fetchRequest.predicate = NSPredicate(format: "record == %@", record)
-
-        fetchedDoorsController = NSFetchedResultsController<Door>(
-            fetchRequest: fetchRequest,
-            managedObjectContext: moc,
-            sectionNameKeyPath: #keyPath(Door.latestVisit.wrappedSymbol),
-            cacheName: nil
-        )
-        fetchedDoorsController.delegate = self
-
-        do {
-            try fetchedDoorsController.performFetch()
-            dataSource.apply(doorsSnapshot(), animatingDifferences: false)
-        } catch {
-            // Failed to fetch results from the database. Handle errors appropriately in your app.
-        }
-    }
-}
-
-// MARK: - Fetched Results Controller Delegate
-
-extension DoorsViewController: NSFetchedResultsControllerDelegate {
-    func controllerDidChangeContent(
-        _ controller: NSFetchedResultsController<NSFetchRequestResult>
-    ) {
-        let snapshot = doorsSnapshot()
-        dataSource.apply(snapshot, animatingDifferences: true)
     }
 }
 
