@@ -40,8 +40,8 @@ class DoorsViewController: UIViewController {
         super.viewDidLoad()
 
         dataSource.apply(doorsSnapshot(), animatingDifferences: false)
-        viewModel.fetchedDoorsList.contentDidChange
-            .sink { [weak self] in
+        viewModel.fetchedDoorsList.objects
+            .sink { [weak self] doors in
                 guard let self = self else { return }
 
                 let snapshot = self.doorsSnapshot()

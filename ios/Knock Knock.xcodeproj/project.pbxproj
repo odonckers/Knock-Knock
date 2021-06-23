@@ -25,6 +25,7 @@
 		7FA3CAC42637B73000F9E130 /* DoorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3CAC32637B73000F9E130 /* DoorsViewController.swift */; };
 		7FB7416A2633504000D0C224 /* EnvironmentUIPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB741692633504000D0C224 /* EnvironmentUIPreviewWrapper.swift */; };
 		7FD8B3512620BD0100B51D86 /* CoreDataPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD8B3502620BD0100B51D86 /* CoreDataPublisher.swift */; };
+		7FD99B8326817D1D00EE6E1A /* ManagedObjectChangesPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD99B8226817D1D00EE6E1A /* ManagedObjectChangesPublisher.swift */; };
 		7FE71393262DF68200FF9B10 /* MoveRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE71392262DF68200FF9B10 /* MoveRecordView.swift */; };
 		7FE7139E262E17D800FF9B10 /* RecordRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE7139D262E17D800FF9B10 /* RecordRow.swift */; };
 		7FE713A9262E3A2F00FF9B10 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE713A8262E3A2F00FF9B10 /* VisualEffectView.swift */; };
@@ -110,6 +111,7 @@
 		7FA3CAC32637B73000F9E130 /* DoorsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorsViewController.swift; sourceTree = "<group>"; };
 		7FB741692633504000D0C224 /* EnvironmentUIPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentUIPreviewWrapper.swift; sourceTree = "<group>"; };
 		7FD8B3502620BD0100B51D86 /* CoreDataPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataPublisher.swift; sourceTree = "<group>"; };
+		7FD99B8226817D1D00EE6E1A /* ManagedObjectChangesPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectChangesPublisher.swift; sourceTree = "<group>"; };
 		7FE71392262DF68200FF9B10 /* MoveRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveRecordView.swift; sourceTree = "<group>"; };
 		7FE7139D262E17D800FF9B10 /* RecordRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRow.swift; sourceTree = "<group>"; };
 		7FE713A8262E3A2F00FF9B10 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
@@ -198,8 +200,8 @@
 				E25A166725E0804E0065517B /* Binding.swift */,
 				E25A164225E07F4C0065517B /* Bundle.swift */,
 				E25A160425E073B90065517B /* NSManagedObjectContext.swift */,
-				E2BB6FC025EB3F2600731EDE /* UIColor.swift */,
 				7F0835EC264CA7AB00A940FA /* Publisher.swift */,
+				E2BB6FC025EB3F2600731EDE /* UIColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -341,6 +343,7 @@
 				7FD8B3502620BD0100B51D86 /* CoreDataPublisher.swift */,
 				E25A164725E07F8D0065517B /* Configure.swift */,
 				7F0835EA264CA30400A940FA /* FetchedObjectList.swift */,
+				7FD99B8226817D1D00EE6E1A /* ManagedObjectChangesPublisher.swift */,
 				E2BB6FDA25EB6DF600731EDE /* ModelManagedObject.swift */,
 				E25A166C25E080960065517B /* PlatformModifiers.swift */,
 				E25A167425E080D00065517B /* SheetState.swift */,
@@ -665,6 +668,7 @@
 				E25A164325E07F4C0065517B /* Bundle.swift in Sources */,
 				7F8A31732622460C003F8FB7 /* View+AssignToUI.swift in Sources */,
 				7F531104260E66B400F5F3BE /* RecordCollectionViewListCellContentView.swift in Sources */,
+				7FD99B8326817D1D00EE6E1A /* ManagedObjectChangesPublisher.swift in Sources */,
 				E25A166825E0804E0065517B /* Binding.swift in Sources */,
 				7F27D54E2620D6B0000B7360 /* RootViewController.swift in Sources */,
 				E25A16C225E0857B0065517B /* VisitSymbol.swift in Sources */,

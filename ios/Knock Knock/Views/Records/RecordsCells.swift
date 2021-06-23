@@ -8,11 +8,6 @@
 import UIKit
 
 extension RecordsViewController {
-    typealias CellRegistration = UICollectionView.CellRegistration<
-        UICollectionViewListCell,
-        SidebarItem
-    >
-
     func headerRegistration() -> CellRegistration {
         CellRegistration { [weak self] cell, indexPath, item in
             var contentConfiguration = cell.defaultContentConfiguration()

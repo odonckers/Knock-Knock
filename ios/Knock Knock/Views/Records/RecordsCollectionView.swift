@@ -8,12 +8,6 @@
 import UIKit
 
 extension RecordsViewController {
-    typealias DataSource = UICollectionViewDiffableDataSource<
-        SidebarSection,
-        SidebarItem
-    >
-    typealias Snapshot = NSDiffableDataSourceSectionSnapshot<SidebarItem>
-
     func makeCollectionView() -> UICollectionView {
         let collectionView = UICollectionView(
             frame: view.bounds,
@@ -98,42 +92,6 @@ extension RecordsViewController {
                 }
             }
         )
-    }
-
-    func recordsSnapshot() -> Snapshot {
-        var snapshot = Snapshot()
-        let items = viewModel.fetchedRecordsList.objects.map { record in recordRow(record: record) }
-
-        snapshot.append(items)
-        return snapshot
-    }
-
-    func territoriesSnapshot() -> Snapshot {
-        var snapshot = Snapshot()
-
-        let header: SidebarItem = .header(title: "Territories")
-        snapshot.append([header])
-        snapshot.expand([header])
-
-        viewModel.fetchedTerritoriesList.objects.forEach { territory in
-            let expandableRow: SidebarItem = .expandableRow(
-                image: UIImage(systemName: "folder"),
-                title: territory.wrappedName,
-                subtitle: nil,
-                id: territory.wrappedID,
-                object: territory
-            )
-
-            let items: [SidebarItem] = territory.recordArray.map { record in
-                recordRow(record: record)
-            }
-
-            snapshot.append([expandableRow], to: header)
-            snapshot.expand([expandableRow])
-            snapshot.append(items, to: expandableRow)
-        }
-
-        return snapshot
     }
 }
 

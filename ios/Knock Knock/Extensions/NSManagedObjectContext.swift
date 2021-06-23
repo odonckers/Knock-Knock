@@ -6,8 +6,14 @@
 //
 
 import CoreData
+import UIKit
 
 extension NSManagedObjectContext {
+    static var view: NSManagedObjectContext {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        return delegate.persistenceController.container.viewContext
+    }
+
     public func unsafeSave() {
         if hasChanges {
             do {

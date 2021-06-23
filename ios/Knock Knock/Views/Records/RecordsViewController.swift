@@ -10,17 +10,16 @@ import CoreData
 import UIKit
 
 class RecordsViewController: UIViewController {
+    typealias DataSource = UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>
+    typealias CellRegistration = UICollectionView.CellRegistration<
+        UICollectionViewListCell,
+        SidebarItem
+    >
+
     let isCompact: Bool
-    let viewModel: RecordsViewModel
 
     init(isCompact: Bool) {
         self.isCompact = isCompact
-
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let moc = appDelegate.persistenceController.container.viewContext
-
-        viewModel = RecordsViewModel(moc: moc)
-
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -29,6 +28,8 @@ class RecordsViewController: UIViewController {
     }
 
     private var cancellables = Set<AnyCancellable>()
+    @Published private var animateChanges = false
+    let viewModel = RecordsViewModel()
 
     private lazy var addTerritoryBarButton = makeAddTerritoryBarButton()
     private lazy var addRecordBarButton = makeAddRecordBarButton()
@@ -43,7 +44,13 @@ class RecordsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        applyInitialSnapshots()
+        viewModel.$recordsSnapshot
+            .apply(to: .records, in: dataSource, animate: $animateChanges)
+            .store(in: &cancellables)
+        viewModel.$territoriesSnapshot
+            .apply(to: .territories, in: dataSource, animate: $animateChanges)
+            .store(in: &cancellables)
+        animateChanges = true
 
         title = "Records"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -131,102 +138,5 @@ extension RecordsViewController {
         }
 
         present(alertController, animated: true)
-    }
-}
-
-extension RecordsViewController {
-    private func applyInitialSnapshots() {
-        dataSource.apply(recordsSnapshot(), to: .records, animatingDifferences: false)
-        dataSource.apply(territoriesSnapshot(), to: .territories, animatingDifferences: false)
-
-        viewModel.fetchedRecordsList.contentDidChange
-            .sink { [weak self] in
-                guard let self = self else { return }
-
-                let snapshot = self.recordsSnapshot()
-                self.dataSource.apply(snapshot, to: .records, animatingDifferences: true)
-            }
-            .store(in: &cancellables)
-
-        viewModel.fetchedTerritoriesList.contentDidChange
-            .sink { [weak self] in
-                guard let self = self else { return }
-
-                let snapshot = self.territoriesSnapshot()
-                self.dataSource.apply(snapshot, to: .territories, animatingDifferences: true)
-            }
-            .store(in: &cancellables)
-    }
-}
-
-extension RecordsViewController {
-    enum SidebarItemType: Int {
-        case header, expandableRow, row
-    }
-
-    enum SidebarSection: Int {
-        case records, territories
-    }
-
-    struct SidebarItem: Hashable, Identifiable {
-        let id: String
-        private(set) var object: NSManagedObject? = nil
-        private(set) var type: SidebarItemType
-        private(set) var image: UIImage? = nil
-        private(set) var title: String? = nil
-        private(set) var subtitle: String? = nil
-        private(set) var tintColor: UIColor? = nil
-        private(set) var hasExpander: Bool = false
-        private(set) var hasChild: Bool = false
-
-        static func header(
-            title: String,
-            hasExpander: Bool = true,
-            id: String = UUID().uuidString
-        ) -> Self {
-            SidebarItem(id: id, type: .header, title: title, hasExpander: hasExpander)
-        }
-
-        static func expandableRow(
-            image: UIImage? = nil,
-            title: String,
-            subtitle: String? = nil,
-            tintColor: UIColor? = nil,
-            hasExpander: Bool = true,
-            id: String = UUID().uuidString,
-            object: NSManagedObject? = nil
-        ) -> SidebarItem {
-            SidebarItem(
-                id: id,
-                object: object,
-                type: .expandableRow,
-                image: image,
-                title: title,
-                subtitle: subtitle,
-                tintColor: tintColor,
-                hasExpander: hasExpander
-            )
-        }
-
-        static func row(
-            image: UIImage? = nil,
-            title: String,
-            subtitle: String? = nil,
-            tintColor: UIColor? = nil,
-            hasChild: Bool = false,
-            id: String = UUID().uuidString,
-            object: NSManagedObject? = nil
-        ) -> SidebarItem {
-            SidebarItem(
-                id: id,
-                object: object,
-                type: .row,
-                image: image,
-                title: title,
-                subtitle: subtitle,
-                tintColor: tintColor,
-                hasChild: hasChild
-            )
-        }
     }
 }

@@ -9,10 +9,9 @@ import Combine
 import CoreData
 import Foundation
 
-class FetchedObjectList<Object: NSManagedObject>: NSObject, NSFetchedResultsControllerDelegate {
+class FetchedObjectList<Object>: NSObject, NSFetchedResultsControllerDelegate
+where Object: NSManagedObject {
     let fetchedResultsController: NSFetchedResultsController<Object>
-    private let onContentChange = PassthroughSubject<(), Never>()
-    private let onObjectChange = PassthroughSubject<Object, Never>()
 
     init(
         fetchRequest: NSFetchRequest<Object>,
@@ -31,20 +30,27 @@ class FetchedObjectList<Object: NSManagedObject>: NSObject, NSFetchedResultsCont
 
         do {
             try fetchedResultsController.performFetch()
+            sendCurrentObjects()
         } catch {
             NSLog("Error fetching objects: \(error)")
         }
     }
 
-    var objects: [Object] { fetchedResultsController.fetchedObjects ?? [] }
+    var objects: AnyPublisher<[Object], Never> { onObjectsChange.eraseToAnyPublisher() }
     var sections: [NSFetchedResultsSectionInfo] { fetchedResultsController.sections ?? [] }
-    var contentDidChange: AnyPublisher<(), Never> { onContentChange.eraseToAnyPublisher() }
     var objectDidChange: AnyPublisher<Object, Never> { onObjectChange.eraseToAnyPublisher() }
+
+    private let onObjectChange = PassthroughSubject<Object, Never>()
+    private let onObjectsChange = PassthroughSubject<[Object], Never>()
+
+    private func sendCurrentObjects() {
+        onObjectsChange.send(fetchedResultsController.fetchedObjects ?? [])
+    }
 
     func controllerDidChangeContent(
         _ controller: NSFetchedResultsController<NSFetchRequestResult>
     ) {
-        onContentChange.send()
+        sendCurrentObjects()
     }
 
     func controller(
