@@ -21,6 +21,7 @@
 		7F53110F260E714900F5F3BE /* RecordCollectionViewListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53110E260E714900F5F3BE /* RecordCollectionViewListCell.swift */; };
 		7F5311282610404D00F5F3BE /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5311272610404D00F5F3BE /* UIFont+Extension.swift */; };
 		7F5DA90C2620E67A00043B18 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F5DA90B2620E67A00043B18 /* CloudKit.framework */; };
+		7F66B8DC2687B33700045C53 /* CollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F66B8DB2687B33700045C53 /* CollectionItem.swift */; };
 		7F8A31732622460C003F8FB7 /* View+AssignToUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8A31722622460C003F8FB7 /* View+AssignToUI.swift */; };
 		7FA3CAC42637B73000F9E130 /* DoorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3CAC32637B73000F9E130 /* DoorsViewController.swift */; };
 		7FB7416A2633504000D0C224 /* EnvironmentUIPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB741692633504000D0C224 /* EnvironmentUIPreviewWrapper.swift */; };
@@ -107,6 +108,7 @@
 		7F53110E260E714900F5F3BE /* RecordCollectionViewListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCollectionViewListCell.swift; sourceTree = "<group>"; };
 		7F5311272610404D00F5F3BE /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		7F5DA90B2620E67A00043B18 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		7F66B8DB2687B33700045C53 /* CollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionItem.swift; sourceTree = "<group>"; };
 		7F8A31722622460C003F8FB7 /* View+AssignToUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+AssignToUI.swift"; sourceTree = "<group>"; };
 		7FA3CAC32637B73000F9E130 /* DoorsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorsViewController.swift; sourceTree = "<group>"; };
 		7FB741692633504000D0C224 /* EnvironmentUIPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentUIPreviewWrapper.swift; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 				E25A16B825E085290065517B /* Visit */,
 				E25A162925E07AC60065517B /* Knock_Knock.xcdatamodeld */,
 				E25A15F025E072F10065517B /* Persistence.swift */,
+				7F66B8DB2687B33700045C53 /* CollectionItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -642,6 +645,7 @@
 				E24673BB25F0623600A0653B /* AppDelegate.swift in Sources */,
 				E25A163E25E07CC30065517B /* FilledBackground.swift in Sources */,
 				E25A16BA25E0854C0065517B /* RecordType.swift in Sources */,
+				7F66B8DC2687B33700045C53 /* CollectionItem.swift in Sources */,
 				7FFEBE052638CBF80098C160 /* CollectionListHeaderCellContentConfiguration.swift in Sources */,
 				E2BB6FC125EB3F2600731EDE /* UIColor.swift in Sources */,
 				7FE9BD6E264F777600E5FB18 /* DoorsViewModel.swift in Sources */,

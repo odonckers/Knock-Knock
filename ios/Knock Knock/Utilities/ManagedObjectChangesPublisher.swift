@@ -9,6 +9,34 @@ import Combine
 import CoreData
 import Foundation
 
+@propertyWrapper
+struct ManagedObjectChanges<Object> where Object: NSManagedObject {
+    var wrappedValue: AnyPublisher<CollectionDifference<Object>, Never> {
+        fetchRequest.sortDescriptors = sortDescriptors
+        fetchRequest.predicate = predicate
+        return moc.changesPublisher(for: fetchRequest)
+            .catch { _ in Empty() }
+            .eraseToAnyPublisher()
+    }
+
+    var moc: NSManagedObjectContext
+    var fetchRequest: NSFetchRequest<Object>
+    var sortDescriptors: [NSSortDescriptor]?
+    var predicate: NSPredicate?
+
+    init(
+        moc: NSManagedObjectContext = .view,
+        fetchRequest: NSFetchRequest<Object>,
+        sortDescriptors: [NSSortDescriptor]? = nil,
+        predicate: NSPredicate? = nil
+    ) {
+        self.moc = moc
+        self.fetchRequest = fetchRequest
+        self.sortDescriptors = sortDescriptors
+        self.predicate = predicate
+    }
+}
+
 extension NSManagedObjectContext {
     func changesPublisher<Object>(
         for fetchRequest: NSFetchRequest<Object>
@@ -18,22 +46,28 @@ extension NSManagedObjectContext {
     }
 }
 
-struct ManagedObjectChangesPublisher<Object>: Publisher
-where Object: NSManagedObject {
+struct ManagedObjectChangesPublisher<Object>: Publisher where Object: NSManagedObject {
     typealias Output = CollectionDifference<Object>
     typealias Failure = Error
 
     let fetchRequest: NSFetchRequest<Object>
     let moc: NSManagedObjectContext
 
-    init(fetchRequest: NSFetchRequest<Object>, moc: NSManagedObjectContext) {
+    init(
+        fetchRequest: NSFetchRequest<Object>,
+        moc: NSManagedObjectContext
+    ) {
         self.fetchRequest = fetchRequest
         self.moc = moc
     }
 
     func receive<S>(subscriber: S)
-    where S : Subscriber, Error == S.Failure, CollectionDifference<Object> == S.Input {
-        let inner = Inner(downstream: subscriber, fetchRequest: fetchRequest, moc: moc)
+    where S : Subscriber, Error == S.Failure, Output == S.Input {
+        let inner = Inner(
+            downstream: subscriber,
+            fetchRequest: fetchRequest,
+            moc: moc
+        )
         subscriber.receive(subscription: inner)
     }
 }
@@ -43,7 +77,7 @@ extension ManagedObjectChangesPublisher {
                                            Subscription,
                                            NSFetchedResultsControllerDelegate
     where Downstream: Subscriber,
-          Downstream.Input == CollectionDifference<Object>,
+          Downstream.Input == Output,
           Downstream.Failure == Error
     {
         private let downstream: Downstream
@@ -111,6 +145,6 @@ extension ManagedObjectChangesPublisher {
             updateDiff()
         }
 
-        override var description: String { "ManagedObjectChanges(\(Object.self))" }
+        override var description: String { "MocChanges(\(Object.self))" }
     }
 }

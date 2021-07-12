@@ -50,27 +50,19 @@ class RecordsViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     @Published private(set) var recordsSnapshot = Snapshot()
-    private var recordChanges: AnyPublisher<CollectionDifference<Record>, Never> {
-        let fetchRequest: NSFetchRequest = Record.fetchRequest()
-        fetchRequest.sortDescriptors = [
-            NSSortDescriptor(keyPath: \Record.streetName, ascending: true)
-        ]
-        fetchRequest.predicate = NSPredicate(format: "territory == NULL")
-        return moc.changesPublisher(for: fetchRequest)
-            .catch { _ in Empty() }
-            .eraseToAnyPublisher()
-    }
+    @ManagedObjectChanges(
+        fetchRequest: Record.fetchRequest(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Record.streetName, ascending: true)],
+        predicate: NSPredicate(format: "territory == NULL")
+    )
+    private var recordChanges
 
     @Published private(set) var territoriesSnapshot = Snapshot()
-    private var territoryChanges: AnyPublisher<CollectionDifference<Territory>, Never> {
-        let fetchRequest: NSFetchRequest = Territory.fetchRequest()
-        fetchRequest.sortDescriptors = [
-            NSSortDescriptor(keyPath: \Territory.name, ascending: true)
-        ]
-        return moc.changesPublisher(for: fetchRequest)
-            .catch { _ in Empty() }
-            .eraseToAnyPublisher()
-    }
+    @ManagedObjectChanges(
+        fetchRequest: Territory.fetchRequest(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Territory.name, ascending: true)]
+    )
+    private var territoryChanges
 
     private func recordRow(record: Record) -> SidebarItem {
         var title = [String]()
